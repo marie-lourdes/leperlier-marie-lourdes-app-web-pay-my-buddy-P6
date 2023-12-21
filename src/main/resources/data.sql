@@ -71,4 +71,4 @@ INSERT INTO account(user_id, soldes,TYPE ) VALUES
 ("testuser2@gmail.com", 9825.00, "buddy account");
 
 INSERT INTO transaction(credit_account_id, credit_user_id, beneficiary_count_id , beneficiary_user_id,transaction_date_time, amount, transaction_fees) VALUES
-(76000,"testuser1@gmail.com", 76001,"testuser2@gmail.com", NOW(), 2358.00, 4.2);
+(76000,"testuser1@gmail.com", 76001,"testuser2@gmail.com", NOW(), 2388.00, 4.2);
