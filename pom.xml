@@ -114,6 +114,24 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+		<profiles>
+		<profile>
+			<activation>
+				<property>
+					<name>environnement</name>
+					<value>dev</value>
+				</property>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources/config-dev</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
