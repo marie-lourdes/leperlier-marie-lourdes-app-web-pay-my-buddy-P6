@@ -51,4 +51,24 @@ FOREIGN KEY(beneficiary_user_id) REFERENCES account(user_id) ON DELETE RESTRICT 
 
 ALTER TABLE transaction AUTO_INCREMENT = 0000;
 
+/* DEFAULT VALUES FOR PAYMYBUDDY_TEST DB */
 
+INSERT INTO user_app(email, first_name, last_name, password ) VALUES
+("testuser1@gmail.com", "firstnameuser1", "lastnameuser1", "codesablage");
+
+INSERT INTO user_app(email, first_name, last_name, password, user_contact_id ) VALUES
+("testuser2@gmail.com", "firstnameuser1", "lastnameuser1", "codesablage","testuser1@gmail.com");
+
+INSERT INTO user_app_role(user_id, role_id) VALUES
+("testuser1@gmail.com", 1),
+("testuser1@gmail.com", 2),
+("testuser2@gmail.com", 1);
+
+INSERT INTO account(user_id, soldes,TYPE ) VALUES
+("testuser1@gmail.com", 45075.00, "buddy account");
+
+INSERT INTO account(user_id, soldes,TYPE ) VALUES
+("testuser2@gmail.com", 9825.00, "buddy account");
+
+INSERT INTO transaction(credit_account_id, credit_user_id, beneficiary_count_id , beneficiary_user_id,transaction_date_time, amount, transaction_fees) VALUES
+(76000,"testuser1@gmail.com", 76001,"testuser2@gmail.com", NOW(), 2388.00, 4.2);
