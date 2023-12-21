@@ -1,5 +1,5 @@
 package com.paymybuddy.api.model;
 
-public class UserContactDTO {
+public class Role {
 
 }
