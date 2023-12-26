@@ -11,7 +11,7 @@ private AuthenticationUserDetailService authentificationService;*/
 public class Authentication {
 	/*@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder();g
 	}*/
 	
 	/*@Bean
