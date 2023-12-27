@@ -14,11 +14,11 @@ public class WebSecurity {
 		//ajoutez les roles
 	return http
 			.authorizeHttpRequests((requests) ->{ 
-				requests.requestMatchers("/").permitAll();
+				requests.requestMatchers("/sign-up").permitAll();
 				requests.anyRequest().authenticated();
 			})
 			.formLogin((form) -> form
-					.loginPage("/home")
+					.loginPage("/login")
 					.permitAll()
 				)
 				.logout((logout) -> logout.permitAll()).build();
