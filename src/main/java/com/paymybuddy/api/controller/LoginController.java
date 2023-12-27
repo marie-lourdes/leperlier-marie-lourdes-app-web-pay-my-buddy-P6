@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class HomeController {
+public class LoginController {
 	
 	@GetMapping("/sign-up")
 	public String getHomePage() {
