@@ -2,9 +2,11 @@ package com.paymybuddy.api.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 
-
-/*@Configuration
+@Configuration
 @EnableWebSecurity
 public class WebSecurity {
 	@Bean
@@ -12,15 +14,14 @@ public class WebSecurity {
 		//ajoutez les roles
 	return http
 			.authorizeHttpRequests((requests) ->{ 
-				requests.requestMatchers("/","/home").permitAll();
+				requests.requestMatchers("/").permitAll();
 				requests.anyRequest().authenticated();
 			})
 			.formLogin((form) -> form
-					.loginPage("/login")
+					.loginPage("/home")
 					.permitAll()
 				)
 				.logout((logout) -> logout.permitAll()).build();
-				
-	}
-		
-}*/
+			
+	}		
+}
