@@ -1,12 +1,12 @@
 package com.paymybuddy.api.config.security;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
 
 /*@Autowired
 private AuthenticationUserDetailService authentificationService;*/
 
-@Configuration
+/*@Configuration
 @EnableWebSecurity
 public class Authentication {
 	/*@Bean
@@ -19,6 +19,6 @@ public class Authentication {
 		AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
 	authenticationManagerBuilder.userDetailsService(customUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
 		return authenticationManagerBuilder.build();
-	}*/
+	}
 
-}
+}*/
