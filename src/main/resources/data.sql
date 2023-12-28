@@ -12,7 +12,7 @@ id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
 role_name VARCHAR(10) UNIQUE NOT NULL
 );
 
-INSERT INTO role(id,role_name) VALUES
+INSERT INTO role(role_name) VALUES
 ("ROLE_USER"), ("ROLE_ADMIN");
 
 CREATE TABLE user_app_role(
