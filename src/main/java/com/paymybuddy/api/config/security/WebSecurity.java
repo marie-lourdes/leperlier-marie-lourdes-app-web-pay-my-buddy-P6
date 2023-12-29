@@ -26,15 +26,4 @@ public class WebSecurity {
 				.logout((logout) -> logout.permitAll()).build();
 
 	}
-
-	@Bean
-	public UserDetailsService users() {
-		UserDetails user = User.builder().username("user@gmail.com").password(passwordEncoder().encode("user")).build();
-		return new InMemoryUserDetailsManager(user);
-	}
-
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 }

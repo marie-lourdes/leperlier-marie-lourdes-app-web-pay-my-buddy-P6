@@ -148,7 +148,7 @@
 					<resource>
 						<directory>src/main/resources/config-dev</directory>
 						<filtering>true</filtering>
-					</resource>
+					</resource>	
 				</resources>
 			</build>
 		</profile>
