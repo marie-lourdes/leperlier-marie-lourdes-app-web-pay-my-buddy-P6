@@ -20,7 +20,7 @@ public class LoginController {
 	
 	@PostMapping("/login-form")//traitement formulaire
 	public ModelAndView loginForm() {
-		return new ModelAndView("redirect:/");	
+		return new ModelAndView("redirect:/sign-up");	
 	}
 
 }
