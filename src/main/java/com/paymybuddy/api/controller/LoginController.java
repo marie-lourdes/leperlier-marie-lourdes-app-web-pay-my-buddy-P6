@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 	
 	@GetMapping("/sign-up")
-	public String getHomePage() {
+	public String getSignUpPage() {
 		return "sign-up";
 	}
 	
@@ -22,5 +22,9 @@ public class LoginController {
 	public ModelAndView loginForm() {
 		return new ModelAndView("redirect:/");	
 	}
-
+	
+	@GetMapping("/home")//
+	public String  getHomePage() {
+		return "home";
+	}
 }

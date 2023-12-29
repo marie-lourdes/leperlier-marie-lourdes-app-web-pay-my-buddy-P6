@@ -4,11 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -19,11 +14,10 @@ public class WebSecurity {
 		// ajoutez les roles
 		return http.authorizeHttpRequests((requests) -> {
 			requests.requestMatchers("/sign-up").permitAll();
+			requests.requestMatchers("/transactions").hasRole("USER");
+			requests.requestMatchers("/home").hasRole("ADMIN");
 			requests.anyRequest().authenticated();
-		})
-
-				.formLogin((form) -> form.loginPage("/login").permitAll().loginProcessingUrl("/login-form"))
+		}).formLogin((form) -> form.loginPage("/login").permitAll().loginProcessingUrl("/login-form"))//traitement formulaire
 				.logout((logout) -> logout.permitAll()).build();
-
 	}
 }
