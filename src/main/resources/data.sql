@@ -13,7 +13,7 @@ role_name VARCHAR(10) UNIQUE NOT NULL
 );
 
 INSERT INTO role(role_name) VALUES
-("ROLE_USER"), ("ROLE_ADMIN");
+("USER"), ("ADMIN");
 
 CREATE TABLE user_app_role(
 user_id VARCHAR(500) NOT NULL,
