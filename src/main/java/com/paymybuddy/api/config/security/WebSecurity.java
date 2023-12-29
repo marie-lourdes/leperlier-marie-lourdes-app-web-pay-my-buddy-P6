@@ -16,26 +16,21 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurity {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		//ajoutez les roles
-	return http
-			.authorizeHttpRequests((requests) ->{ 
-				requests.requestMatchers("/sign-up").permitAll();
-				requests.anyRequest().authenticated();
-			})
-			.formLogin((form) -> 
-			form.loginPage("/login")
-					.permitAll()
-				)
+		// ajoutez les roles
+		return http.authorizeHttpRequests((requests) -> {
+			requests.requestMatchers("/sign-up").permitAll();
+			requests.anyRequest().authenticated();
+		})
+
+				.formLogin((form) -> form.loginPage("/login").permitAll().loginProcessingUrl("/login-form"))
 				.logout((logout) -> logout.permitAll()).build();
-			
-	}		
+
+	}
+
 	@Bean
 	public UserDetailsService users() {
-		UserDetails user = User.builder().username("user@gmail.com").password(passwordEncoder().encode("user"))
-				.build();
-		UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("admin"))
-				.build();
-		return new InMemoryUserDetailsManager(user, admin);
+		UserDetails user = User.builder().username("user@gmail.com").password(passwordEncoder().encode("user")).build();
+		return new InMemoryUserDetailsManager(user);
 	}
 
 	@Bean
