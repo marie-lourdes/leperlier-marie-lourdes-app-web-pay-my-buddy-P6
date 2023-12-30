@@ -23,7 +23,6 @@ public  class UserApp {
 	@Email
 	@Column(name="email", unique=true)
 	private String email;
-	private Long id;
 	
 	@Column(name="first_name")
 	private String firstName;
