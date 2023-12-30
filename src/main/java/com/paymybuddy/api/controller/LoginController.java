@@ -18,7 +18,7 @@ public class LoginController {
 		return "login";
 	}
 	
-	@PostMapping("/login-form")//traitement formulaire
+	@PostMapping("/login-form")//traitement formulaire et generation token avec JWT
 	public ModelAndView loginForm() {
 		return new ModelAndView("redirect:/");	
 	}
