@@ -12,12 +12,14 @@ public class WebSecurity {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// ajoutez les roles
-		return http.authorizeHttpRequests((requests) -> {
+		http.authorizeHttpRequests((requests) -> {
 			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers("/transactions").hasRole("ADMIN");
 			requests.requestMatchers("/home").hasRole("USER");
 			requests.anyRequest().authenticated();
 		}).formLogin((form) -> form.loginPage("/login").permitAll().loginProcessingUrl("/login-form"))//traitement formulaire
-				.logout((logout) -> logout.permitAll()).build();
+				.logout((logout) -> logout.permitAll());
+		
+		return http.build();
 	}
 }
