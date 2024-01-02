@@ -1,0 +1,13 @@
+@charset "UTF-8";
+input{
+	border-radius:5px ;
+	border: 2px slategrey solid;
+}
+input[type="submit"]{
+	width:40px;
+	height: 20px;
+	
+}
+div{
+	background-color: blue;
+}
