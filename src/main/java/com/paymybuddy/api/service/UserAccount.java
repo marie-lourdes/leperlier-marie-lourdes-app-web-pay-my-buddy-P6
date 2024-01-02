@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.DTO.UserMapper;
 import com.paymybuddy.api.domain.model.UserApp;
-import com.paymybuddy.api.repository.IUserAppDTORepository;
+import com.paymybuddy.api.repository.IUserRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -16,7 +16,7 @@ import jakarta.transaction.Transactional;
 public class UserAccount {
 
 	@Autowired
-	private IUserAppDTORepository userAppDTORepository;
+	private IUserRepository userAppDTORepository;
 
 	@Autowired
 	private UserMapper mapper;
