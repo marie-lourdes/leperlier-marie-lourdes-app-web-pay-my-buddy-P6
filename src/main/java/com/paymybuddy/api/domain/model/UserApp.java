@@ -54,4 +54,14 @@ public  class UserApp {
 	          name = "role_id")) 
 	private List<Role> roles;
 
+	public UserApp (){}
+	
+	public UserApp (String email,String password,List<Role> roles){
+		this.email= email;
+		this.password=password;
+		this.roles=roles;
+	
+	}
+	
+	
 }

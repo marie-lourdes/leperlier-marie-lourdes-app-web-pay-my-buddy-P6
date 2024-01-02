@@ -1,5 +1,11 @@
 package com.paymybuddy.api.domain.DTO;
 
-public class UserLoginDTO {
+import java.util.List;
 
+import com.paymybuddy.api.domain.model.Role;
+
+public class UserLoginDTO {
+	private String email;
+	private String password;
+	private List<Role> roles;
 }

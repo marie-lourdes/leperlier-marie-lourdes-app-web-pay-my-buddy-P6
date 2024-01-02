@@ -29,7 +29,7 @@ public class AuthenticationUserDetailService implements UserDetailsService{
 		public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 			UserApp userDTO = userAccountService.getUserByEmail(email);
 			
-			return new User(userDTO.getFirstName()+userDTO.getLastName(), userDTO.getPassword(), getGrantedAuthorities(userDTO.getRoles()));
+			return new User(userDTO.getEmail(), userDTO.getPassword(), getGrantedAuthorities(userDTO.getRoles()));
 		}
 
 		private List<GrantedAuthority> getGrantedAuthorities(List<Role> role) {
