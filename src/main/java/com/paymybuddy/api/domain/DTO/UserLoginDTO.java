@@ -8,7 +8,18 @@ import lombok.Data;
 
 @Data
 public class UserLoginDTO {
+
 	private String email;
 	private String password;
 	private List<Role> roles;
+
+	public UserLoginDTO() {
+	}
+
+	public UserLoginDTO(String email, String password, List<Role> roles) {
+		this.email = email;
+		this.password = password;
+		this.roles = roles;
+
+	}
 }
