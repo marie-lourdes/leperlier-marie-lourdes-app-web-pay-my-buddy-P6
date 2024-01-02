@@ -8,7 +8,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurity {
+public class WebSecurity  {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// ajoutez les roles
@@ -17,7 +17,7 @@ public class WebSecurity {
 			requests.requestMatchers("/transactions").hasRole("ADMIN");
 			requests.requestMatchers("/home").hasRole("USER");
 			requests.anyRequest().authenticated();
-		}).formLogin((form) -> form.loginPage("/login").loginProcessingUrl("/login").permitAll())//traitement formulaire
+		}).formLogin((form) -> form.loginPage("/login").permitAll())//traitement formulaire
 				.logout((logout) -> logout.permitAll());
 		
 		return http.build();
