@@ -15,13 +15,15 @@ import org.springframework.stereotype.Service;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IUserAppDTORepository;
 
-/*@Service
-public class AuthenticationUserDetailService implements UserDetailsService{
+@Service
+public class AuthenticationUserDetailService/* implements UserDetailsService*/{
 	
 		@Autowired
 		private IUserAppDTORepository userAppDTORepository;
+		
+		
 
-		@Override
+		/*@Override
 		public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 			UserApp userDTO = userAppDTORepository.findByEmail(email);
 			
@@ -32,6 +34,6 @@ public class AuthenticationUserDetailService implements UserDetailsService{
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
 			return authorities;
-		}
+		}*/
 	
-}*/
+}
