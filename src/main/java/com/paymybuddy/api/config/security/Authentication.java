@@ -1,8 +1,5 @@
 package com.paymybuddy.api.config.security;
 
-import org.springframework.context.annotation.Configuration;
-
-
 /*@Autowired
 private AuthenticationUserDetailService authentificationService;*/
 

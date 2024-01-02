@@ -12,28 +12,26 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.api.domain.model.Role;
 import com.paymybuddy.api.domain.model.UserApp;
-import com.paymybuddy.api.repository.IUserAppDTORepository;
 
 @Service
-public class AuthenticationUserDetailService/* implements UserDetailsService*/{
+public class AuthenticationUserDetailService implements UserDetailsService{
 	
 		@Autowired
-		private IUserAppDTORepository userAppDTORepository;
+		private UserAccount userAccountService;
 		
-		
-
-		/*@Override
+		@Override
 		public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-			UserApp userDTO = userAppDTORepository.findByEmail(email);
+			UserApp userDTO = userAccountService.getUserByEmail(email);
 			
-			return new User(userDTO.getUsername(), userDTO.getPassword(), getGrantedAuthorities(userDTO.getRole()));
+			return new User(userDTO.getFirstName()+userDTO.getLastName(), userDTO.getPassword(), getGrantedAuthorities(userDTO.getRoles()));
 		}
 
-		private List<GrantedAuthority> getGrantedAuthorities(String role) {
+		private List<GrantedAuthority> getGrantedAuthorities(List<Role> role) {
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-			authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+			role.forEach(roleUser->authorities.add(new SimpleGrantedAuthority("ROLE_" + role)));		
 			return authorities;
-		}*/
+		}
 	
 }
