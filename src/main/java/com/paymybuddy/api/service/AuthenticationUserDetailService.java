@@ -1,6 +1,7 @@
 package com.paymybuddy.api.service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Service;
 import com.paymybuddy.api.domain.model.Role;
 import com.paymybuddy.api.domain.model.UserApp;
 
+import jakarta.transaction.Transactional;
+
+@Transactional
 @Service
 public class AuthenticationUserDetailService implements UserDetailsService{
 	

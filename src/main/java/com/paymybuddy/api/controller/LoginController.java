@@ -18,10 +18,10 @@ public class LoginController {
 		return "login";
 	}
 	
-	@PostMapping("/login-form")//traitement formulaire et generation token avec JWT
+	/*@PostMapping("/login")//traitement formulaire et generation token avec JWT
 	public ModelAndView loginForm() {
 		return new ModelAndView("redirect:/");	
-	}
+	}*/
 	
 	@GetMapping("/home")//
 	public String  getHomePage() {

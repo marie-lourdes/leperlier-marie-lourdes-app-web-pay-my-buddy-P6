@@ -17,7 +17,7 @@ public class WebSecurity {
 			requests.requestMatchers("/transactions").hasRole("ADMIN");
 			requests.requestMatchers("/home").hasRole("USER");
 			requests.anyRequest().authenticated();
-		}).formLogin((form) -> form.loginPage("/login").permitAll().loginProcessingUrl("/login-form"))//traitement formulaire
+		}).formLogin((form) -> form.loginPage("/login").loginProcessingUrl("/login").permitAll())//traitement formulaire
 				.logout((logout) -> logout.permitAll());
 		
 		return http.build();

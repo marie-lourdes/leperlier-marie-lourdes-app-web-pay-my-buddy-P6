@@ -11,8 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.paymybuddy.api.service.AuthenticationUserDetailService;
 
-
-
 @Configuration
 @EnableWebSecurity
 public class Authentication {
