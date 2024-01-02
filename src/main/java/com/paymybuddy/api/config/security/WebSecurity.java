@@ -16,9 +16,12 @@ public class WebSecurity  {
 			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers("/transactions").hasRole("ADMIN");
 			requests.requestMatchers("/").permitAll();
+			requests.requestMatchers("/login").rememberMe();
 			requests.anyRequest().authenticated();
-		}).formLogin((form) -> form.loginPage("/login").permitAll())
+			
+		}).formLogin((form) -> form.loginPage("/login").permitAll().defaultSuccessUrl("/account/home"))
 				.logout((logout) -> logout.permitAll());
+				
 		
 		return http.build();
 	}

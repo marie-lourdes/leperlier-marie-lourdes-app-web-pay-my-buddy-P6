@@ -23,7 +23,7 @@ public class LoginController {
 		return new ModelAndView("redirect:/");	
 	}*/
 	
-	@GetMapping("/home")//
+	@GetMapping("/account/home")
 	public String  getHomePage() {
 		return "home";
 	}
