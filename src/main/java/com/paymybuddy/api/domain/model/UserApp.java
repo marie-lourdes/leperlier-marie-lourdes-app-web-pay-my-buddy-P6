@@ -20,48 +20,41 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="user_app")
-public  class UserApp {
+@Table(name = "user_app")
+public class UserApp {
 	private final String REGEX_P = "^(.+)@(\\S+)$";
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Pattern( regexp = REGEX_P)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Pattern(regexp = REGEX_P)
 	@Email
-	@Column(name="email", unique=true)
+	@Column(name = "email", unique = true)
 	private String email;
-	
-	@Column(name="first_name")
+
+	@Column(name = "first_name")
 	private String firstName;
-	
-	@Column(name="last_name")
+
+	@Column(name = "last_name")
 	private String lastName;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
-	
-	@OneToMany	( cascade = CascadeType.ALL, 
-			   orphanRemoval = true, 
-			   fetch = FetchType.EAGER)
-	@JoinColumn(name="user_contact_id")
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_contact_id")
 	private List<UserApp> contacts;
-	
+
 	@ManyToMany
-	@JoinTable( 
-	        name = "user_app_role", 
-	        joinColumns = @JoinColumn(
-	          name = "user_id"), 
-	        inverseJoinColumns = @JoinColumn(
-	          name = "role_id")) 
+	@JoinTable(name = "user_app_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
 
-	public UserApp (){}
-	
-	public UserApp (String email,String password,List<Role> roles){
-		this.email= email;
-		this.password=password;
-		this.roles=roles;
-	
+	public UserApp() {
 	}
-	
-	
+
+	public UserApp(String email, String password, List<Role> roles) {
+		this.email = email;
+		this.password = password;
+		this.roles = roles;
+
+	}
+
 }

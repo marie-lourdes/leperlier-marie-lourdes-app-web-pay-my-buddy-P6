@@ -14,5 +14,7 @@ public class UserMapper {
 		String email = user.getEmail();
 		String password = user.getPassword();
 		List<Role> roles = user.getRoles();
+		
+		return new UserLoginDTO (email,password,roles);
 	}
 }
