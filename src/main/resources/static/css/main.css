@@ -1,13 +1,62 @@
 @charset "UTF-8";
-input{
+
+body {
+	min-height: 100vh;
+	font-family:Verdana, Arial, sans-serif;
+}
+
+.container {
+	margin:auto 0;
+	width: auto;
+}
+
+header, main {
+	display: flex;
+	flex-direction: column;		
+	align-items: center;
+	justify-content: space-around;
+}
+
+header {
+	 background:#3E3B3D;
+	 min-height: 5vh;
+	 padding: 5px;
+	 color: white;
+	 font-weight: bold;
+}
+
+nav {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 4vh;
+   
+}
+
+main {	
+    justify-content: space-around;
+    min-height: 89vh; 
+}
+
+.button-styled, input {
 	border-radius:5px ;
-	border: 2px slategrey solid;
+	color: white;	
 }
-input[type="submit"]{
-	width:40px;
-	height: 20px;
-	
+
+.button-styled, input[type="submit"]{
+	font-weight: bold;
 }
-div{
-	background-color: blue;
+
+input {
+	 appearance: none;	
+	 font-family:Helvetica, Arial, sans-serif;
+	 font-size: 12px;
 }
+
+input[type="submit"] {
+	padding:5px 30px;	
+	background-color: #2145D8;
+	border:0;
+}
+
+

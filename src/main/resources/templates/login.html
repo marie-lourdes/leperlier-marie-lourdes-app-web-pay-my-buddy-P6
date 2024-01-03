@@ -3,26 +3,37 @@
     <head>
 		<meta charset="UTF-8">
         <title>Login</title>
-        <link th:href="@{/css/main.css}" rel="stylesheet" />
-        <link th:href="@{/css/login.css}" rel="stylesheet" />
+        <link th:href="@{css/main.css}" rel="stylesheet" />
+        <link th:href="@{css/login.css}" rel="stylesheet" />
     </head>
     <body>
-        <div th:if="${param.error}">
+		<header>
+			<nav> Pay My Buddy</nav>
+		</header>
+		<div class="container">
+			 <div th:if="${param.error}">
             Invalid email and password.
         </div>
         <div th:if="${param.logout}">
             You have been logged out.
         </div>
-        <form th:action="@{/login}" method="post">
-            <div><label> User Name : <input  type="email" name="username" placeholder="Email"/> </label></div>
-            <div><label> Password: <input type="password" name="password" placeholder="Password"/> </label></div>
-            <div class="check-remember">
-                <input type="checkbox" id="remember" name="remember-me">
-                <label for="remember">
-                    Remember Me
-                </label>
-            </div>
-            <div><input type="submit" value="Sign In"/></div>
-        </form>
+        <main>
+			<form th:action="@{/login}" method="post">
+				<div class="button-styled button-home">
+					 Pay My Buddy
+				</div>
+	            <div class="login-field"><label> <input  type="email" name="username" placeholder="Email"/> </label></div>
+	            <div class="login-field"><label> <input type="password" name="password" placeholder="Password"/> </label></div>
+	            <div class="check-remember">
+	                <input type="checkbox" id="remember" name="remember-me">
+	                <label for="remember">
+	                    Remember Me
+	                </label>
+	            </div>
+	            <div class="button-styled"><input type="submit" value="login" /></div>				
+            </form>
+		</main> 
+       
+		</div>    
     </body>
 </html>
