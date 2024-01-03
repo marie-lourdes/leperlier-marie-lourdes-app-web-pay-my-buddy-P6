@@ -27,7 +27,7 @@ public class WebSecurity {
 			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers("/transactions").hasRole("ADMIN");
 			// requests.requestMatchers("/login").rememberMe();
-			requests.anyRequest().authenticated().anyRequest();
+			requests.anyRequest().authenticated();
 
 		}).rememberMe((remember) -> {
 			remember.rememberMeServices(rememberMeServices(authentificationService));
@@ -46,9 +46,10 @@ public class WebSecurity {
 	@Bean
 	RememberMeServices rememberMeServices(UserDetailsService userDetailsService) {
 		RememberMeTokenAlgorithm encodingAlgorithm = RememberMeTokenAlgorithm.SHA256;
-		TokenBasedRememberMeServices rememberMe = new TokenBasedRememberMeServices("tokensecret", userDetailsService,
+		TokenBasedRememberMeServices rememberMe = new TokenBasedRememberMeServices("key89745&secretet&trestreslongetunique&", userDetailsService,
 				encodingAlgorithm);
-		rememberMe.setMatchingAlgorithm(RememberMeTokenAlgorithm.MD5);
+		rememberMe.setMatchingAlgorithm(RememberMeTokenAlgorithm.SHA256);
 		return rememberMe;
 	}
+
 }
