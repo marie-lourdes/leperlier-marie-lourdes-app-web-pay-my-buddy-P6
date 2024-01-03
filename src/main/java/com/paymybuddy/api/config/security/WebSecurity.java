@@ -24,6 +24,7 @@ public class WebSecurity {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// ajoutez les roles
 		http.authorizeHttpRequests((requests) -> {
+			requests.requestMatchers("/css/**").permitAll();
 			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers("/transactions").hasRole("ADMIN");
 			// requests.requestMatchers("/login").rememberMe();
