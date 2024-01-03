@@ -12,39 +12,38 @@
 			<nav> Pay My Buddy</nav>
 		</header>
 		<div class="container">
-			 <div th:if="${param.error}">
-            Invalid email and password.
-        </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
-        <main>
-			<form th:action="@{/login}" method="post">
-				<div class="button-styled button-home">
-					 Pay My Buddy
-				</div>
-	            <div class="login-field">
-						<div class="login-field--fontawesome">
-							<i class="fa-regular fa-envelope"></i>
-						<input  type="email" name="username" placeholder="Email"/>
-						</div>	
+			<div th:if="${param.error}">
+	            Invalid email and password.
+	        </div>
+	        <div th:if="${param.logout}">
+	            You have been logged out.
+	        </div>
+	        <main>
+				<form th:action="@{/login}" method="post">
+					<div class="button-styled button-home">
+						 Pay My Buddy
 					</div>
-	            <div class="login-field">
-						<div class="login-field--fontawesome">
-						<i class="fa-solid fa-asterisk"></i> 
-						<input type="password" name="password" placeholder="Password"/> 
+		            <div class="login-field">
+							<div class="login-field--fontawesome">
+								<i class="fa-regular fa-envelope"></i>
+							<input  type="email" name="username" placeholder="Email"/>
+							</div>	
 						</div>
-					</div>
-	            <div class="check-remember">
-	                <input type="checkbox" id="remember" name="remember-me">
-	                <label for="remember">
-	                    Remember Me
-	                </label>
-	            </div>
-	            <div class="button-styled"><input type="submit" value="login" /></div>				
-            </form>
-		</main> 
-       
+		            <div class="login-field">
+							<div class="login-field--fontawesome">
+							<i class="fa-solid fa-asterisk"></i> 
+							<input type="password" name="password" placeholder="Password"/> 
+							</div>
+						</div>
+		            <div class="check-remember">
+		                <input type="checkbox" id="remember" name="remember-me">
+		                <label for="remember">
+		                    Remember Me
+		                </label>
+		            </div>
+		            <div class="button-styled"><input type="submit" value="Login" /></div>				
+	            </form>
+			</main>   
 		</div>    
     </body>
 </html>
