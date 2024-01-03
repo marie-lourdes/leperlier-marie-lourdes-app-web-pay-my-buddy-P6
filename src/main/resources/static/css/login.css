@@ -24,6 +24,7 @@
 	
 form, .login-field{
 	  border: 2px rgba(213,215,222,0.5) solid;
+	  border-radius: 8px;
 }
 
 form {
