@@ -38,6 +38,9 @@ main {
     min-height: 89vh; 
 }
 
+a {
+	text-decoration: none;
+}
 .button-styled, input {
 	border-radius:5px ;
 	color: white;	

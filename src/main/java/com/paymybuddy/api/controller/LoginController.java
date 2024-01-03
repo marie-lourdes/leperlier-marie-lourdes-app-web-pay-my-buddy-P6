@@ -27,4 +27,8 @@ public class LoginController {
 	public String  getHomePage() {
 		return "home";
 	}
+	@GetMapping("/*")//
+	public String  getPage404() {
+		return "page404";
+	}
 }

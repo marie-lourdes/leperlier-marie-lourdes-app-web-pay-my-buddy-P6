@@ -16,7 +16,7 @@ import com.paymybuddy.api.service.AuthenticationUserDetailService;
 @Configuration
 @EnableWebSecurity
 public class WebSecurity {
-	
+
 	@Autowired
 	private AuthenticationUserDetailService authentificationService;
 
@@ -24,7 +24,7 @@ public class WebSecurity {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// ajoutez les roles
 		http.authorizeHttpRequests((requests) -> {
-		
+
 			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers("/transactions").hasRole("ADMIN");
 			requests.requestMatchers("/css/**").permitAll();
@@ -34,12 +34,11 @@ public class WebSecurity {
 		}).rememberMe((remember) -> {
 			remember.rememberMeServices(rememberMeServices(authentificationService));
 			remember.useSecureCookie(true);
-		})
-		.formLogin((form) -> form.loginPage("/login").permitAll().defaultSuccessUrl("/account/home"))
-		.logout((logout) -> {
-			logout.permitAll();
-			logout.deleteCookies("JSESSIONID");
-		});
+		}).formLogin((form) -> form.loginPage("/login").permitAll().defaultSuccessUrl("/account/home"))
+				.logout((logout) -> {
+					logout.permitAll();
+					logout.deleteCookies("JSESSIONID");
+				});
 
 		return http.build();
 
@@ -48,8 +47,8 @@ public class WebSecurity {
 	@Bean
 	RememberMeServices rememberMeServices(UserDetailsService userDetailsService) {
 		RememberMeTokenAlgorithm encodingAlgorithm = RememberMeTokenAlgorithm.SHA256;
-		TokenBasedRememberMeServices rememberMe = new TokenBasedRememberMeServices("key89745&secretet&trestreslongetunique&", userDetailsService,
-				encodingAlgorithm);
+		TokenBasedRememberMeServices rememberMe = new TokenBasedRememberMeServices(
+				"key89745&secretet&trestreslongetunique&", userDetailsService, encodingAlgorithm);
 		rememberMe.setMatchingAlgorithm(RememberMeTokenAlgorithm.SHA256);
 		return rememberMe;
 	}
