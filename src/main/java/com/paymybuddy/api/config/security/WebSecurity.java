@@ -25,9 +25,9 @@ public class WebSecurity {
 		// ajoutez les roles
 		http.authorizeHttpRequests((requests) -> {
 		
-			//requests.requestMatchers("/sign-up").permitAll();
+			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers("/transactions").hasRole("ADMIN");
-			requests.requestMatchers("/css/*").permitAll();
+			requests.requestMatchers("/css/**").permitAll();
 			// requests.requestMatchers("/login").rememberMe();
 			requests.anyRequest().authenticated();
 
