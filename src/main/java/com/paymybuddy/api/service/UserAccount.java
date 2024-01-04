@@ -28,6 +28,7 @@ public class UserAccount {
 	public UserLoginDTO getUserByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
 		UserLoginDTO userDTO = mapper.UserToDTO(user);
+		System.out.println(userDTO );
 		return userDTO;
 	}
 }
