@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+		<meta charset="UTF-8">
+        <title>Login</title>
+        <link th:href="@{css/main.css}" rel="stylesheet" />
+        <link th:href="@{css/login.css}" rel="stylesheet" />
+        <link th:href="@{css/page404.css}" rel="stylesheet" />
+         <script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}" crossorigin="anonymous}"></script>
+    </head>
+    <body>
+		<header>
+			<nav> Pay My Buddy</nav>
+		</header>
+		<div class="container">
+	        <main class="main main--404">
+			<a th:href="@{/account/home}"><div class="button-styled button-home button-home--404">
+						 Pay My Buddy
+					</div></a>
+					<div class="text-404">
+						Oups,page 404! 
+					</div>        
+			</main>   
+		</div>    
+    </body>
+</html>

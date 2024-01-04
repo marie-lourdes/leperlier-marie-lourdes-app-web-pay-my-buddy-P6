@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+main.main--404{
+	justify-content: center;
+}
+
+.button-home.button-home--404 {
+	margin-bottom:15vh;
+}
+
+.text-404{
+	font-size: 3rem;
+} 
