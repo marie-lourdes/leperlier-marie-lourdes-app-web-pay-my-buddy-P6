@@ -20,9 +20,14 @@ public class Role {
 	private Integer id;
 	
 	@Column(name="role_name")
-	private String roleName;
+	private String rolename;
 	
 	@ManyToMany(mappedBy="roles")	
 	private List<UserApp>users;
 
+	@Override
+	public String toString() {
+		return "Role{" + "id:" + id+  ", roleName:"
+				+ rolename +  '}';
+	}
 }

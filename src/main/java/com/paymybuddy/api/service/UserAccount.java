@@ -16,17 +16,17 @@ import jakarta.transaction.Transactional;
 public class UserAccount {
 
 	@Autowired
-	private IUserRepository userAppDTORepository;
+	private IUserRepository userRepository;
 
 	@Autowired
 	private UserMapper mapper;
 
 	public UserApp createUser(UserApp userApp) {
-		return userAppDTORepository.save(userApp);
+		return userRepository.save(userApp);
 	}
 
 	public UserLoginDTO getUserByEmail(String email) {
-		UserApp user = userAppDTORepository.findByEmail(email);
+		UserApp user = userRepository.findByEmail(email);
 		UserLoginDTO userDTO = mapper.UserToDTO(user);
 		return userDTO;
 	}

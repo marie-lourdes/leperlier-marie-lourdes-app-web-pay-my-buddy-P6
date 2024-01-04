@@ -20,6 +20,11 @@ public class UserLoginDTO {
 		this.email = email;
 		this.password = password;
 		this.roles = roles;
-
+	}
+	
+	@Override
+	public String toString() {
+		return "UserLoginDTO{" + "email:" + email+  ", password:"
+				+ password + ", roles:" + roles + '}';
 	}
 }

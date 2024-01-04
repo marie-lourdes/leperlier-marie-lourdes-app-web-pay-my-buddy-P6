@@ -56,5 +56,10 @@ public class UserApp {
 		this.roles = roles;
 
 	}
-
+	
+	@Override
+	public String toString() {
+		return "UserApp{" + "email:" + email+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", password:"
+				+ password + ", contacts:" + contacts+ ", roles:" + roles + '}';
+	}
 }

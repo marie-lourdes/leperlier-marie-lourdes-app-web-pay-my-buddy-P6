@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.paymybuddy.api.domain.model.Role;
 
 public interface IRoleRepository extends JpaRepository<Role,Integer> {
-	public Role findByName(String name);
+	public Role findByRolename(String name);
 
 }

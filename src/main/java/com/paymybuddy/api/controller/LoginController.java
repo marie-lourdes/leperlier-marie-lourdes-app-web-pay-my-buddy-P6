@@ -2,8 +2,6 @@ package com.paymybuddy.api.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
@@ -27,8 +25,9 @@ public class LoginController {
 	public String  getHomePage() {
 		return "home";
 	}
-	@GetMapping("/*")//
-	public String  getPage404() {
-		return "page404";
+	
+	@GetMapping("/error")
+	public String  getPage404() {	   
+		return "error";
 	}
 }
