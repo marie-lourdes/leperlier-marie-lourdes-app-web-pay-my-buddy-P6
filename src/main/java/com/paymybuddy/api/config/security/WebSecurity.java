@@ -18,28 +18,24 @@ import com.paymybuddy.api.service.AuthenticationUserDetailService;
 public class WebSecurity {
 
 	@Autowired
-	private AuthenticationUserDetailService authentificationService;
+	private AuthenticationUserDetailService authenticationService;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		// ajoutez les roles
 		http.authorizeHttpRequests((requests) -> {
-
-			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers("/transactions").hasRole("ADMIN");
+			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers("/css/**").permitAll();
-			// requests.requestMatchers("/login").rememberMe();
 			requests.anyRequest().authenticated();
 
 		}).rememberMe((remember) -> {
-			remember.rememberMeServices(rememberMeServices(authentificationService));
+			remember.rememberMeServices(rememberMeServices(authenticationService));
 			remember.useSecureCookie(true);
-		}).formLogin((form) -> form.loginPage("/login").permitAll().defaultSuccessUrl("/account/home"))
-				.logout((logout) -> {
-					logout.logoutSuccessUrl("/logout");
-					logout.permitAll();
-					logout.deleteCookies("JSESSIONID");
-				});
+		}).formLogin(form -> form.loginPage("/login").permitAll())
+		.logout((logout) -> {
+			logout.logoutSuccessUrl("/logout-success");
+			logout.deleteCookies("JSESSIONID");
+		});
 
 		return http.build();
 
