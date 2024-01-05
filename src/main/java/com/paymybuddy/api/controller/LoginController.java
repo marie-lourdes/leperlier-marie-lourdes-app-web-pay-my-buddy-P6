@@ -15,6 +15,11 @@ public class LoginController {
 	public String getLoginPage() {
 		return "login";
 	}
+	
+	@GetMapping("/logout") //
+	public String getLogoutPage() {
+		return "logout";
+	}
 
 	/*
 	 * @PostMapping("/login")//traitement formulaire et generation token avec JWT

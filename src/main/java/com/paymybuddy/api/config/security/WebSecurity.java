@@ -36,6 +36,7 @@ public class WebSecurity {
 			remember.useSecureCookie(true);
 		}).formLogin((form) -> form.loginPage("/login").permitAll().defaultSuccessUrl("/account/home"))
 				.logout((logout) -> {
+					logout.logoutSuccessUrl("/logout");
 					logout.permitAll();
 					logout.deleteCookies("JSESSIONID");
 				});
