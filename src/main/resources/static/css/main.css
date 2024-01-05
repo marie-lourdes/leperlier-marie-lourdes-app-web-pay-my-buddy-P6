@@ -13,10 +13,13 @@ header, main {
 }
 
 header {	
-	 min-height: 20vh;
-	 padding: 5px;
+	 min-height: 20.5vh;
 	 width: 100%;
+	 box-sizing: border-box;
+}
 
+.header--height {
+	min-height: 5vh;
 }
 
 .title-header {
@@ -28,6 +31,8 @@ header {
     color: white;
 	font-weight: bold;
 	width: 100%;
+	padding: 14px;
+    box-sizing: border-box;
    
 }
 

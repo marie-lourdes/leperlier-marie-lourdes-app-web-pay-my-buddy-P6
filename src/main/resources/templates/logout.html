@@ -1,36 +1,38 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<header>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link th:href="@{/css/main.css}" rel="stylesheet" />
+	</head>
+	<body>
+		<header>
 			<div class="title-header"> Pay My Buddy</div>	
-			<div class="nav-bar">
-				<a href="/account/home">
-					 <div class="button-styled button-home">
-							Pay My Buddy
-					 </div>
-				</a>
-				<nav> 
-					<ul>
-						<li><a>Home</a></li>
-						<li><a>Transfer</a></li>
-						<li><a>Profil</a></li>
-						<li><a>Contact</a></li>
-						<li><a>Log off</a></li>
-						<li><a>Sign up</a></li>
-					</ul>
-				</nav>
-			</div>		
+				<div class="nav-bar">
+					<a th:href="@{/account/home}">
+						 <div class="button-styled button-home">
+								Pay My Buddy
+						 </div>
+					</a>
+					<nav> 
+						<ul>
+							<li><a th:href="@{/account/home}">Home</a></li>
+							<li><a>Transfer</a></li>
+							<li><a>Profil</a></li>
+							<li><a>Contact</a></li>
+							<li><a th:href="@{/logout}">Log off</a></li>
+							<li><a th:href="@{/sign-up}">Sign up</a></li>
+						</ul>
+					</nav>
+				</div>
+						
 		</header>
 		<div class="container">
 			<main>
-				<form th:action="@{/logout}" method="post">
-					<div class="button-styled"><input type="submit" value="Log off" /></div>	
-				</form>
-			</main>
-			</div>
-</body>
+					<form th:action="@{/logout}" method="post">
+						<div class="button-styled"><input type="submit" value="Log off" /></div>	
+					</form>
+				</main>			
+		</div>
+	</body>
 </html>
