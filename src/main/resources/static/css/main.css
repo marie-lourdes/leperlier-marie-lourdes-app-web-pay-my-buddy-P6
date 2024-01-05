@@ -78,7 +78,15 @@ main.main--error{
 	margin-bottom:15vh;
 }
 
-.text-error{
+.text-error, .text-welcome{
 	font-size: 3rem;
 } 
 
+.text-welcome{
+	color: rgb(111,174,75);
+}
+
+.fontawesome-styled {
+	font-size: 3rem;
+	color: #000;
+}
