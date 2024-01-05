@@ -41,6 +41,12 @@ main {
 a {
 	text-decoration: none;
 }
+
+.button-home {
+	background-image: linear-gradient(to right,rgb(111,174,75),rgb(133,215,88));
+		padding: 10px 15px;
+}
+
 .button-styled, input {
 	border-radius:5px ;
 	color: white;	
@@ -62,4 +68,17 @@ input[type="submit"] {
 	border:0;
 }
 
+/*css pages erreur*/
+
+main.main--error{
+	justify-content: center;
+}
+
+.button-home.button-home--error {
+	margin-bottom:15vh;
+}
+
+.text-error{
+	font-size: 3rem;
+} 
 
