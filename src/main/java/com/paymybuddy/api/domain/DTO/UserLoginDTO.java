@@ -2,7 +2,7 @@ package com.paymybuddy.api.domain.DTO;
 
 import java.util.List;
 
-import com.paymybuddy.api.domain.model.Role;
+
 
 import lombok.Data;
 
@@ -11,20 +11,20 @@ public class UserLoginDTO {
 
 	private String email;
 	private String password;
-	private List<Role> roles;
+	private String role;
 
 	public UserLoginDTO() {
 	}
 
-	public UserLoginDTO(String email, String password, List<Role> roles) {
+	public UserLoginDTO(String email, String password, String role) {
 		this.email = email;
 		this.password = password;
-		this.roles = roles;
+		this.role = role;
 	}
 	
 	@Override
 	public String toString() {
 		return "UserLoginDTO{" + "email:" + email+  ", password:"
-				+ password + ", roles:" + roles + '}';
+				+ password + ", role:" + role + '}';
 	}
 }

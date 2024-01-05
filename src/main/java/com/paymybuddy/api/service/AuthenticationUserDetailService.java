@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
-import com.paymybuddy.api.domain.model.Role;
+
 
 import jakarta.transaction.Transactional;
 
@@ -28,12 +28,12 @@ public class AuthenticationUserDetailService implements UserDetailsService{
 		public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 			UserLoginDTO userDTO =userAccountService.getUserByEmail(email);
 			
-			return new User(userDTO.getEmail(), userDTO.getPassword(), getGrantedAuthorities(userDTO.getRoles()));
+			return new User(userDTO.getEmail(), userDTO.getPassword(), getGrantedAuthorities(userDTO.getRole()));
 		}
 
-		private List<GrantedAuthority> getGrantedAuthorities(List<Role> role) {
+		private List<GrantedAuthority> getGrantedAuthorities(String role) {
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-			role.forEach(roleUser->authorities.add(new SimpleGrantedAuthority("ROLE_" + role)));		
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + role));		
 			return authorities;
 		}
 	

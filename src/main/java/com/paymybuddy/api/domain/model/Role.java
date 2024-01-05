@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Data
+/*@Data
 @Entity
 @Table(name="role_name")
 public class Role {
@@ -30,4 +30,4 @@ public class Role {
 		return "Role{" + "id:" + id+  ", roleName:"
 				+ rolename +  '}';
 	}
-}
+}*/

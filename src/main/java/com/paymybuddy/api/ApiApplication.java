@@ -20,7 +20,7 @@ public class ApiApplication implements CommandLineRunner {
 	
      @Override
 	public  void run (String...args) {
-    	 userAccount.getUserByEmail("testuser2@gmail.com");
+    	 userAccount.getUserByEmail("testuser1@gmail.com");
     	
 	}
 }

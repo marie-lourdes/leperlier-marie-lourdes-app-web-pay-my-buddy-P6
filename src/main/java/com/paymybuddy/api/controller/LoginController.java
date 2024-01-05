@@ -29,7 +29,7 @@ public class LoginController {
 
 	@GetMapping("/transactions")
 	public String getTransactionPage() {
-		return"home";
+		return "transactions";
 	}
 	
 	/*@GetMapping("/error")

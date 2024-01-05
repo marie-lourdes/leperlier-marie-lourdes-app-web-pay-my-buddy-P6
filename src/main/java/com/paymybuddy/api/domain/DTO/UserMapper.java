@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.paymybuddy.api.domain.model.Role;
+
 import com.paymybuddy.api.domain.model.UserApp;
 
 @Component
@@ -13,8 +13,8 @@ public class UserMapper {
 
 		String email = user.getEmail();
 		String password = user.getPassword();
-		List<Role> roles = user.getRoles();
+	    String role = user.getRole();
 		
-		return new UserLoginDTO (email,password,roles);
+		return new UserLoginDTO (email,password,role);
 	}
 }

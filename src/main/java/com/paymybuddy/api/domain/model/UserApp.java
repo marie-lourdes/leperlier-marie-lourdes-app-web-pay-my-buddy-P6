@@ -43,23 +43,21 @@ public class UserApp {
 	@JoinColumn(name = "user_contact_id")
 	private List<UserApp> contacts;
 
-	@ManyToMany
-	@JoinTable(name = "user_app_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private List<Role> roles;
+	private String role;
 
 	public UserApp() {
 	}
 
-	public UserApp(String email, String password, List<Role> roles) {
+	public UserApp(String email, String password, String role) {
 		this.email = email;
 		this.password = password;
-		this.roles = roles;
+		this.role = role;
 
 	}
 	
 	@Override
 	public String toString() {
 		return "UserApp{" + "email:" + email+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", password:"
-				+ password + ", contacts:" + contacts+ ", roles:" + roles + '}';
+				+ password + ", contacts:" + contacts+ ", role:" + role + '}';
 	}
 }
