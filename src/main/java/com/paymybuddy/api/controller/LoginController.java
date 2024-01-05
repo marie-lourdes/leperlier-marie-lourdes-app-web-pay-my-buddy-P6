@@ -21,6 +21,10 @@ public class LoginController {
 		return "logout";
 	}
 
+	@GetMapping("/logout-success")
+	public String getLogoutSucessPage() {
+		return "logout-success";
+	}
 	/*
 	 * @PostMapping("/login")//traitement formulaire et generation token avec JWT
 	 * public ModelAndView loginForm() { return new ModelAndView("redirect:/"); }

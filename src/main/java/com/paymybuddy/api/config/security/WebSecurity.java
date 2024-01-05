@@ -25,6 +25,7 @@ public class WebSecurity {
 		http.authorizeHttpRequests((requests) -> {
 			requests.requestMatchers("/transactions").hasRole("ADMIN");
 			requests.requestMatchers("/sign-up").permitAll();
+			requests.requestMatchers("/logout-success").permitAll();
 			requests.requestMatchers("/css/**").permitAll();
 			requests.anyRequest().authenticated();
 
