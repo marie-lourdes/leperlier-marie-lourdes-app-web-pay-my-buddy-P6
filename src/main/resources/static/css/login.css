@@ -67,6 +67,11 @@ input[type="checkbox"] {
     width: 100%;
     display: none;
 }
+
 input[type="checkbox"]:checked ~ .fa-solid.fa-check{  
 	display:block;
 } 
+
+.login-error {
+	color: #E32D14;
+}
