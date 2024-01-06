@@ -23,7 +23,7 @@ public class WebSecurity {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((requests) -> {
-			requests.requestMatchers("/transactions").hasRole("ADMIN");
+			requests.requestMatchers("/transactions-billing").hasRole("ADMIN");
 			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers("/logout-success").permitAll();
 			requests.requestMatchers("/css/**").permitAll();

@@ -5,12 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginController {
-
-	@GetMapping("/sign-up")
-	public String getSignUpPage() {
-		return "sign-up";
-	}
-
+	
 	@GetMapping("/login") //
 	public String getLoginPage() {
 		return "login";
@@ -22,7 +17,7 @@ public class LoginController {
 	}
 
 	@GetMapping("/logout-success")
-	public String getLogoutSucessPage() {
+	public String getLogoutSuccessPage() {
 		return "logout-success";
 	}
 	/*
@@ -30,38 +25,6 @@ public class LoginController {
 	 * public ModelAndView loginForm() { return new ModelAndView("redirect:/"); }
 	 */
 
-	@GetMapping("/account/home")
-	public String getHomePage() {
-		return "home";
-	}
-
-
-	@GetMapping("/transactions")
-	public String getTransactionPage() {
-		return "transactions";
-	}
 	
-	/*@GetMapping("/error")
-	public String getPage404() {
-		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-
-		if (status != null) {
-			Integer statusCode = Integer.valueOf(status.toString());
-
-			if (statusCode == HttpStatus.NOT_FOUND.value()) {
-				return "error-404";
-			} else if (statusCode == HttpStatus.FORBIDDEN.value()) {
-				return "error-403";
-			}
-
-		}
-
-		return "error";
-	}*/
-
-	@GetMapping("/error")
-	public String getPage404() {
-		return "error";
-	}
 	
 }
