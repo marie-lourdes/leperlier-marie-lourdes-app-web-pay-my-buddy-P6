@@ -3,6 +3,7 @@ package com.paymybuddy.api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.DTO.UserMapper;
 import com.paymybuddy.api.domain.model.UserApp;
@@ -25,9 +26,16 @@ public class UserAccount {
 		return userRepository.save(userApp);
 	}
 
-	public UserLoginDTO getUserByEmail(String email) {
+	public UserLoginDTO getUserLoginByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
-		UserLoginDTO userDTO = mapper.UserToUserLoginDTO(user);
+		UserLoginDTO userLoginDTO = mapper.UserToUserLoginDTO(user);
+		System.out.println(userLoginDTO );
+		return userLoginDTO;
+	}
+	
+	public UserDTO getUserByEmail(String email) {
+		UserApp user = userRepository.findByEmail(email);
+		UserDTO userDTO = mapper.UserToUserDTO(user);
 		System.out.println(userDTO );
 		return userDTO;
 	}

@@ -17,4 +17,12 @@ public class UserMapper {
 		
 		return new UserLoginDTO (email,password,role);
 	}
+	
+	public UserDTO UserToUserDTO(UserApp user) {
+
+		String email = user.getEmail();
+	    String role = user.getRole();
+		
+		return new UserDTO (email,role);
+	}
 }
