@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 
-
 import jakarta.transaction.Transactional;
 
 @Transactional
@@ -28,7 +27,7 @@ public class AuthenticationUserDetailService implements UserDetailsService{
 		public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 			UserLoginDTO userDTO =userAccountService.getUserByEmail(email);
 		User	userdetails= new User(userDTO.getEmail(), userDTO.getPassword(), getGrantedAuthorities(userDTO.getRole()));
-		System.out.println(userdetails);
+		System.out.println(userdetails); // pour les test 
 			return userdetails;
 		}
 
