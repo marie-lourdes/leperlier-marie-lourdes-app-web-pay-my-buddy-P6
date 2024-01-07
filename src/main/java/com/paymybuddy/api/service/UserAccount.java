@@ -1,9 +1,12 @@
 package com.paymybuddy.api.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.api.domain.DTO.UserContactDTO;
 import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.DTO.UserMapper;
@@ -26,7 +29,6 @@ public class UserAccount {
 	private UserMapper mapper;
 
 	public UserApp createUser(UserApp userApp) {
-	
 		String userPassword =userApp.getPassword();
 		String userPasswordEncoded=passwordEncoder.encode(userPassword);
 		userApp.setPassword(userPasswordEncoded);
@@ -45,5 +47,17 @@ public class UserAccount {
 		UserDTO userDTO = mapper.UserToUserDTO(user);
 		System.out.println(userDTO );
 		return userDTO;
+	}
+	
+	public void addUserContact(String  email,String  emailContact) {
+		UserApp userContact = userRepository.findByEmail(emailContact);
+		//UserContactDTO userContactDTO = mapper.UserToUserContactDTO(userContact);
+		UserApp user = userRepository.findByEmail(email);
+		List<UserApp> contactsOfUser=user.getContacts();
+		contactsOfUser.add(userContact );
+		user.setContacts(contactsOfUser);
+		System.out.println(userContact);
+		System.out.println(user);
+		userRepository.save(user);
 	}
 }

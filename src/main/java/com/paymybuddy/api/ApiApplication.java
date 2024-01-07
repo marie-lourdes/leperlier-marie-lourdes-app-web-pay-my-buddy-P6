@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.paymybuddy.api.domain.DTO.UserDTO;
+import com.paymybuddy.api.domain.DTO.UserContactDTO;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.service.UserAccount;
 
@@ -31,6 +31,7 @@ public class ApiApplication implements CommandLineRunner {
     	 userRegistered.setPassword("codesecrettest");
     	 userRegistered.setContacts(new ArrayList<UserApp>());
     	 userAccount.createUser(userRegistered);
+    	 userAccount.addUserContact("testuser3@gmail.com","testuser1@gmail.com");
     	 userAccount.getUserLoginByEmail("testuser3@gmail.com");
     	 
    
