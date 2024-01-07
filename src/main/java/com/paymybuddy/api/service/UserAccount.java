@@ -1,6 +1,7 @@
 package com.paymybuddy.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.api.domain.DTO.UserDTO;
@@ -15,7 +16,9 @@ import jakarta.transaction.Transactional;
 @Transactional
 @Service
 public class UserAccount {
-
+	
+	private BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+	
 	@Autowired
 	private IUserRepository userRepository;
 
@@ -23,6 +26,10 @@ public class UserAccount {
 	private UserMapper mapper;
 
 	public UserApp createUser(UserApp userApp) {
+	
+		String userPassword =userApp.getPassword();
+		String userPasswordEncoded=passwordEncoder.encode(userPassword);
+		userApp.setPassword(userPasswordEncoded);
 		return userRepository.save(userApp);
 	}
 

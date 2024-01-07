@@ -1,11 +1,14 @@
 package com.paymybuddy.api;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.paymybuddy.api.domain.DTO.UserLoginDTO;
+import com.paymybuddy.api.domain.DTO.UserDTO;
+import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.service.UserAccount;
 
 //@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
@@ -20,8 +23,18 @@ public class ApiApplication implements CommandLineRunner {
 	
      @Override
 	public  void run (String...args) {
-    	 userAccount.getUserLoginByEmail("testuser1@gmail.com");
+    	 //test userRegistered
+    	 UserApp userRegistered = new UserApp();
+    	 userRegistered.setFirstName("firstname3");
+    	 userRegistered.setLastName("lastname3");
+    	 userRegistered.setEmail("testuser3@gmail.com");
+    	 userRegistered.setPassword("codesecrettest");
+    	 userRegistered.setContacts(new ArrayList<UserApp>());
+    	 userAccount.createUser(userRegistered);
+    	 userAccount.getUserLoginByEmail("testuser3@gmail.com");
     	 
+   
+    	 userAccount.getUserLoginByEmail("testuser1@gmail.com");	 
      	 userAccount.getUserByEmail("testuser1@gmail.com");
     	
 	}

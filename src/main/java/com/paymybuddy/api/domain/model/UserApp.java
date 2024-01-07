@@ -24,7 +24,6 @@ import lombok.Data;
 public class UserApp {
 	private final String REGEX_P = "^(.+)@(\\S+)$";
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Pattern(regexp = REGEX_P)
 	@Email
 	@Column(name = "email", unique = true)
