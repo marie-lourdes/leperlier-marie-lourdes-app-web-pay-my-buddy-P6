@@ -1,5 +1,5 @@
 package com.paymybuddy.api.utils;
 
-public class MessageTestingAuthenticationService {
+public class MessageTestingAuthenticationService  implements MessageService{
 
 }
