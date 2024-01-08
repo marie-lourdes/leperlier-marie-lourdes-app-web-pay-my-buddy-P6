@@ -46,10 +46,11 @@ public class UserAccount /*implements IContactRepository*/ {
 		return userEmailAdress;		
 	}*/
 	
-	public void addUserContact(Contact contact,UserApp user) {
-		user.getContacts().add(contact);
+	public void addUserContact(Contact contact,String emailUser) {
+		UserApp user = userRepository.findByEmail(emailUser);
+		
 	   	contact.setUser(user);
-		 contactRepository.save(contact);
+	    contactRepository.save(contact);
 		
 	}
 	/*public  List<Contact> findByUser(String id){

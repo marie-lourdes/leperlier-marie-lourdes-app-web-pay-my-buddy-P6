@@ -29,25 +29,12 @@ public class ApiApplication implements CommandLineRunner {
      @Override
 	public  void run (String...args) {
     	 
-    	// List<Contact> contactsOfUser= userRegistered.getContacts();
     	Contact userContact = new Contact();
       	userContact.setIdContact("testuser1@gmail.com");
     	userContact.setFirstName("firstname1");
     	userContact.setLastName("lastname1");
-  
-    	//userContact.setUser(userRegistered);
- 		//contactsOfUser.add(userContact);
-       userAccount.addUserContact(userContact,userRegistered);
- userAccount.getUserEntityByEmail("testuser2@gmail.com");
-    // UserApp  user2=userRepository.findByEmail("testuser1@gmail.com");
- // System.out.println("user contact ajouté"+user2); 
-    	 
-    	 //test method repository avec @query JPA
-    	//userAccount.findByEmailAdress("testuser2@gmail.com") ;
-    	 
-   
-    	/* userAccount.getUserLoginByEmail("testuser1@gmail.com");	 */
-     	userAccount.getUserByEmail("testuser3@gmail.com");
+       userAccount.addUserContact(userContact,"testuser2@gmail.com");
+ 
     	
 	}
 }
