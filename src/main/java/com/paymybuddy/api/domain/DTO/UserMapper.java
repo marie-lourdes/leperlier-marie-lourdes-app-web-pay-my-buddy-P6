@@ -25,9 +25,9 @@ public class UserMapper {
 		return new UserDTO (email,role);
 	}
 
-	public UserContactDTO UserToUserContactDTO(UserApp user) {
+	/*public UserContactDTO UserToUserContactDTO(UserApp user) {
 		String email = user.getEmail();
 	  
 		return new UserContactDTO (email);
-	}
+	}*/
 }
