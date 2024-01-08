@@ -1,11 +1,10 @@
 package com.paymybuddy.api.domain.model;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
@@ -13,14 +12,14 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "user_app")
-public class UserApp {
+@Table(name = "contacts")
+public class Contact{
 	private final String REGEX_P = "^(.+)@(\\S+)$";
 	@Id
 	@Pattern(regexp = REGEX_P)
 	@Email
-	@Column(name = "email", unique = true)
-	private String email;
+	@Column(name = "id_contact", unique = true)
+	private String idContact;
 
 	@Column(name = "first_name")
 	private String firstName;
@@ -28,16 +27,12 @@ public class UserApp {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@Column(name = "password")
-	private String password;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private UserApp user;
 
-	@OneToMany(mappedBy="user")
-	private List<Contact> contacts;
-	
-	@Column(name = "role")
-	private String role;
 
-	public UserApp() {
+/*	public UserApp() {
 	}
 
 	public UserApp(String email, String password, String role) {
@@ -45,11 +40,11 @@ public class UserApp {
 		this.password = password;
 		this.role = role;
 
-	}
+	}*/
 	
-	@Override
+/*	@Override
 	public String toString() {
 		return "UserApp{" + "email:" + email+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", password:"
 				+ password + ", contacts:" + contacts+ ", role:" + role + '}';
-	}
+	}*/
 }
