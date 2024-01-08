@@ -1,9 +1,6 @@
 package com.paymybuddy.api.domain.DTO;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
-
 
 import com.paymybuddy.api.domain.model.UserApp;
 

@@ -1,8 +1,5 @@
 package com.paymybuddy.api.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -47,9 +44,9 @@ public class UserAccount /*implements IContactRepository*/ {
 	}*/
 	
 	public void addUserContact(Contact contact,String emailUser) {
-		UserApp user = userRepository.findByEmail(emailUser);
-		
+		UserApp user = userRepository.findByEmail(emailUser)	;
 	   	contact.setUser(user);
+	   //System.out.println(user.getContacts());	
 	    contactRepository.save(contact);
 		
 	}

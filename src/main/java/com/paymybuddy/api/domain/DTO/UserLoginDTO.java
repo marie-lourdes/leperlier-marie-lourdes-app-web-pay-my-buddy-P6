@@ -1,9 +1,5 @@
 package com.paymybuddy.api.domain.DTO;
 
-import java.util.List;
-
-
-
 import lombok.Data;
 
 @Data
