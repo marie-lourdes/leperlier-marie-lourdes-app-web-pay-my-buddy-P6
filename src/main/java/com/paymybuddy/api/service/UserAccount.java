@@ -56,6 +56,8 @@ public class UserAccount {
 		List<UserApp> contactsOfUser=user.getContacts();
 		contactsOfUser.add(userContact );
 		user.setContacts(contactsOfUser);
+		System.out.println("user contact"+userContact);
+		System.out.println("user :"+user);
 		userRepository.save(user);
 	}
 }
