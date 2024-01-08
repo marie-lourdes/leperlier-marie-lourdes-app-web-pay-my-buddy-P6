@@ -33,11 +33,14 @@ public class ApiApplication implements CommandLineRunner {
     	 userRegistered.setContacts(new ArrayList<UserApp>());
     	 userAccount.createUser(userRegistered);
     	userAccount.addUserContact("testuser1@gmail.com","testuser3@gmail.com");
-    	 userAccount.getUserLoginByEmail("testuser3@gmail.com");
+    	 userAccount.getUserEntityByEmail("testuser2@gmail.com");
+    	 
+    	 //test method repository avec @query JPA
+    	 userAccount.findByEmailAdress("testuser1@gmail.com") ;
     	 
    
-    	 userAccount.getUserLoginByEmail("testuser1@gmail.com");	 
-     	userAccount.getUserByEmail("testuser1@gmail.com");
+    	/* userAccount.getUserLoginByEmail("testuser1@gmail.com");	 
+     	userAccount.getUserByEmail("testuser2@gmail.com");*/
     	
 	}
 }

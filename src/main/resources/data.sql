@@ -42,7 +42,7 @@ INSERT INTO user_app(email, first_name, last_name, password , role) VALUES
 ("testuser1@gmail.com", "firstnameuser1", "lastnameuser1", "$2a$10$EGu79kZqYg4X8Ol99UCsBONWuUjL0M1ZgbjcUKBzR2VFeo50tIRbK","ADMIN");
 
 INSERT INTO user_app(email, first_name, last_name, password, user_contact_id,role) VALUES
-("testuser2@gmail.com", "firstnameuser1", "lastnameuser1", "$2a$10$loqM3iAxV3CxJJydEvsDK.Zq3H33VdV1vy5PmQsf7wFsTJRzWZeCG","testuser1@gmail.com","USER");
+("testuser2@gmail.com", "firstnameuser2", "lastnameuser2", "$2a$10$loqM3iAxV3CxJJydEvsDK.Zq3H33VdV1vy5PmQsf7wFsTJRzWZeCG","testuser1@gmail.com","USER");
 
 INSERT INTO account(user_id, soldes,TYPE ) VALUES
 ("testuser1@gmail.com", 45075.00, "buddy account");

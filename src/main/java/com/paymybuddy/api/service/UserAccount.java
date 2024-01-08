@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,19 +28,38 @@ public class UserAccount {
 
 	@Autowired
 	private UserMapper mapper;
-
-	public UserApp createUser(String email) {
-		UserApp userFound = userRepository.findByEmail(email).get();
-		return userFound;
-	}
 	
-	public UserApp getUser(UserApp userApp) {
+	public UserApp createUser(UserApp userApp) {
 		String userPassword =userApp.getPassword();
 		String userPasswordEncoded=passwordEncoder.encode(userPassword);
 		userApp.setPassword(userPasswordEncoded);
 		return userRepository.save(userApp);
 	}
+	
+	public void findByEmailAdress(String  email) {
+	
+		UserApp userEmailAdress =userRepository.findByEmailAddress(email);
+		System.out.println("userEmailAdress"+userEmailAdress);
+	}
 
+	public void addUserContact(String  email,String  emailContact) {
+		UserApp userContact = userRepository.findByEmail(emailContact).get();
+		//UserContactDTO userContactDTO = mapper.UserToUserContactDTO(userContact);
+		UserApp user = userRepository.findByEmail(email).get();
+		List<UserApp> contactsOfUser=user.getContacts();
+		contactsOfUser.add(userContact );
+		user.setContacts(contactsOfUser);
+		System.out.println("user contact"+userContact);
+		System.out.println("user :"+user);
+		userRepository.save(user);
+	}
+	
+	public UserApp getUserEntityByEmail(String email) {
+		UserApp userFound = userRepository.findByEmail(email).get();
+		System.out.println("user entity By email :"+userFound);
+		return userFound;
+	}
+	
 	public UserLoginDTO getUserLoginByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email).get();
 		UserLoginDTO userLoginDTO = mapper.UserToUserLoginDTO(user);
@@ -54,15 +74,5 @@ public class UserAccount {
 		return userDTO;
 	}
 	
-	public void addUserContact(String  email,String  emailContact) {
-		UserApp userContact = userRepository.findByEmail(emailContact).get();
-		//UserContactDTO userContactDTO = mapper.UserToUserContactDTO(userContact);
-		UserApp user = userRepository.findByEmail(email).get();
-		List<UserApp> contactsOfUser=user.getContacts();
-		contactsOfUser.add(userContact );
-		user.setContacts(contactsOfUser);
-		System.out.println("user contact"+userContact);
-		System.out.println("user :"+user);
-		userRepository.save(user);
-	}
+
 }
