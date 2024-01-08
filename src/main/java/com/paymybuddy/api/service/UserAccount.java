@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.DTO.UserMapper;
+import com.paymybuddy.api.domain.model.Contact;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IUserRepository;
 
@@ -36,15 +37,15 @@ public class UserAccount {
 		return userRepository.save(userApp);
 	}
 	
-	public UserApp  findByEmailAdress(String  email) {
+	public Contact  findByEmailAdress(String  email) {
 	
-		UserApp userEmailAdress =userRepository.findByEmailAddress(email);
+		Contact  userEmailAdress =userRepository.findByEmailAddress(email);
 		System.out.println("userEmailAdress"+userEmailAdress);
 		return userEmailAdress;
 		
 	}
 	
-	public void addUserContact(List<UserApp>contacts, String email) {
+	public void addUserContact(List<Contact>contacts, String email) {
 
 	    userRepository.setContacts( contacts, email );
 		

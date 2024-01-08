@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.paymybuddy.api.domain.model.Contact;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.service.UserAccount;
 
@@ -30,9 +31,9 @@ public class ApiApplication implements CommandLineRunner {
     	 userRegistered.setEmail("testuser3@gmail.com");
     	 userRegistered.setPassword("codesecrettest");
     	 userRegistered.setRole("USER");
-    	 userRegistered.setContacts(new ArrayList<UserApp>());
+    	 userRegistered.setContacts(new ArrayList<Contact>());
     	 userAccount.createUser(userRegistered);
-    	 List<UserApp> contactsOfUser= userRegistered.getContacts();
+    	 List<Contact> contactsOfUser= userRegistered.getContacts();
  		contactsOfUser.add(userAccount.findByEmailAdress("testuser1@gmail.com") );
     	userAccount.addUserContact(contactsOfUser,"testuser3@gmail.com");
     	 userAccount.getUserEntityByEmail("testuser2@gmail.com");
