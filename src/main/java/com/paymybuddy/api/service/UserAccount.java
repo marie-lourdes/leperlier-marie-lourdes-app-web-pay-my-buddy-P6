@@ -36,13 +36,21 @@ public class UserAccount {
 		return userRepository.save(userApp);
 	}
 	
-	public void findByEmailAdress(String  email) {
+	public UserApp  findByEmailAdress(String  email) {
 	
 		UserApp userEmailAdress =userRepository.findByEmailAddress(email);
 		System.out.println("userEmailAdress"+userEmailAdress);
+		return userEmailAdress;
+		
+	}
+	
+	public void addUserContact(List<UserApp>contacts, String email) {
+
+	    userRepository.setContacts( contacts, email );
+		
 	}
 
-	public void addUserContact(String  email,String  emailContact) {
+	/*public void addUserContact(String  email,String  emailContact) {
 		UserApp userContact = userRepository.findByEmail(emailContact).get();
 		//UserContactDTO userContactDTO = mapper.UserToUserContactDTO(userContact);
 		UserApp user = userRepository.findByEmail(email).get();
@@ -52,7 +60,7 @@ public class UserAccount {
 		System.out.println("user contact"+userContact);
 		System.out.println("user :"+user);
 		userRepository.save(user);
-	}
+	}*/
 	
 	public UserApp getUserEntityByEmail(String email) {
 		UserApp userFound = userRepository.findByEmail(email).get();

@@ -1,13 +1,13 @@
 package com.paymybuddy.api;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.paymybuddy.api.domain.DTO.UserContactDTO;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.service.UserAccount;
 
@@ -32,7 +32,9 @@ public class ApiApplication implements CommandLineRunner {
     	 userRegistered.setRole("USER");
     	 userRegistered.setContacts(new ArrayList<UserApp>());
     	 userAccount.createUser(userRegistered);
-    	userAccount.addUserContact("testuser1@gmail.com","testuser3@gmail.com");
+    	 List<UserApp> contactsOfUser= userRegistered.getContacts();
+ 		contactsOfUser.add(userAccount.findByEmailAdress("testuser1@gmail.com") );
+    	userAccount.addUserContact(contactsOfUser,"testuser3@gmail.com");
     	 userAccount.getUserEntityByEmail("testuser2@gmail.com");
     	 
     	 //test method repository avec @query JPA
