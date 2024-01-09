@@ -16,15 +16,16 @@ import com.paymybuddy.api.service.UserAccount;
 
 @Controller
 public class UserAccountController {
-	@Autowired
-	private UserAccount userAccount ;
 	
-	private String principalUser;
+	@Autowired
+	private UserAccount userAccountService ;
+	
+	private String principalUsername;
 
 	@GetMapping("/")
 	@ResponseBody
-	public void getPrincipalUsername(Principal principal) {
-		this.principalUser= principal.getName();
+	public void getPrincipalUserInfo(Principal principal) {
+		this.principalUsername= principal.getName();
 	}
 	
 	@GetMapping("/sign-up")
@@ -46,12 +47,12 @@ public class UserAccountController {
 	
 	@GetMapping("/account/contact")// enpoint template contacts
 	public String getUserContact(Model model) {
-		List<ContactDTO> allContact = userAccount.findUserContacts(this.getPrincipalUser());
+		List<ContactDTO> allContact = userAccountService.findUserContacts(this.getPrincipalUsername());
 		model.addAttribute("contacts", allContact );
 		return "contacts";
 	}
 
-	public String getPrincipalUser() {
-		return this.principalUser;
+	public String getPrincipalUsername() {
+		return this. principalUsername;
 	}
 }
