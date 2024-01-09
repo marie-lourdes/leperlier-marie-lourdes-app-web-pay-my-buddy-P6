@@ -32,7 +32,7 @@ public class UserAccountController {
 	@ResponseBody
 	public ResponseEntity<List<ContactDTO>> getUserContact(@PathVariable  String id ) {
 		List<ContactDTO> allContact = userAccount.findUserContacts(id); 
-		return  ResponseEntity.status(HttpStatus.CREATED).body(allContact );
+		return  ResponseEntity.status(HttpStatus.OK).body(allContact );
 	}
 
 }
