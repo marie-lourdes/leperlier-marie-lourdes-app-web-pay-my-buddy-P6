@@ -28,7 +28,7 @@ public class UserAccountController {
 		return "home";
 	}
 	
-	@GetMapping("/account/{id}/contact")
+	@GetMapping("/account/{id}/contact")// enpoint ressource contact , pas endpoint template!
 	@ResponseBody
 	public ResponseEntity<List<ContactDTO>> getUserContact(@PathVariable  String id ) {
 		List<ContactDTO> allContact = userAccount.findUserContacts(id); 
