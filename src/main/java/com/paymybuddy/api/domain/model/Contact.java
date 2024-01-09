@@ -28,6 +28,7 @@ public class Contact{
 	private String lastName;
 
 	@ManyToOne
+	@JoinColumn(name="user_id")
 	private UserApp user;
 
 

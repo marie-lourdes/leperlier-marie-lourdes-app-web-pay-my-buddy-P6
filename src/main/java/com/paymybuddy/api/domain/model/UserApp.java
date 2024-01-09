@@ -34,7 +34,7 @@ public class UserApp {
 	@Column(name = "password")
 	private String password;
 
-	@OneToMany
+	@OneToMany(mappedBy="user")
 	private List<Contact> contacts;
 	
 	@Column(name = "role")
