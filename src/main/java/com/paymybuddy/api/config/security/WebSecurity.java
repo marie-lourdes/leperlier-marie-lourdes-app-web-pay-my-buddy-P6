@@ -30,7 +30,8 @@ public class WebSecurity {
 			requests.requestMatchers("/css/**").permitAll();
 			requests.anyRequest().authenticated();
 
-		}).rememberMe((remember) -> {
+		})
+		.rememberMe((remember) -> {
 			remember.rememberMeServices(rememberMeServices(authenticationService));
 			remember.useSecureCookie(true);
 		})
