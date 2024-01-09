@@ -1,10 +1,11 @@
 package com.paymybuddy.api.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.DTO.UserMapper;
 import com.paymybuddy.api.domain.model.Contact;
@@ -46,10 +47,11 @@ public class UserAccount /*implements IContactRepository*/ {
 	public void addUserContact(Contact contact,String emailUser) {
 		UserApp user = userRepository.findByEmail(emailUser)	;
 	   	contact.setUser(user);
-	   //System.out.println(user.getContacts());	
 	    contactRepository.save(contact);
 		
 	}
+	
+	
 	/*public  List<Contact> findByUser(String id){
 		
 	}*/
@@ -69,10 +71,11 @@ public class UserAccount /*implements IContactRepository*/ {
 		userRepository.save(user);
 	}*/
 	
-	public UserApp getUserEntityByEmail(String email) {
+	public UserApp  getUserEntityByEmail(String email) {
 		UserApp userFound = userRepository.findByEmail(email);
-		System.out.println("user entity By email :"+userFound);
-		return userFound;
+	
+
+		return  userFound;
 	}
 	
 	public UserLoginDTO getUserLoginByEmail(String email) {
@@ -82,12 +85,12 @@ public class UserAccount /*implements IContactRepository*/ {
 		return userLoginDTO;
 	}
 	
-	public UserDTO getUserByEmail(String email) {
+	/*public UserDTO getUserByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
 		UserDTO userDTO = mapper.UserToUserDTO(user);
 		System.out.println(userDTO );
 		return userDTO;
-	}
+	}*/
 	
 
 }
