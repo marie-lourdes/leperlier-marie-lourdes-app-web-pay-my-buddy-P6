@@ -1,5 +1,6 @@
 package com.paymybuddy.api.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.paymybuddy.api.domain.DTO.ContactDTO;
 import com.paymybuddy.api.service.AuthenticationUserDetailService;
@@ -16,7 +18,15 @@ import com.paymybuddy.api.service.UserAccount;
 public class UserAccountController {
 	@Autowired
 	private UserAccount userAccount ;
+	
+	private String principalUser;
 
+	@GetMapping("/")
+	@ResponseBody
+	public void getPrincipalUsername(Principal principal) {
+		this.principalUser= principal.getName();
+	}
+	
 	@GetMapping("/sign-up")
 	public String getSignUpPage() {
 		return "sign-up";
@@ -34,10 +44,14 @@ public class UserAccountController {
 		return  ResponseEntity.status(HttpStatus.OK).body(allContact );
 	}*/
 	
-	@GetMapping("/account/{id}/contact")// enpoint template contacts
-	public String getUserContact(Model model,@PathVariable  String id ) {
-		List<ContactDTO> allContact = userAccount.findUserContacts(id);
+	@GetMapping("/account/contact")// enpoint template contacts
+	public String getUserContact(Model model) {
+		List<ContactDTO> allContact = userAccount.findUserContacts(this.getPrincipalUser());
 		model.addAttribute("contacts", allContact );
 		return "contacts";
+	}
+
+	public String getPrincipalUser() {
+		return this.principalUser;
 	}
 }
