@@ -1,11 +1,14 @@
 package com.paymybuddy.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.api.domain.DTO.ContactDTO;
+import com.paymybuddy.api.domain.DTO.ContactMapper;
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.DTO.UserMapper;
 import com.paymybuddy.api.domain.model.Contact;
@@ -30,6 +33,8 @@ public class UserAccount {
 
 	@Autowired
 	private UserMapper mapper;
+	@Autowired
+	private ContactMapper mapperContact;
 
 	public UserApp createUser(UserApp userApp) {
 		String userPassword = userApp.getPassword();
@@ -51,10 +56,25 @@ public class UserAccount {
 
 	}
 
-	public List<Contact> findUserContacts() {
+	public List<ContactDTO> findUserContacts(String emailUser) {
 		Iterable<Contact> allcontacts = contactRepository.findAll();
-		System.out.println(allcontacts );//provoque des erreurs stackoverflow
-		return (List<Contact>) allcontacts;
+		List<ContactDTO> contacts =new ArrayList<ContactDTO>();
+		
+		allcontacts.forEach(contact->{
+			ContactDTO contactAdded = mapperContact.contactToContactDTO(contact);
+			if(contact.getUser().getEmail().equals(emailUser)) {
+				//System.out.println("contact of user "+contact.getUser().getFirstName()+":"+contact.getIdContact() );
+				contactAdded.setIdContact(contact.getIdContact());
+				contactAdded.setFirstName(contact.getFirstName());
+				contactAdded.setLastName(contact.getLastName());
+				 contacts.add(contactAdded) ;
+				
+			}
+			
+			
+			}) ;
+		//System.out.println(allcontacts );//provoque des erreurs stackoverflow
+		 return  contacts;
 	}
 
 	public UserLoginDTO getUserLoginByEmail(String email) {
