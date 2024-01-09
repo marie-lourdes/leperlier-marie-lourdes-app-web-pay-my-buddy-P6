@@ -42,9 +42,8 @@ public class Contact{
 
 	}*/
 	
-/*	@Override
+	/*@Override
 	public String toString() {
-		return "UserApp{" + "email:" + email+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", password:"
-				+ password + ", contacts:" + contacts+ ", role:" + role + '}';
+		return "UserApp{" + "email:" + idContact+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", user" + user+ '}';
 	}*/
 }
