@@ -17,7 +17,7 @@ import lombok.Data;
 @Table(name = "user_app")
 public class UserApp {
 	private final String REGEX_P = "^(.+)@(\\S+)$";
-	
+
 	@Id
 	@Pattern(regexp = REGEX_P)
 	@Email
@@ -33,34 +33,20 @@ public class UserApp {
 	@Column(name = "password")
 	private String password;
 
-	@OneToMany(mappedBy="user",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Contact> contacts;
-	
+
 	@Column(name = "role")
 	private String role;
 
-	public UserApp() {
-	}
-
-	public UserApp(String email, String password, String role) {
-		this.email = email;
-		this.password = password;
-		this.role = role;
-	}
-	
-	public  List<Contact>addContact(Contact contact) {
+	public List<Contact> addContact(Contact contact) {
 		this.contacts.add(contact);
 		return this.getContacts();
 	}
-	
-/*public void getContact() {
-		for(Contact contact : this.contacts) {
-			System.out.println(contact);
-		}
-	}*/
+
 	@Override
 	public String toString() {
-		return "UserApp{" + "email:" + email+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", password:"
-				+ password + ", contacts:" + contacts+ ", role:" + role + '}';
+		return "UserApp{" + "email:" + email + ", first name:'" + firstName + '\'' + ", last name:" + lastName
+				+ ", password:" + password + ", contacts:" + contacts + ", role:" + role + '}';
 	}
 }

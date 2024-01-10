@@ -31,19 +31,8 @@ public class Contact{
 	@JoinColumn(name="user_id")
 	private UserApp user;
 
-
-/*	public UserApp() {
-	}
-
-	public UserApp(String email, String password, String role) {
-		this.email = email;
-		this.password = password;
-		this.role = role;
-
-	}*/
-	
-	/*@Override
+	@Override
 	public String toString() {
-		return "UserApp{" + "email:" + idContact+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", user" + user+ '}';
-	}*/
+		return "UserApp{" + "email:" + idContact+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", user_" + user+ '}';
+	}
 }

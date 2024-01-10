@@ -1,5 +1,6 @@
 package com.paymybuddy.api.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,16 +45,24 @@ public class UserAccount {
 	}
 
 	public void addUserContact(String emailContact, String emailUser) {
-		UserApp user = userRepository.findByEmail(emailUser);
-		UserApp contact = userRepository.findByEmail(emailContact);
+		UserApp user = new UserApp();
+		UserApp contact = new UserApp();
 		Contact newUserContact = new Contact();
-		newUserContact.setIdContact(contact.getEmail());
-		newUserContact.setFirstName(contact.getFirstName());
-		newUserContact.setLastName(contact.getLastName());
-		newUserContact.setUser(user);
-		// contact.setUser(user);
+		try {
+			user = userRepository.findByEmail(emailUser);
+			contact = userRepository.findByEmail(emailContact);
+			if (contact == null) {
+				throw new NullPointerException("contact email " + emailContact + "not found");
+			} else {
+				newUserContact.setIdContact(contact.getEmail());
+				newUserContact.setFirstName(contact.getFirstName());
+				newUserContact.setLastName(contact.getLastName());
+				newUserContact.setUser(user);
+			}
+		} catch (Exception e) {
+			e.getMessage();
+		}
 		contactRepository.save(newUserContact);
-
 	}
 
 	public List<ContactDTO> findUserContacts(String emailUser) {
