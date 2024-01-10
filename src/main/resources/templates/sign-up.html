@@ -12,24 +12,34 @@
 		</header>
       <div class="container">
 	        <main>
-				<form th:action="@{/sign-up-form}" method="post">
+				<form th:action="@{/sign-up-form}" method="post" th:object="${user}">
 					<a th:href="@{/account/home}">
 					  <div class="button-styled button-home">
 								 Pay My Buddy
 					  </div>
 				    </a>
 		            <div class="login-field">
-							<div class="login-field--fontawesome">
-								<i class="fa-regular fa-envelope"></i>
-							<input  type="email" name="username" placeholder="Email"/>
-							</div>	
-						</div>
+						<div class="login-field--fontawesome">
+							<i class="fa-regular fa-envelope"></i>
+							<input th:field="*{email}"   type="email" name="username" placeholder="Email"/>
+						</div>	
+					</div>
 		            <div class="login-field">
 							<div class="login-field--fontawesome">
-							<i class="fa-solid fa-asterisk"></i> 
-							<input type="password" name="password" placeholder="Password"/> 
+							<input th:field="*{firstName}" type="text" name="firstname" placeholder="Firstname"/> 
 							</div>
+					</div>
+					  <div class="login-field">
+							<div class="login-field--fontawesome">
+							<input th:field="*{lastName}" type="text" name="lastname" placeholder="Lastname"/> 
+							</div>
+					</div>
+					<div class="login-field">
+						<div class="login-field--fontawesome">
+						  <i class="fa-solid fa-asterisk"></i> 
+						  <input th:field="*{password}" type="password" name="password" placeholder="Password"/> 
 						</div>
+					</div>
 		            <div class="button-styled"><input type="submit" value="Sign-Up" /></div>				
 	            </form>
 			</main>   

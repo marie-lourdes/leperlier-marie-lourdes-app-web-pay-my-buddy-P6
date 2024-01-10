@@ -44,6 +44,15 @@ public class UserAccount {
 		return userRepository.save(userApp);
 	}
 
+	public UserLoginDTO subscribeUser(UserApp userApp) {
+		String userPassword = userApp.getPassword();
+		String userPasswordEncoded = passwordEncoder.encode(userPassword);
+		userApp.setPassword(userPasswordEncoded);
+		UserLoginDTO userLoginDTO = mapper.UserToUserLoginDTO(userApp);
+		 userRepository.save(userApp);
+		 return userLoginDTO;
+	}
+	
 	public void addUserContact(String emailContact, String emailUser) {
 		UserApp user = new UserApp();
 		UserApp contact = new UserApp();
