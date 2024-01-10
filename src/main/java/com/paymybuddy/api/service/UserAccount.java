@@ -1,6 +1,5 @@
 package com.paymybuddy.api.service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.api.domain.DTO.ContactDTO;
 import com.paymybuddy.api.domain.DTO.ContactMapper;
+import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.DTO.UserMapper;
 import com.paymybuddy.api.domain.model.Contact;
@@ -93,12 +93,12 @@ public class UserAccount {
 		return userLoginDTO;
 	}
 
-	/*public UserDTO getUserByEmail(String email) {
+	public UserDTO getUserByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
 		UserDTO userDTO = mapper.UserToUserDTO(user);
-		System.out.println(userDTO );
+		
 		return userDTO;
-	}*/
+	}
 	
 
 }

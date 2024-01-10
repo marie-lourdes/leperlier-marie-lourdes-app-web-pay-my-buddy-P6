@@ -36,6 +36,7 @@ public class ApiApplication implements CommandLineRunner {
     	userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
     	//UserApp user= userAccount.getUserEntityByEmail("testuser3@gmail.com");
     	 userAccount.findUserContacts("testuser2@gmail.com");
+    	 
     	
     
     	//user.getContacts();

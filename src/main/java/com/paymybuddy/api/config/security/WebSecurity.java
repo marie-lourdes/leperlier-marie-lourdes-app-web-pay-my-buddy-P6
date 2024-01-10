@@ -35,7 +35,7 @@ public class WebSecurity {
 			remember.rememberMeServices(rememberMeServices(authenticationService));
 			remember.useSecureCookie(true);
 		})
-		.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+	//	.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))//empeche la redirection sur la page demandé apres authentification, session stateless
 		.formLogin(form -> form.loginPage("/login").permitAll())
 		.logout((logout) -> {
 			logout.logoutSuccessUrl("/logout-success");

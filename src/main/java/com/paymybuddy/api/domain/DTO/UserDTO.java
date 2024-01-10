@@ -9,21 +9,22 @@ import lombok.Data;
 @Data
 public class UserDTO {
 	private String email;
-	private String role;
+	private String firstName;
+	
 	private List<Contact> contacts;
 	
 	public UserDTO() {
 		
 	}
 	
-	public UserDTO(String email, String role,List<Contact> contacts) {
+	public UserDTO(String email,String firstName, List<Contact> contacts) {
 		this.email = email;
-		this.role = role;
+		this.firstName = firstName;
 		this.contacts=contacts;
 	}
 
 	@Override
 	public String toString() {
-		return "UserDTO{" + "email:" + email + ", role:" + role +", contacts:" + contacts + '}';
+		return "UserDTO{" + "email:" + email + ", firstName:" + firstName +", contacts:" + contacts + '}';
 	}
 }

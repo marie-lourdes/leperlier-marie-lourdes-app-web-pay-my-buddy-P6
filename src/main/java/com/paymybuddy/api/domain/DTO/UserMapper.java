@@ -20,10 +20,10 @@ public class UserMapper {
 	
 	public UserDTO UserToUserDTO(UserApp user) {
 		String email = user.getEmail();
-	    String role = user.getRole();	
+	    String firstName = user.getFirstName();	
 	    List<Contact>contacts = user.getContacts();	
 	    
-		return new UserDTO (email,role, contacts);
+		return new UserDTO (email, firstName, contacts);
 	}
 
 	/*public UserContactDTO UserToUserContactDTO(UserApp user) {
