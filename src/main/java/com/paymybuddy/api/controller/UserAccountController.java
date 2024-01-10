@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.paymybuddy.api.domain.DTO.ContactDTO;
 import com.paymybuddy.api.domain.DTO.UserDTO;
-import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.service.UserAccount;
 
@@ -27,42 +26,7 @@ public class UserAccountController {
 	@Autowired
 	private UserAccount userAccountService ;
 	
-	private String principalUsername;
 
-	/*-----------------Controller API------------------------------*/	
-	@GetMapping("/")
-	@ResponseBody
-	public void getPrincipalUserInfo(Principal principal) { 
-		this.principalUsername= principal.getName();	
-	}
-	
-	@GetMapping("/user/{id}")
-	@ResponseBody
-	public ResponseEntity<UserDTO>getHomePage( @PathVariable  String id) {
-		UserDTO userFoundById= new UserDTO();
-		userFoundById =userAccountService.getUserByEmail(id);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(userFoundById );
-	}
-	
-	/*@PostMapping("/user")
-	@ResponseBody
-	public ResponseEntity<UserApp>getHomePage( UserApp user) {
-		
-		UserApp userCreated =userAccountService.createUser(user);
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(userCreated );
-	}*/
-	
-	
-	/*@GetMapping("/account/{id}/contact")// enpoint ressource contact , pas endpoint template!
-	@ResponseBody
-	public ResponseEntity<List<ContactDTO>> getUserContact(@PathVariable  String id ) {
-		List<ContactDTO> allContact = userAccount.findUserContacts(id); 
-		return  ResponseEntity.status(HttpStatus.OK).body(allContact );
-	}*/
-
-	/*-----------------Controller web------------------------------*/
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@ModelAttribute UserApp user){
 		 userAccountService.createUser(user);
@@ -77,20 +41,17 @@ public class UserAccountController {
 	}
 	
 	@GetMapping("/account/home")
-	public String getHomePage( Model model) {
-		String principal = this.getPrincipalUsername();
-		model.addAttribute("principal",principal);
+	public String getHomePage( Model model, Principal principal) {
+	
+		model.addAttribute("principal",principal.getName());
 		return "home";
 	}
 	
 	@GetMapping("/account/contact")// enpoint template contacts
-	public String getUserContact(Model model) {
-		List<ContactDTO> allContact = userAccountService.findUserContacts(this.getPrincipalUsername());
+	public String getUserContact(Model model, Principal principal) {
+		List<ContactDTO> allContact = userAccountService.findUserContacts(principal.getName());
 		model.addAttribute("contacts", allContact );
 		return "contacts";
 	}
 
-	public String getPrincipalUsername() {
-		return this. principalUsername;
-	}
 }
