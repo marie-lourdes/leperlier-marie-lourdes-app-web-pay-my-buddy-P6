@@ -17,10 +17,8 @@ import lombok.Data;
 public class Contact{
 	private final String REGEX_P = "^(.+)@(\\S+)$";
 	@Id
-	@Pattern(regexp = REGEX_P)
 	@NotNull
-	@Email
-	@Column(name = "id_contact", unique = true)
+	@Pattern(regexp = REGEX_P)
 	private String idContact;
 
 	@NotNull

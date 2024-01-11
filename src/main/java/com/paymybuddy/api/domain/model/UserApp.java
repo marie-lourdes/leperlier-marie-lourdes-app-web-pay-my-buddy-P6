@@ -20,10 +20,8 @@ public class UserApp {
 	private final String REGEX_P = "^(.+)@(\\S+)[.](\\S+)$";
 
 	@Id
-	@Pattern(regexp = REGEX_P)
 	@NotNull
-	/*@Email
-	@Column(name = "email", unique = true)*/
+	@Pattern(regexp = REGEX_P)
 	private String email;
 
 	@NotNull
@@ -48,7 +46,7 @@ public class UserApp {
 		this.contacts.add(contact);
 		return this.getContacts();
 	}
-
+	
 	@Override
 	public String toString() {
 		return "UserApp{" + "email:" + email + ", first name:'" + firstName + '\'' + ", last name:" + lastName
