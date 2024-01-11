@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.paymybuddy.api.domain.model.BuddyAccount;
 import com.paymybuddy.api.domain.model.Contact;
-import com.paymybuddy.api.repository.IAccountRepository;
+import com.paymybuddy.api.repository.IBuddyAccountRepository;
 import com.paymybuddy.api.repository.IContactRepository;
 import com.paymybuddy.api.service.UserAccount;
 
@@ -22,7 +22,7 @@ public class ApiApplication implements CommandLineRunner {
 	IContactRepository contactRepository;
 	
 	@Autowired
-	IAccountRepository accountRepository;
+	IBuddyAccountRepository accountRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
