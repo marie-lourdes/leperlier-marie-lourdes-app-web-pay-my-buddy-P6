@@ -12,25 +12,23 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name = "account")
 public abstract class Account {
-	@Id
-	@NotNull
-	protected String id;
 
-	@NotNull
-	@Column(name = "user_id")
+	protected long id;
+
+	
 	protected String userId;
 
-	@NotNull
-	@Column(name = "solde")
 	protected double solde;
 	
-	@NotNull
-	@Column(name = "type")
+
 	protected String type;
 	
+	public Account(long id,String userId,double solde){
+		 this.id=id;
+			this.userId=userId;
+			 this.solde=solde;
+	}
 	@Override
 	public String toString() {
 		return "Account{" + "email:" + id+ ", userid:'" + userId + '\'' + ", solde:" + solde + ", type:" + type + '}';
