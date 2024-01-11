@@ -3,6 +3,8 @@ package com.paymybuddy.api.domain.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -14,8 +16,9 @@ public class BuddyAccount extends Account {
 	private long id;
 
 	@NotNull
-	@Column(name = "user_id")
-	private String userId;
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private UserApp user;
 
 	@NotNull
 	@Column(name = "solde")
@@ -28,9 +31,9 @@ public class BuddyAccount extends Account {
 	public BuddyAccount() {
 		super();
 	}
-	public BuddyAccount(String userId,double solde){
-		super(userId, solde);
-		this.userId=userId;
+	public BuddyAccount(UserApp user, double solde){
+		super(user, solde);
+		this.user=user;
 		this.solde=solde;
 	 }
 

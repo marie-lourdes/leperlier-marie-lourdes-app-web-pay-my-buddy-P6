@@ -5,9 +5,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.paymybuddy.api.domain.model.BankAccount;
 import com.paymybuddy.api.domain.model.BuddyAccount;
 import com.paymybuddy.api.domain.model.Contact;
+import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IBankAccountRepository;
 import com.paymybuddy.api.repository.IBuddyAccountRepository;
 import com.paymybuddy.api.repository.IContactRepository;
@@ -27,7 +27,7 @@ public class ApiApplication implements CommandLineRunner {
 	IBuddyAccountRepository accountRepository;
 	
 	@Autowired
-	IBankAccountRepository BankAccountRepository;
+	IBankAccountRepository bankAccountRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
@@ -35,9 +35,8 @@ public class ApiApplication implements CommandLineRunner {
 	
      @Override
 	public  void run (String...args) {
-    	BuddyAccount  accountApp = new BuddyAccount("testuser3@gmail.com",0.0);
-    	BankAccount  bankAccount = new BankAccount(100824,"testuser3@gmail.com",787378.0124);
-    	System.out.println(accountApp);
+    	
+    	
     	Contact userContact = new Contact();
       	userContact.setIdContact("testuser1@gmail.com");
     	userContact.setFirstName("firstname1");
@@ -47,8 +46,11 @@ public class ApiApplication implements CommandLineRunner {
     	userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
     	//UserApp user= userAccount.getUserEntityByEmail("testuser3@gmail.com");
     	 userAccount.findUserContacts("testuser2@gmail.com");
-    	 
-    	 accountRepository.save(accountApp);
-    	 BankAccountRepository.save()
+    	// UserApp userTest2=userAccount.getUserEntityByEmail("testuser3@gmail.com");
+     	//BuddyAccount  accountApp = new BuddyAccount(userTest2,0.0);
+     	//BankAccount  bankAccount = new BankAccount(100824,"testuser3@gmail.com",787378.0124);
+    	//System.out.println(accountApp);
+    	// accountRepository.save(accountApp);
+    	 //bankAccountRepository.save(bankAccount);
 	}
 }

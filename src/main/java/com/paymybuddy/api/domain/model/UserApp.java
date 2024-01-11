@@ -7,8 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -36,11 +36,17 @@ public class UserApp {
 	@Column(name = "password")
 	private String password;
 
+	@Column(name = "role")
+	private String role = "USER";
+	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Contact> contacts;
 
-	@Column(name = "role")
-	private String role = "USER";
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+	private BuddyAccount buddyAccount;
+	
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+	private BankAccount bankAccount;
 
 	public List<Contact> addContact(Contact contact) {
 		this.contacts.add(contact);

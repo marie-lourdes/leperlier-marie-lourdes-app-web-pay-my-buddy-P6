@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
     <head>
 		<meta charset="UTF-8">
-        <title>HomePage</title>
+        <title>Profil</title>
         <link th:href="@{/css/main.css}" rel="stylesheet" />
         <script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}" crossorigin="anonymous"></script>
     </head>
@@ -19,7 +19,7 @@
 					<ul>
 						<li><a th:href="@{/account/home}">Home</a></li>
 						<li><a>Transfer</a></li>
-						<li><a th:href= "@{/account/profil}">Profil</a></li>
+						<li><a>Profil</a></li>
 						<li><a th:href="@{/account/contact}">Contact</a></li>
 						<li><a th:href="@{/logout}">Log off</a></li>
 						<li><a th:href="@{/sign-up}">Sign up</a></li>
@@ -29,11 +29,15 @@
 		</header>
 		<div class="container">
 			<main>
-				 <div class="text-welcome" >
-					 <i class="fa-regular fa-face-smile fontawesome-styled"></i>
-	                  Welcome to Pay My Buddy application!
-	                  <span th:text="${principal}"> Prénom </span>
-	        </div>  
+				 <section>
+					<h1>Profil</h1>
+	           
+	                    <li> Firstname<span th:text="${user.firstName}"> Firstname </span></li> 
+	                    <li> Lastname<span th:text="${user.lastName}"> Lastname </span></li>
+	                    <li>Email<span th:text="${user.email}"> Email </span></li>
+	                     <li>Solde buddy compte <span > </span></li>
+	                     <li>Solde bank compte <span > </span></li>
+	        </section>  
 			</main>
 		</div>          
     </body>

@@ -53,5 +53,12 @@ public class UserAccountController {
 		model.addAttribute("contacts", allContact );
 		return "contacts";
 	}
+	
+	@GetMapping("/account/profil")// 
+	public String getProfilPage(Model model, Principal principal) {
+		UserApp user = userAccountService.getUserEntityByEmail(principal.getName());
+		model.addAttribute("user", user );
+		return "profil";
+	}
 
 }

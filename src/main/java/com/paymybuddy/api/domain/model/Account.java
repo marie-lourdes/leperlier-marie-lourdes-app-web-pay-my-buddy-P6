@@ -15,24 +15,24 @@ import lombok.Data;
 public abstract class Account {
 
 	private long id;
-	private String userId;
+	private UserApp user;
 	private double solde;
 	private String type;
 	
 	public Account(){}
 	
-	public Account(String userId,double solde){
-		this.userId=userId;
+	public Account(UserApp user,double solde){
+		this.user=user;
 		this.solde=solde;
 	}
 	
-	public Account(long id,String userId,double solde){
+	public Account(long id,UserApp user,double solde){
 		 this.id=id;
-		this.userId=userId;
+		this.user=user;
 		this.solde=solde;
 	}
 	@Override
 	public String toString() {
-		return "Account{" + "email:" + id+ ", userid:'" + userId + '\'' + ", solde:" + solde + ", type:" + type + '}';
+		return "Account{" + "email:" + id+ ", user:'" + user + '\'' + ", solde:" + solde + ", type:" + type + '}';
 	}
 }

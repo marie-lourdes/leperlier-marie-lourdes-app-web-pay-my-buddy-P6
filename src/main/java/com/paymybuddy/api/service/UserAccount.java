@@ -44,15 +44,6 @@ public class UserAccount {
 		return userRepository.save(userApp);
 	}
 
-	public UserLoginDTO subscribeUser(UserApp userApp) {
-		String userPassword = userApp.getPassword();
-		String userPasswordEncoded = passwordEncoder.encode(userPassword);
-		userApp.setPassword(userPasswordEncoded);
-		UserLoginDTO userLoginDTO = mapper.UserToUserLoginDTO(userApp);
-		 userRepository.save(userApp);
-		 return userLoginDTO;
-	}
-	
 	public void addUserContact(String emailContact, String emailUser) {
 		UserApp user = new UserApp();
 		UserApp contact = new UserApp();
@@ -85,11 +76,8 @@ public class UserAccount {
 				contactAdded.setIdContact(contact.getIdContact());
 				contactAdded.setFirstName(contact.getFirstName());
 				contactAdded.setLastName(contact.getLastName());
-				 contacts.add(contactAdded) ;
-				
-			}
-			
-			
+				contacts.add(contactAdded) ;		
+			}		
 			}) ;
 		//System.out.println(allcontacts );//provoque des erreurs stackoverflow
 		 return  contacts;
@@ -104,10 +92,12 @@ public class UserAccount {
 
 	public UserDTO getUserByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
-		UserDTO userDTO = mapper.UserToUserDTO(user);
-		
+		UserDTO userDTO = mapper.UserToUserDTO(user);	
 		return userDTO;
 	}
 	
-
+	public UserApp getUserEntityByEmail(String email) {
+		UserApp user = userRepository.findByEmail(email);	
+		return user;
+	}
 }
