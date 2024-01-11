@@ -17,18 +17,22 @@ import lombok.Data;
 public abstract class Account {
 	@Id
 	@NotNull
-	private String id;
+	protected String id;
 
 	@NotNull
 	@Column(name = "user_id")
-	private String firstName;
+	protected String userId;
 
 	@NotNull
 	@Column(name = "solde")
-	private double solde;
+	protected double solde;
 	
 	@NotNull
 	@Column(name = "type")
-	private String type;
+	protected String type;
 	
+	@Override
+	public String toString() {
+		return "Account{" + "email:" + id+ ", userid:'" + userId + '\'' + ", solde:" + solde + ", type:" + type + '}';
+	}
 }
