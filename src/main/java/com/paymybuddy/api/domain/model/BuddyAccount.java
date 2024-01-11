@@ -11,7 +11,6 @@ import jakarta.validation.constraints.NotNull;
 public class BuddyAccount extends Account {
 	
 	@Id
-	@NotNull
 	private long id;
 
 	@NotNull
@@ -20,7 +19,7 @@ public class BuddyAccount extends Account {
 
 	@NotNull
 	@Column(name = "solde")
-	private double solde;
+	private double solde=0.0;
 	
 	@NotNull
 	@Column(name = "type")
@@ -29,9 +28,8 @@ public class BuddyAccount extends Account {
 	public BuddyAccount() {
 		super();
 	}
-	public BuddyAccount(long id,String userId,double solde){
-		super( id, userId,solde);
-		this.id=id;
+	public BuddyAccount(String userId,double solde){
+		super(userId, solde);
 		this.userId=userId;
 		this.solde=solde;
 	 }

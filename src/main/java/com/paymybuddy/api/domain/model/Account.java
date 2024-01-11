@@ -21,6 +21,11 @@ public abstract class Account {
 	
 	public Account(){}
 	
+	public Account(String userId,double solde){
+		this.userId=userId;
+		this.solde=solde;
+	}
+	
 	public Account(long id,String userId,double solde){
 		 this.id=id;
 		this.userId=userId;

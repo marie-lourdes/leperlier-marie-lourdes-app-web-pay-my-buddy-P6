@@ -11,7 +11,6 @@ import jakarta.validation.constraints.NotNull;
 public class BankAccount extends Account{
 
 	@Id
-	@NotNull
 	private long id;
 
 	@NotNull
