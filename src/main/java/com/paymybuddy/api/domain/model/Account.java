@@ -11,12 +11,24 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
-/*@Data
+@Data
 @Entity
 @Table(name = "account")
 public abstract class Account {
 	@Id
+	@NotNull
+	private String id;
 
-	@Column(name = "email", unique = true)
-	private String email;
-}*/
+	@NotNull
+	@Column(name = "user_id")
+	private String firstName;
+
+	@NotNull
+	@Column(name = "solde")
+	private double solde;
+	
+	@NotNull
+	@Column(name = "type")
+	private String type;
+	
+}
