@@ -94,7 +94,7 @@ input {
 	 font-size: 1rem;
 }
 
-input[type="submit"] {
+.button-form{
 	padding:10px 50px;	
 	background-color: #2145D8;
 	border:0;

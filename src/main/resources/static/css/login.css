@@ -72,6 +72,11 @@ input[type="checkbox"]:checked ~ .fa-solid.fa-check{
 	display:block;
 } 
 
+.link-sign-up{
+	color: #2145D8;
+   text-decoration: underline;
+}
+
 .login-error {
 	color: #E32D14;
 }
