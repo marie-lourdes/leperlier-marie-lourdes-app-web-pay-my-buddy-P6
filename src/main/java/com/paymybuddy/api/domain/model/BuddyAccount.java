@@ -18,7 +18,7 @@ public class BuddyAccount extends Account {
 	@NotNull
 	@OneToOne
 	@JoinColumn(name="user_id")
-	private UserApp user;
+	private String user;
 
 	@NotNull
 	@Column(name = "balance")
@@ -31,7 +31,7 @@ public class BuddyAccount extends Account {
 	public BuddyAccount() {
 		super();
 	}
-	public BuddyAccount(UserApp user, double balance){
+	public BuddyAccount(String user, double balance){
 		super(user, balance);
 		this.user=user;
 		this.balance=balance;

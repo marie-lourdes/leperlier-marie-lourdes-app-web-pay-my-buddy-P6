@@ -99,12 +99,12 @@ public class UserAccount {
 		 accountFound=0.0;
 		allAccounts.forEach(account->{
 		System.out.println(account);
-		/*	if( account.getUser().getEmail().equals(emailUser)) {
+		if( account.getUser().equals(emailUser)) {
 			
 				 accountFound=account.getBalance();
 			
 				
-			}*/		
+			}		
 			}) ;
 		return accountFound;
 	}

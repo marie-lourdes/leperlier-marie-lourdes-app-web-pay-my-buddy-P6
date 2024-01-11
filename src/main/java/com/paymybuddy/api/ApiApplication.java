@@ -43,13 +43,12 @@ public class ApiApplication implements CommandLineRunner {
     	//userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
     	//UserApp user= userAccount.getUserEntityByEmail("testuser3@gmail.com");
     	// userAccount.findUserContacts("testuser2@gmail.com");
-    	//UserApp userTest2=userAccount.getUserEntityByEmail("testuser2@gmail.com");
-     	//BuddyAccount  accountApp = new BuddyAccount();
-     	//accountApp.setBalance(0.0);
-     	//accountApp.setUser(userTest2);
+    	UserApp userTest2=userAccount.getUserEntityByEmail("testuser2@gmail.com");
+     	BuddyAccount  accountApp = new BuddyAccount("testuser2@gmail.com",0.0);
+    	
      	//BankAccount  bankAccount = new BankAccount(100824,"testuser2@gmail.com",787378.0124);
-    	//System.out.println(accountApp);
-    	// accountRepository.save(accountApp);
+    	System.out.println(accountApp);
+    	accountRepository.save(accountApp);
     	 //bankAccountRepository.save(bankAccount);
     	 //accountRepository.findByUser("testuser2@gmail.com");
 	}

@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,9 +16,9 @@ public class BankAccount extends Account{
 	private long id;
 
 	@NotNull
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="user_id")
-	private UserApp user;
+	private String user;
 
 	@NotNull
 	@Column(name = "balance")
@@ -31,7 +31,7 @@ public class BankAccount extends Account{
 	public BankAccount() {
 		super();
 	}
-	public BankAccount(long id, UserApp  user, double balance){
+	public BankAccount(long id, String user, double balance){
 		super( id, user, balance);
 		this.id=id;
 		this.user=user;
