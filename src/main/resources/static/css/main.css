@@ -5,6 +5,10 @@ body {
 	font-family:Verdana, Arial, sans-serif;
 }
 
+h1 {
+	color:#3E3B3D;
+}
+
 header, main {
 	display: flex;
 	flex-direction: column;		
@@ -70,6 +74,9 @@ main {
     min-height: 89vh; 
 }
 
+main.main--table {
+	 justify-content: flex-start;
+}
 a {
 	text-decoration: none;
 }
@@ -99,6 +106,39 @@ input {
 	background-color: #2145D8;
 	border:0;
 	cursor: pointer;
+}
+
+/*csstable*/
+
+table {
+	border-collapse: collapse;
+	width: 70%;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+table, thead, tbody, tbody tr {
+	border: 3px  #8F8B8A groove;
+	text-align: center;
+	
+}
+
+thead {
+	/*background-color: rgba(205,201,201,0.5);*/
+	background-color: rgba(198,195,195,0.5);
+}
+
+thead th {
+		padding: 15px;
+		color: rgb(111,174,75);
+}
+
+tbody tr {
+	background-color: rgba(240,237,237,0.5);
+}
+
+th, td{
+	padding: 8px;
 }
 
 /*css pages erreur*/
