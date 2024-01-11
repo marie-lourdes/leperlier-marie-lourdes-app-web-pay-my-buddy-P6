@@ -30,7 +30,7 @@ public class ApiApplication implements CommandLineRunner {
 	
      @Override
 	public  void run (String...args) {
-    	BuddyAccount  accountApp = new BuddyAccount(760824,"testuser2@gmail.com",787378.0124);
+    	BuddyAccount  accountApp = new BuddyAccount(760824,"testuser3@gmail.com",787378.0124);
     	System.out.println(accountApp);
     	Contact userContact = new Contact();
       	userContact.setIdContact("testuser1@gmail.com");

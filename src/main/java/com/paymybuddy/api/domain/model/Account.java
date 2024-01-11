@@ -14,20 +14,17 @@ import lombok.Data;
 @Data
 public abstract class Account {
 
-	protected long id;
-
+	private long id;
+	private String userId;
+	private double solde;
+	private String type;
 	
-	protected String userId;
-
-	protected double solde;
-	
-
-	protected String type;
+	public Account(){}
 	
 	public Account(long id,String userId,double solde){
 		 this.id=id;
-			this.userId=userId;
-			 this.solde=solde;
+		this.userId=userId;
+		this.solde=solde;
 	}
 	@Override
 	public String toString() {
