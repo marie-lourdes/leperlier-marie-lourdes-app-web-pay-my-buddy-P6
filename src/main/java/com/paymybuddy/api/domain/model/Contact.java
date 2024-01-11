@@ -7,6 +7,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
@@ -17,16 +18,20 @@ public class Contact{
 	private final String REGEX_P = "^(.+)@(\\S+)$";
 	@Id
 	@Pattern(regexp = REGEX_P)
+	@NotNull
 	@Email
 	@Column(name = "id_contact", unique = true)
 	private String idContact;
 
+	@NotNull
 	@Column(name = "first_name")
 	private String firstName;
 
+	@NotNull
 	@Column(name = "last_name")
 	private String lastName;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private UserApp user;
