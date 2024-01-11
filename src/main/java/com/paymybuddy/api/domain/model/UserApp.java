@@ -41,9 +41,8 @@ public class UserApp {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Contact> contacts;
 
-	@NotNull
 	@Column(name = "role")
-	private String role;
+	private String role = "USER";
 
 	public List<Contact> addContact(Contact contact) {
 		this.contacts.add(contact);
