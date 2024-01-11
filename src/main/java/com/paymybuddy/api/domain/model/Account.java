@@ -16,23 +16,23 @@ public abstract class Account {
 
 	private long id;
 	private UserApp user;
-	private double solde;
+	private double balance;
 	private String type;
 	
 	public Account(){}
 	
-	public Account(UserApp user,double solde){
+	public Account(UserApp user,double balance){
 		this.user=user;
-		this.solde=solde;
+		this.balance=balance;
 	}
 	
-	public Account(long id,UserApp user,double solde){
+	public Account(long id,UserApp user,double balance){
 		 this.id=id;
 		this.user=user;
-		this.solde=solde;
+		this.balance=balance;
 	}
 	@Override
 	public String toString() {
-		return "Account{" + "email:" + id+ ", user:'" + user + '\'' + ", solde:" + solde + ", type:" + type + '}';
+		return "Account{" + "id:" + id+ ", user:'" + user + '\'' + ", balance:" + balance+ ", type:" + type + '}';
 	}
 }

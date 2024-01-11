@@ -21,8 +21,8 @@ public class BankAccount extends Account{
 	private UserApp user;
 
 	@NotNull
-	@Column(name = "solde")
-	private double solde;
+	@Column(name = "balance")
+	private double balance;
 	
 	@NotNull
 	@Column(name = "type")
@@ -31,10 +31,10 @@ public class BankAccount extends Account{
 	public BankAccount() {
 		super();
 	}
-	public BankAccount(long id, UserApp  user, double solde){
-		super( id, user, solde);
+	public BankAccount(long id, UserApp  user, double balance){
+		super( id, user, balance);
 		this.id=id;
 		this.user=user;
-		this.solde=solde;
+		this.balance=balance;
 	 }
 }

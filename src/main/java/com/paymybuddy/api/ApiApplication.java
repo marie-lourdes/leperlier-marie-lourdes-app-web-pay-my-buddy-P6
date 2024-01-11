@@ -24,10 +24,7 @@ public class ApiApplication implements CommandLineRunner {
 	IContactRepository contactRepository;
 	
 	@Autowired
-	IBuddyAccountRepository accountRepository;
-	
-	@Autowired
-	IBankAccountRepository bankAccountRepository;
+	private IBuddyAccountRepository accountRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
@@ -37,20 +34,23 @@ public class ApiApplication implements CommandLineRunner {
 	public  void run (String...args) {
     	
     	
-    	Contact userContact = new Contact();
+    /*	Contact userContact = new Contact();
       	userContact.setIdContact("testuser1@gmail.com");
     	userContact.setFirstName("firstname1");
-    	userContact.setLastName("lastname1");
+    	userContact.setLastName("lastname1");*/
     	
-    	userAccount.addUserContact("testuser1@gmail.com","testuser2@gmail.com");
-    	userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
+    	//userAccount.addUserContact("testuser1@gmail.com","testuser2@gmail.com");
+    	//userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
     	//UserApp user= userAccount.getUserEntityByEmail("testuser3@gmail.com");
-    	 userAccount.findUserContacts("testuser2@gmail.com");
-    	// UserApp userTest2=userAccount.getUserEntityByEmail("testuser3@gmail.com");
-     	//BuddyAccount  accountApp = new BuddyAccount(userTest2,0.0);
-     	//BankAccount  bankAccount = new BankAccount(100824,"testuser3@gmail.com",787378.0124);
+    	// userAccount.findUserContacts("testuser2@gmail.com");
+    	//UserApp userTest2=userAccount.getUserEntityByEmail("testuser2@gmail.com");
+     	//BuddyAccount  accountApp = new BuddyAccount();
+     	//accountApp.setBalance(0.0);
+     	//accountApp.setUser(userTest2);
+     	//BankAccount  bankAccount = new BankAccount(100824,"testuser2@gmail.com",787378.0124);
     	//System.out.println(accountApp);
     	// accountRepository.save(accountApp);
     	 //bankAccountRepository.save(bankAccount);
+    	 //accountRepository.findByUser("testuser2@gmail.com");
 	}
 }

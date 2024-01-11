@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,13 +16,13 @@ public class BuddyAccount extends Account {
 	private long id;
 
 	@NotNull
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="user_id")
 	private UserApp user;
 
 	@NotNull
-	@Column(name = "solde")
-	private double solde=0.0;
+	@Column(name = "balance")
+	private double balance;
 	
 	@NotNull
 	@Column(name = "type")
@@ -31,10 +31,10 @@ public class BuddyAccount extends Account {
 	public BuddyAccount() {
 		super();
 	}
-	public BuddyAccount(UserApp user, double solde){
-		super(user, solde);
+	public BuddyAccount(UserApp user, double balance){
+		super(user, balance);
 		this.user=user;
-		this.solde=solde;
+		this.balance=balance;
 	 }
 
 }
