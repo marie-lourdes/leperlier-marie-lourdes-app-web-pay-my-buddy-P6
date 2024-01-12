@@ -108,17 +108,18 @@ public class UserAccount {
 		}
 		accountRepository.save(newAccount);
 	}
-	public Double findAccountBalanceByUser(String emailUser) {
+	
+	public BuddyAccount  findBuddyAccountByUser(String emailUser) {
 		Iterable<BuddyAccount >allAccounts=  accountRepository.findAll();
-		 accountFound=0.0;
-		//BuddyAccount newAccount = new BuddyAccount();
-		allAccounts.forEach(account->{
-		System.out.println("account solde"+account);
+		BuddyAccount newAccount = new BuddyAccount();
+		
+		allAccounts.forEach(account->{	
 		if( account.getUser().getEmail().equals(emailUser)) {	
-				 accountFound=account.getBalance();			
+			newAccount.setBalance(account.getBalance());		
+				 System.out.println("account solde "+account);
 			}		
 			}) ;
-		return accountFound;
+		return newAccount;
 	}
 	
 	public UserLoginDTO getUserLoginByEmail(String email) {
