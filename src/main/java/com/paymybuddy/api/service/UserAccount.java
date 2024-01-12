@@ -15,7 +15,7 @@ import com.paymybuddy.api.domain.DTO.UserMapper;
 import com.paymybuddy.api.domain.model.Account;
 import com.paymybuddy.api.domain.model.Contact;
 import com.paymybuddy.api.domain.model.UserApp;
-import com.paymybuddy.api.repository.IBuddyAccountRepository;
+import com.paymybuddy.api.repository.IAccountRepository;
 import com.paymybuddy.api.repository.IContactRepository;
 import com.paymybuddy.api.repository.IUserRepository;
 
@@ -35,7 +35,7 @@ public class UserAccount {
 	private IContactRepository contactRepository;
 
 	@Autowired
-	private IBuddyAccountRepository accountRepository;
+	private IAccountRepository accountRepository;
 
 	@Autowired
 	private UserMapper mapper;
@@ -126,7 +126,7 @@ public class UserAccount {
 		return contacts;
 	}
 
-	public Account findBuddyAccountByUser(String emailUser) {
+	public Account findAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
 		Account newAccount = new Account();
 

@@ -60,7 +60,7 @@ public class UserAccountController {
 	public String getProfilPage(Model model, Principal principal) {
 		UserApp user = userAccountService.getUserEntityByEmail(principal.getName());
 		// user.getEmail();
-		Account userAccountBalance = userAccountService.findBuddyAccountByUser(principal.getName());
+		Account userAccountBalance = userAccountService.findAccountByUser(principal.getName());
 		model.addAttribute("user", user);
 		model.addAttribute("userAccount", userAccountBalance);
 		return "profil";
