@@ -33,16 +33,16 @@ public class UserAccount {
 
 	@Autowired
 	private IContactRepository contactRepository;
-	
+
 	@Autowired
 	private IBuddyAccountRepository accountRepository;
 
 	@Autowired
 	private UserMapper mapper;
-	
+
 	@Autowired
 	private ContactMapper mapperContact;
-	
+
 	private Double accountFound;
 
 	public UserApp createUser(UserApp userApp) {
@@ -59,7 +59,7 @@ public class UserAccount {
 		try {
 			user = userRepository.findByEmail(emailUser);
 			contactToAdd = userRepository.findByEmail(emailContact);
-			if (contactToAdd== null) {
+			if (contactToAdd == null) {
 				throw new NullPointerException("contact email " + emailContact + "not found");
 			} else {
 				newUserContact.setIdContact(contactToAdd.getEmail());
@@ -75,22 +75,23 @@ public class UserAccount {
 
 	public List<ContactDTO> findUserContacts(String emailUser) {
 		Iterable<Contact> allContacts = contactRepository.findAll();
-		List<ContactDTO> contacts =new ArrayList<ContactDTO>();
-		
-		allContacts.forEach(contact->{
-			ContactDTO contactFound= mapperContact.contactToContactDTO(contact);
-			if(contact.getUser().getEmail().equals(emailUser)) {
-				//System.out.println("contact of user "+contact.getUser().getFirstName()+":"+contact.getIdContact() );
+		List<ContactDTO> contacts = new ArrayList<ContactDTO>();
+
+		allContacts.forEach(contact -> {
+			ContactDTO contactFound = mapperContact.contactToContactDTO(contact);
+			if (contact.getUser().getEmail().equals(emailUser)) {
+				// System.out.println("contact of user
+				// "+contact.getUser().getFirstName()+":"+contact.getIdContact() );
 				contactFound.setIdContact(contact.getIdContact());
 				contactFound.setFirstName(contact.getFirstName());
 				contactFound.setLastName(contact.getLastName());
-				contacts.add(contactFound) ;	
-			}		
-			}) ;
-		//System.out.println(allcontacts );//provoque des erreurs stackoverflow
-		 return  contacts;
+				contacts.add(contactFound);
+			}
+		});
+		// System.out.println(allcontacts );//provoque des erreurs stackoverflow
+		return contacts;
 	}
-	
+
 	public void addUserAccount(String emailUser) {
 		UserApp user = new UserApp();
 		BuddyAccount newAccount = new BuddyAccount();
@@ -101,27 +102,27 @@ public class UserAccount {
 			} else {
 				newAccount.setBalance(0.0);
 				newAccount.setType("Buddy Account");
-				newAccount.setUser(user);	
+				newAccount.setUser(user);
 			}
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		accountRepository.save(newAccount);
 	}
-	
-	public BuddyAccount  findBuddyAccountByUser(String emailUser) {
-		Iterable<BuddyAccount >allAccounts=  accountRepository.findAll();
+
+	public BuddyAccount findBuddyAccountByUser(String emailUser) {
+		Iterable<BuddyAccount> allAccounts = accountRepository.findAll();
 		BuddyAccount newAccount = new BuddyAccount();
-		
-		allAccounts.forEach(account->{	
-		if( account.getUser().getEmail().equals(emailUser)) {	
-			newAccount.setBalance(account.getBalance());		
-				 System.out.println("account solde "+account);
-			}		
-			}) ;
+
+		allAccounts.forEach(account -> {
+			if (account.getUser().getEmail().equals(emailUser)) {
+				newAccount.setBalance(account.getBalance());
+				System.out.println("account solde " + account);
+			}
+		});
 		return newAccount;
 	}
-	
+
 	public UserLoginDTO getUserLoginByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
 		UserLoginDTO userLoginDTO = mapper.UserToUserLoginDTO(user);
@@ -131,12 +132,12 @@ public class UserAccount {
 
 	public UserDTO getUserByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
-		UserDTO userDTO = mapper.UserToUserDTO(user);	
+		UserDTO userDTO = mapper.UserToUserDTO(user);
 		return userDTO;
 	}
-	
+
 	public UserApp getUserEntityByEmail(String email) {
-		UserApp user = userRepository.findByEmail(email);	
+		UserApp user = userRepository.findByEmail(email);
 		return user;
 	}
 }

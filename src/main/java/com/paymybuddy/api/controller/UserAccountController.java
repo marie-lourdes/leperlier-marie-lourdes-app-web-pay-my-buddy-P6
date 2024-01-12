@@ -18,53 +18,52 @@ import com.paymybuddy.api.service.UserAccount;
 
 @Controller
 public class UserAccountController {
-	
+
 	@Autowired
-	private UserAccount userAccountService ;
-	
+	private UserAccount userAccountService;
 
 	@PostMapping("/sign-up-form")
-	public ModelAndView createUser(@ModelAttribute UserApp user){
-		 userAccountService.createUser(user);
-		 return new ModelAndView("redirect:/");
+	public ModelAndView createUser(@ModelAttribute UserApp user) {
+		userAccountService.createUser(user);
+		return new ModelAndView("redirect:/");
 	}
-	
+
 	@PostMapping("/save-buddy-account")
-	public ModelAndView createAccount( Principal principal){
-		 userAccountService.addUserAccount(principal.getName());
-		 return new ModelAndView("redirect:/account-success");
+	public ModelAndView createAccount(Principal principal) {
+		userAccountService.addUserAccount(principal.getName());
+		return new ModelAndView("redirect:/account-success");
 	}
-	
+
 	@GetMapping("/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
-		model.addAttribute("user",userCreated);
+		model.addAttribute("user", userCreated);
 		return "sign-up";
 	}
-	
+
 	@GetMapping("/account/home")
-	public String getHomePage( Model model, Principal principal) {
-		model.addAttribute("principal",principal.getName());
+	public String getHomePage(Model model, Principal principal) {
+		model.addAttribute("principal", principal.getName());
 		return "home";
 	}
-	
-	@GetMapping("/account/contact")// enpoint template contacts
+
+	@GetMapping("/account/contact") // enpoint template contacts
 	public String getUserContact(Model model, Principal principal) {
 		List<ContactDTO> allContact = userAccountService.findUserContacts(principal.getName());
-		model.addAttribute("contacts", allContact );
+		model.addAttribute("contacts", allContact);
 		return "contacts";
 	}
-	
-	@GetMapping("/account/profil")// 
+
+	@GetMapping("/account/profil") //
 	public String getProfilPage(Model model, Principal principal) {
 		UserApp user = userAccountService.getUserEntityByEmail(principal.getName());
-		//user.getEmail();
-	    BuddyAccount userAccountBalance= userAccountService.findBuddyAccountByUser(user.getEmail());
-		model.addAttribute("user", user );
+		// user.getEmail();
+		BuddyAccount userAccountBalance = userAccountService.findBuddyAccountByUser(user.getEmail());
+		model.addAttribute("user", user);
 		model.addAttribute("userAccount", userAccountBalance);
 		return "profil";
 	}
-	
+
 	@GetMapping("/account-success")
 	public String getSignUpPage() {
 		return "account-success";
