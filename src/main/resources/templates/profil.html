@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
         <title>Profil</title>
         <link th:href="@{/css/main.css}" rel="stylesheet" />
+         <link th:href="@{/css/profil.css}" rel="stylesheet" />
         <script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -31,24 +32,25 @@
 			<main>
 				 <section>
 					<h1>Profil</h1>
-	                   <div class="section-profil">
+	                   <div class="section-user-info">
 				         <li> Firstname: <span th:text="${user.firstName}"> Firstname </span></li> 
 	                    <br/>
 	                    <li> Lastname: <span th:text="${user.lastName}"> Lastname </span></li>
 	                    <br/>
 	                    <li>Email: <span th:text="${user.email}"> Email </span></li>
-	                    <br/>
-	                    <li>Balance buddy account: <span >Balance buddy account </span></li>
-	                    <br/>
-	                    <li>Balance bank account:<span th:text="${userAccount.balance}" > Balance bank account</span></li>
-			        </div>
+	                   </div>
 	             
 	            </section>  
 	            <section>
-					<h2> Buddy Account</h2>
-				<form th:action="@{/save-buddy-account}" method="post" >
-					<div class="button-styled"><input class="button-form" type="submit" value="Create Buddy Account" /></div>
-				</form>
+					<h2>Accounts</h2>	 		
+					<div class="section-user-info section-user-info--accounts">
+	                    <li>Balance buddy account: <span th:text="${userAccount.balance}">Balance buddy account </span></li>
+	                    <br/>
+	                    <li>Balance bank account:<span > Balance bank account</span></li>        
+	                    <form th:action="@{/save-buddy-account}" method="post" >
+						<div class="button-styled button-styled--creating-account"><input class="button-form button-form--creating-account" type="submit" value="Create Buddy Account" /></div>
+					</form>
+			        </div>
 				</section>
 			</main>
 		</div>          

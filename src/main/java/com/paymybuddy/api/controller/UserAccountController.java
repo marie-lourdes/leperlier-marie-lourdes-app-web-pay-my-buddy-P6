@@ -30,7 +30,7 @@ public class UserAccountController {
 
 	@PostMapping("/save-buddy-account")
 	public ModelAndView createAccount(Principal principal) {
-		userAccountService.addUserAccount(principal.getName());
+		userAccountService.addBuddyAccount(principal.getName());
 		return new ModelAndView("redirect:/account-success");
 	}
 
@@ -58,7 +58,7 @@ public class UserAccountController {
 	public String getProfilPage(Model model, Principal principal) {
 		UserApp user = userAccountService.getUserEntityByEmail(principal.getName());
 		// user.getEmail();
-		BuddyAccount userAccountBalance = userAccountService.findBuddyAccountByUser(user.getEmail());
+		BuddyAccount userAccountBalance = userAccountService.findBuddyAccountByUser(principal.getName());
 		model.addAttribute("user", user);
 		model.addAttribute("userAccount", userAccountBalance);
 		return "profil";
