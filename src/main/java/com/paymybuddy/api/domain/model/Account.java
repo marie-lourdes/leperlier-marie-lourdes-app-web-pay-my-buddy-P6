@@ -1,29 +1,33 @@
 package com.paymybuddy.api.domain.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public abstract class Account {
-
+@Entity
+@Table(name = "account")
+public class Account {
+	
+	@Id
 	private long id;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name="user_id")
 	private UserApp user;
+
+	@NotNull
+	@Column(name = "balance")
 	private double balance;
+	
+	@NotNull
+	@Column(name = "type")
 	private String type;
 	
-	public Account(){}
-	
-	public Account(UserApp user,double balance){
-		this.user=user;
-		this.balance=balance;
-	}
-	
-	public Account(long id,UserApp user,double balance){
-		 this.id=id;
-		this.user=user;
-		this.balance=balance;
-	}
-	@Override
-	public String toString() {
-		return "Account{" + "id:" + id+ ", user:'" + user + '\'' + ", balance:" + balance+ ", type:" + type + '}';
-	}
 }

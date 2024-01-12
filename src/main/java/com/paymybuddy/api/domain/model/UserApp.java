@@ -42,7 +42,7 @@ public class UserApp {
 	private List<Contact> contacts;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<BuddyAccount> buddyAccount;
+	private List<Account> buddyAccount;
 
 
 	public List<Contact> addContact(Contact contact) {

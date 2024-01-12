@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.paymybuddy.api.domain.DTO.ContactDTO;
-import com.paymybuddy.api.domain.model.BuddyAccount;
+import com.paymybuddy.api.domain.model.Account;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.service.UserAccount;
 
@@ -60,7 +60,7 @@ public class UserAccountController {
 	public String getProfilPage(Model model, Principal principal) {
 		UserApp user = userAccountService.getUserEntityByEmail(principal.getName());
 		// user.getEmail();
-		BuddyAccount userAccountBalance = userAccountService.findBuddyAccountByUser(principal.getName());
+		Account userAccountBalance = userAccountService.findBuddyAccountByUser(principal.getName());
 		model.addAttribute("user", user);
 		model.addAttribute("userAccount", userAccountBalance);
 		return "profil";

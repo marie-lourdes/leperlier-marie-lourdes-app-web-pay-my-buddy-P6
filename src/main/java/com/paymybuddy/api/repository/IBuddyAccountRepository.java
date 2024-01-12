@@ -2,11 +2,11 @@ package com.paymybuddy.api.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.paymybuddy.api.domain.model.BuddyAccount;
+import com.paymybuddy.api.domain.model.Account;
 
 import jakarta.transaction.Transactional;
 
 @Transactional
-public interface IBuddyAccountRepository extends JpaRepository<BuddyAccount, Long> {
+public interface IBuddyAccountRepository extends JpaRepository<Account, Long> {
  //public BuddyAccount findByUser(String user);
 }

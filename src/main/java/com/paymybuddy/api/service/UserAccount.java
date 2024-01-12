@@ -12,7 +12,7 @@ import com.paymybuddy.api.domain.DTO.ContactMapper;
 import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.DTO.UserMapper;
-import com.paymybuddy.api.domain.model.BuddyAccount;
+import com.paymybuddy.api.domain.model.Account;
 import com.paymybuddy.api.domain.model.Contact;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IBuddyAccountRepository;
@@ -73,7 +73,7 @@ public class UserAccount {
 
 	public void addBuddyAccount(String emailUser) {
 		UserApp user = new UserApp();
-		BuddyAccount newAccount = new BuddyAccount();
+		Account newAccount = new Account();
 		try {
 			user = userRepository.findByEmail(emailUser);
 			if (user == null) {
@@ -126,9 +126,9 @@ public class UserAccount {
 		return contacts;
 	}
 
-	public BuddyAccount findBuddyAccountByUser(String emailUser) {
-		Iterable<BuddyAccount> allAccounts = accountRepository.findAll();
-		BuddyAccount newAccount = new BuddyAccount();
+	public Account findBuddyAccountByUser(String emailUser) {
+		Iterable<Account> allAccounts = accountRepository.findAll();
+		Account newAccount = new Account();
 
 		allAccounts.forEach(account -> {
 			if (account.getUser().getEmail().equals(emailUser)) {
