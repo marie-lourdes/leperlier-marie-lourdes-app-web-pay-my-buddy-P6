@@ -96,31 +96,26 @@ public class UserAccount {
 		BuddyAccount newAccount = new BuddyAccount();
 		try {
 			user = userRepository.findByEmail(emailUser);
-			//contact = userRepository.findByEmail(emailContact);
 			if (user == null) {
 				throw new NullPointerException("user email " + emailUser + "not found");
 			} else {
 				newAccount.setBalance(0.0);
 				newAccount.setType("Buddy Account");
-				newAccount.setUser(user);
-			
+				newAccount.setUser(user);	
 			}
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		accountRepository.save(newAccount);
 	}
-	public Double findBuddyAccountBalanceByUser(String emailUser) {
+	public Double findAccountBalanceByUser(String emailUser) {
 		Iterable<BuddyAccount >allAccounts=  accountRepository.findAll();
 		 accountFound=0.0;
 		//BuddyAccount newAccount = new BuddyAccount();
 		allAccounts.forEach(account->{
 		System.out.println("account solde"+account);
-		if( account.getUser().getEmail().equals(emailUser)) {
-			
-				 accountFound=account.getBalance();
-			
-				
+		if( account.getUser().getEmail().equals(emailUser)) {	
+				 accountFound=account.getBalance();			
 			}		
 			}) ;
 		return accountFound;

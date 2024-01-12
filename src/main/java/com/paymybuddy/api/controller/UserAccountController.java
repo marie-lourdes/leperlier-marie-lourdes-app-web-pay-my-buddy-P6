@@ -37,7 +37,6 @@ public class UserAccountController {
 	
 	@GetMapping("/account/home")
 	public String getHomePage( Model model, Principal principal) {
-	
 		model.addAttribute("principal",principal.getName());
 		return "home";
 	}
@@ -58,5 +57,4 @@ public class UserAccountController {
 		//model.addAttribute("userAccountBalance", userAccountBalance);
 		return "profil";
 	}
-
 }
