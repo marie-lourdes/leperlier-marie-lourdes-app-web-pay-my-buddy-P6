@@ -52,19 +52,6 @@ public class ApiApplication implements CommandLineRunner {
     	//accountRepository.save(accountApp);
     	 //bankAccountRepository.save(bankAccount);
     	 //accountRepository.findByUser("testuser2@gmail.com");
-    	Account  bankAccountUser2 =new Account();
-    	bankAccountUser2.setId(100824);
-    	bankAccountUser2.setUser(userRepository.findByEmail("testuser2@gmail.com"));
-    	bankAccountUser2.setType("Banking Account");
-    	bankAccountUser2.setBalance(546486.45);
-    	accountRepository.save(	bankAccountUser2);
-    	
-    	Account  bankAccountUser3 =new Account();
-    	bankAccountUser3.setId(100204);
-    	bankAccountUser3.setUser(userRepository.findByEmail("testuser3@gmail.com"));
-    	bankAccountUser3.setType("Banking Account");
-    	bankAccountUser3.setBalance(10752);
-    	accountRepository.save(	bankAccountUser3);
-    	   	 
+	   	 
 	}
 }

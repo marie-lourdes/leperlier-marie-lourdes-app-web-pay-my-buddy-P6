@@ -126,17 +126,30 @@ public class UserAccount {
 		return contacts;
 	}
 
-	public Account findAccountByUser(String emailUser) {
+	public Account findBuddyAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
-		Account newAccount = new Account();
+		Account buddyAccount = new Account();
 
 		allAccounts.forEach(account -> {
-			if (account.getUser().getEmail().equals(emailUser)) {
-				newAccount.setBalance(account.getBalance());
+			if (account.getUser().getEmail().equals(emailUser)&& account.getType().contains("Buddy Account") ) {
+				buddyAccount.setBalance(account.getBalance());
 				System.out.println("account solde " + account);
 			}
 		});
-		return newAccount;
+		return buddyAccount;
+	}
+	
+	public Account findBankingAccountByUser(String emailUser) {
+		Iterable<Account> allAccounts = accountRepository.findAll();
+		Account bankingAccount = new Account();
+
+		allAccounts.forEach(account -> {
+			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Banking Account") ) {
+				bankingAccount.setBalance(account.getBalance());
+				System.out.println("account solde " + account);
+			}
+		});
+		return bankingAccount;
 	}
 
 }
