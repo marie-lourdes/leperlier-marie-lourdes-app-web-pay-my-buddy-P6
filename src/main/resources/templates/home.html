@@ -32,7 +32,8 @@
 				 <div class="text-welcome" >
 					 <i class="fa-regular fa-face-smile fontawesome-styled"></i>
 	                  Welcome to Pay My Buddy application!
-	                  <span th:text="${principal}"> Prénom </span>
+	                  <span th:text="${user.firstName}"> Prénom </span>
+	                  <div th:text="${user.email}">Email</div>
 	        </div>  
 			</main>
 		</div>          

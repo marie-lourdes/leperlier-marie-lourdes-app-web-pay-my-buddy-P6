@@ -43,7 +43,9 @@ public class UserAccountController {
 
 	@GetMapping("/account/home")
 	public String getHomePage(Model model, Principal principal) {
-		model.addAttribute("principal", principal.getName());
+		
+		UserApp user = userAccountService.getUserEntityByEmail(principal.getName());
+		model.addAttribute("user", user);
 		return "home";
 	}
 

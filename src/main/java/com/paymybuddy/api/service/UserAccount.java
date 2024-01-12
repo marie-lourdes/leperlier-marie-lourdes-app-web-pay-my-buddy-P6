@@ -43,8 +43,6 @@ public class UserAccount {
 	@Autowired
 	private ContactMapper mapperContact;
 
-	private Double accountFound;
-
 	public UserApp createUser(UserApp userApp) {
 		String userPassword = userApp.getPassword();
 		String userPasswordEncoded = passwordEncoder.encode(userPassword);

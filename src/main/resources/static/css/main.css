@@ -159,6 +159,18 @@ td {
 	padding: 8px;
 }
 
+.text-welcome {
+	color: rgb(111, 174, 75);
+}
+
+.text-welcome div {
+	font-size: 1rem;
+}
+
+.fontawesome-styled {
+	font-size: 3rem;
+	color: #000;
+}
 /*css pages erreur*/
 
 main.main--error {
@@ -174,11 +186,3 @@ main.main--error {
 	font-size: 3rem;
 }
 
-.text-welcome {
-	color: rgb(111, 174, 75);
-}
-
-.fontawesome-styled {
-	font-size: 3rem;
-	color: #000;
-}
