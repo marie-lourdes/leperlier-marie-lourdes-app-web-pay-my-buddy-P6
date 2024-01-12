@@ -5,18 +5,20 @@ body {
 	font-family: Verdana, Arial, sans-serif;
 }
 
-h1,h2 {
+h1,
+h2 {
 	color: #3E3B3D;
 }
 
-section {    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 70%;
-    
+section {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	width: 70%;
+
 }
+
 header,
 main {
 	display: flex;
@@ -166,7 +168,7 @@ td {
 
 .text-welcome div {
 	font-size: 1rem;
-	margin:30px auto;
+	margin: 30px auto;
 	width: 100%;
 }
 
@@ -174,6 +176,7 @@ td {
 	font-size: 3rem;
 	color: #000;
 }
+
 /*css pages erreur*/
 
 main.main--error {
@@ -188,4 +191,3 @@ main.main--error {
 .text-welcome {
 	font-size: 3rem;
 }
-
