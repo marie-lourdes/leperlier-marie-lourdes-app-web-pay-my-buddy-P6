@@ -28,6 +28,12 @@ public class UserAccountController {
 		 return new ModelAndView("redirect:/");
 	}
 	
+	@PostMapping("/save-buddy-account")
+	public ModelAndView createAccount( Principal principal){
+		 userAccountService.addUserAccount(principal.getName());
+		 return new ModelAndView("redirect:/account-success");
+	}
+	
 	@GetMapping("/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
@@ -57,4 +63,9 @@ public class UserAccountController {
 		//model.addAttribute("userAccountBalance", userAccountBalance);
 		return "profil";
 	}
+	
+	/*@GetMapping("/account-success")
+	public String getSignUpPage() {
+		return "account-success";
+	}*/
 }

@@ -31,8 +31,8 @@
 			<main class="main--customized">
 				 <section>
 					<h1>Profil</h1>
-	           
-	                    <li> Firstname: <span th:text="${user.firstName}"> Firstname </span></li> 
+	                   <div>
+				         <li> Firstname: <span th:text="${user.firstName}"> Firstname </span></li> 
 	                    <br/>
 	                    <li> Lastname: <span th:text="${user.lastName}"> Lastname </span></li>
 	                    <br/>
@@ -41,7 +41,15 @@
 	                    <li>Balance buddy account: <span >Balance buddy account </span></li>
 	                    <br/>
 	                    <li>Balance bank account:<span th:text="${userAccountBalance}" > Balance bank account</span></li>
-	        </section>  
+			        </div>
+	             
+	            </section>  
+	            <section>
+					<h2> Buddy Account</h2>
+				<form th:action="@{/save-buddy-account}" method="post" >
+					<div class="button-styled"><input class="button-form" type="submit" value="Create Buddy Account" /></div>
+				</form>
+				</section>
 			</main>
 		</div>          
     </body>

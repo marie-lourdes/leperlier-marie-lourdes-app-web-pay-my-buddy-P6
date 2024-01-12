@@ -6,7 +6,7 @@ import com.paymybuddy.api.domain.model.BuddyAccount;
 
 import jakarta.transaction.Transactional;
 
-
+@Transactional
 public interface IBuddyAccountRepository extends JpaRepository<BuddyAccount, Long> {
  //public BuddyAccount findByUser(String user);
 }

@@ -5,9 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.paymybuddy.api.domain.model.BuddyAccount;
-import com.paymybuddy.api.domain.model.Contact;
-import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IBuddyAccountRepository;
 import com.paymybuddy.api.repository.IContactRepository;
 import com.paymybuddy.api.service.UserAccount;

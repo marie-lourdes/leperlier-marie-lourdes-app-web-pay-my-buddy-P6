@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -42,7 +41,7 @@ public class UserApp {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Contact> contacts;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<BuddyAccount> buddyAccount;
 
 
