@@ -44,9 +44,9 @@
 	            <section>
 					<h2>Accounts</h2>	 		
 					<div class="section-user-info section-user-info--accounts">
-	                    <li>Balance buddy account: <span th:text="${userBuddyAccount.balance}">Balance buddy account </span></li>
+	                    <li>Balance buddy account: <span th:text="${userBuddyAccount.balance}"> Balance buddy account </span></li>
 	                    <br/>
-	                    <li>Balance bank account:<span th:text="${userBankingAccount.balance}"> Balance bank account</span></li>        
+	                    <li>Balance bank account: <span th:text="${userBankingAccount.balance}"> Balance bank account</span></li>        
 	                    <form th:action="@{/save-buddy-account}" method="post" >
 						<div class="button-styled button-styled--creating-account"><input class="button-form button-form--creating-account" type="submit" value="Create Buddy Account" /></div>
 					</form>
