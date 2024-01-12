@@ -98,7 +98,7 @@ public class UserAccount {
 		Iterable<BuddyAccount >allAccounts=  accountRepository.findAll();
 		 accountFound=0.0;
 		allAccounts.forEach(account->{
-		System.out.println(account);
+		System.out.println("account solde"+account);
 		if( account.getUser().equals(emailUser)) {
 			
 				 accountFound=account.getBalance();
