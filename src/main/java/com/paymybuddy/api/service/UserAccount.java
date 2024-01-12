@@ -15,7 +15,6 @@ import com.paymybuddy.api.domain.DTO.UserMapper;
 import com.paymybuddy.api.domain.model.BuddyAccount;
 import com.paymybuddy.api.domain.model.Contact;
 import com.paymybuddy.api.domain.model.UserApp;
-import com.paymybuddy.api.repository.IBankAccountRepository;
 import com.paymybuddy.api.repository.IBuddyAccountRepository;
 import com.paymybuddy.api.repository.IContactRepository;
 import com.paymybuddy.api.repository.IUserRepository;
@@ -37,9 +36,6 @@ public class UserAccount {
 	
 	@Autowired
 	private IBuddyAccountRepository accountRepository;
-	
-	@Autowired
-	private IBankAccountRepository bankAccountRepository;
 
 	@Autowired
 	private UserMapper mapper;
@@ -58,17 +54,17 @@ public class UserAccount {
 
 	public void addUserContact(String emailContact, String emailUser) {
 		UserApp user = new UserApp();
-		UserApp contact = new UserApp();
+		UserApp contactToAdd = new UserApp();
 		Contact newUserContact = new Contact();
 		try {
 			user = userRepository.findByEmail(emailUser);
-			contact = userRepository.findByEmail(emailContact);
-			if (contact == null) {
+			contactToAdd = userRepository.findByEmail(emailContact);
+			if (contactToAdd== null) {
 				throw new NullPointerException("contact email " + emailContact + "not found");
 			} else {
-				newUserContact.setIdContact(contact.getEmail());
-				newUserContact.setFirstName(contact.getFirstName());
-				newUserContact.setLastName(contact.getLastName());
+				newUserContact.setIdContact(contactToAdd.getEmail());
+				newUserContact.setFirstName(contactToAdd.getFirstName());
+				newUserContact.setLastName(contactToAdd.getLastName());
 				newUserContact.setUser(user);
 			}
 		} catch (Exception e) {
@@ -94,12 +90,33 @@ public class UserAccount {
 		//System.out.println(allcontacts );//provoque des erreurs stackoverflow
 		 return  contacts;
 	}
+	
+	public void addUserAccount(String emailUser) {
+		UserApp user = new UserApp();
+		BuddyAccount newAccount = new BuddyAccount();
+		try {
+			user = userRepository.findByEmail(emailUser);
+			//contact = userRepository.findByEmail(emailContact);
+			if (user == null) {
+				throw new NullPointerException("user email " + emailUser + "not found");
+			} else {
+				newAccount.setBalance(0.0);
+				newAccount.setType("Buddy Account");
+				newAccount.setUser(user);
+			
+			}
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		accountRepository.save(newAccount);
+	}
 	public Double findBuddyAccountBalanceByUser(String emailUser) {
 		Iterable<BuddyAccount >allAccounts=  accountRepository.findAll();
 		 accountFound=0.0;
+		//BuddyAccount newAccount = new BuddyAccount();
 		allAccounts.forEach(account->{
 		System.out.println("account solde"+account);
-		if( account.getUser().equals(emailUser)) {
+		if( account.getUser().getEmail().equals(emailUser)) {
 			
 				 accountFound=account.getBalance();
 			

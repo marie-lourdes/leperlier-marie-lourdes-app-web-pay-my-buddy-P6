@@ -42,11 +42,9 @@ public class UserApp {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Contact> contacts;
 
-	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
-	private BuddyAccount buddyAccount;
-	
-	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
-	private BankAccount bankAccount;
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	private List<BuddyAccount> buddyAccount;
+
 
 	public List<Contact> addContact(Contact contact) {
 		this.contacts.add(contact);

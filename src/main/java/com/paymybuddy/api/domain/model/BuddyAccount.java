@@ -1,26 +1,26 @@
 package com.paymybuddy.api.domain.model;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "account")
-public class BuddyAccount extends Account {
+public class BuddyAccount {
 	
 	@Id
 	private long id;
 
 	@NotNull
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="user_id")
-	private List<UserApp> user;
+	private UserApp user;
 
 	@NotNull
 	@Column(name = "balance")
@@ -28,15 +28,13 @@ public class BuddyAccount extends Account {
 	
 	@NotNull
 	@Column(name = "type")
-	private String type="buddy account";
+	private String type;
 	
-	public BuddyAccount() {
-		super();
-	}
-	public BuddyAccount(List<UserApp> user, double balance){
-		super(user, balance);
+	
+	/*public BuddyAccount(UserApp user, double balance,String type){
 		this.user=user;
 		this.balance=balance;
-	 }
+		this.type=type;
+	 }*/
 
 }

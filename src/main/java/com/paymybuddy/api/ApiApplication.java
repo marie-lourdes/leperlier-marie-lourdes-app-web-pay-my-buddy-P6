@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.paymybuddy.api.domain.model.BuddyAccount;
 import com.paymybuddy.api.domain.model.Contact;
 import com.paymybuddy.api.domain.model.UserApp;
-import com.paymybuddy.api.repository.IBankAccountRepository;
 import com.paymybuddy.api.repository.IBuddyAccountRepository;
 import com.paymybuddy.api.repository.IContactRepository;
 import com.paymybuddy.api.service.UserAccount;
@@ -33,7 +32,7 @@ public class ApiApplication implements CommandLineRunner {
      @Override
 	public  void run (String...args) {
     	
-    	
+    	// userAccount.addUserAccount("testuser2@gmail.com");
     /*	Contact userContact = new Contact();
       	userContact.setIdContact("testuser1@gmail.com");
     	userContact.setFirstName("firstname1");
@@ -43,11 +42,11 @@ public class ApiApplication implements CommandLineRunner {
     	//userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
     	//UserApp user= userAccount.getUserEntityByEmail("testuser3@gmail.com");
     	// userAccount.findUserContacts("testuser2@gmail.com");
-    	UserApp userTest2=userAccount.getUserEntityByEmail("testuser2@gmail.com");
-    BuddyAccount  accountApp = new BuddyAccount(userTest2,7867842.4475);
+    	//UserApp userTest2=userAccount.getUserEntityByEmail("testuser2@gmail.com");
+   // BuddyAccount  accountApp = new BuddyAccount(userTest2,7867842.4475);
     	
      	//BankAccount  bankAccount = new BankAccount(100824,"testuser2@gmail.com",787378.0124);
-    	System.out.println(accountApp);
+    	//System.out.println(accountApp);
     	//accountRepository.save(accountApp);
     	 //bankAccountRepository.save(bankAccount);
     	 //accountRepository.findByUser("testuser2@gmail.com");
