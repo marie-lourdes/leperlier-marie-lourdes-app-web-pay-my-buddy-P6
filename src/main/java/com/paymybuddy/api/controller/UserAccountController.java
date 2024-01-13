@@ -24,8 +24,19 @@ public class UserAccountController {
 
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@ModelAttribute UserApp user) {
-		userAccountService.createUser(user);
-		return new ModelAndView("redirect:/");
+		UserApp userCreated= new UserApp();
+		try {
+			userCreated=userAccountService.createUser(user);
+			return new ModelAndView("redirect:/");
+		}catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("redirect:/error");
+		}catch(NullPointerException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("redirect:/error");
+		}
+	
+		
 	}
 
 	@PostMapping("/save-buddy-account")

@@ -43,11 +43,24 @@ public class UserAccount {
 	@Autowired
 	private ContactMapper mapperContact;
 
-	public UserApp createUser(UserApp userApp) {
-		String userPassword = userApp.getPassword();
-		String userPasswordEncoded = passwordEncoder.encode(userPassword);
-		userApp.setPassword(userPasswordEncoded);
-		return userRepository.save(userApp);
+	public UserApp createUser(UserApp userApp) throws IllegalArgumentException{
+		UserApp userExisting = userRepository.findByEmail(userApp.getEmail());
+		UserApp userCreated= new UserApp();
+		
+		//try {
+			if(userExisting.getEmail().equals(userApp.getEmail())) {
+				throw new IllegalArgumentException("Email already exist!");
+			}else {
+				String userPassword = userApp.getPassword();
+				String userPasswordEncoded = passwordEncoder.encode(userPassword);
+				userApp.setPassword(userPasswordEncoded);
+				userCreated = userRepository.save(userApp);
+			}
+		/*}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}*/
+		
+		return userCreated;
 	}
 
 	public void addUserContact(String emailContact, String emailUser) {

@@ -11,6 +11,9 @@
 			<div class="title-header"> Pay My Buddy</div>	
 		</header>
       <div class="container">
+		  <div class ="login-error" th:if="${param.error}">
+	            Invalid email and password.
+	        </div>
 	        <main>
 				<form th:action="@{/sign-up-form}" method="post" th:object="${user}">
 					<a th:href="@{/account/home}">
@@ -21,23 +24,23 @@
 		            <div class="login-field">
 						<div class="login-field--fontawesome">
 							<i class="fa-regular fa-envelope"></i>
-							<input th:field="*{email}"   type="email" name="username" placeholder="Email"/>
+							<input th:field="*{email}"   type="email" name="username" required  placeholder="Email"/>
 						</div>	
 					</div>
 		            <div class="login-field">
 							<div class="login-field--fontawesome">
-							<input th:field="*{firstName}" type="text" name="firstname" placeholder="Firstname"/> 
+							<input th:field="*{firstName}" type="text" name="firstname" required  placeholder="Firstname"/> 
 							</div>
 					</div>
 					  <div class="login-field">
 							<div class="login-field--fontawesome">
-							<input th:field="*{lastName}" type="text" name="lastname" placeholder="Lastname"/> 
+							<input th:field="*{lastName}" type="text" name="lastname" required placeholder="Lastname"/> 
 							</div>
 					</div>
 					<div class="login-field">
 						<div class="login-field--fontawesome">
 						  <i class="fa-solid fa-asterisk"></i> 
-						  <input th:field="*{password}" type="password" name="password" placeholder="Password"/> 
+						  <input th:field="*{password}" type="password" name="password" required placeholder="Password"/> 
 						</div>
 					</div>
 		            <div class="button-styled"><input class="button-form type" type="submit" value="Sign-Up" /></div>				
