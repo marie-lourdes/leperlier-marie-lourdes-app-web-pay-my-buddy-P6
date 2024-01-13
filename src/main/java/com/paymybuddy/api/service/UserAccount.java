@@ -47,7 +47,7 @@ public class UserAccount {
 		UserApp userExisting = userRepository.findByEmail(userApp.getEmail());
 		UserApp userCreated= new UserApp();
 		
-		//try {
+		try {
 			if(userExisting.getEmail().equals(userApp.getEmail())) {
 				throw new IllegalArgumentException("Email already exist!");
 			}else {
@@ -56,9 +56,9 @@ public class UserAccount {
 				userApp.setPassword(userPasswordEncoded);
 				userCreated = userRepository.save(userApp);
 			}
-		/*}catch(Exception e) {
+		}catch(Exception e) {
 			System.out.println(e.getMessage());
-		}*/
+		}
 		
 		return userCreated;
 	}

@@ -27,15 +27,16 @@ public class UserAccountController {
 	private UserAccount userAccountService;
 
 	@PostMapping("/sign-up-form")
-	public ModelAndView createUser(@Valid @ModelAttribute UserApp user,HttpServletResponse response) throws IOException {
+	public ModelAndView createUser(@Valid @ModelAttribute UserApp user, HttpServletResponse response)
+			throws IOException {
 		try {
 			userAccountService.createUser(user);
 			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			response.setIntHeader("status",400);
+			// response.setIntHeader("status",400);
 			return new ModelAndView("redirect:/error-400");
-		}	
+		}
 	}
 
 	@PostMapping("/save-buddy-account")
