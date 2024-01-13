@@ -26,6 +26,7 @@ public class WebSecurity {
 		http.authorizeHttpRequests((requests) -> {
 			requests.requestMatchers("/transactions-billing").hasRole("ADMIN");
 			requests.requestMatchers("/sign-up").permitAll();
+			requests.requestMatchers("/error-400").permitAll();
 			requests.requestMatchers(HttpMethod.POST,"/sign-up-form").permitAll();
 			requests.requestMatchers("/logout-success").permitAll();
 			requests.requestMatchers("/css/**").permitAll();

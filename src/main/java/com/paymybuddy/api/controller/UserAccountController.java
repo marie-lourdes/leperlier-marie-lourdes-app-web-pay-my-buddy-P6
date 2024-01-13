@@ -1,5 +1,6 @@
 package com.paymybuddy.api.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import com.paymybuddy.api.domain.model.Account;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.service.UserAccount;
 
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+
 @Controller
 public class UserAccountController {
 
@@ -23,20 +27,15 @@ public class UserAccountController {
 	private UserAccount userAccountService;
 
 	@PostMapping("/sign-up-form")
-	public ModelAndView createUser(@ModelAttribute UserApp user) {
-		UserApp userCreated= new UserApp();
+	public ModelAndView createUser(@Valid @ModelAttribute UserApp user,HttpServletResponse response) throws IOException {
 		try {
-			userCreated=userAccountService.createUser(user);
+			userAccountService.createUser(user);
 			return new ModelAndView("redirect:/");
-		}catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error");
-		}catch(NullPointerException e) {
-			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error");
-		}
-	
-		
+			response.setIntHeader("status",400);
+			return new ModelAndView("redirect:/error-400");
+		}	
 	}
 
 	@PostMapping("/save-buddy-account")
@@ -54,7 +53,7 @@ public class UserAccountController {
 
 	@GetMapping("/account/home")
 	public String getHomePage(Model model, Principal principal) {
-		
+
 		UserApp user = userAccountService.getUserEntityByEmail(principal.getName());
 		model.addAttribute("user", user);
 		return "home";
@@ -80,7 +79,7 @@ public class UserAccountController {
 	}
 
 	@GetMapping("/account-success")
-	public String getSignUpPage() {
+	public String getSignUpSucessPage() {
 		return "account-success";
 	}
 }
