@@ -44,22 +44,20 @@ public class UserAccount {
 	private ContactMapper mapperContact;
 
 	public UserApp createUser(UserApp userApp) throws IllegalArgumentException{
-		UserApp userExisting = userRepository.findByEmail(userApp.getEmail());
 		UserApp userCreated= new UserApp();
+		UserApp userExisting = userRepository.findByEmail(userApp.getEmail());
 		
-		try {
-			if(userExisting.getEmail().equals(userApp.getEmail())) {
-				throw new IllegalArgumentException("Email already exist!");
+			if( userExisting !=null) {
+				if(userExisting.getEmail().equals(userApp.getEmail()) ) {
+					throw new IllegalArgumentException("Email already exist!");
+				}
 			}else {
 				String userPassword = userApp.getPassword();
 				String userPasswordEncoded = passwordEncoder.encode(userPassword);
 				userApp.setPassword(userPasswordEncoded);
 				userCreated = userRepository.save(userApp);
 			}
-		}catch(Exception e) {
-			System.out.println(e.getMessage());
-		}
-		
+			
 		return userCreated;
 	}
 
