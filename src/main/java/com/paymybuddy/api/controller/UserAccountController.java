@@ -41,8 +41,18 @@ public class UserAccountController {
 
 	@PostMapping("/save-buddy-account")
 	public ModelAndView createAccount(Principal principal) {
-		userAccountService.addBuddyAccount(principal.getName());
-		return new ModelAndView("redirect:/account-success");
+		try {
+			userAccountService.addBuddyAccount(principal.getName());
+			return new ModelAndView("redirect:/account-success");
+		}catch(NullPointerException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("redirect:/error-400");
+		}catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("redirect:/error-400");
+		}
+	
+		
 	}
 
 	@PostMapping("/save-contact")

@@ -1,5 +1,6 @@
 package com.paymybuddy.api.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,22 +68,32 @@ public class UserAccount {
 		}
 	}
 
-	public void addBuddyAccount(String emailUser) {
+	public void addBuddyAccount(String emailUser) throws IllegalArgumentException {
 		UserApp user = new UserApp();
 		Account newAccount = new Account();
+		List<Account> accountExisting = new ArrayList<Account>();
 		try {
 			user = userRepository.findByEmail(emailUser);
+			accountExisting = accountRepository.findByUser(user);
 			if (user == null) {
-				throw new NullPointerException("user email " + emailUser + "not found");
-			} else {
-				newAccount.setBalance(80.0);
-				newAccount.setType("Buddy Account");
-				newAccount.setUser(user);
-				newAccount.setCreation(new Date());
+				throw new NullPointerException("user email " + emailUser + " not found");
 			}
-		} catch (Exception e) {
-			e.getMessage();
+		} catch (NullPointerException e) {
+			System.out.println(e.getMessage());
 		}
+
+		for (Account account : accountExisting) {
+			if (account.getType().contains("Buddy Account")) {
+				throw new IllegalArgumentException(
+						" BuddyAccount already exist, " + "birthdate is: " + account.getCreation());
+			}
+		}
+
+		newAccount.setBalance(80.0);
+		newAccount.setType("Buddy Account");
+		newAccount.setUser(user);
+		newAccount.setCreation(new Date());
+
 		accountRepository.save(newAccount);
 	}
 
