@@ -51,20 +51,20 @@ public class UserAccount {
 		return userCreated;
 	}
 
-	public void addUserContact(String emailContact, String emailUser) throws NullPointerException{
+	public void addUserContact(String emailContact, String emailUser) throws IllegalArgumentException {
 		UserApp user = new UserApp();
 		UserApp contactToAdd = new UserApp();
-		
+
 		user = userRepository.findByEmail(emailUser);
 		contactToAdd = userRepository.findByEmail(emailContact);
-			if (contactToAdd == null) {
-				throw new NullPointerException("contact email " + emailContact + " not found");
-			} else {
-				user.addContact(contactToAdd);
-				userRepository.save(user);
-			}		
-		} 
-	
+		if (contactToAdd == null) {
+			throw new IllegalArgumentException("Incorrect contact email " + emailContact + " provided");
+		} else {
+			user.addContact(contactToAdd);
+			userRepository.save(user);
+		}
+	}
+
 	public void addBuddyAccount(String emailUser) {
 		UserApp user = new UserApp();
 		Account newAccount = new Account();
@@ -104,9 +104,7 @@ public class UserAccount {
 
 	public List<UserApp> findUserContacts(String emailUser) {
 		UserApp user = userRepository.findByEmail(emailUser);
-		// List<UserApp> userContacts = new ArrayList<UserApp>();
 		List<UserApp> userContacts = user.getContacts();
-
 		System.out.println("userContact" + userContacts);
 		return userContacts;
 	}
@@ -121,6 +119,7 @@ public class UserAccount {
 				System.out.println("account solde " + account);
 			}
 		});
+		
 		return buddyAccount;
 	}
 
@@ -134,6 +133,7 @@ public class UserAccount {
 				System.out.println("account solde " + account);
 			}
 		});
+		
 		return bankingAccount;
 	}
 
