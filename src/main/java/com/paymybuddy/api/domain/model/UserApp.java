@@ -1,11 +1,16 @@
 package com.paymybuddy.api.domain.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -39,17 +44,34 @@ public class UserApp {
 	@Column(name = "role")
 	private String role = "USER";
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private List<Contact> contacts;
+	/*@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	private List<Contact> contacts;*/
+	
+
+	@ManyToMany(
+			fetch = FetchType.LAZY,
+			cascade = { 
+					CascadeType.PERSIST, 
+					CascadeType.MERGE 
+					}	
+			)
+	@JoinTable(
+			name = "contacts",
+			joinColumns = @JoinColumn(name =  "id_contact"), 
+			inverseJoinColumns = @JoinColumn(name = "user_id")
+			)
+	List<UserApp> contacts = new ArrayList<>();
+	
+	
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Account> buddyAccount;
 
 
-	public List<Contact> addContact(Contact contact) {
+/*	public List<Contact> addContact(Contact contact) {
 		this.contacts.add(contact);
 		return this.getContacts();
-	}
+	}*/
 	
 	@Override
 	public String toString() {
