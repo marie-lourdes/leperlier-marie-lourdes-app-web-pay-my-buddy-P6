@@ -51,22 +51,21 @@ public class UserAccount {
 		return userCreated;
 	}
 
-	public void addUserContact(String emailContact, String emailUser) {
+	public void addUserContact(String emailContact, String emailUser) throws NullPointerException{
 		UserApp user = new UserApp();
 		UserApp contactToAdd = new UserApp();
 
 		try {
 			user = userRepository.findByEmail(emailUser);
 			contactToAdd = userRepository.findByEmail(emailContact);
+			System.out.println("contact to add"+contactToAdd );
 			if (contactToAdd == null) {
 				throw new NullPointerException("contact email " + emailContact + "not found");
 			} else {
 				user.addContact(contactToAdd);
-				;
-				// newUserContact.setUserId(user.getEmail());
 			}
 		} catch (Exception e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 		userRepository.save(user);
 

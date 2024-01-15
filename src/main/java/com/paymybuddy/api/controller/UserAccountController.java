@@ -47,14 +47,18 @@ public class UserAccountController {
 
 	@PostMapping("/save-contact")
 	public ModelAndView createContact(@ModelAttribute UserApp contact, Principal principal) throws IOException {
+		
 		try {
 			userAccountService.addUserContact(contact.getEmail(), principal.getName());
-			return new ModelAndView("redirect:/account/contact");
+	
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
 			return new ModelAndView("redirect:/error-400");
+		}catch (NullPointerException e) {
+			e.getMessage();
 		}
+		return new ModelAndView("redirect:/account/contact");
 	}
 
 	@GetMapping("/sign-up")
