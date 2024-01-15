@@ -58,7 +58,9 @@ public class UserAccount {
 		user = userRepository.findByEmail(emailUser);
 		contactToAdd = userRepository.findByEmail(emailContact);
 		if (contactToAdd == null) {
-			throw new IllegalArgumentException("Incorrect contact email " + emailContact + " provided");
+			throw new IllegalArgumentException("Incorrect contact email  provided: " + emailContact);
+		} else if (user.getContacts().contains(contactToAdd)) {
+			throw new IllegalArgumentException("Contact already exist!");
 		} else {
 			user.addContact(contactToAdd);
 			userRepository.save(user);
@@ -119,7 +121,7 @@ public class UserAccount {
 				System.out.println("account solde " + account);
 			}
 		});
-		
+
 		return buddyAccount;
 	}
 
@@ -133,7 +135,7 @@ public class UserAccount {
 				System.out.println("account solde " + account);
 			}
 		});
-		
+
 		return bankingAccount;
 	}
 
