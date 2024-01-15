@@ -19,9 +19,11 @@ public class Contact{
 	private final String REGEX_P = "^(.+)@(\\S+)$";
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	private Integer id;
 	
 	@NotNull
 	@Pattern(regexp = REGEX_P)
+	@Column(name = "id_contact")
 	private String idContact;
 
 	@NotNull

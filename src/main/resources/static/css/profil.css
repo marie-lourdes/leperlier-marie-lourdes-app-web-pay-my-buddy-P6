@@ -10,15 +10,15 @@
 	flex-direction: column;
 }
 
-.section-user-info--accounts {
+.section-user-info--padding{
 	padding-bottom: 5px;
 }
 
-.button-styled--creating-account {
+.button-styled--profil{
 	margin: 40px 0;
 }
 
-.button-form--creating-account {
+.button-form--profil {
 	width: 70%;
 	text-wrap: wrap;
 }
