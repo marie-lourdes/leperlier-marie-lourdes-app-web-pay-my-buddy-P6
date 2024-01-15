@@ -9,7 +9,7 @@ import com.paymybuddy.api.domain.model.Contact;
 public class ContactMapper {
 
 	public ContactDTO contactToContactDTO(Contact contact) {
-		String email = contact.getIdContact();
+		String email = contact.getEmailContact();
 		String firstName = contact.getFirstName();
 		String lastName = contact.getLastName();
 

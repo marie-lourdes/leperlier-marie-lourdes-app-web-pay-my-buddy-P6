@@ -72,7 +72,7 @@ public class UserAccount {
 			if (contactToAdd == null) {
 				throw new NullPointerException("contact email " + emailContact + "not found");
 			} else {
-				newUserContact.setIdContact(contactToAdd.getEmail());
+				newUserContact.setEmailContact(contactToAdd.getEmail());
 				newUserContact.setFirstName(contactToAdd.getFirstName());
 				newUserContact.setLastName(contactToAdd.getLastName());
 				newUserContact.setUser(user);
@@ -130,7 +130,7 @@ public class UserAccount {
 			if (contact.getUser().getEmail().equals(emailUser)) {
 				// System.out.println("contact of user
 				// "+contact.getUser().getFirstName()+":"+contact.getIdContact() );
-				contactFound.setIdContact(contact.getIdContact());
+				contactFound.setEmailContact(contact.getEmailContact());
 				contactFound.setFirstName(contact.getFirstName());
 				contactFound.setLastName(contact.getLastName());
 				contacts.add(contactFound);

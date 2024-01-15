@@ -21,6 +21,7 @@ public class UserApp {
 	@Id
 	@NotNull
 	@Pattern(regexp = REGEX_P)
+	@Column(name = "user_id", unique= true)
 	private String email;
 
 	@NotNull

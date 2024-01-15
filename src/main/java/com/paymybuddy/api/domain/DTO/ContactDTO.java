@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ContactDTO {
-	private String idContact;
+	private String emailContact ;
 	private String firstName;
 	private String lastName;
 	
@@ -12,14 +12,14 @@ public class ContactDTO {
 		
 	}
 	
-	public ContactDTO(String idContact, String firstName, String lastName) {
-		this.idContact = idContact;
+	public ContactDTO(String emailContact , String firstName, String lastName) {
+		this.emailContact = emailContact ;
 		this.firstName = firstName;
 		this.lastName=lastName;
 	}
 
 	@Override
 	public String toString() {
-		return "ContactDTO{" + "idContact:" + idContact+ ", firstName:" + firstName +", lastName:" + lastName + '}';
+		return "ContactDTO{" + "emailContact :" + emailContact + ", firstName:" + firstName +", lastName:" + lastName + '}';
 	}
 }

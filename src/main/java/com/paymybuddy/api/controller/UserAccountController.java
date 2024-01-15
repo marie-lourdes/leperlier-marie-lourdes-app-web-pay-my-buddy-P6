@@ -51,7 +51,7 @@ public class UserAccountController {
 	public ModelAndView createContact(@ModelAttribute Contact contact,Principal principal)
 			throws IOException {
 		try {
-			userAccountService.addUserContact(contact.getIdContact(),principal.getName());
+			userAccountService.addUserContact(contact.getEmailContact(),principal.getName());
 			return new ModelAndView("redirect:/account/contact");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());

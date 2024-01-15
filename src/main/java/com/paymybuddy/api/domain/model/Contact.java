@@ -19,12 +19,13 @@ public class Contact{
 	private final String REGEX_P = "^(.+)@(\\S+)$";
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name = "id_contact")
 	private Integer id;
 	
 	@NotNull
 	@Pattern(regexp = REGEX_P)
-	@Column(name = "id_contact")
-	private String idContact;
+	@Column(name = "email_contact")
+	private String emailContact;
 
 	@NotNull
 	@Column(name = "first_name")
@@ -41,6 +42,6 @@ public class Contact{
 
 	@Override
 	public String toString() {
-		return "UserApp{" + "email:" + idContact+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", user_" + user+ '}';
+		return "UserApp{" + "email:" + emailContact+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", user_" + user+ '}';
 	}
 }
