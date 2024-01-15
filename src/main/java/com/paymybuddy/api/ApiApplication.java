@@ -42,6 +42,9 @@ public class ApiApplication implements CommandLineRunner {
     	userContact.setLastName("lastname1");*/
     	
     	//userAccount.addUserContact("testuser1@gmail.com","testuser2@gmail.com");
+     	//userAccount.addUserContact("testuser1@gmail.com","testuser3@gmail.com");
+    	userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
+    	userAccount.findUserContacts("testuser2@gmail.com");
     	//userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
     	//UserApp user= userAccount.getUserEntityByEmail("testuser3@gmail.com");
     	// userAccount.findUserContacts("testuser2@gmail.com");

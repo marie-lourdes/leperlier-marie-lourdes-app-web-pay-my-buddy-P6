@@ -57,8 +57,8 @@ public class UserApp {
 			)
 	@JoinTable(
 			name = "contacts",
-			joinColumns = @JoinColumn(name =  "id_contact"), 
-			inverseJoinColumns = @JoinColumn(name = "user_id")
+			joinColumns = @JoinColumn(name =  "user_id"), 
+			inverseJoinColumns = @JoinColumn(name =  "id_contact")
 			)
 	List<UserApp> contacts = new ArrayList<>();
 	
@@ -68,10 +68,10 @@ public class UserApp {
 	private List<Account> buddyAccount;
 
 
-/*	public List<Contact> addContact(Contact contact) {
+	public void addContact(UserApp contact) {
 		this.contacts.add(contact);
-		return this.getContacts();
-	}*/
+		
+	}
 	
 	@Override
 	public String toString() {

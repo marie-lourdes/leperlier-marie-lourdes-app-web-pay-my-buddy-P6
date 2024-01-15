@@ -47,7 +47,7 @@ public class UserAccountController {
 	}
 
 
-	@PostMapping("/save-contact")
+/*	@PostMapping("/save-contact")
 	public ModelAndView createContact(@ModelAttribute Contact contact,Principal principal)
 			throws IOException {
 		try {
@@ -58,7 +58,8 @@ public class UserAccountController {
 			// response.setIntHeader("status",400);
 			return new ModelAndView("redirect:/error-400");
 		}
-	}
+	}*/
+	
 	@GetMapping("/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
@@ -74,12 +75,12 @@ public class UserAccountController {
 		return "home";
 	}
 
-	@GetMapping("/account/contact") // enpoint template contacts
+/*	@GetMapping("/account/contact") // enpoint template contacts
 	public String getUserContact(Model model, Principal principal) {
 		List<ContactDTO> allContact = userAccountService.findUserContacts(principal.getName());
 		model.addAttribute("contacts", allContact);
 		return "contacts";
-	}
+	}*/
 
 	@GetMapping("/account/profil") //
 	public String getProfilPage(Model model, Principal principal) {

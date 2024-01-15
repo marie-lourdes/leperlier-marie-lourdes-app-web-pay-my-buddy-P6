@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.api.domain.DTO.ContactDTO;
-import com.paymybuddy.api.domain.DTO.ContactMapper;
+
 import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.DTO.UserMapper;
@@ -41,9 +41,6 @@ public class UserAccount {
 	@Autowired
 	private UserMapper mapper;
 
-	@Autowired
-	private ContactMapper mapperContact;
-
 	public UserApp createUser(UserApp userApp) throws IllegalArgumentException{
 		UserApp userCreated= new UserApp();
 		UserApp userExisting = userRepository.findByEmail(userApp.getEmail());
@@ -65,22 +62,20 @@ public class UserAccount {
 	public void addUserContact(String emailContact, String emailUser) {
 		UserApp user = new UserApp();
 		UserApp contactToAdd = new UserApp();
-		Contact newUserContact = new Contact();
+		UserApp  newUserContact = new UserApp ();
 		try {
 			user = userRepository.findByEmail(emailUser);
 			contactToAdd = userRepository.findByEmail(emailContact);
 			if (contactToAdd == null) {
 				throw new NullPointerException("contact email " + emailContact + "not found");
 			} else {
-				newUserContact.setEmailContact(contactToAdd.getEmail());
-				newUserContact.setFirstName(contactToAdd.getFirstName());
-				newUserContact.setLastName(contactToAdd.getLastName());
-				newUserContact.setUser(user);
+				user.addContact(contactToAdd);;
+				//newUserContact.setUserId(user.getEmail());				
 			}
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		contactRepository.save(newUserContact);
+		userRepository.save(user);
 		
 	}
 
@@ -121,23 +116,24 @@ public class UserAccount {
 		return user;
 	}
 
-	public List<ContactDTO> findUserContacts(String emailUser) {
-		Iterable<Contact> allContacts = contactRepository.findAll();
-		List<ContactDTO> contacts = new ArrayList<ContactDTO>();
-
-		allContacts.forEach(contact -> {
-			ContactDTO contactFound = mapperContact.contactToContactDTO(contact);
+	public List<UserApp> findUserContacts(String emailUser) {
+		UserApp user = userRepository.findByEmail(emailUser);
+		//List<UserApp> userContacts = new ArrayList<UserApp>();
+		List<UserApp> userContacts =user.getContacts();
+		//UserLoginDTO userLoginDTO = mapper.UserToUserLoginDTO(user);
+		/*allContacts.forEach(contact -> {
+			
 			if (contact.getUser().getEmail().equals(emailUser)) {
-				// System.out.println("contact of user
-				// "+contact.getUser().getFirstName()+":"+contact.getIdContact() );
+			
 				contactFound.setEmailContact(contact.getEmailContact());
 				contactFound.setFirstName(contact.getFirstName());
 				contactFound.setLastName(contact.getLastName());
 				contacts.add(contactFound);
 			}
-		});
+		});*/
 		// System.out.println(allcontacts );//provoque des erreurs stackoverflow
-		return contacts;
+		System.out.println("userContact"+userContacts);
+		return userContacts;
 	}
 
 	public Account findBuddyAccountByUser(String emailUser) {

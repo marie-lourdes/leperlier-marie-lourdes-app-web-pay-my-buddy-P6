@@ -20,28 +20,21 @@ public class Contact{
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name = "id_contact")
-	private Integer id;
+	private String idContact;
 	
 	@NotNull
 	@Pattern(regexp = REGEX_P)
-	@Column(name = "email_contact")
-	private String emailContact;
+	@Column(name = "user_id")
+	private String userId;
 
-	@NotNull
-	@Column(name = "first_name")
-	private String firstName;
 
-	@NotNull
-	@Column(name = "last_name")
-	private String lastName;
-
-	@NotNull
+	/*@NotNull
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private UserApp user;
+	private UserApp user;*/
 
 	@Override
 	public String toString() {
-		return "UserApp{" + "email:" + emailContact+ ", first name:'" + firstName + '\'' + ", last name:" + lastName + ", user_" + user+ '}';
+		return "UserApp{" + "idContact:" + idContact+"userId: " +userId+   '}';
 	}
 }

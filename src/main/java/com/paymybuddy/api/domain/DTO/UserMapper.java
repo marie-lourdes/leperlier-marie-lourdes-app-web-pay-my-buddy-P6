@@ -21,9 +21,9 @@ public class UserMapper {
 	public UserDTO UserToUserDTO(UserApp user) {
 		String email = user.getEmail();
 	    String firstName = user.getFirstName();	
-	    List<Contact>contacts = user.getContacts();	
+	    //List<Contact>contacts = user.getContacts();	
 	    
-		return new UserDTO (email, firstName, contacts);
+		return new UserDTO (email, firstName);
 	}
 
 	/*public UserContactDTO UserToUserContactDTO(UserApp user) {

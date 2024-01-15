@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.paymybuddy.api.domain.model.Contact;
 
 
-@Component
+/*@Component
 public class ContactMapper {
 
 	public ContactDTO contactToContactDTO(Contact contact) {
@@ -16,4 +16,4 @@ public class ContactMapper {
 		return new ContactDTO(email, firstName, lastName);
 	}
 
-}
+}*/
