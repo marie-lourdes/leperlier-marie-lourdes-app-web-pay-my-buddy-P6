@@ -1,6 +1,7 @@
 package com.paymybuddy.api.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,10 +91,10 @@ public class UserAccount {
 			if (user == null) {
 				throw new NullPointerException("user email " + emailUser + "not found");
 			} else {
-				newAccount.setBalance(0.0);
+				newAccount.setBalance(80.0);
 				newAccount.setType("Buddy Account");
 				newAccount.setUser(user);
-				newAccount.setCreated(true);
+				newAccount.setCreation(new Date());;
 			}
 		} catch (Exception e) {
 			e.getMessage();

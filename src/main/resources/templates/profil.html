@@ -44,7 +44,7 @@
 	            <section>
 					<h2>Accounts</h2>	 		
 					<div class="section-user-info section-user-info--accounts">
-	                    <li th:if="${userBuddyAccount.creation}">Balance buddy account: <span th:text="${userBuddyAccount.balance}"> Balance buddy account </span></li>
+	                    <li th:if="${userBuddyAccount.balance}">Balance buddy account: <span th:text="${userBuddyAccount.balance}"> Balance buddy account </span></li>
 	                    <br/>
 	                    <li>Balance bank account: <span th:text="${userBankingAccount.balance}"> Balance bank account</span></li>        
 	                    <form th:action="@{/save-buddy-account}" method="post" >

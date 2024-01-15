@@ -39,7 +39,7 @@ public class UserAccountController {
 		}
 	}
 
-	@PostMapping("/save-buddy-account")
+   @PostMapping("/save-buddy-account")
 	public ModelAndView createAccount(Principal principal) {
 		userAccountService.addBuddyAccount(principal.getName());
 		return new ModelAndView("redirect:/account-success");
@@ -73,7 +73,7 @@ public class UserAccountController {
 		// user.getEmail();
 		Account userBuddyAccountBalance = userAccountService.findBuddyAccountByUser(principal.getName());
 		Account userBankingAccountBalance = userAccountService.findBankingAccountByUser(principal.getName());
-		System.out.println(userBuddyAccountBalance.getBalance());
+		System.out.println("creation"+userBuddyAccountBalance.getCreation());
 		model.addAttribute("user", user);
 		model.addAttribute("userBuddyAccount", userBuddyAccountBalance);
 		model.addAttribute("userBankingAccount", userBankingAccountBalance);

@@ -1,5 +1,7 @@
 package com.paymybuddy.api.domain.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +35,7 @@ public class Account {
 	@Column(name = "type")
 	private String type;
 	
-	@Column(name = "created")
-	private boolean created;
+	@Column(name = "creation")
+	private Date creation;
 	
 }
