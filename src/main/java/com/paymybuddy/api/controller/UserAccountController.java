@@ -39,18 +39,16 @@ public class UserAccountController {
 		}
 	}
 
-   @PostMapping("/save-buddy-account")
+	@PostMapping("/save-buddy-account")
 	public ModelAndView createAccount(Principal principal) {
 		userAccountService.addBuddyAccount(principal.getName());
 		return new ModelAndView("redirect:/account-success");
 	}
 
-
 	@PostMapping("/save-contact")
-	public ModelAndView createContact(@ModelAttribute UserApp contact,Principal principal)
-			throws IOException {
+	public ModelAndView createContact(@ModelAttribute UserApp contact, Principal principal) throws IOException {
 		try {
-			userAccountService.addUserContact(contact.getEmail(),principal.getName());
+			userAccountService.addUserContact(contact.getEmail(), principal.getName());
 			return new ModelAndView("redirect:/account/contact");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -58,7 +56,7 @@ public class UserAccountController {
 			return new ModelAndView("redirect:/error-400");
 		}
 	}
-	
+
 	@GetMapping("/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
@@ -87,10 +85,10 @@ public class UserAccountController {
 		// user.getEmail();
 		Account userBuddyAccountBalance = userAccountService.findBuddyAccountByUser(user.getEmail());
 		Account userBankingAccountBalance = userAccountService.findBankingAccountByUser(user.getEmail());
-		System.out.println("creation"+userBuddyAccountBalance.getCreation());
-		 UserDTO contactCreated = new UserDTO();
+		System.out.println("creation" + userBuddyAccountBalance.getCreation());
+		UserDTO contactCreated = new UserDTO();
 		model.addAttribute("contact", contactCreated);
-	model.addAttribute("user", user);
+		model.addAttribute("user", user);
 		model.addAttribute("userBuddyAccount", userBuddyAccountBalance);
 		model.addAttribute("userBankingAccount", userBankingAccountBalance);
 		return "profil";

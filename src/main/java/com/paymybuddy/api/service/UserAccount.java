@@ -33,21 +33,21 @@ public class UserAccount {
 	@Autowired
 	private UserMapper mapper;
 
-	public UserApp createUser(UserApp userApp) throws IllegalArgumentException{
-		UserApp userCreated= new UserApp();
+	public UserApp createUser(UserApp userApp) throws IllegalArgumentException {
+		UserApp userCreated = new UserApp();
 		UserApp userExisting = userRepository.findByEmail(userApp.getEmail());
-		
-			if( userExisting !=null) {
-				if(userExisting.getEmail().equals(userApp.getEmail()) ) {
-					throw new IllegalArgumentException("Email already exist!");
-				}
-			}else {
-				String userPassword = userApp.getPassword();
-				String userPasswordEncoded = passwordEncoder.encode(userPassword);
-				userApp.setPassword(userPasswordEncoded);
-				userCreated = userRepository.save(userApp);
+
+		if (userExisting != null) {
+			if (userExisting.getEmail().equals(userApp.getEmail())) {
+				throw new IllegalArgumentException("Email already exist!");
 			}
-			
+		} else {
+			String userPassword = userApp.getPassword();
+			String userPasswordEncoded = passwordEncoder.encode(userPassword);
+			userApp.setPassword(userPasswordEncoded);
+			userCreated = userRepository.save(userApp);
+		}
+
 		return userCreated;
 	}
 
@@ -61,14 +61,15 @@ public class UserAccount {
 			if (contactToAdd == null) {
 				throw new NullPointerException("contact email " + emailContact + "not found");
 			} else {
-				user.addContact(contactToAdd);;
-				//newUserContact.setUserId(user.getEmail());				
+				user.addContact(contactToAdd);
+				;
+				// newUserContact.setUserId(user.getEmail());
 			}
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		userRepository.save(user);
-		
+
 	}
 
 	public void addBuddyAccount(String emailUser) {
@@ -110,10 +111,10 @@ public class UserAccount {
 
 	public List<UserApp> findUserContacts(String emailUser) {
 		UserApp user = userRepository.findByEmail(emailUser);
-		//List<UserApp> userContacts = new ArrayList<UserApp>();
-		List<UserApp> userContacts =user.getContacts();
-		
-		System.out.println("userContact"+userContacts);
+		// List<UserApp> userContacts = new ArrayList<UserApp>();
+		List<UserApp> userContacts = user.getContacts();
+
+		System.out.println("userContact" + userContacts);
 		return userContacts;
 	}
 
@@ -122,20 +123,20 @@ public class UserAccount {
 		Account buddyAccount = new Account();
 
 		allAccounts.forEach(account -> {
-			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Buddy Account") ) {
+			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Buddy Account")) {
 				buddyAccount.setBalance(account.getBalance());
 				System.out.println("account solde " + account);
 			}
 		});
 		return buddyAccount;
 	}
-	
+
 	public Account findBankingAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
 		Account bankingAccount = new Account();
 
 		allAccounts.forEach(account -> {
-			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Banking Account") ) {
+			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Banking Account")) {
 				bankingAccount.setBalance(account.getBalance());
 				System.out.println("account solde " + account);
 			}
