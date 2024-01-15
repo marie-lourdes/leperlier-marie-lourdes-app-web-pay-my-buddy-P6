@@ -50,15 +50,11 @@ public class UserAccountController {
 		
 		try {
 			userAccountService.addUserContact(contact.getEmail(), principal.getName());
-	
-		} catch (IllegalArgumentException e) {
+			return new ModelAndView("redirect:/account/contact");
+		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
-			// response.setIntHeader("status",400);
 			return new ModelAndView("redirect:/error-400");
-		}catch (NullPointerException e) {
-			e.getMessage();
-		}
-		return new ModelAndView("redirect:/account/contact");
+		}	
 	}
 
 	@GetMapping("/sign-up")

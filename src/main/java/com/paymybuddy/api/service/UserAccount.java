@@ -54,23 +54,17 @@ public class UserAccount {
 	public void addUserContact(String emailContact, String emailUser) throws NullPointerException{
 		UserApp user = new UserApp();
 		UserApp contactToAdd = new UserApp();
-
-		try {
-			user = userRepository.findByEmail(emailUser);
-			contactToAdd = userRepository.findByEmail(emailContact);
-			System.out.println("contact to add"+contactToAdd );
+		
+		user = userRepository.findByEmail(emailUser);
+		contactToAdd = userRepository.findByEmail(emailContact);
 			if (contactToAdd == null) {
-				throw new NullPointerException("contact email " + emailContact + "not found");
+				throw new NullPointerException("contact email " + emailContact + " not found");
 			} else {
 				user.addContact(contactToAdd);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		userRepository.save(user);
-
-	}
-
+				userRepository.save(user);
+			}		
+		} 
+	
 	public void addBuddyAccount(String emailUser) {
 		UserApp user = new UserApp();
 		Account newAccount = new Account();
