@@ -5,10 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.paymybuddy.api.domain.model.Account;
-import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IAccountRepository;
-import com.paymybuddy.api.repository.IContactRepository;
 import com.paymybuddy.api.repository.IUserRepository;
 import com.paymybuddy.api.service.UserAccount;
 
@@ -19,9 +16,6 @@ public class ApiApplication implements CommandLineRunner {
 	@Autowired
 	private UserAccount userAccount ;
 	
-	@Autowired
-	IContactRepository contactRepository;
-
 	@Autowired
 	IUserRepository userRepository;
 	
@@ -43,8 +37,8 @@ public class ApiApplication implements CommandLineRunner {
     	
     	//userAccount.addUserContact("testuser1@gmail.com","testuser2@gmail.com");
      	//userAccount.addUserContact("testuser1@gmail.com","testuser3@gmail.com");
-    	userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
-    	userAccount.findUserContacts("testuser2@gmail.com");
+    	//userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
+    	//userAccount.findUserContacts("testuser2@gmail.com");
     	//userAccount.addUserContact("testuser3@gmail.com","testuser2@gmail.com");
     	//UserApp user= userAccount.getUserEntityByEmail("testuser3@gmail.com");
     	// userAccount.findUserContacts("testuser2@gmail.com");

@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.paymybuddy.api.domain.DTO.ContactDTO;
+import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.model.Account;
-import com.paymybuddy.api.domain.model.Contact;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.service.UserAccount;
 
@@ -47,18 +46,18 @@ public class UserAccountController {
 	}
 
 
-/*	@PostMapping("/save-contact")
-	public ModelAndView createContact(@ModelAttribute Contact contact,Principal principal)
+	@PostMapping("/save-contact")
+	public ModelAndView createContact(@ModelAttribute UserApp contact,Principal principal)
 			throws IOException {
 		try {
-			userAccountService.addUserContact(contact.getEmailContact(),principal.getName());
+			userAccountService.addUserContact(contact.getEmail(),principal.getName());
 			return new ModelAndView("redirect:/account/contact");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
 			return new ModelAndView("redirect:/error-400");
 		}
-	}*/
+	}
 	
 	@GetMapping("/sign-up")
 	public String getSignUpPage(Model model) {
@@ -75,12 +74,12 @@ public class UserAccountController {
 		return "home";
 	}
 
-/*	@GetMapping("/account/contact") // enpoint template contacts
+	@GetMapping("/account/contact") // enpoint template contacts
 	public String getUserContact(Model model, Principal principal) {
-		List<ContactDTO> allContact = userAccountService.findUserContacts(principal.getName());
+		List<UserApp> allContact = userAccountService.findUserContacts(principal.getName());
 		model.addAttribute("contacts", allContact);
 		return "contacts";
-	}*/
+	}
 
 	@GetMapping("/account/profil") //
 	public String getProfilPage(Model model, Principal principal) {
@@ -89,9 +88,9 @@ public class UserAccountController {
 		Account userBuddyAccountBalance = userAccountService.findBuddyAccountByUser(user.getEmail());
 		Account userBankingAccountBalance = userAccountService.findBankingAccountByUser(user.getEmail());
 		System.out.println("creation"+userBuddyAccountBalance.getCreation());
-		Contact contactCreated = new Contact();
+		 UserDTO contactCreated = new UserDTO();
 		model.addAttribute("contact", contactCreated);
-		model.addAttribute("user", user);
+	model.addAttribute("user", user);
 		model.addAttribute("userBuddyAccount", userBuddyAccountBalance);
 		model.addAttribute("userBankingAccount", userBankingAccountBalance);
 		return "profil";

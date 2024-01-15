@@ -1,6 +1,5 @@
 package com.paymybuddy.api.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,16 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.paymybuddy.api.domain.DTO.ContactDTO;
-
 import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.DTO.UserLoginDTO;
 import com.paymybuddy.api.domain.DTO.UserMapper;
 import com.paymybuddy.api.domain.model.Account;
-import com.paymybuddy.api.domain.model.Contact;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IAccountRepository;
-import com.paymybuddy.api.repository.IContactRepository;
 import com.paymybuddy.api.repository.IUserRepository;
 
 import jakarta.transaction.Transactional;
@@ -31,9 +26,6 @@ public class UserAccount {
 
 	@Autowired
 	private IUserRepository userRepository;
-
-	@Autowired
-	private IContactRepository contactRepository;
 
 	@Autowired
 	private IAccountRepository accountRepository;
@@ -62,7 +54,7 @@ public class UserAccount {
 	public void addUserContact(String emailContact, String emailUser) {
 		UserApp user = new UserApp();
 		UserApp contactToAdd = new UserApp();
-		UserApp  newUserContact = new UserApp ();
+
 		try {
 			user = userRepository.findByEmail(emailUser);
 			contactToAdd = userRepository.findByEmail(emailContact);
@@ -120,18 +112,7 @@ public class UserAccount {
 		UserApp user = userRepository.findByEmail(emailUser);
 		//List<UserApp> userContacts = new ArrayList<UserApp>();
 		List<UserApp> userContacts =user.getContacts();
-		//UserLoginDTO userLoginDTO = mapper.UserToUserLoginDTO(user);
-		/*allContacts.forEach(contact -> {
-			
-			if (contact.getUser().getEmail().equals(emailUser)) {
-			
-				contactFound.setEmailContact(contact.getEmailContact());
-				contactFound.setFirstName(contact.getFirstName());
-				contactFound.setLastName(contact.getLastName());
-				contacts.add(contactFound);
-			}
-		});*/
-		// System.out.println(allcontacts );//provoque des erreurs stackoverflow
+		
 		System.out.println("userContact"+userContacts);
 		return userContacts;
 	}

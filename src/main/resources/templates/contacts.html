@@ -45,9 +45,9 @@
 							<td colspan="3">Vous n'avez pas de contacts</td>
 						</tr>
 						<tr th:each="contact: ${contacts}">
-							<td><span th:text="${contact.firstName}"> Prénom </span></td>
 							<td><span th:text="${contact.lastName}"> Nom </span></td>
-							<td><span th:text="${contact.emailContact}"> Email</span></td>
+							<td><span th:text="${contact.firstName}"> Prénom </span></td>
+							<td><span th:text="${contact.email}"> Email</span></td>
 						</tr>
 					</tbody>
 				</table>				  		

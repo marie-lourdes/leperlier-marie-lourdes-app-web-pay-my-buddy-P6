@@ -2,29 +2,26 @@ package com.paymybuddy.api.domain.DTO;
 
 import java.util.List;
 
-import com.paymybuddy.api.domain.model.Contact;
-
 import lombok.Data;
 
 @Data
 public class UserDTO {
 	private String email;
 	private String firstName;
-	
-	//private List<Contact> contacts;
-	
+	private String lastName;
 	public UserDTO() {
 		
 	}
 	
-	public UserDTO(String email,String firstName) {
+	public UserDTO(String email,String firstName, String lastName) {
 		this.email = email;
 		this.firstName = firstName;
-		
+		this.lastName = lastName;
+	
 	}
 
 	@Override
 	public String toString() {
-		return "UserDTO{" + "email:" + email + ", firstName:" + firstName + '}';
+		return "UserDTO{" + "email:" + email + ", firstName:" + firstName +", lastName:" + lastName + '}';
 	}
 }
