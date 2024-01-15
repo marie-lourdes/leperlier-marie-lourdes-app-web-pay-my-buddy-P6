@@ -22,3 +22,13 @@
 	width: 70%;
 	text-wrap: wrap;
 }
+
+.fa-solid.fa-user {
+	font-size: 1.3rem;
+	margin-right: 5px;;
+}
+
+.field-connection{
+	padding: 10px  20px 10px 5px;
+	width: 50%;
+}

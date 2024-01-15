@@ -63,11 +63,10 @@
 				<h2>Connections</h2>
 				<div class="section-user-info section-user-info--padding">
 					<form th:action="@{/save-contact}" method="post" th:object="${contact}">
-
-						<div class="login-field">
+						<div >
 							<div class="login-field--fontawesome">
 								<i class="fa-solid fa-user"></i>
-								<input th:field="*{idContact}" type="email" name="id-contact" required
+								<input class="field-connection" th:field="*{idContact}" type="email" name="id-contact" required
 									placeholder="durand@email.com" />
 							</div>
 						</div>
