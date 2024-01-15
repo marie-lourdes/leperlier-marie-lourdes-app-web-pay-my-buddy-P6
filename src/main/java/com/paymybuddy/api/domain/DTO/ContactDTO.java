@@ -1,9 +1,5 @@
 package com.paymybuddy.api.domain.DTO;
 
-import java.util.List;
-
-import com.paymybuddy.api.domain.model.Contact;
-
 import lombok.Data;
 
 @Data
@@ -24,6 +20,6 @@ public class ContactDTO {
 
 	@Override
 	public String toString() {
-		return "ContactDTO{" + "idContact:" + idContact + ", firstName:" + firstName +", lastName:" + lastName + '}';
+		return "ContactDTO{" + "idContact:" + idContact+ ", firstName:" + firstName +", lastName:" + lastName + '}';
 	}
 }

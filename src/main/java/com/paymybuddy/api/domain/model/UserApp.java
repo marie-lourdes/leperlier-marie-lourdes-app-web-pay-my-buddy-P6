@@ -41,7 +41,7 @@ public class UserApp {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Contact> contacts;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Account> buddyAccount;
 
 

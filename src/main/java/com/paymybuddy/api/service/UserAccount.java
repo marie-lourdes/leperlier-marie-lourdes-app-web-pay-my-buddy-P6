@@ -93,6 +93,7 @@ public class UserAccount {
 				newAccount.setBalance(0.0);
 				newAccount.setType("Buddy Account");
 				newAccount.setUser(user);
+				newAccount.setCreated(true);
 			}
 		} catch (Exception e) {
 			e.getMessage();
@@ -142,7 +143,7 @@ public class UserAccount {
 		Account buddyAccount = new Account();
 
 		allAccounts.forEach(account -> {
-			if (account.getUser().getEmail().equals(emailUser)&& account.getType().contains("Buddy Account") ) {
+			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Buddy Account") ) {
 				buddyAccount.setBalance(account.getBalance());
 				System.out.println("account solde " + account);
 			}

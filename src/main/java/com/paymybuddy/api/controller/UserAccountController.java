@@ -73,6 +73,7 @@ public class UserAccountController {
 		// user.getEmail();
 		Account userBuddyAccountBalance = userAccountService.findBuddyAccountByUser(principal.getName());
 		Account userBankingAccountBalance = userAccountService.findBankingAccountByUser(principal.getName());
+		System.out.println(userBuddyAccountBalance.getBalance());
 		model.addAttribute("user", user);
 		model.addAttribute("userBuddyAccount", userBuddyAccountBalance);
 		model.addAttribute("userBankingAccount", userBankingAccountBalance);
