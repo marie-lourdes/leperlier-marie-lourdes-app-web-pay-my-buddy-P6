@@ -2,6 +2,8 @@ package com.paymybuddy.api.domain.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,6 +18,8 @@ import lombok.Data;
 public class Contact{
 	private final String REGEX_P = "^(.+)@(\\S+)$";
 	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	
 	@NotNull
 	@Pattern(regexp = REGEX_P)
 	private String idContact;

@@ -51,6 +51,17 @@
 						<div class="button-styled button-styled--creating-account"><input class="button-form button-form--creating-account" type="submit" value="Create Buddy Account" /></div>
 					</form>
 			        </div>
+			        <form th:action="@{/save-contact}" method="post" th:object="${contact}">
+					
+		            <div class="login-field">
+						<div class="login-field--fontawesome">
+							<i class="fa-regular fa-envelope"></i>
+							<input th:field="*{idContact}"   type="email" name="id-contact" required  placeholder="Email contact"/>
+						</div>	
+					</div>
+		    
+		            <div class="button-styled"><input class="button-form type" type="submit" value="add connection" /></div>				
+	            </form>
 				</section>
 			</main>
 		</div>          

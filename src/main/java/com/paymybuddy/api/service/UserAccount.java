@@ -62,7 +62,7 @@ public class UserAccount {
 		return userCreated;
 	}
 
-	public void addUserContact(String emailContact, String emailUser) {
+	public Contact addUserContact(String emailContact, String emailUser) {
 		UserApp user = new UserApp();
 		UserApp contactToAdd = new UserApp();
 		Contact newUserContact = new Contact();
@@ -80,7 +80,8 @@ public class UserAccount {
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		contactRepository.save(newUserContact);
+		newUserContact=contactRepository.save(newUserContact);
+		return newUserContact;
 	}
 
 	public void addBuddyAccount(String emailUser) {
@@ -94,7 +95,7 @@ public class UserAccount {
 				newAccount.setBalance(80.0);
 				newAccount.setType("Buddy Account");
 				newAccount.setUser(user);
-				newAccount.setCreation(new Date());;
+				newAccount.setCreation(new Date());
 			}
 		} catch (Exception e) {
 			e.getMessage();

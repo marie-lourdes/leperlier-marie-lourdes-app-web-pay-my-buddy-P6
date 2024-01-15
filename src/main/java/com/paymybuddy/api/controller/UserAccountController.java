@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.paymybuddy.api.domain.DTO.ContactDTO;
 import com.paymybuddy.api.domain.model.Account;
+import com.paymybuddy.api.domain.model.Contact;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.service.UserAccount;
 
@@ -45,6 +46,19 @@ public class UserAccountController {
 		return new ModelAndView("redirect:/account-success");
 	}
 
+
+	@PostMapping("/save-contact")
+	public ModelAndView createContact(@ModelAttribute Contact contact,Principal principal)
+			throws IOException {
+		try {
+			userAccountService.addUserContact(contact.getIdContact(),principal.getName());
+			return new ModelAndView("redirect:/account/contact");
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			// response.setIntHeader("status",400);
+			return new ModelAndView("redirect:/error-400");
+		}
+	}
 	@GetMapping("/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
@@ -71,9 +85,11 @@ public class UserAccountController {
 	public String getProfilPage(Model model, Principal principal) {
 		UserApp user = userAccountService.getUserEntityByEmail(principal.getName());
 		// user.getEmail();
-		Account userBuddyAccountBalance = userAccountService.findBuddyAccountByUser(principal.getName());
-		Account userBankingAccountBalance = userAccountService.findBankingAccountByUser(principal.getName());
+		Account userBuddyAccountBalance = userAccountService.findBuddyAccountByUser(user.getEmail());
+		Account userBankingAccountBalance = userAccountService.findBankingAccountByUser(user.getEmail());
 		System.out.println("creation"+userBuddyAccountBalance.getCreation());
+		Contact contactCreated = new Contact();
+		model.addAttribute("contact", contactCreated);
 		model.addAttribute("user", user);
 		model.addAttribute("userBuddyAccount", userBuddyAccountBalance);
 		model.addAttribute("userBankingAccount", userBankingAccountBalance);
