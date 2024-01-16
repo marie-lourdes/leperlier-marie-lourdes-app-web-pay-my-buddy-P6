@@ -17,13 +17,13 @@ import jakarta.transaction.Transactional;
 @Transactional
 @Service
 public class AccountService {
-	
+
 	@Autowired
 	private IUserRepository userRepository;
-	
+
 	@Autowired
 	private IAccountRepository accountRepository;
-	
+
 	public void addBuddyAccount(String emailUser) throws IllegalArgumentException {
 		UserApp user = new UserApp();
 		Account newAccount = new Account();
@@ -52,7 +52,7 @@ public class AccountService {
 
 		accountRepository.save(newAccount);
 	}
-	
+
 	public Account findBuddyAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
 		Account buddyAccount = new Account();
@@ -66,7 +66,7 @@ public class AccountService {
 
 		return buddyAccount;
 	}
-	
+
 	public Account findBankingAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
 		Account bankingAccount = new Account();
@@ -80,5 +80,4 @@ public class AccountService {
 
 		return bankingAccount;
 	}
-
 }
