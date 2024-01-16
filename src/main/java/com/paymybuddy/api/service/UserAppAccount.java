@@ -21,15 +21,12 @@ import jakarta.transaction.Transactional;
 //service creation user, avec page sign up pour le controller et utilise le service d authentification
 @Transactional
 @Service
-public class UserAccount {
+public class UserAppAccount {
 
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Autowired
 	private IUserRepository userRepository;
-
-	@Autowired
-	private IAccountRepository accountRepository;
 
 	@Autowired
 	private UserMapper mapper;
@@ -68,35 +65,7 @@ public class UserAccount {
 		}
 	}
 
-	public void addBuddyAccount(String emailUser) throws IllegalArgumentException {
-		UserApp user = new UserApp();
-		Account newAccount = new Account();
-		List<Account> accountExisting = new ArrayList<Account>();
-		try {
-			user = userRepository.findByEmail(emailUser);
-			accountExisting = accountRepository.findByUser(user);
-			if (user == null) {
-				throw new NullPointerException("user email " + emailUser + " not found");
-			}
-		} catch (NullPointerException e) {
-			System.out.println(e.getMessage());
-		}
-
-		for (Account account : accountExisting) {
-			if (account.getType().contains("Buddy Account")) {
-				throw new IllegalArgumentException(
-						" BuddyAccount already exist, " + "birthdate is: " + account.getCreation());
-			}
-		}
-
-		newAccount.setBalance(80.0);
-		newAccount.setType("Buddy Account");
-		newAccount.setUser(user);
-		newAccount.setCreation(new Date());
-
-		accountRepository.save(newAccount);
-	}
-
+	
 	public UserLoginDTO getUserLoginByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
 		UserLoginDTO userLoginDTO = mapper.UserToUserLoginDTO(user);
@@ -121,33 +90,4 @@ public class UserAccount {
 		System.out.println("userContact" + userContacts);
 		return userContacts;
 	}
-
-	public Account findBuddyAccountByUser(String emailUser) {
-		Iterable<Account> allAccounts = accountRepository.findAll();
-		Account buddyAccount = new Account();
-
-		allAccounts.forEach(account -> {
-			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Buddy Account")) {
-				buddyAccount.setBalance(account.getBalance());
-				System.out.println("account solde " + account);
-			}
-		});
-
-		return buddyAccount;
-	}
-
-	public Account findBankingAccountByUser(String emailUser) {
-		Iterable<Account> allAccounts = accountRepository.findAll();
-		Account bankingAccount = new Account();
-
-		allAccounts.forEach(account -> {
-			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Banking Account")) {
-				bankingAccount.setBalance(account.getBalance());
-				System.out.println("account solde " + account);
-			}
-		});
-
-		return bankingAccount;
-	}
-
 }

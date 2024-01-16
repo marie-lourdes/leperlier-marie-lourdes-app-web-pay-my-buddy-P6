@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.model.Account;
 import com.paymybuddy.api.domain.model.UserApp;
-import com.paymybuddy.api.service.UserAccount;
+import com.paymybuddy.api.service.UserAppAccount;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 public class UserAccountController {
 
 	@Autowired
-	private UserAccount userAccountService;
+	private UserAppAccount userAccountService;
 
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user, HttpServletResponse response)
