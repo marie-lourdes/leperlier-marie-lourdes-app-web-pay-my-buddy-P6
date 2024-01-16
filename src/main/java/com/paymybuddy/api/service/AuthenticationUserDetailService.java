@@ -23,7 +23,7 @@ import jakarta.transaction.Transactional;
 public class AuthenticationUserDetailService implements UserDetailsService{
 	
 		@Autowired
-		private UserAppAccount userAccountService;
+		private UserAppService userAccountService;
 			
 		@Override
 		public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

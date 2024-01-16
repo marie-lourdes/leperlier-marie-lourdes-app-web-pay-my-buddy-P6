@@ -21,7 +21,7 @@ import jakarta.transaction.Transactional;
 //service creation user, avec page sign up pour le controller et utilise le service d authentification
 @Transactional
 @Service
-public class UserAppAccount {
+public class UserAppService {
 
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
