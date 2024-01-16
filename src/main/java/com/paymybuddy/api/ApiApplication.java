@@ -7,12 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.paymybuddy.api.repository.IUserRepository;
 
-//@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 @SpringBootApplication
 public class ApiApplication implements CommandLineRunner {
-
-	@Autowired
-	IUserRepository userRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
@@ -20,7 +16,6 @@ public class ApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-
 
 	}
 }
