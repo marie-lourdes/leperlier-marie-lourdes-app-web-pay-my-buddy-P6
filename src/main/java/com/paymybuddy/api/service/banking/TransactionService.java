@@ -74,26 +74,28 @@ public class TransactionService {
 		// Stream<Object> resultMapContactUser= contactUser.map(elem->elem);
 		System.out.println("filter contact firstname" + usercontact);
 
-		/*Transaction transationCreated = this.createTransaction(
+		Transaction transationCreated = this.createTransaction(
 				creditUser, 
 				accountService.findBuddyAccountByUser(creditUserId), 
 				usercontact, 
 				accountService.findBuddyAccountByUser(usercontact.getEmail()), 
 				"texte description", 
 				amount,
-				0);	*/
+				0);	
 
-		//this.saveTransactionBDD(transationCreated);
+			
 //mise a jour compte
-	
-	//	accountCreditUser.addTransaction(transationCreated);
-	//	accountCreditUser=	 accountService.updateTransactionBuddyAccount(creditUserId, transationCreated);
+		List<Transaction> listTransaction=accountCreditUser.getTransactions();
+		 listTransaction.add(transationCreated);
+	accountCreditUser.addTransaction(transationCreated);
+		//	accountService.updateTransactionBuddyAccount(creditUserId, listTransaction);
+		//this.saveTransactionBDD(transationCreated);
 		//accountRepository.save(accountCreditUser);
 		//accountRepository.save(accountUserContact);
 		
 		//System.out.println("accountUserContact" + 	accountUserContact);
 		//System.out.println("accountCreditUse" + 	accountCreditUser);
-		//System.out.println("transationCreated" +transationCreated);
+		System.out.println("transationCreated" +transationCreated);
 	}
 	
 //calcul des comptes -tranfert

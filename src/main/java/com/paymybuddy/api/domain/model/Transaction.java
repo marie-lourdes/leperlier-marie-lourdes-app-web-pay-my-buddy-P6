@@ -30,38 +30,22 @@ public class Transaction {
 	private Date date;
 	
 	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER,
-			cascade = { 
-			CascadeType.PERSIST,
-			CascadeType.MERGE,
-			})
+	@ManyToOne
 	@JoinColumn(name = "credit_account_id")
 	private Account creditAccount;
 	
 	@NotNull
-	@ManyToOne(	fetch = FetchType.EAGER,
-			cascade = { 
-			CascadeType.PERSIST,
-			CascadeType.MERGE,
-			})
+	@ManyToOne
 	@JoinColumn(name = "credit_user_id")
 	private UserApp creditUser;
 	
 	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER,
-			cascade = { 
-			CascadeType.PERSIST,
-			CascadeType.MERGE,
-			})
+	@ManyToOne
 	@JoinColumn(name = "beneficiary_count_id")
 	private Account beneficiaryAccount;
 	
 	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER,
-			cascade = { 
-			CascadeType.PERSIST,
-			CascadeType.MERGE,
-			})
+	@ManyToOne
 	@JoinColumn(name = "beneficiary_user_id")
 	private UserApp beneficiaryUser;
 	
