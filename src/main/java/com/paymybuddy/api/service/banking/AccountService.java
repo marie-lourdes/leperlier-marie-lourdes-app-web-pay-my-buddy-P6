@@ -54,17 +54,25 @@ public class AccountService {
 		accountRepository.save(newAccount);
 	}
 
-	public Account updateBalanceBuddyAccount(String emailUserAccount, double amount) {
-		Account buddyAccount = findBuddyAccountByUser(emailUserAccount);
-		buddyAccount.setBalance(amount);
-		return accountRepository.save(buddyAccount);
+	public void updateBalanceBuddyAccount(String emailUserAccount, double amount) {
+		 UserApp user =userRepository.findByEmail(emailUserAccount);
+		accountRepository.updateBalanceBuddyAccount(amount, user);
+		
 	}
 
-	public Account updateTransactionBuddyAccount(String emailUserAccount, Transaction transaction) {
+	/*public Account updateTransactionBuddyAccount(String emailUserAccount, Transaction transaction) {
 		Account buddyAccount = findBuddyAccountByUser(emailUserAccount);
-		buddyAccount.getTransactions().add(transaction);
-		return accountRepository.save(buddyAccount);
-	}
+		Account buddyAccountUpdated = new Account();
+		buddyAccountUpdated.setId(buddyAccount.getId());
+		buddyAccountUpdated.setUser(buddyAccount.getUser());
+		buddyAccountUpdated.setBalance(buddyAccount.getBalance());
+		buddyAccountUpdated.setType(buddyAccount.getType());
+		buddyAccountUpdated.setCreation(buddyAccount.getCreation());
+		buddyAccountUpdated.getTransactions().add(transaction);
+		//buddyAccount.setTransactions();
+		accountRepository.save(buddyAccountUpdated);
+		return buddyAccountUpdated;
+	}*/
 
 	public Account findBuddyAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();

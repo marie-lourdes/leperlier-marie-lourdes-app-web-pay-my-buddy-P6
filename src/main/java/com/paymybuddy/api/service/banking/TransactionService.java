@@ -10,6 +10,7 @@ import com.paymybuddy.api.domain.model.Account;
 import com.paymybuddy.api.domain.model.Transaction;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.ITransactionRepository;
+import com.paymybuddy.api.repository.IUserRepository;
 import com.paymybuddy.api.service.UserAppService;
 
 import jakarta.transaction.Transactional;
@@ -25,6 +26,9 @@ public class TransactionService {
 
 	@Autowired
 	AccountService accountService;
+	
+	@Autowired
+	IUserRepository  userRepository ;
 
 	public List<Transaction> getAllTransactions() {
 		return transactionRepository.findAll();
@@ -65,36 +69,40 @@ public class TransactionService {
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amount);
-
+		accountService.updateBalanceBuddyAccount(usercontact.getEmail(), balanceCalculatedBeneficiaryUser);
+		accountService.updateBalanceBuddyAccount(creditUser.getEmail(), balanceCalculatedCreditUser);
 		// Stream<Object> resultMapContactUser= contactUser.map(elem->elem);
 		System.out.println("filter contact firstname" + usercontact);
 
-		Transaction transationCreated = this.createTransaction(
+		/*Transaction transationCreated = this.createTransaction(
 				creditUser, 
 				accountService.findBuddyAccountByUser(creditUserId), 
 				usercontact, 
 				accountService.findBuddyAccountByUser(usercontact.getEmail()), 
 				"texte description", 
 				amount,
-				0);	
+				0);	*/
 
-		this.saveTransactionBDD(transationCreated);
+		//this.saveTransactionBDD(transationCreated);
 //mise a jour compte
-		accountUserContact=accountService.updateBalanceBuddyAccount(usercontact.getEmail(), balanceCalculatedBeneficiaryUser);
-		accountCreditUser=accountService.updateBalanceBuddyAccount(creditUser.getEmail(), balanceCalculatedCreditUser);
-		accountCreditUser.addTransaction(transationCreated);
-		accountCreditUser=	 accountService.updateTransactionBuddyAccount(creditUserId, transationCreated);
 	
-		 
+	//	accountCreditUser.addTransaction(transationCreated);
+	//	accountCreditUser=	 accountService.updateTransactionBuddyAccount(creditUserId, transationCreated);
+		//accountRepository.save(accountCreditUser);
+		//accountRepository.save(accountUserContact);
+		
+		//System.out.println("accountUserContact" + 	accountUserContact);
+		//System.out.println("accountCreditUse" + 	accountCreditUser);
+		//System.out.println("transationCreated" +transationCreated);
 	}
 	
 //calcul des comptes -tranfert
 	public double addAmount(double balance, double amount) {
-		return balance - amount;
+		return balance + amount;
 	}
 
 	public double withdrawAmount(double balance, double amount) {
-		return balance + amount;
+		return balance - amount;
 	}
 
 }

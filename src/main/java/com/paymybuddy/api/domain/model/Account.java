@@ -35,7 +35,6 @@ public class Account {
 	@Column(name = "balance")
 	private double balance;
 	
-	
 	@Column(name = "type")
 	private String type;
 	
