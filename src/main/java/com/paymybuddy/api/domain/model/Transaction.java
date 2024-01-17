@@ -31,6 +31,7 @@ public class Transaction {
 	private Account creditAccount;
 	
 	@NotNull
+	@ManyToOne
 	@JoinColumn(name = "credit_user_id")
 	private UserApp creditUser;
 	
