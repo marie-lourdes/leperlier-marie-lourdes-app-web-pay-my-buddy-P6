@@ -31,8 +31,7 @@ public class Transaction {
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER,
 			cascade = { 
-			CascadeType.PERSIST,
-			CascadeType.MERGE,
+			CascadeType.ALL
 			})
 	@JoinColumn(name = "credit_account_id")
 	private Account creditAccount;
@@ -40,8 +39,8 @@ public class Transaction {
 	@NotNull
 	@ManyToOne(	fetch = FetchType.EAGER,
 			cascade = { 
-			CascadeType.PERSIST,
-			CascadeType.MERGE,
+			CascadeType.ALL
+			
 			})
 	@JoinColumn(name = "credit_user_id")
 	private UserApp creditUser;
@@ -49,8 +48,8 @@ public class Transaction {
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER,
 			cascade = { 
-			CascadeType.PERSIST,
-			CascadeType.MERGE,
+			CascadeType.ALL
+			
 			})
 	@JoinColumn(name = "beneficiary_count_id")
 	private Account beneficiaryAccount;

@@ -77,19 +77,20 @@ public class TransactionService {
 		accountService.updateBalanceBuddyAccount(creditUser.getEmail(), balanceCalculatedCreditUser);
 		// Stream<Object> resultMapContactUser= contactUser.map(elem->elem);
 		System.out.println("filter contact firstname" + usercontact);
-		
+		 accountCreditUser = accountService.findBuddyAccountByUser(creditUserId);
+	accountUserContact = accountService.findBuddyAccountByUser(usercontact.getEmail());
 		//accountRepository.save(accountCreditUser);
 		//accountRepository.save(accountUserContact);
 		Transaction transationCreated = this.createTransaction(
 				creditUser, 
-				accountService.findBuddyAccountByUser(creditUserId), 
+				accountCreditUser , 
 				usercontact, 
-				accountService.findBuddyAccountByUser(usercontact.getEmail()), 
+				accountUserContact, 
 				"texte description", 
 				amount,
 				0);	
 
-		//this.saveTransactionBDD(transationCreated);	
+		this.saveTransactionBDD(transationCreated);	
 		
 
 		List<Transaction> listTransaction=accountCreditUser.getTransactions();
