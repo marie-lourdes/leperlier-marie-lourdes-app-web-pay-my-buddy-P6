@@ -30,7 +30,7 @@ public class Account {
 
 	@NotNull
 	@Column(name = "balance")
-	private double balance;
+	private BankBalance balance;
 	
 	@NotNull
 	@Column(name = "type")
