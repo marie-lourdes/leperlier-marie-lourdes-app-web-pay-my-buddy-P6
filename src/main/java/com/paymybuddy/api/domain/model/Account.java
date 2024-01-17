@@ -26,7 +26,7 @@ public class Account {
 	@Column(name = "id")
 	private long id;
 
-	@NotNull
+	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private UserApp user;
@@ -35,7 +35,7 @@ public class Account {
 	@Column(name = "balance")
 	private double balance;
 	
-	@NotNull
+	
 	@Column(name = "type")
 	private String type;
 	

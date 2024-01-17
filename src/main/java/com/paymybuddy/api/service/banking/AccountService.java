@@ -54,16 +54,16 @@ public class AccountService {
 		accountRepository.save(newAccount);
 	}
 
-	public void updateBalanceBuddyAccount(String emailUserAccount, double amount) {
+	public Account updateBalanceBuddyAccount(String emailUserAccount, double amount) {
 		Account buddyAccount = findBuddyAccountByUser(emailUserAccount);
 		buddyAccount.setBalance(amount);
-		accountRepository.save(buddyAccount);
+		return accountRepository.save(buddyAccount);
 	}
-	
-	public void updateTransactionBuddyAccount(String emailUserAccount,Transaction transaction) {
+
+	public Account updateTransactionBuddyAccount(String emailUserAccount, Transaction transaction) {
 		Account buddyAccount = findBuddyAccountByUser(emailUserAccount);
 		buddyAccount.getTransactions().add(transaction);
-		accountRepository.save(buddyAccount);
+		return accountRepository.save(buddyAccount);
 	}
 
 	public Account findBuddyAccountByUser(String emailUser) {

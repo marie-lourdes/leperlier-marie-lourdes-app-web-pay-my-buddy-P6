@@ -27,9 +27,9 @@ public class ApiApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) {
-		List<Transaction> transaction =transactionService.getTransactionsByCreditUser(userRepository.findByEmail("testuser2@gmail.com"));
-		System.out.println(transaction.size());
-		//transactionService.createTransaction("firstnameuser3", "testuser2@gmail.com");
+		//List<Transaction> transaction =transactionService.getTransactionsByCreditUser(userRepository.findByEmail("testuser2@gmail.com"));
+		//System.out.println(transaction.size());
+		transactionService.tranfer("firstnameuser3", "testuser2@gmail.com",547.00);
 
 	}
 }

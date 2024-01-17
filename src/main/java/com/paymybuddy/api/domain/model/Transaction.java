@@ -2,8 +2,12 @@ package com.paymybuddy.api.domain.model;
 
 import java.util.Date;
 
+import org.hibernate.annotations.Cascade;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -26,22 +30,38 @@ public class Transaction {
 	private Date date;
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER,
+			cascade = { 
+			CascadeType.PERSIST,
+			CascadeType.MERGE,
+			})
 	@JoinColumn(name = "credit_account_id")
 	private Account creditAccount;
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne(	fetch = FetchType.EAGER,
+			cascade = { 
+			CascadeType.PERSIST,
+			CascadeType.MERGE,
+			})
 	@JoinColumn(name = "credit_user_id")
 	private UserApp creditUser;
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER,
+			cascade = { 
+			CascadeType.PERSIST,
+			CascadeType.MERGE,
+			})
 	@JoinColumn(name = "beneficiary_count_id")
 	private Account beneficiaryAccount;
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER,
+			cascade = { 
+			CascadeType.PERSIST,
+			CascadeType.MERGE,
+			})
 	@JoinColumn(name = "beneficiary_user_id")
 	private UserApp beneficiaryUser;
 	

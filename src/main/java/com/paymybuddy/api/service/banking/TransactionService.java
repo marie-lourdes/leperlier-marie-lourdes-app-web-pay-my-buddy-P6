@@ -22,7 +22,7 @@ public class TransactionService {
 
 	@Autowired
 	UserAppService userAppService;
-	
+
 	@Autowired
 	AccountService accountService;
 
@@ -36,38 +36,40 @@ public class TransactionService {
 
 	public void saveTransactionBDD(Transaction transaction) {
 		transactionRepository.save(transaction);
-			
+
 	}
-	//method instead use constructor too much args
-	public Transaction createTransaction(UserApp creditUser, Account accountCreditUser,UserApp contact, Account accountContact,String description,Double amount, float transactionFees) {
-		Transaction tranfertRegistered =new Transaction ();
+
+	// method instead use constructor too much args
+	public Transaction createTransaction(UserApp creditUser, Account accountCreditUser, UserApp contact,
+			Account accountContact, String description, Double amount, float transactionFees) {
+		Transaction tranfertRegistered = new Transaction();
 		tranfertRegistered.setDate(new Date());
 		tranfertRegistered.setCreditUser(creditUser);
 		tranfertRegistered.setCreditAccount(accountCreditUser);
-		tranfertRegistered.setBeneficiaryUser( contact);
+		tranfertRegistered.setBeneficiaryUser(contact);
 		tranfertRegistered.setBeneficiaryAccount(accountContact);
 		tranfertRegistered.setDescription(description);
-		tranfertRegistered.setAmount(amount);;
+		tranfertRegistered.setAmount(amount);
+		;
 		tranfertRegistered.setTransactionFees(transactionFees);
 		return tranfertRegistered;
 	}
 	
 	public void tranfer(String nameBeneficiary, String creditUserId, double amount) {
 		UserApp usercontact = userAppService.findOneUserContactsByName(nameBeneficiary, creditUserId);
-		UserApp	creditUser =userAppService.getUserEntityByEmail(creditUserId);
-		
-		double balanceBeneficiary=accountService.findBuddyAccountByUser(usercontact.getEmail()).getBalance();
-		double balanceCredit=accountService.findBuddyAccountByUser(creditUserId).getBalance();	
-		double	balanceCalculatedBeneficiaryUser =addAmount(balanceBeneficiary,amount);
-		double balanceCalculatedCreditUser =withdrawAmount(balanceCredit, amount);
-	
+		UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
+		Account accountCreditUser = accountService.findBuddyAccountByUser(creditUserId);
+		Account accountUserContact = accountService.findBuddyAccountByUser(usercontact.getEmail());
 
-		accountService.updateBalanceBuddyAccount(usercontact.getEmail(),balanceCalculatedBeneficiaryUser);
-		accountService.updateBalanceBuddyAccount(usercontact.getEmail(),balanceCalculatedBeneficiaryUser);
+		double balanceBeneficiary = accountService.findBuddyAccountByUser(usercontact.getEmail()).getBalance();
+		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
+		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
+		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amount);
+
 		// Stream<Object> resultMapContactUser= contactUser.map(elem->elem);
-				System.out.println("filter contact firstname" + usercontact);
-				
-		Transaction transationCreated=this.createTransaction(
+		System.out.println("filter contact firstname" + usercontact);
+
+		Transaction transationCreated = this.createTransaction(
 				creditUser, 
 				accountService.findBuddyAccountByUser(creditUserId), 
 				usercontact, 
@@ -75,16 +77,24 @@ public class TransactionService {
 				"texte description", 
 				amount,
 				0);	
-		
+
 		this.saveTransactionBDD(transationCreated);
+//mise a jour compte
+		accountUserContact=accountService.updateBalanceBuddyAccount(usercontact.getEmail(), balanceCalculatedBeneficiaryUser);
+		accountCreditUser=accountService.updateBalanceBuddyAccount(creditUser.getEmail(), balanceCalculatedCreditUser);
+		accountCreditUser.addTransaction(transationCreated);
+		accountCreditUser=	 accountService.updateTransactionBuddyAccount(creditUserId, transationCreated);
+	
+		 
 	}
 	
-	public double addAmount(double balance,double amount) {
-		return balance- amount;
+//calcul des comptes -tranfert
+	public double addAmount(double balance, double amount) {
+		return balance - amount;
 	}
-	
-	public double withdrawAmount(	double balance,double amount) {
-		return balance+ amount;
+
+	public double withdrawAmount(double balance, double amount) {
+		return balance + amount;
 	}
-	
+
 }
