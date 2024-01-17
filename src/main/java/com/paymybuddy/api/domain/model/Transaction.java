@@ -5,6 +5,7 @@ import java.util.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -31,7 +32,7 @@ public class Transaction {
 	
 	@NotNull
 	@ManyToOne
-	@Column(name = "credit_user_id")
+	@JoinColumn(name = "credit_user_id")
 	private UserApp creditUser;
 	
 	/*@NotNull
@@ -41,7 +42,7 @@ public class Transaction {
 	
 	@NotNull
 	@ManyToOne
-	@Column(name = "beneficiary_user_id")
+	@JoinColumn(name = "beneficiary_user_id")
 	private UserApp beneficiaryUser;
 	
 	@NotNull
