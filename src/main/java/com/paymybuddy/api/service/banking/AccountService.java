@@ -71,8 +71,12 @@ public class AccountService {
 
 		allAccounts.forEach(account -> {
 			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Buddy Account")) {
+				buddyAccount.setId(account.getId());
+				buddyAccount.setCreation(account.getCreation());
+				//buddyAccount.setTransactions(account.getTransactions());
+				buddyAccount.setUser(account.getUser());	
 				buddyAccount.setBalance(account.getBalance());
-				System.out.println("account solde " + account);
+				System.out.println("account solde " +  buddyAccount);
 			}
 		});
 

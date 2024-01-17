@@ -81,6 +81,11 @@ public class UserAppService {
 		UserApp user = userRepository.findByEmail(email);
 		return user;
 	}
+	
+	public UserApp getUserEntityByName(String firstName, String lastName) {
+		UserApp user = userRepository.findByFirstNameAndLastName(firstName, lastName);
+		return user;
+	}
 
 	public List<UserApp> findAllUserContacts(String emailUser) {
 		UserApp user = userRepository.findByEmail(emailUser);

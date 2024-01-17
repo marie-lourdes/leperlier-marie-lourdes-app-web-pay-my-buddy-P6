@@ -48,14 +48,14 @@ public class TransactionService {
 	}
 
 	// method instead use constructor too much args
-	public Transaction createTransaction(UserApp creditUser, Account accountCreditUser, UserApp contact,
-			Account accountContact, String description, Double amount, float transactionFees) {
+	public Transaction createTransaction(UserApp creditUser, UserApp contact,
+			String description, Double amount, float transactionFees) {
 		Transaction tranfertRegistered = new Transaction();
 		tranfertRegistered.setDate(new Date());
 		tranfertRegistered.setCreditUser(creditUser);
-		tranfertRegistered.setCreditAccount(accountCreditUser);
+	//	tranfertRegistered.setCreditAccount(accountCreditUser);
 		tranfertRegistered.setBeneficiaryUser(contact);
-		tranfertRegistered.setBeneficiaryAccount(accountContact);
+		//tranfertRegistered.setBeneficiaryAccount(accountContact);
 		tranfertRegistered.setDescription(description);
 		tranfertRegistered.setAmount(amount);
 		tranfertRegistered.setTransactionFees(transactionFees);
@@ -78,31 +78,30 @@ public class TransactionService {
 		// Stream<Object> resultMapContactUser= contactUser.map(elem->elem);
 		System.out.println("filter contact firstname" + usercontact);
 		 accountCreditUser = accountService.findBuddyAccountByUser(creditUserId);
-	accountUserContact = accountService.findBuddyAccountByUser(usercontact.getEmail());
+	     accountUserContact = accountService.findBuddyAccountByUser(usercontact.getEmail());
 		//accountRepository.save(accountCreditUser);
 		//accountRepository.save(accountUserContact);
 		Transaction transationCreated = this.createTransaction(
 				creditUser, 
-				accountCreditUser , 
 				usercontact, 
-				accountUserContact, 
 				"texte description", 
 				amount,
-				0);	
+				0);
 
 		this.saveTransactionBDD(transationCreated);	
 		
 
-		List<Transaction> listTransaction=accountCreditUser.getTransactions();
+		/*List<Transaction> listTransaction=accountCreditUser.getTransactions();
 		 listTransaction.add(transationCreated);
-	accountCreditUser.addTransaction(transationCreated);
+	accountCreditUser.addTransaction(transationCreated);*/
+	
 			//accountService.updateTransactionBuddyAccount(creditUserId, listTransaction); //??????????
 	//	this.saveTransactionBDD(transationCreated);
 	
 		
 		//System.out.println("accountUserContact" + 	accountUserContact);
 		//System.out.println("accountCreditUse" + 	accountCreditUser);
-		System.out.println("transationCreated" +transationCreated);
+		//System.out.println("transationCreated" +transationCreated);
 	}
 	
 //calcul des comptes -tranfert
