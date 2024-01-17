@@ -2,8 +2,6 @@ package com.paymybuddy.api.domain.model;
 
 import java.util.Date;
 
-import org.hibernate.annotations.Cascade;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +13,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
@@ -30,22 +29,38 @@ public class Transaction {
 	private Date date;
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER,
+			cascade = { 
+			CascadeType.PERSIST,
+			CascadeType.MERGE,
+			})
 	@JoinColumn(name = "credit_account_id")
 	private Account creditAccount;
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne(	fetch = FetchType.EAGER,
+			cascade = { 
+			CascadeType.PERSIST,
+			CascadeType.MERGE,
+			})
 	@JoinColumn(name = "credit_user_id")
 	private UserApp creditUser;
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER,
+			cascade = { 
+			CascadeType.PERSIST,
+			CascadeType.MERGE,
+			})
 	@JoinColumn(name = "beneficiary_count_id")
 	private Account beneficiaryAccount;
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER,
+			cascade = { 
+			CascadeType.PERSIST,
+			CascadeType.MERGE,
+			})
 	@JoinColumn(name = "beneficiary_user_id")
 	private UserApp beneficiaryUser;
 	
@@ -56,9 +71,23 @@ public class Transaction {
 	@Positive
 	@NotNull
 	@Column(name = "amount")
-	private Double amount;
+	private double amount;
 		
 	@NotNull
 	@Column(name = "transaction_fees")
 	private float transactionFees;
+	
+	public  Transaction() {}
+	
+	public  Transaction(Date date,UserApp creditUser,Account creditAccount,Account beneficiaryAccount,UserApp beneficiaryUser,String description,double amount, float transactionFees) {
+		this.date=date;
+		this.creditAccount=creditAccount;
+		this.creditUser= creditUser;
+		this.beneficiaryAccount=beneficiaryAccount;
+		this.beneficiaryUser=beneficiaryUser;
+		this.description=description;
+		this.amount=amount;
+		this.transactionFees=transactionFees;
+	}
+	
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.paymybuddy.api.domain.model.Account;
 import com.paymybuddy.api.domain.model.Transaction;
 import com.paymybuddy.api.domain.model.UserApp;
+import com.paymybuddy.api.repository.IAccountRepository;
 import com.paymybuddy.api.repository.ITransactionRepository;
 import com.paymybuddy.api.repository.IUserRepository;
 import com.paymybuddy.api.service.UserAppService;
@@ -20,6 +21,9 @@ import jakarta.transaction.Transactional;
 public class TransactionService {
 	@Autowired
 	ITransactionRepository transactionRepository;
+
+	@Autowired
+	IAccountRepository accountRepository;
 
 	@Autowired
 	UserAppService userAppService;
@@ -54,7 +58,6 @@ public class TransactionService {
 		tranfertRegistered.setBeneficiaryAccount(accountContact);
 		tranfertRegistered.setDescription(description);
 		tranfertRegistered.setAmount(amount);
-		;
 		tranfertRegistered.setTransactionFees(transactionFees);
 		return tranfertRegistered;
 	}
@@ -69,11 +72,14 @@ public class TransactionService {
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amount);
+		
 		accountService.updateBalanceBuddyAccount(usercontact.getEmail(), balanceCalculatedBeneficiaryUser);
 		accountService.updateBalanceBuddyAccount(creditUser.getEmail(), balanceCalculatedCreditUser);
 		// Stream<Object> resultMapContactUser= contactUser.map(elem->elem);
 		System.out.println("filter contact firstname" + usercontact);
-
+		
+		//accountRepository.save(accountCreditUser);
+		//accountRepository.save(accountUserContact);
 		Transaction transationCreated = this.createTransaction(
 				creditUser, 
 				accountService.findBuddyAccountByUser(creditUserId), 
@@ -83,15 +89,15 @@ public class TransactionService {
 				amount,
 				0);	
 
-			
-//mise a jour compte
+		//this.saveTransactionBDD(transationCreated);	
+		
+
 		List<Transaction> listTransaction=accountCreditUser.getTransactions();
 		 listTransaction.add(transationCreated);
 	accountCreditUser.addTransaction(transationCreated);
-		//	accountService.updateTransactionBuddyAccount(creditUserId, listTransaction);
-		//this.saveTransactionBDD(transationCreated);
-		//accountRepository.save(accountCreditUser);
-		//accountRepository.save(accountUserContact);
+			//accountService.updateTransactionBuddyAccount(creditUserId, listTransaction); //??????????
+	//	this.saveTransactionBDD(transationCreated);
+	
 		
 		//System.out.println("accountUserContact" + 	accountUserContact);
 		//System.out.println("accountCreditUse" + 	accountCreditUser);
