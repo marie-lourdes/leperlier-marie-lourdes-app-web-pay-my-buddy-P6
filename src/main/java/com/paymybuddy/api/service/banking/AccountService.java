@@ -45,7 +45,7 @@ public class AccountService {
 			}
 		}
 
-		newAccount.getBalance().setAmount(80.0);
+		newAccount.setBalance(80.0);
 		newAccount.setType("Buddy Account");
 		newAccount.setUser(user);
 		newAccount.setCreation(new Date());

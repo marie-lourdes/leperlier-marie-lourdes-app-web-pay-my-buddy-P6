@@ -1,5 +1,6 @@
 package com.paymybuddy.api.domain.model;
 
+import jakarta.persistence.Entity;
 import lombok.Data;
 
 @Data

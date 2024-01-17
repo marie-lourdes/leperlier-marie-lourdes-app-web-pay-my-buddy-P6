@@ -37,7 +37,7 @@ public class Transaction {
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "beneficiary_count_id")
-	private String beneficiaryAccount;
+	private Account beneficiaryAccount;
 	
 	@NotNull
 	@ManyToOne
