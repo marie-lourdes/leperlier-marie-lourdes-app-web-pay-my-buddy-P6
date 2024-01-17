@@ -87,7 +87,7 @@ public class UserAccountController {
 
 	@GetMapping("/account/contact") // enpoint template contacts
 	public String getUserContact(Model model, Principal principal) {
-		List<UserApp> allContact = userAppService.findUserContacts(principal.getName());
+		List<UserApp> allContact = userAppService.findAllUserContacts(principal.getName());
 		model.addAttribute("contacts", allContact);
 		return "contacts";
 	}

@@ -1,6 +1,8 @@
 package com.paymybuddy.api.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -80,10 +82,18 @@ public class UserAppService {
 		return user;
 	}
 
-	public List<UserApp> findUserContacts(String emailUser) {
+	public List<UserApp> findAllUserContacts(String emailUser) {
 		UserApp user = userRepository.findByEmail(emailUser);
 		List<UserApp> userContacts = user.getContacts();
 		System.out.println("userContact" + userContacts);
 		return userContacts;
+	}
+	
+	public UserApp findOneUserContactsByName(String nameContact, String emailUser) {
+	Stream<UserApp> contactUser = this.findAllUserContacts(emailUser).stream().filter((elem) -> {
+		return elem.getFirstName().equals(nameContact);
+	});
+	List<UserApp> usercontact = contactUser.collect(Collectors.toList());
+	return usercontact.get(0);
 	}
 }
