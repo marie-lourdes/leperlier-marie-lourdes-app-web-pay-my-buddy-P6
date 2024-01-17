@@ -52,11 +52,13 @@ public class AccountService {
 
 		accountRepository.save(newAccount);
 	}
-	
+
 	public void updateBalanceBuddyAccount(String emailUserAccount, double amount) {
-		findBuddyAccountByUser(emailUserAccount).setBalance( amount);		
+		Account buddyAccount = findBuddyAccountByUser(emailUserAccount);
+		buddyAccount.setBalance(amount);
+		accountRepository.save(buddyAccount);
 	}
-	
+
 	public Account findBuddyAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
 		Account buddyAccount = new Account();
