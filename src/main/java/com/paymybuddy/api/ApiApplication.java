@@ -29,7 +29,7 @@ public class ApiApplication implements CommandLineRunner {
 	public void run(String... args) {
 		List<Transaction> transaction =transactionService.getTransactionsByCreditUser(userRepository.findByEmail("testuser2@gmail.com"));
 		System.out.println(transaction.size());
-		transactionService.createTransaction("firstnameuser3", "testuser2@gmail.com");
+		//transactionService.createTransaction("firstnameuser3", "testuser2@gmail.com");
 
 	}
 }

@@ -1,5 +1,6 @@
 package com.paymybuddy.api.service.banking;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +34,37 @@ public class TransactionService {
 		return transactionRepository.findByCreditUser(creditUser);
 	}
 
-	public void createTransaction(String nameBeneficiary, String creditUserId, double amount) {
-
-	
-		
-		
+	public void saveTransactionBDD(Transaction transaction) {
+		transactionRepository.save(transaction);
+			
 	}
+	//method instead use constructor too much args
+	public void createTransaction(Date date,UserApp creditUser, Account accountCreditUser,UserApp contact, Account accountContact,String description,Double amount, float transactionFees) {
+		Transaction tranfertRegistered =new Transaction ();
+		tranfertRegistered.setDate(new Date());
+		tranfertRegistered.setCreditUser(creditUser);
+		tranfertRegistered.setCreditAccount(accountCreditUser);
+		tranfertRegistered.setBeneficiaryUser( contact);
+		tranfertRegistered.setBeneficiaryAccount(accountContact);
+		tranfertRegistered.setDescription(description);
+		tranfertRegistered.setTransactionFees(transactionFees);
+	}
+	
 	public void tranfer(String nameBeneficiary, String creditUserId, double amount) {
 		UserApp usercontact = userAppService.findOneUserContactsByName(nameBeneficiary, creditUserId);
+		
 		double balanceBeneficiary=accountService.findBuddyAccountByUser(usercontact.getEmail()).getBalance();
 		double balanceCredit=accountService.findBuddyAccountByUser(creditUserId).getBalance();
-		double balanceUpdatedCreditUser=addAmount(balanceBeneficiary,amount);
-		double balanceUpdatedBeneficiaryUser=withdrawAmount(balanceCredit, amount);
+		
+		double	balanceCalculatedBeneficiaryUser =addAmount(balanceBeneficiary,amount);
+		double balanceCalculatedCreditUser =withdrawAmount(balanceCredit, amount);
+	
+		accountService.updateBalanceBuddyAccount(usercontact.getEmail(),balanceCalculatedBeneficiaryUser);
+		accountService.updateBalanceBuddyAccount(usercontact.getEmail(),balanceCalculatedBeneficiaryUser);
 		// Stream<Object> resultMapContactUser= contactUser.map(elem->elem);
 				System.out.println("filter contact firstname" + usercontact);
+				
+				
 	}
 	
 	public double addAmount(double balance,double amount) {
