@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.api.domain.model.Account;
+import com.paymybuddy.api.domain.model.Transaction;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IAccountRepository;
 import com.paymybuddy.api.repository.IUserRepository;
@@ -56,6 +57,12 @@ public class AccountService {
 	public void updateBalanceBuddyAccount(String emailUserAccount, double amount) {
 		Account buddyAccount = findBuddyAccountByUser(emailUserAccount);
 		buddyAccount.setBalance(amount);
+		accountRepository.save(buddyAccount);
+	}
+	
+	public void updateTransactionBuddyAccount(String emailUserAccount,Transaction transaction) {
+		Account buddyAccount = findBuddyAccountByUser(emailUserAccount);
+		buddyAccount.getTransactions().add(transaction);
 		accountRepository.save(buddyAccount);
 	}
 
