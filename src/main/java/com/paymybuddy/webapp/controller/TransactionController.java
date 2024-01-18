@@ -3,6 +3,6 @@ package com.paymybuddy.webapp.controller;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class UserTransactionController {
+public class TransactionController {
 
 }
