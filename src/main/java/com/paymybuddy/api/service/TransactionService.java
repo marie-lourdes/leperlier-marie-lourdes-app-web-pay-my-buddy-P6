@@ -11,12 +11,13 @@ import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IAccountRepository;
 import com.paymybuddy.api.repository.ITransactionRepository;
 import com.paymybuddy.api.repository.IUserRepository;
+import com.paymybuddy.api.utils.IOperation;
 
 import jakarta.transaction.Transactional;
 
 @Transactional
 @Service
-public class TransactionService {
+public class TransactionService implements IOperation {
 	
 	@Autowired
 	ITransactionRepository transactionRepository;
@@ -79,16 +80,27 @@ public class TransactionService {
 	}
 
 //calcul des comptes -tranfert
-	public double addAmount(double balance, double amount) {
-		return balance + amount;
+	
+/*	public double addAmount(double balanceCreditUser, double payment) {
+		
+		return add(double balanceCreditUser, double payment);
 	}
 
-	public double withdrawAmount(double balance, double amount) {
-		return balance - amount;
+	public double withdrawAmount(double balanceBeneficiaryUser, double payment) {
+		return withdraw(balanceBeneficiaryUser, double payment);
 	}
 	
+	@Override
+	public  double add(double balance, double amount){
+		return balance + amount;
+	}
+	
+	@Override
+	public  double withdraw(double balance, double amount){
+		return balance - amount;
+	}
 // calcul frais de transaction
 	public double calculateFees(double amountTransaction) {
 		return 0;
-	}
+	}*/
 }
