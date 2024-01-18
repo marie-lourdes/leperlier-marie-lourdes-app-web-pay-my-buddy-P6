@@ -65,7 +65,7 @@ public class UserApp {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Account> buddyAccount;
 	
-	@OneToMany(mappedBy = "credit_user_id", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "creditUser", fetch = FetchType.EAGER)
 	private List<Transaction> transactions= new ArrayList<>();
 	
 	public void addTransaction(Transaction transaction) {

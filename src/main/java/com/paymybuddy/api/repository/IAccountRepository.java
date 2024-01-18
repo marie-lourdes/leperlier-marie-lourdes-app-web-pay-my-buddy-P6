@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.api.domain.model.Account;
 import com.paymybuddy.api.domain.model.Transaction;
@@ -19,7 +20,4 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
  @Query(value=" update  Account a set a.balance=:amount where (a.user=:user) and(a.type like '%Buddy Account%') ")
  public void updateBalanceBuddyAccount(@Param("amount") double amount, @Param("user") UserApp user);
  
- @Modifying
- @Query(value=" update  Account a set a.transactions=:transactions where (a.user=:user) and(a.type like '%Buddy Account%') ")
- public void updateTransactionBuddyAccount(@Param("transactions") List<Transaction> transactions, @Param("user") UserApp user);
 }

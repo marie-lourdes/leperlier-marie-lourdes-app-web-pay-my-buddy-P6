@@ -60,10 +60,10 @@ public class AccountService {
 		
 	}
 
-	public void updateTransactionBuddyAccount(String emailUserAccount, List<Transaction> transaction) {
+	/*public void updateTransactionBuddyAccount(String emailUserAccount, List<Transaction> transaction) {
 		 UserApp user =userRepository.findByEmail(emailUserAccount);
 		accountRepository.updateTransactionBuddyAccount(transaction,user );
-	}
+	}*/
 
 	public Account findBuddyAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();

@@ -25,24 +25,14 @@ public class Transaction {
 	@Column(name = "transaction_date_time ")
 	private Date date;
 	
-	/*@NotNull
-	@ManyToOne
-	@JoinColumn(name = "credit_account_id")
-	private Account creditAccount;*/
-	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "credit_user_id")
+	@JoinColumn(name = "credit_user_id", nullable=false)
 	private UserApp creditUser;
 	
-	/*@NotNull
-	@ManyToOne
-	@JoinColumn(name = "beneficiary_count_id")
-	private Account beneficiaryAccount;*/
-	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "beneficiary_user_id")
+	@JoinColumn(name = "beneficiary_user_id", nullable=false)
 	private UserApp beneficiaryUser;
 	
 	@NotNull
@@ -60,11 +50,9 @@ public class Transaction {
 	
 	public  Transaction() {}
 	
-	public  Transaction(Date date,UserApp creditUser,Account creditAccount,Account beneficiaryAccount,UserApp beneficiaryUser,String description,double amount, float transactionFees) {
+	public  Transaction(Date date,UserApp creditUser,UserApp beneficiaryUser,String description,double amount, float transactionFees) {
 		this.date=date;
-		//this.creditAccount=creditAccount;
 		this.creditUser= creditUser;
-	//	this.beneficiaryAccount=beneficiaryAccount;
 		this.beneficiaryUser=beneficiaryUser;
 		this.description=description;
 		this.amount=amount;
