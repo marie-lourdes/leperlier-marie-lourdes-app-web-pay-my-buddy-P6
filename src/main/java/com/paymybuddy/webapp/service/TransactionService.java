@@ -1,6 +1,5 @@
 package com.paymybuddy.webapp.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
-import com.paymybuddy.webapp.repository.IAccountRepository;
 import com.paymybuddy.webapp.repository.ITransactionRepository;
-import com.paymybuddy.webapp.repository.IUserRepository;
-import com.paymybuddy.webapp.utils.IOperation;
 
 import jakarta.transaction.Transactional;
 
@@ -30,7 +26,7 @@ public class TransactionService {
 		return transactionRepository.findByCreditUser(creditUser);
 	}
 
-	public void saveTransactionBDD(Transaction transaction) {
+	public void saveTransactionDB(Transaction transaction) {
 		transactionRepository.save(transaction);
 	}
 

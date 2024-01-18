@@ -25,21 +25,27 @@ public class BankingService implements IOperation {
 	public void payToContact(String contactName, String creditUserId, double amount) {
 		UserApp usercontact = userAppService.findOneUserContactsByName(contactName, creditUserId);
 		UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
+		String userContactEmail= usercontact.getEmail(); 
+		
+		updateBalanceContactAndBalanceUser(userContactEmail,creditUserId, amount); 
+	
+		Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact, "texte description",
+				amount, 0);
+	//creditUser.getTransactions().add(transactionCreated);
+		transactionService.saveTransactionDB(transactionCreated);
+	}
 
-		double balanceBeneficiary = accountService.findBuddyAccountByUser(usercontact.getEmail()).getBalance();
+	public void transfertToBuddyAccountUser(Account bankingAccount, Account buddyAccount, double amount) {}
+	
+	public void updateBalanceContactAndBalanceUser(String contactId,String creditUserId,double amount) {
+		double balanceBeneficiary = accountService.findBuddyAccountByUser(contactId).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amount);
 
-		accountService.updateBalanceBuddyAccount(usercontact.getEmail(), balanceCalculatedBeneficiaryUser);
-		accountService.updateBalanceBuddyAccount(creditUser.getEmail(), balanceCalculatedCreditUser);
-
-		Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact, "texte description",
-				547.00, 0);
-		transactionService.saveTransactionBDD(transactionCreated);
+		accountService.updateBalanceBuddyAccount( contactId, balanceCalculatedBeneficiaryUser);
+		accountService.updateBalanceBuddyAccount(creditUserId, balanceCalculatedCreditUser);
 	}
-
-	public void transfertToBuddyAccountUser(Account bankingAccount, Account buddyAccount, double amount) {}
 //calcul des comptes -tranfert
 	
 	public double addAmount(double balanceCreditUser, double payment) {	
