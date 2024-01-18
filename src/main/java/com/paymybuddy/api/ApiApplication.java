@@ -11,9 +11,9 @@ import com.paymybuddy.api.domain.model.Transaction;
 import com.paymybuddy.api.repository.IAccountRepository;
 import com.paymybuddy.api.repository.ITransactionRepository;
 import com.paymybuddy.api.repository.IUserRepository;
+import com.paymybuddy.api.service.AccountService;
+import com.paymybuddy.api.service.TransactionService;
 import com.paymybuddy.api.service.UserAppService;
-import com.paymybuddy.api.service.banking.AccountService;
-import com.paymybuddy.api.service.banking.TransactionService;
 
 import jakarta.transaction.Transactional;
 

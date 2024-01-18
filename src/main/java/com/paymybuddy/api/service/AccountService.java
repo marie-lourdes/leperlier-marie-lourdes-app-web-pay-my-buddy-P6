@@ -1,4 +1,4 @@
-package com.paymybuddy.api.service.banking;
+package com.paymybuddy.api.service;
 
 import java.util.ArrayList;
 import java.util.Date;

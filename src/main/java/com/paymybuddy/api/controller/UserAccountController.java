@@ -15,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.paymybuddy.api.domain.DTO.UserDTO;
 import com.paymybuddy.api.domain.model.Account;
 import com.paymybuddy.api.domain.model.UserApp;
+import com.paymybuddy.api.service.AccountService;
 import com.paymybuddy.api.service.UserAppService;
-import com.paymybuddy.api.service.banking.AccountService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

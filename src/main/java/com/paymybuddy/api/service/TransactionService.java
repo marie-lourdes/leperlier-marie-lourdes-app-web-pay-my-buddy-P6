@@ -1,4 +1,4 @@
-package com.paymybuddy.api.service.banking;
+package com.paymybuddy.api.service;
 
 import java.util.Date;
 import java.util.List;
@@ -11,7 +11,6 @@ import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IAccountRepository;
 import com.paymybuddy.api.repository.ITransactionRepository;
 import com.paymybuddy.api.repository.IUserRepository;
-import com.paymybuddy.api.service.UserAppService;
 
 import jakarta.transaction.Transactional;
 
