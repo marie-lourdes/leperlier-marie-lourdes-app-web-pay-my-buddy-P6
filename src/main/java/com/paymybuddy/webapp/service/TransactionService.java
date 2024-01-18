@@ -81,8 +81,7 @@ public class TransactionService implements IOperation{
 
 //calcul des comptes -tranfert
 	
-	public double addAmount(double balanceCreditUser, double payment) {
-		
+	public double addAmount(double balanceCreditUser, double payment) {	
 		return add(balanceCreditUser, payment);
 	}
 
@@ -99,8 +98,9 @@ public class TransactionService implements IOperation{
 	public  double withdraw(double balance, double amount){
 		return balance - amount;
 	}
-// calcul frais de transaction
+	
+/* calcul frais de transaction
 	public double calculateFees(double amountTransaction) {
 		return 0;
-	}
+	}*/
 }
