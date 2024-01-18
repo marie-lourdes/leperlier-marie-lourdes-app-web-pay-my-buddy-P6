@@ -17,26 +17,23 @@ import lombok.Data;
 @Entity
 @Table(name = "account")
 public class Account {
-	
+
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private long id;
 
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private UserApp user;
 
 	@NotNull
 	@Column(name = "balance")
 	private double balance;
-	
+
 	@Column(name = "type")
 	private String type;
-	
+
 	@Column(name = "creation")
 	private Date creation;
-	
-	
-
 }

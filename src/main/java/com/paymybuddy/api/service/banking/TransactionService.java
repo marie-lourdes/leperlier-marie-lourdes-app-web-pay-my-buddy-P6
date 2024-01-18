@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.paymybuddy.api.domain.model.Account;
 import com.paymybuddy.api.domain.model.Transaction;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IAccountRepository;
@@ -19,6 +18,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 @Service
 public class TransactionService {
+	
 	@Autowired
 	ITransactionRepository transactionRepository;
 

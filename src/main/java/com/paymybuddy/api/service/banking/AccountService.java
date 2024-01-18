@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.api.domain.model.Account;
-import com.paymybuddy.api.domain.model.Transaction;
 import com.paymybuddy.api.domain.model.UserApp;
 import com.paymybuddy.api.repository.IAccountRepository;
 import com.paymybuddy.api.repository.IUserRepository;
@@ -45,7 +44,6 @@ public class AccountService {
 						" BuddyAccount already exist, " + "birthdate is: " + account.getCreation());
 			}
 		}
-
 		newAccount.setBalance(80.0);
 		newAccount.setType("Buddy Account");
 		newAccount.setUser(user);
@@ -55,15 +53,16 @@ public class AccountService {
 	}
 
 	public void updateBalanceBuddyAccount(String emailUserAccount, double amount) {
-		 UserApp user =userRepository.findByEmail(emailUserAccount);
+		UserApp user = userRepository.findByEmail(emailUserAccount);
 		accountRepository.updateBalanceBuddyAccount(amount, user);
-		
 	}
 
-	/*public void updateTransactionBuddyAccount(String emailUserAccount, List<Transaction> transaction) {
-		 UserApp user =userRepository.findByEmail(emailUserAccount);
-		accountRepository.updateTransactionBuddyAccount(transaction,user );
-	}*/
+	/*
+	 * public void updateTransactionBuddyAccount(String emailUserAccount,
+	 * List<Transaction> transaction) { UserApp user
+	 * =userRepository.findByEmail(emailUserAccount);
+	 * accountRepository.updateTransactionBuddyAccount(transaction,user ); }
+	 */
 
 	public Account findBuddyAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
@@ -73,10 +72,9 @@ public class AccountService {
 			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Buddy Account")) {
 				buddyAccount.setId(account.getId());
 				buddyAccount.setCreation(account.getCreation());
-				//buddyAccount.setTransactions(account.getTransactions());
-				buddyAccount.setUser(account.getUser());	
+				buddyAccount.setUser(account.getUser());
 				buddyAccount.setBalance(account.getBalance());
-				System.out.println("account solde " +  buddyAccount);
+				System.out.println("account solde " + buddyAccount);
 			}
 		});
 
