@@ -30,9 +30,9 @@ public class TransactionService {
 
 	@Autowired
 	AccountService accountService;
-	
+
 	@Autowired
-	IUserRepository  userRepository ;
+	IUserRepository userRepository;
 
 	public List<Transaction> getAllTransactions() {
 		return transactionRepository.findAll();
@@ -44,64 +44,41 @@ public class TransactionService {
 
 	public void saveTransactionBDD(Transaction transaction) {
 		transactionRepository.save(transaction);
-
 	}
 
 	// method instead use constructor too much args
-	public Transaction createTransaction(UserApp creditUser, UserApp contact,
+	
+	/*public Transaction createTransaction(UserApp creditUser, UserApp contact,
 			String description, Double amount, float transactionFees) {
 		Transaction tranfertRegistered = new Transaction();
 		tranfertRegistered.setDate(new Date());
 		tranfertRegistered.setCreditUser(creditUser);
-	//	tranfertRegistered.setCreditAccount(accountCreditUser);
+	
 		tranfertRegistered.setBeneficiaryUser(contact);
 		//tranfertRegistered.setBeneficiaryAccount(accountContact);
 		tranfertRegistered.setDescription(description);
 		tranfertRegistered.setAmount(amount);
 		tranfertRegistered.setTransactionFees(transactionFees);
 		return tranfertRegistered;
-	}
+	}*/
 	
 	public void tranfer(String nameBeneficiary, String creditUserId, double amount) {
 		UserApp usercontact = userAppService.findOneUserContactsByName(nameBeneficiary, creditUserId);
 		UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
-		
+
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(usercontact.getEmail()).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amount);
-		
+
 		accountService.updateBalanceBuddyAccount(usercontact.getEmail(), balanceCalculatedBeneficiaryUser);
 		accountService.updateBalanceBuddyAccount(creditUser.getEmail(), balanceCalculatedCreditUser);
-		// Stream<Object> resultMapContactUser= contactUser.map(elem->elem);
-		System.out.println("filter contact firstname" + usercontact);
-		Account accountCreditUser = accountService.findBuddyAccountByUser(creditUserId);
-	    Account accountUserContact = accountService.findBuddyAccountByUser(usercontact.getEmail());
-		//accountRepository.save(accountCreditUser);
-		//accountRepository.save(accountUserContact);
-		/*Transaction transationCreated = this.createTransaction(
-				creditUser, 
-				usercontact, 
-				"texte description", 
-				amount,
-				0);*/
-	     Transaction transactionCreated = new Transaction(new Date(),creditUser,usercontact,"texte description",547.00,0);
-		this.saveTransactionBDD(transactionCreated);	
-		
 
-		/*List<Transaction> listTransaction=accountCreditUser.getTransactions();
-		 listTransaction.add(transationCreated);
-	accountCreditUser.addTransaction(transationCreated);*/
-	
-			//accountService.updateTransactionBuddyAccount(creditUserId, listTransaction); //??????????
-	//	this.saveTransactionBDD(transationCreated);
-	
-		
-		//System.out.println("accountUserContact" + 	accountUserContact);
-		//System.out.println("accountCreditUse" + 	accountCreditUser);
-		//System.out.println("transationCreated" +transationCreated);
+		Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact, "texte description",
+				547.00, 0);
+		this.saveTransactionBDD(transactionCreated);
 	}
-	
+
 //calcul des comptes -tranfert
 	public double addAmount(double balance, double amount) {
 		return balance + amount;
