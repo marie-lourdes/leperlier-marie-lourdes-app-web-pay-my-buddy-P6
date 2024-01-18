@@ -1,6 +1,5 @@
 package com.paymybuddy.api;
 
-<<<<<<< Updated upstream
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,16 +49,4 @@ public class ApiApplication implements CommandLineRunner {
 		List<Transaction> transactionFountByUser=transactionService.getTransactionsByCreditUser(userAppService.getUserEntityByEmail("testuser2@gmail.com"));
 		System.out.println(transactionFountByUser);
 	}
-=======
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class ApiApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(ApiApplication.class, args);
-	}
-
->>>>>>> Stashed changes
 }
