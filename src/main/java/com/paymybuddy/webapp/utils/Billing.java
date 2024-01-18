@@ -6,10 +6,11 @@ public class Billing {
 	
 	private Billing(){}
 	
-	public static void calculateFees(double amountTransation) {
-		double result = 0;
+	public static double calculateFees(double amountTransation) {
+		double result = 0.0;
 		Integer percentFee= (int) (RATE *100);
 		result =percentFee/amountTransation;
+		return result;
 	}
 	/*public static void calculateFees(double amountTransation) {
 		(RATE *100)*amount/amount
