@@ -17,22 +17,10 @@ import jakarta.transaction.Transactional;
 
 @Transactional
 @Service
-public class TransactionService implements IOperation{
+public class TransactionService {
 	
 	@Autowired
 	ITransactionRepository transactionRepository;
-
-	@Autowired
-	IAccountRepository accountRepository;
-
-	@Autowired
-	UserAppService userAppService;
-
-	@Autowired
-	AccountService accountService;
-
-	@Autowired
-	IUserRepository userRepository;
 
 	public List<Transaction> getAllTransactions() {
 		return transactionRepository.findAll();
@@ -62,42 +50,7 @@ public class TransactionService implements IOperation{
 		return tranfertRegistered;
 	}*/
 	
-	public void tranfer(String nameBeneficiary, String creditUserId, double amount) {
-		UserApp usercontact = userAppService.findOneUserContactsByName(nameBeneficiary, creditUserId);
-		UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
 
-		double balanceBeneficiary = accountService.findBuddyAccountByUser(usercontact.getEmail()).getBalance();
-		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
-		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
-		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amount);
-
-		accountService.updateBalanceBuddyAccount(usercontact.getEmail(), balanceCalculatedBeneficiaryUser);
-		accountService.updateBalanceBuddyAccount(creditUser.getEmail(), balanceCalculatedCreditUser);
-
-		Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact, "texte description",
-				547.00, 0);
-		this.saveTransactionBDD(transactionCreated);
-	}
-
-//calcul des comptes -tranfert
-	
-	public double addAmount(double balanceCreditUser, double payment) {	
-		return add(balanceCreditUser, payment);
-	}
-
-	public double withdrawAmount(double balanceBeneficiaryUser, double payment) {
-		return withdraw(balanceBeneficiaryUser, payment);
-	}
-	
-	@Override
-	public  double add(double balance, double amount){
-		return balance + amount;
-	}
-	
-	@Override
-	public  double withdraw(double balance, double amount){
-		return balance - amount;
-	}
 	
 /* calcul frais de transaction
 	public double calculateFees(double amountTransaction) {
