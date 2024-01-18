@@ -9,7 +9,7 @@ public class Billing {
 	public static double calculateFees(double amountTransation) {
 		double result = 0.0;
 		Integer percentFee= (int) (RATE *100);
-		result =percentFee/amountTransation;
+		result =(percentFee/100)*amountTransation;
 		return result;
 	}
 	/*public static void calculateFees(double amountTransation) {
