@@ -1,5 +1,5 @@
 package com.paymybuddy.api.service;
 
-public class Admin {
+public class AdminService {
 
 }
