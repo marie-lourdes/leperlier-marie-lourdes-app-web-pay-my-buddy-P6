@@ -1,5 +1,6 @@
 package com.paymybuddy.api.domain.DTO;
 
+<<<<<<< Updated upstream
 import lombok.Data;
 
 @Data
@@ -23,4 +24,8 @@ public class UserLoginDTO {
 		return "UserLoginDTO{" + "email:" + email+  ", password:"
 				+ password + ", role:" + role + '}';
 	}
+=======
+public class UserLoginDTO {
+
+>>>>>>> Stashed changes
 }

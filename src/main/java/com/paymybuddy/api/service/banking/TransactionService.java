@@ -87,5 +87,9 @@ public class TransactionService {
 	public double withdrawAmount(double balance, double amount) {
 		return balance - amount;
 	}
-
+	
+// calcul frais de transaction
+	public double calculateFees(double amountTransaction) {
+		return 0;
+	}
 }

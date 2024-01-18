@@ -1,5 +1,6 @@
 package com.paymybuddy.api.domain.model;
 
+<<<<<<< Updated upstream
 /*@Data
 @Entity
 @Table(name="role_name")
@@ -20,3 +21,8 @@ public class Role {
 				+ rolename +  '}';
 	}
 }*/
+=======
+public class Role {
+
+}
+>>>>>>> Stashed changes

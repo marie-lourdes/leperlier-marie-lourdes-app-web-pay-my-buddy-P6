@@ -1,5 +1,6 @@
 package com.paymybuddy.api.domain.model;
 
+<<<<<<< Updated upstream
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -60,3 +61,8 @@ public class Transaction {
 	}
 	
 }
+=======
+public class Transaction {
+
+}
+>>>>>>> Stashed changes

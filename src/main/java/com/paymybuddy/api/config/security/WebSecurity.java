@@ -1,5 +1,6 @@
 package com.paymybuddy.api.config.security;
 
+<<<<<<< Updated upstream
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,3 +59,29 @@ public class WebSecurity {
 	}
 
 }
+=======
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+
+/*@Configuration
+@EnableWebSecurity
+public class WebSecurity {
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		//ajoutez les roles
+	return http
+			.authorizeHttpRequests((requests) ->{ 
+				requests.requestMatchers("/","/home").permitAll();
+				requests.anyRequest().authenticated();
+			})
+			.formLogin((form) -> form
+					.loginPage("/login")
+					.permitAll()
+				)
+				.logout((logout) -> logout.permitAll()).build();
+				
+	}
+		
+}*/
+>>>>>>> Stashed changes

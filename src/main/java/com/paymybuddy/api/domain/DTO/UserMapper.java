@@ -1,5 +1,6 @@
 package com.paymybuddy.api.domain.DTO;
 
+<<<<<<< Updated upstream
 import org.springframework.stereotype.Component;
 
 import com.paymybuddy.api.domain.model.UserApp;
@@ -21,4 +22,8 @@ public class UserMapper {
 	     
 		return new UserDTO (email, firstName,lastName);
 	}
+=======
+public class UserMapper {
+
+>>>>>>> Stashed changes
 }

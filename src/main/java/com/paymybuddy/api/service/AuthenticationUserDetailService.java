@@ -1,10 +1,14 @@
 package com.paymybuddy.api.service;
 
+<<<<<<< Updated upstream
 import java.security.Principal;
+=======
+>>>>>>> Stashed changes
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< Updated upstream
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -54,3 +58,28 @@ public class AuthenticationUserDetailService implements UserDetailsService{
 		      return usernameInfo;
 		   }
 }
+=======
+
+import org.springframework.stereotype.Service;
+
+/*@Service
+public class AuthenticationUserDetailService implements UserDetailsService{
+	
+		@Autowired
+		private UserRepository userRepository;
+
+		@Override
+		public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+			User user = userRepository.findByUsername(username);
+			
+			return new User(user.getUsername(), user.getPassword(), getGrantedAuthorities(user.getRole()));
+		}
+
+		private List<GrantedAuthority> getGrantedAuthorities(String role) {
+			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+			return authorities;
+		}
+	
+}*/
+>>>>>>> Stashed changes

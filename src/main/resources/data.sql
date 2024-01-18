@@ -3,11 +3,34 @@ email VARCHAR(500) NOT NULL UNIQUE PRIMARY KEY,
 first_name VARCHAR(100) NOT NULL,
 last_name VARCHAR(100) NOT NULL,
 password VARCHAR(100) NOT NULL,
+<<<<<<< Updated upstream
 role VARCHAR(10),
 user_contact_id VARCHAR(500) , 
 FOREIGN KEY(user_contact_id ) REFERENCES user_app(email) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+=======
+user_contact_id VARCHAR(500) UNIQUE, 
+FOREIGN KEY(user_contact_id ) REFERENCES user_app(email) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE role(
+id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
+role_name VARCHAR(10) UNIQUE NOT NULL
+);
+
+INSERT INTO role(id,role_name) VALUES
+("ROLE_USER"), ("ROLE_ADMIN");
+
+CREATE TABLE user_app_role(
+user_id VARCHAR(500) NOT NULL,
+role_id INT NOT NULL,
+FOREIGN KEY(user_id) REFERENCES user_app(email) ON DELETE RESTRICT ON UPDATE CASCADE,
+FOREIGN KEY(role_id ) REFERENCES role(id ) ON DELETE RESTRICT ON UPDATE CASCADE,
+PRIMARY KEY(user_id,role_id)
+);
+
+>>>>>>> Stashed changes
 CREATE TABLE account(
 id BIGINT NOT NULL AUTO_INCREMENT,
 user_id VARCHAR(500) UNIQUE  NOT NULL,
@@ -36,6 +59,7 @@ FOREIGN KEY(beneficiary_user_id) REFERENCES account(user_id) ON DELETE RESTRICT 
 
 ALTER TABLE transaction AUTO_INCREMENT = 1001;
 
+<<<<<<< Updated upstream
 /* DEFAULT VALUES FOR PAYMYBUDDY_TEST DB */
 
 INSERT INTO user_app(email, first_name, last_name, password , role) VALUES
@@ -52,3 +76,6 @@ INSERT INTO account(user_id, soldes,TYPE ) VALUES
 
 INSERT INTO transaction(credit_account_id, credit_user_id, beneficiary_count_id , beneficiary_user_id,transaction_date_time, amount, transaction_fees) VALUES
 (76001,"testuser1@gmail.com", 76002,"testuser2@gmail.com", NOW(), 2388.00, 4.2);
+=======
+
+>>>>>>> Stashed changes
