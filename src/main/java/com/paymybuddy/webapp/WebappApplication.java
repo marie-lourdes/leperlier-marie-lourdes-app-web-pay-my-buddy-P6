@@ -18,7 +18,7 @@ import com.paymybuddy.webapp.service.UserAppService;
 import jakarta.transaction.Transactional;
 
 @SpringBootApplication
-public class Application implements CommandLineRunner {
+public class WebappApplication implements CommandLineRunner {
 	
 	@Autowired
 	TransactionService transactionService;
@@ -38,7 +38,7 @@ public class Application implements CommandLineRunner {
 	ITransactionRepository transactionRepository;
 	
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(WebappApplication.class, args);
 	}
 	
 	@Transactional
