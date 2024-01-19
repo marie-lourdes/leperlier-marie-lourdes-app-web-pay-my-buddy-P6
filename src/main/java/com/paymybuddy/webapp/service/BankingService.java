@@ -28,18 +28,15 @@ public class BankingService implements IOperation {
 			if ( isPaymentAuthorized(creditUserId, amount)) {	
 				throw new Exception("balance/amount of transaction is negative");
 			}
-		
 			UserApp usercontact = userAppService.findOneUserContactsByName(contactName, creditUserId);
 			UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
 			String userContactEmail = usercontact.getEmail();
 
 			double feesTransaction=updateBalanceContactAndBalanceUserWithFeesTransaction(userContactEmail, creditUserId, amount);
 			Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact, "texte description",
-					amount, feesTransaction);
-			// creditUser.getTransactions().add(transactionCreated);
+					amount, feesTransaction);		
+			
 			transactionService.saveTransactionDB(transactionCreated);
-		
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -50,13 +47,14 @@ public class BankingService implements IOperation {
 	public double updateBalanceContactAndBalanceUserWithFeesTransaction(String contactId, String creditUserId, double amount) {
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(contactId).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
+		
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		double amountWithFeesTransaction =Billing.calculateFees(amount);
-		System.out.println("amountWithFeesTransaction"+amountWithFeesTransaction);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
 		 
 		accountService.updateBalanceBuddyAccount(contactId, balanceCalculatedBeneficiaryUser);
 		accountService.updateBalanceBuddyAccount(creditUserId, balanceCalculatedCreditUser);
+		
 		return amountWithFeesTransaction;
 	}
 
