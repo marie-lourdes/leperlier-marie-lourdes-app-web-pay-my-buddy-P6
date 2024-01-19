@@ -13,7 +13,7 @@ public class Billing {
 		return result;
 	}
 
-/*	public double deduceFeeToUserAccount(double feesCalculated, double accountBalance) {
+	public static  double deduceFeeToUserAccount(double feesCalculated, double accountBalance) {
 		return accountBalance -feesCalculated;
-	}*/
+	}
 }

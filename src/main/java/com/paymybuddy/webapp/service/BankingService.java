@@ -22,29 +22,30 @@ public class BankingService implements IOperation {
 	AccountService accountService;
 
 	public void payToContact(String contactName, String creditUserId, double amount) {
-		double userBuddyAccountBalance = accountService.findBuddyAccountByUser(creditUserId).getBalance();
-		try {
-			if (userBuddyAccountBalance <= 0 || amount <= 0) {
+		
+		try {	
+			if ( isPaymentAuthorized(creditUserId, amount)) {	
 				throw new Exception("balance/amount of transaction is negative");
-			} else {
-				UserApp usercontact = userAppService.findOneUserContactsByName(contactName, creditUserId);
-				UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
-				String userContactEmail = usercontact.getEmail();
-
-				updateBalanceContactAndBalanceUser(userContactEmail, creditUserId, amount);
-
-				Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact,
-						"texte description", amount, 0);
-				// creditUser.getTransactions().add(transactionCreated);
-				transactionService.saveTransactionDB(transactionCreated);
 			}
+		
+			UserApp usercontact = userAppService.findOneUserContactsByName(contactName, creditUserId);
+			UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
+			String userContactEmail = usercontact.getEmail();
+
+			updateBalanceContactAndBalanceUser(userContactEmail, creditUserId, amount);
+
+			Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact, "texte description",
+					amount, 0);
+			// creditUser.getTransactions().add(transactionCreated);
+			transactionService.saveTransactionDB(transactionCreated);
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
-// Mise à jour des comptes crediteur et beneficiare
-	
+	// Mise à jour des comptes crediteur et beneficiare
+
 	public void updateBalanceContactAndBalanceUser(String contactId, String creditUserId, double amount) {
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(contactId).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
@@ -56,9 +57,13 @@ public class BankingService implements IOperation {
 	}
 
 	public void transfertToBuddyAccountUser(Account bankingAccount, Account buddyAccount, double amount) {
+
 	}
 
-//Calcul des comptes -tranfert
+	public boolean isPaymentAuthorized(String userId, double payment) {
+		return isOperationAuthorized(userId, payment);
+	}
+	// Calcul des comptes -tranfert
 
 	public double addAmount(double balanceCreditUser, double payment) {
 		return add(balanceCreditUser, payment);
@@ -77,4 +82,15 @@ public class BankingService implements IOperation {
 	public double withdraw(double balance, double amount) {
 		return balance - amount;
 	}
+
+	@Override
+	public boolean isOperationAuthorized(String userId, double amount) {
+		double userBuddyAccountBalance = accountService.findBuddyAccountByUser(userId).getBalance();
+		boolean isAuthorized = false;
+		if (userBuddyAccountBalance <= 0 || amount <= 0) {
+			isAuthorized = true;
+		}
+		return isAuthorized;
+	}
+
 }
