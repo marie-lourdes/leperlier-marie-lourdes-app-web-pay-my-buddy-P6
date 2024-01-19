@@ -2,18 +2,19 @@ package com.paymybuddy.webapp.utils;
 
 public class Billing {
 	
-	private static final double RATE = 0.5 ;
+	public static final double RATE =0.5;
 	
 	private Billing(){}
 	
-	public static double calculateFees(double amountTransation) {
-		double result = 0.0;
-		Integer percentFee= (int) (RATE *100);
-		result =(percentFee/100)*amountTransation;
+	public static double calculateFees(double amountTransaction) {
+		double result =((RATE *100) /100)*amountTransaction;
+		System.out.println("amountransaction"+amountTransaction);
+		System.out.println("resultfees"+result);
 		return result;
 	}
 
-	public static  double deduceFeeToUserAccount(double feesCalculated, double accountBalance) {
+	/*public static  double deduceFeeToUserAccount(double accountBalance,double amountTransaction) {
+		double feesCalculated=calculateFees( amountTransaction);	
 		return accountBalance -feesCalculated;
-	}
+	}*/
 }

@@ -49,13 +49,13 @@ public class Transaction {
 
 	@NotNull
 	@Column(name = "transaction_fees")
-	private float transactionFees;
+	private double transactionFees;
 
 	public Transaction() {
 	}
 
 	public Transaction(Date date, UserApp creditUser, UserApp beneficiaryUser, String description, double amount,
-			float transactionFees) {
+			double transactionFees) {
 		this.date = date;
 		this.creditUser = creditUser;
 		this.beneficiaryUser = beneficiaryUser;

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
+import com.paymybuddy.webapp.utils.Billing;
 import com.paymybuddy.webapp.utils.IOperation;
 
 @Service
@@ -32,12 +33,12 @@ public class BankingService implements IOperation {
 			UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
 			String userContactEmail = usercontact.getEmail();
 
-			updateBalanceContactAndBalanceUser(userContactEmail, creditUserId, amount);
-
+			double feesTransaction=updateBalanceContactAndBalanceUserWithFeesTransaction(userContactEmail, creditUserId, amount);
 			Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact, "texte description",
-					amount, 0);
+					amount, feesTransaction);
 			// creditUser.getTransactions().add(transactionCreated);
 			transactionService.saveTransactionDB(transactionCreated);
+		
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -46,14 +47,17 @@ public class BankingService implements IOperation {
 
 	// Mise à jour des comptes crediteur et beneficiare
 
-	public void updateBalanceContactAndBalanceUser(String contactId, String creditUserId, double amount) {
+	public double updateBalanceContactAndBalanceUserWithFeesTransaction(String contactId, String creditUserId, double amount) {
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(contactId).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
-		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amount);
-
+		double amountWithFeesTransaction =Billing.calculateFees(amount);
+		System.out.println("amountWithFeesTransaction"+amountWithFeesTransaction);
+		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
+		 
 		accountService.updateBalanceBuddyAccount(contactId, balanceCalculatedBeneficiaryUser);
 		accountService.updateBalanceBuddyAccount(creditUserId, balanceCalculatedCreditUser);
+		return amountWithFeesTransaction;
 	}
 
 	public void transfertToBuddyAccountUser(Account bankingAccount, Account buddyAccount, double amount) {
