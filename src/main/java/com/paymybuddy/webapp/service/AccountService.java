@@ -18,7 +18,7 @@ import jakarta.transaction.Transactional;
 
 @Transactional
 @Service
-public class AccountService {
+public class AccountService  {
 
 	@Autowired
 	private IUserRepository userRepository;
@@ -56,6 +56,11 @@ public class AccountService {
 	public void updateBalanceBuddyAccount(String emailUserAccount, double amount) {
 		UserApp user = userRepository.findByEmail(emailUserAccount);
 		accountRepository.updateBalanceBuddyAccount(amount, user);
+	}
+	
+	public void updateBalanceBankingAccount(String emailUserAccount, double amount) {
+		UserApp user = userRepository.findByEmail(emailUserAccount);
+		accountRepository.updateBalanceBankingAccount(amount, user);
 	}
 
 	public Account findBuddyAccountByUser(String emailUser) {

@@ -1,4 +1,4 @@
-package  com.paymybuddy.webapp.domain.model;
+package com.paymybuddy.webapp.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;

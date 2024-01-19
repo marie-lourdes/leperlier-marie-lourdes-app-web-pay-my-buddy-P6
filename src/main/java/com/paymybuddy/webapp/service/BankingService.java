@@ -5,7 +5,6 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.utils.Billing;
@@ -22,22 +21,23 @@ public class BankingService implements IOperation {
 	@Autowired
 	AccountService accountService;
 
-	public void payToContact(String contactName, String creditUserId, double amount) {
+	public void payToContact(String contactFirstName,String contactLastName, String creditUserId, double amount,String description) {
 
 		try {
-			if (isPaymentAuthorized(creditUserId, amount)) {
+			double userBuddyAccountBalance = accountService.findBankingAccountByUser(creditUserId).getBalance();
+			if (isPaymentAuthorized( amount,userBuddyAccountBalance)) {
 				throw new Exception("balance/amount of transaction is negative");
 			}
-			UserApp usercontact = userAppService.findOneUserContactsByName(contactName, creditUserId);
-			UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
+			UserApp usercontact = userAppService.getUserEntityByName(contactFirstName,contactLastName );
+			//UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
 			String userContactEmail = usercontact.getEmail();
 
-			double feesTransaction = updateBalanceContactAndBalanceUserWithFeesTransaction(userContactEmail,
-					creditUserId, amount);
-			Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact, "texte description",
+			/*double feesTransaction = updateBalanceContactAndBalanceCreditUserWithFeesTransaction(userContactEmail,
+					creditUserId, amount);*/
+			/*Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact,  description,
 					amount, feesTransaction);
 
-			transactionService.saveTransactionDB(transactionCreated);
+			transactionService.saveTransactionDB(transactionCreated);*/
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -45,28 +45,63 @@ public class BankingService implements IOperation {
 
 	// Mise à jour des comptes crediteur et beneficiare
 
-	public double updateBalanceContactAndBalanceUserWithFeesTransaction(String contactId, String creditUserId,
+	public double updateBalanceContactAndBalanceCreditUserWithFeesTransaction(String contactEmail, String creditUserId,
 			double amount) {
-		double balanceBeneficiary = accountService.findBuddyAccountByUser(contactId).getBalance();
+		double balanceBeneficiary = accountService.findBuddyAccountByUser( contactEmail).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
 
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
-		double amountWithFeesTransaction = Billing.calculateFees(amount);
+		double feesTransaction = Billing.calculateFees(amount);
+		double amountWithFeesTransaction =addAmount(amount,   feesTransaction);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
 
-		accountService.updateBalanceBuddyAccount(contactId, balanceCalculatedBeneficiaryUser);
+		accountService.updateBalanceBuddyAccount( contactEmail, balanceCalculatedBeneficiaryUser);
 		accountService.updateBalanceBuddyAccount(creditUserId, balanceCalculatedCreditUser);
 
-		return amountWithFeesTransaction;
+		return feesTransaction;
 	}
 
-	public void transfertToBuddyAccountUser(Account bankingAccount, Account buddyAccount, double amount) {
+	public void transferMoneyToBankingAccountUser(String userId, double amount,String description) {
+		try {
+			double userBankingAccountBalance = accountService.findBankingAccountByUser(userId).getBalance();
+			if (isPaymentAuthorized( amount,userBankingAccountBalance)) {
+				throw new Exception("balance/amount of transaction is negative");
+			}
+			
+			UserApp user = userAppService.getUserEntityByEmail(userId);
+			
+			double feesTransaction = updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(userId,
+					amount);
+			Transaction transactionCreated = new Transaction(new Date(), user,  userAppService.getUserEntityByEmail(userId), description,
+					amount, feesTransaction);
 
+			transactionService.saveTransactionDB(transactionCreated);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
+	
+	// Mise à jour du compte buddy de l utilisateur et compte bancaire du meme utilisateur
 
-	public boolean isPaymentAuthorized(String userId, double payment) {
-		return isOperationAuthorized(userId, payment);
+	public double updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(String userId,
+			double amount) {
+		double balanceBuddyAccount = accountService.findBuddyAccountByUser(userId).getBalance();
+		double balanceBankingAccount= accountService.findBankingAccountByUser(userId).getBalance();
+		double feesTransaction = Billing.calculateFees(amount);
+		double amountWithFeesTransaction =addAmount(amount,   feesTransaction);
+		double balanceCalculatedBeneficiaryUser = addAmount(balanceBankingAccount,  amount);
+		double balanceCalculatedCreditUser = withdrawAmount( balanceBuddyAccount, amountWithFeesTransaction);
+
+		accountService.updateBalanceBankingAccount( userId, balanceCalculatedBeneficiaryUser);
+		accountService.updateBalanceBuddyAccount(userId, balanceCalculatedCreditUser);
+
+		return feesTransaction;
 	}
+	
+	public boolean isPaymentAuthorized( double payment,double userAccountBalance) {
+		return isOperationAuthorized( payment,userAccountBalance);
+	}
+	
 	// Calcul des comptes -tranfert
 
 	public double addAmount(double balanceCreditUser, double payment) {
@@ -88,10 +123,9 @@ public class BankingService implements IOperation {
 	}
 
 	@Override
-	public boolean isOperationAuthorized(String userId, double amount) {
-		double userBuddyAccountBalance = accountService.findBuddyAccountByUser(userId).getBalance();
+	public boolean isOperationAuthorized( double amount,double userAccountBalance ) {
 		boolean isAuthorized = false;
-		if (userBuddyAccountBalance <= 0 || amount <= 0) {
+		if (userAccountBalance <= 0 || amount <= 0) {
 			isAuthorized = true;
 		}
 		return isAuthorized;

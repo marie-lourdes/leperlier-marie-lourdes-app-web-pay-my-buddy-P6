@@ -1,5 +1,7 @@
 package com.paymybuddy.webapp.service;
 
+
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -94,11 +96,11 @@ public class UserAppService {
 		return userContacts;
 	}
 	
-	public UserApp findOneUserContactsByName(String nameContact, String emailUser) {
+/*	public UserApp findOneUserContactsByName(String nameContact, String emailUser) {
 	Stream<UserApp> contactUser = this.findAllUserContacts(emailUser).stream().filter((elem) -> {
 		return elem.getFirstName().equals(nameContact);
 	});
 	List<UserApp> usercontact = contactUser.collect(Collectors.toList());
 	return usercontact.get(0);
-	}
+	}*/
 }

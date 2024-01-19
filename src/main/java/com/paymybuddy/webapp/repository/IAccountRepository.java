@@ -17,5 +17,9 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
 	@Modifying
 	@Query(value = " update  BuddyAccount a set a.balance=:amount where (a.user=:user)  ")
 	public void updateBalanceBuddyAccount(@Param("amount") double amount, @Param("user") UserApp user);
+	
+	@Modifying
+	@Query(value = " update  BankingAccount a set a.balance=:amount where (a.user=:user)  ")
+	public void updateBalanceBankingAccount(@Param("amount") double amount, @Param("user") UserApp user);
 
 }
