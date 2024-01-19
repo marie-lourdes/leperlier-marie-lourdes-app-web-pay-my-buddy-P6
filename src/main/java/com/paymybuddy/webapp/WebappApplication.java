@@ -34,7 +34,7 @@ public class WebappApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		
-		bankingService.payToContact("firstnameuser3", "testuser2@gmail.com",-25.00);
+		bankingService.payToContact("firstnameuser3", "testuser2@gmail.com",25.00);
 		List<Transaction> transactionFountByUser=transactionService.getTransactionsByCreditUser(userAppService.getUserEntityByEmail("testuser2@gmail.com"));
 		System.out.println("transactionUser"+transactionFountByUser);
 	}

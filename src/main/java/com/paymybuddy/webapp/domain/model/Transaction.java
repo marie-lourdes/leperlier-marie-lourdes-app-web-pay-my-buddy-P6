@@ -21,8 +21,8 @@ public class Transaction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique= true)
-	private long transaction_id;
+	@Column(name = "transaction_id")
+	private long transactionId;
 
 	@NotNull
 	@Column(name = "transaction_date_time ")
