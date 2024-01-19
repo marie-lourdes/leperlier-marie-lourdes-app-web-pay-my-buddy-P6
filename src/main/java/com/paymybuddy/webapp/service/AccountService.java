@@ -47,7 +47,6 @@ public class AccountService {
 			}
 		}
 		newAccount.setBalance(80.0);
-		//newAccount.setType("Buddy Account");
 		newAccount.setUser(user);
 		newAccount.setCreation(new Date());
 
@@ -59,19 +58,12 @@ public class AccountService {
 		accountRepository.updateBalanceBuddyAccount(amount, user);
 	}
 
-	/*
-	 * public void updateTransactionBuddyAccount(String emailUserAccount,
-	 * List<Transaction> transaction) { UserApp user
-	 * =userRepository.findByEmail(emailUserAccount);
-	 * accountRepository.updateTransactionBuddyAccount(transaction,user ); }
-	 */
-
 	public Account findBuddyAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
 		Account buddyAccount = new BuddyAccount();
 
 		allAccounts.forEach(account -> {
-			if (account.getUser().getEmail().equals(emailUser) && account.getClass()== BuddyAccount.class) {
+			if (account.getUser().getEmail().equals(emailUser) && account.getClass() == BuddyAccount.class) {
 				buddyAccount.setId(account.getId());
 				buddyAccount.setCreation(account.getCreation());
 				buddyAccount.setUser(account.getUser());
@@ -88,7 +80,7 @@ public class AccountService {
 		Account bankingAccount = new BankingAccount();
 
 		allAccounts.forEach(account -> {
-			if (account.getUser().getEmail().equals(emailUser) && account.getClass()== BankingAccount.class) {
+			if (account.getUser().getEmail().equals(emailUser) && account.getClass() == BankingAccount.class) {
 				bankingAccount.setBalance(account.getBalance());
 				System.out.println("account solde " + account);
 			}

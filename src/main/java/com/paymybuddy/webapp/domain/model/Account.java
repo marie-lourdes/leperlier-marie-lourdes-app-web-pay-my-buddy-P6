@@ -1,4 +1,4 @@
-package  com.paymybuddy.webapp.domain.model;
+package com.paymybuddy.webapp.domain.model;
 
 import java.util.Date;
 
@@ -20,13 +20,13 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "account")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="account_type")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "account_type")
 public abstract class Account {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	@Column(name = "id", unique= true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true)
 	private long id;
 
 	@ManyToOne

@@ -49,11 +49,11 @@ public class BankingService implements IOperation {
 			double amount) {
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(contactId).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
-System.out.println("---------balanceCredit ---"+balanceCredit );
+
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		double amountWithFeesTransaction = Billing.calculateFees(amount);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
-		System.out.println("---------balanceCreditcalculated ---"+balanceCalculatedCreditUser );
+
 		accountService.updateBalanceBuddyAccount(contactId, balanceCalculatedBeneficiaryUser);
 		accountService.updateBalanceBuddyAccount(creditUserId, balanceCalculatedCreditUser);
 
@@ -96,5 +96,4 @@ System.out.println("---------balanceCredit ---"+balanceCredit );
 		}
 		return isAuthorized;
 	}
-
 }
