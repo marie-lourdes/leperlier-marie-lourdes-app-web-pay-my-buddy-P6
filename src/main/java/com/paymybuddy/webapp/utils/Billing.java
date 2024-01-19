@@ -12,7 +12,8 @@ public class Billing {
 		result =(percentFee/100)*amountTransation;
 		return result;
 	}
-	/*public static void calculateFees(double amountTransation) {
-		(RATE *100)*amount/amount
+
+/*	public double deduceFeeToUserAccount(double feesCalculated, double accountBalance) {
+		return accountBalance -feesCalculated;
 	}*/
 }

@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
@@ -20,7 +21,7 @@ public class Account {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id", unique= true)
 	private long id;
 
 	@ManyToOne
@@ -28,6 +29,7 @@ public class Account {
 	private UserApp user;
 
 	@NotNull
+	@Positive
 	@Column(name = "balance")
 	private double balance;
 
