@@ -1,22 +1,17 @@
 package com.paymybuddy.webapp.service;
 
-
-
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.DTO.UserLoginDTO;
 import com.paymybuddy.webapp.domain.DTO.UserMapper;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.IUserRepository;
-
-import jakarta.transaction.Transactional;
 
 //service creation user, avec page sign up pour le controller et utilise le service d authentification
 @Transactional

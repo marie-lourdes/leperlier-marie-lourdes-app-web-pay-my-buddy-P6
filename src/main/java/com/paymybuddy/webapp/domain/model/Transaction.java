@@ -2,6 +2,7 @@ package com.paymybuddy.webapp.domain.model;
 
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,12 +31,12 @@ public class Transaction {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "credit_user_id", nullable = false)
+	@JoinColumn(name = "credit_user_id")
 	private UserApp creditUser;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "beneficiary_user_id", nullable = false)
+	@JoinColumn(name = "beneficiary_user_id")
 	private UserApp beneficiaryUser;
 
 	@NotNull

@@ -21,23 +21,25 @@ public class BankingService implements IOperation {
 	@Autowired
 	AccountService accountService;
 
-	public void payToContact(String contactFirstName,String contactLastName, String creditUserId, double amount,String description) {
+	public void payToContact(String emailContact, String creditUserId, double amount,String description) {
 
 		try {
 			double userBuddyAccountBalance = accountService.findBankingAccountByUser(creditUserId).getBalance();
-			if (isPaymentAuthorized( amount,userBuddyAccountBalance)) {
+		if (isPaymentAuthorized( amount,userBuddyAccountBalance)) {
 				throw new Exception("balance/amount of transaction is negative");
 			}
-			UserApp usercontact = userAppService.getUserEntityByName(contactFirstName,contactLastName );
-			//UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
+			UserApp usercontact = userAppService.getUserEntityByEmail(emailContact);
+			UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
 			String userContactEmail = usercontact.getEmail();
 
-			/*double feesTransaction = updateBalanceContactAndBalanceCreditUserWithFeesTransaction(userContactEmail,
-					creditUserId, amount);*/
-			/*Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact,  description,
+			double feesTransaction = updateBalanceContactAndBalanceCreditUserWithFeesTransaction(userContactEmail,
+					creditUserId, amount);
+			Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact,  description,
 					amount, feesTransaction);
 
-			transactionService.saveTransactionDB(transactionCreated);*/
+			transactionService.saveTransactionDB(transactionCreated);
+			System.out.println("amount transaction"+amount);
+			System.out.println("amount transaction"+amount);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -49,12 +51,12 @@ public class BankingService implements IOperation {
 			double amount) {
 		double balanceBeneficiary = accountService.findBuddyAccountByUser( contactEmail).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
-
+		System.out.println("balanceCredit "+balanceCredit );
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		double feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction =addAmount(amount,   feesTransaction);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
-
+		System.out.println("balanceCalculatedCreditUser "+balanceCalculatedCreditUser );
 		accountService.updateBalanceBuddyAccount( contactEmail, balanceCalculatedBeneficiaryUser);
 		accountService.updateBalanceBuddyAccount(creditUserId, balanceCalculatedCreditUser);
 
