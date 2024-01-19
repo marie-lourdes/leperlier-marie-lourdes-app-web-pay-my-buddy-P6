@@ -23,19 +23,20 @@ public class BankingService implements IOperation {
 	AccountService accountService;
 
 	public void payToContact(String contactName, String creditUserId, double amount) {
-		
-		try {	
-			if ( isPaymentAuthorized(creditUserId, amount)) {	
+
+		try {
+			if (isPaymentAuthorized(creditUserId, amount)) {
 				throw new Exception("balance/amount of transaction is negative");
 			}
 			UserApp usercontact = userAppService.findOneUserContactsByName(contactName, creditUserId);
 			UserApp creditUser = userAppService.getUserEntityByEmail(creditUserId);
 			String userContactEmail = usercontact.getEmail();
 
-			double feesTransaction=updateBalanceContactAndBalanceUserWithFeesTransaction(userContactEmail, creditUserId, amount);
+			double feesTransaction = updateBalanceContactAndBalanceUserWithFeesTransaction(userContactEmail,
+					creditUserId, amount);
 			Transaction transactionCreated = new Transaction(new Date(), creditUser, usercontact, "texte description",
-					amount, feesTransaction);		
-			
+					amount, feesTransaction);
+
 			transactionService.saveTransactionDB(transactionCreated);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -44,17 +45,18 @@ public class BankingService implements IOperation {
 
 	// Mise à jour des comptes crediteur et beneficiare
 
-	public double updateBalanceContactAndBalanceUserWithFeesTransaction(String contactId, String creditUserId, double amount) {
+	public double updateBalanceContactAndBalanceUserWithFeesTransaction(String contactId, String creditUserId,
+			double amount) {
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(contactId).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(creditUserId).getBalance();
-		
+System.out.println("---------balanceCredit ---"+balanceCredit );
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
-		double amountWithFeesTransaction =Billing.calculateFees(amount);
+		double amountWithFeesTransaction = Billing.calculateFees(amount);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
-		 
+		System.out.println("---------balanceCreditcalculated ---"+balanceCalculatedCreditUser );
 		accountService.updateBalanceBuddyAccount(contactId, balanceCalculatedBeneficiaryUser);
 		accountService.updateBalanceBuddyAccount(creditUserId, balanceCalculatedCreditUser);
-		
+
 		return amountWithFeesTransaction;
 	}
 

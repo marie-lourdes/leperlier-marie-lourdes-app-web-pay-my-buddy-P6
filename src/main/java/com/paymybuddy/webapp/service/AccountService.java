@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.webapp.domain.model.Account;
+import com.paymybuddy.webapp.domain.model.BankingAccount;
+import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.IAccountRepository;
 import com.paymybuddy.webapp.repository.IUserRepository;
@@ -26,7 +28,7 @@ public class AccountService {
 
 	public void addBuddyAccount(String emailUser) throws IllegalArgumentException {
 		UserApp user = new UserApp();
-		Account newAccount = new Account();
+		Account newAccount = new BuddyAccount();
 		List<Account> accountExisting = new ArrayList<Account>();
 		try {
 			user = userRepository.findByEmail(emailUser);
@@ -39,13 +41,13 @@ public class AccountService {
 		}
 
 		for (Account account : accountExisting) {
-			if (account.getType().contains("Buddy Account")) {
+			if (account.getUser().getEmail().equals(emailUser)) {
 				throw new IllegalArgumentException(
 						" BuddyAccount already exist, " + "birthdate is: " + account.getCreation());
 			}
 		}
 		newAccount.setBalance(80.0);
-		newAccount.setType("Buddy Account");
+		//newAccount.setType("Buddy Account");
 		newAccount.setUser(user);
 		newAccount.setCreation(new Date());
 
@@ -66,10 +68,10 @@ public class AccountService {
 
 	public Account findBuddyAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
-		Account buddyAccount = new Account();
+		Account buddyAccount = new BuddyAccount();
 
 		allAccounts.forEach(account -> {
-			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Buddy Account")) {
+			if (account.getUser().getEmail().equals(emailUser) && account.getClass()== BuddyAccount.class) {
 				buddyAccount.setId(account.getId());
 				buddyAccount.setCreation(account.getCreation());
 				buddyAccount.setUser(account.getUser());
@@ -83,10 +85,10 @@ public class AccountService {
 
 	public Account findBankingAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
-		Account bankingAccount = new Account();
+		Account bankingAccount = new BankingAccount();
 
 		allAccounts.forEach(account -> {
-			if (account.getUser().getEmail().equals(emailUser) && account.getType().contains("Banking Account")) {
+			if (account.getUser().getEmail().equals(emailUser) && account.getClass()== BankingAccount.class) {
 				bankingAccount.setBalance(account.getBalance());
 				System.out.println("account solde " + account);
 			}

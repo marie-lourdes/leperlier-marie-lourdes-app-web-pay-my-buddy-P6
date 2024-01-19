@@ -15,7 +15,7 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
  public List< Account> findByUser(UserApp user);
  
  @Modifying
- @Query(value=" update  Account a set a.balance=:amount where (a.user=:user) and(a.type like '%Buddy Account%') ")
+ @Query(value=" update  BuddyAccount a set a.balance=:amount where (a.user=:user)  ")
  public void updateBalanceBuddyAccount(@Param("amount") double amount, @Param("user") UserApp user);
  
 }
