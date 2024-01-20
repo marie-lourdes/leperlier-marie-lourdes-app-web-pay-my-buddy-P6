@@ -1,6 +1,7 @@
 package com.paymybuddy.webapp.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,6 @@ public class TransactionService {
 	@Autowired
 	IAccountRepository accountRepository;
 	
-	@Autowired
-	private IUserRepository userRepository;
-
 	public List<Transaction> getAllTransactions() {
 		return transactionRepository.findAll();
 	}
@@ -35,6 +33,9 @@ public class TransactionService {
 		return transactionRepository.findByAccountCreditUser(accountCreditUser);
 	}
 
+	/*public Transaction getTransactionsByAccountId(long accountCreditUserId) {
+		return transactionRepository.findById(accountCreditUserId).get();
+	}*/
 /*	public void saveTransaction(Transaction transaction) {
 		transactionRepository.save(transaction);
 	}*/

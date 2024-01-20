@@ -35,9 +35,9 @@ public class Transaction {
 	private Account accountCreditUser;
 
 	@NotNull
-	//@ManyToOne
-	//@JoinColumn(name = "account_beneficiary_user_id")
-	@Column(name = "account_beneficiary_user_id")
+	@ManyToOne
+	@JoinColumn(name = "account_beneficiary_user_id")
+	//@Column(name = "account_beneficiary_user_id")
 	private Account accountBeneficiaryUser;
 	
 	@NotNull
