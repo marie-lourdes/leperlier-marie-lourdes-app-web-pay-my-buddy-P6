@@ -1,10 +1,13 @@
 package com.paymybuddy.webapp.domain.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +15,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -26,7 +30,7 @@ public abstract class Account {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true)
+	@Column(name = "account_id", unique = true)
 	private long id;
 
 	@ManyToOne
@@ -43,4 +47,12 @@ public abstract class Account {
 
 	@Column(name = "creation")
 	private Date creation;
+	
+	@OneToMany(mappedBy = "creditUser", fetch = FetchType.EAGER)
+	private List<Transaction> transactions= new ArrayList<>();
+	
+	public void addTransaction(Transaction transaction) {
+		this.transactions.add(transaction);
+	}
+	
 }

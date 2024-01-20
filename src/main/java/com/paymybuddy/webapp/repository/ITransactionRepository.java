@@ -8,7 +8,7 @@ import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 
 public interface ITransactionRepository extends JpaRepository<Transaction, Long> {
-	public List<Transaction> findByCreditUser(UserApp userId);
+	public List<Transaction> findByAccountCreditUser(Account accountId);
 
 }
 

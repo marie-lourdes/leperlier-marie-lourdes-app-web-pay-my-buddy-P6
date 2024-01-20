@@ -31,14 +31,14 @@ public class Transaction {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "credit_user_id")
-	private UserApp creditUser;
+	@JoinColumn(name = "account_credit_user_id")
+	private Account accountCreditUser;
 
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "beneficiary_user_id")
-	private UserApp beneficiaryUser;
-
+	//@ManyToOne
+	@JoinColumn(name = "account_beneficiary_user_id")
+	private UserApp accountBeneficiaryUser;
+	
 	@NotNull
 	@Column(name = "description")
 	private String description;

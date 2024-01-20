@@ -1,6 +1,7 @@
 package com.paymybuddy.webapp.controller;
 
 import java.io.IOException;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.web.exchanges.HttpExchange.Principal;
@@ -32,14 +33,20 @@ public class TransactionController {
 	UserAppService userAppService;
 	
 	@PostMapping("/save-payment")
-	public ModelAndView createPayment(@Valid @ModelAttribute Transaction transaction, Principal principal )
+	public ModelAndView createPayment(@Valid @ModelAttribute Transaction transaction,Principal principal)
 			throws IOException {
 		try {
-			double feesTransaction = Billing.calculateFees(transaction.getAmount());
-			
+			double feesTransaction = Billing.calculateFees(amount);
+	/*	Transaction transactionCreated = new Transaction();
+			transactionCreated.setDate(new Date());
+			transactionCreated.setCreditUser(userAppService.getUserEntityByEmail(principal.getName()));
+			transactionCreated.setBeneficiaryUser(userAppService.getUserEntityByEmail(email));
+			transactionCreated.setAmount(amount);
+			transactionCreated.setTransactionFees(feesTransaction);
+			transactionService.saveTransactionDB(transactionCreated);*/
 
-			bankingService.payToContact(transaction.getBeneficiaryUser().getEmail(), principal.getName(), transaction.getAmount(), transaction.getDescription()); 
-			//transactionService.saveTransactionDB(transaction);
+			bankingService.payToContact(userAppService.getUserEntityByEmail(principal.getName()).getEmail(), userAppService.getUserEntityByEmail(email).getEmail(),amount, description); 
+		
 			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -48,10 +55,15 @@ public class TransactionController {
 		}
 	}
 	@GetMapping("/account/transfer")
-	public String gettransfer(Model model) {
+	public String gettransfer(Model model, Principal principal) {
 		Transaction transactionCreated = new Transaction();
+	/* double  amount=0;
+		String email="";
+		String description="";*/
 		
-		model.addAttribute("transaction", transactionCreated);
+		model.addAttribute(" transactionCreated ", transactionCreated );
+		/*model.addAttribute(" description",  description);
+		model.addAttribute("email", email);*/
 		return "transfer";
 	}
 }

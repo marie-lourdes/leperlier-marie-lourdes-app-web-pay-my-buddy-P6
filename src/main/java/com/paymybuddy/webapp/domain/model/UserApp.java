@@ -63,7 +63,7 @@ public class UserApp {
 	List<UserApp> contacts = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private List<Account> buddyAccount;
+	private List<Account> account;
 	
 	@OneToMany(mappedBy = "creditUser", fetch = FetchType.EAGER)
 	private List<Transaction> transactions= new ArrayList<>();

@@ -12,7 +12,7 @@
 		</header>
       <div class="container">
 	        <main>
-				<form th:action="@{/save-payment}" method="post"th:object="${transaction}" >
+				<form th:action="@{/save-payment}" method="post">
 					<a th:href="@{/account/home}">
 					  <div class="button-styled button-home">
 								 Pay My Buddy
@@ -21,18 +21,18 @@
 		            <div class="login-field">
 						<div class="login-field--fontawesome">
 							<i class="fa-regular fa-envelope"></i>
-							<input th:field="*{amount}"   type="number" name="amount" required  placeholder="amount"/>
+							<input th:value="${amount}"   type="number" name="amount" required  placeholder="amount"/>
 						</div>	
 					</div>
 		            <div class="login-field">
 							<div class="login-field--fontawesome">
-							<input th:field="*{beneficiaryUser.email}" type="email" name="email" required  placeholder="email"/> 
+							<input th:value="${email}" type="email" name="email" required  placeholder="email"/> 
 							</div>
 					</div>
 				
 			<div class="login-field">
 							<div class="login-field--fontawesome">
-							<input th:field="*{description}" type="text" name="description" required  placeholder="description"/> 
+							<input th:value="${description}" type="text" name="description" required  placeholder="description"/> 
 							</div>
 					</div>
 		            <div class="button-styled"><input class="button-form type" type="submit" value="Pay" /></div>				
