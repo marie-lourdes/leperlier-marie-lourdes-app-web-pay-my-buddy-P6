@@ -74,10 +74,10 @@ public class BankingService implements IOperation {
 			
 			double feesTransaction = updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(userId,
 					amount);
-			Transaction transactionCreated = new Transaction(new Date(), user,  userAppService.getUserEntityByEmail(userId), description,
+		/*	Transaction transactionCreated = new Transaction(new Date(), user,  userAppService.getUserEntityByEmail(userId), description,
 					amount, feesTransaction);
 
-			transactionService.saveTransactionDB(transactionCreated);
+			transactionService.saveTransaction(transactionCreated);*/
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

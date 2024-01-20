@@ -49,7 +49,7 @@ public class UserAppService {
 		UserApp contactToAdd = new UserApp();
 
 		user = userRepository.findByEmail(emailUser);
-		contactToAdd = userRepository.findByEmail(emailContact);
+		contactToAdd = userRepository.findByEmail(emailContact);//verifier que le contcat est bien utilisateur inscrit
 		if (contactToAdd == null) {
 			throw new IllegalArgumentException("Incorrect contact email  provided: " + emailContact);
 		} else if (user.getContacts().contains(contactToAdd)) {

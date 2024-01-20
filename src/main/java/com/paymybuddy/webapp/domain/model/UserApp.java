@@ -64,14 +64,7 @@ public class UserApp {
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Account> account;
-	
-	@OneToMany(mappedBy = "creditUser", fetch = FetchType.EAGER)
-	private List<Transaction> transactions= new ArrayList<>();
-	
-	public void addTransaction(Transaction transaction) {
-		this.transactions.add(transaction);
-	}
-	
+
 	public void addContact(UserApp contact) {
 		this.contacts.add(contact);
 		

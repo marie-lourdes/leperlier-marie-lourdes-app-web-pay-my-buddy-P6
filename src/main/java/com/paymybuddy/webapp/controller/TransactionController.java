@@ -36,7 +36,7 @@ public class TransactionController {
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction transaction,Principal principal)
 			throws IOException {
 		try {
-			double feesTransaction = Billing.calculateFees(amount);
+			//double feesTransaction = Billing.calculateFees(amount);
 	/*	Transaction transactionCreated = new Transaction();
 			transactionCreated.setDate(new Date());
 			transactionCreated.setCreditUser(userAppService.getUserEntityByEmail(principal.getName()));
@@ -45,7 +45,7 @@ public class TransactionController {
 			transactionCreated.setTransactionFees(feesTransaction);
 			transactionService.saveTransactionDB(transactionCreated);*/
 
-			bankingService.payToContact(userAppService.getUserEntityByEmail(principal.getName()).getEmail(), userAppService.getUserEntityByEmail(email).getEmail(),amount, description); 
+		//	bankingService.payToContact(userAppService.getUserEntityByEmail(principal.getName()).getEmail(), userAppService.getUserEntityByEmail(email).getEmail(),amount, description); 
 		
 			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {
