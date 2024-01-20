@@ -2,7 +2,7 @@ package com.paymybuddy.webapp.utils;
 
 public class Billing {
 	
-	public static final double RATE =0.5;
+	public static final double RATE =0.05;
 	
 	private Billing(){}
 	
