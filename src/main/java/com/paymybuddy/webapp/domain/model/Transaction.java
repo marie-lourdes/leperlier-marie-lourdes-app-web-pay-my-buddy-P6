@@ -55,11 +55,11 @@ public class Transaction {
 	public Transaction() {
 	}
 
-	public Transaction(Date date, UserApp creditUser, UserApp beneficiaryUser, String description, double amount,
+	public Transaction(Date date, Account accountCreditUser, Account accountBeneficiaryUser, String description, double amount,
 			double transactionFees) {
 		this.date = date;
-		this.creditUser = creditUser;
-		this.beneficiaryUser = beneficiaryUser;
+		this.accountCreditUser= accountCreditUser;
+		this. accountBeneficiaryUser =  accountBeneficiaryUser;
 		this.description = description;
 		this.amount = amount;
 		this.transactionFees = transactionFees;
