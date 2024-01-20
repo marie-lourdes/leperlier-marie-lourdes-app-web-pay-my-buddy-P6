@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.Transaction;
-import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.ITransactionRepository;
 
 import jakarta.transaction.Transactional;
@@ -22,8 +22,8 @@ public class TransactionService {
 		return transactionRepository.findAll();
 	}
 
-	public List<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
-		return transactionRepository.findByCreditUser(creditUser);
+	public List<Transaction> getTransactionsByAccountCreditUser(Account accountCreditUser) {
+		return transactionRepository.findByAccountCreditUser(accountCreditUser);
 	}
 
 	public void saveTransactionDB(Transaction transaction) {
