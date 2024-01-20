@@ -48,11 +48,11 @@ public abstract class Account {
 	@Column(name = "creation")
 	private Date creation;
 	
-	@OneToMany(mappedBy = "creditUser", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "accountCreditUser", fetch = FetchType.EAGER)
 	private List<Transaction> transactions= new ArrayList<>();
 	
 	public void addTransaction(Transaction transaction) {
-		this.transactions.add(transaction);
+		this.transactions.add(transaction);	
 	}
 	
 }
