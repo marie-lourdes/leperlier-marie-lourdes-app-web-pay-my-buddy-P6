@@ -1,40 +1,25 @@
 package com.paymybuddy.webapp.controller;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.web.exchanges.HttpExchange.Principal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.paymybuddy.webapp.domain.model.Transaction;
-import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.BankingService;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
-import com.paymybuddy.webapp.utils.Billing;
-
-import jakarta.validation.Valid;
 
 @Controller
 public class TransactionController {
 	
-	@Autowired
+	/*@Autowired
 	private BankingService bankingService;
 	
 	@Autowired
 	TransactionService transactionService;
 	
 	@Autowired
-	UserAppService userAppService;
+	UserAppService userAppService;*/
 	
-	@PostMapping("/save-payment")
+/*	@PostMapping("/save-payment")
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction transaction,Principal principal)
 			throws IOException {
 		try {
@@ -46,7 +31,8 @@ public class TransactionController {
 			transactionCreated.setAmount(amount);
 			transactionCreated.setTransactionFees(feesTransaction);
 			transactionService.saveTransactionDB(transactionCreated);*/
-			transactionService.addTransactionUserAndContact(transaction);
+	
+			/*transactionService.addTransactionUserAndContact(transaction);
 			bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
 					transaction.getAmount(), transaction.getDescription()); 
@@ -57,17 +43,6 @@ public class TransactionController {
 			// response.setIntHeader("status",400);
 			return new ModelAndView("redirect:/error-400");
 		}
-	}
-	@GetMapping("/account/transfer")
-	public String gettransfer(Model model, Principal principal) {
-		List<Transaction> allTransaction= transactionService.getAllTransactions();
-	/* double  amount=0;
-		String email="";
-		String description="";*/
-		
-		model.addAttribute(" transactions ", allTransaction);
-		/*model.addAttribute(" description",  description);
-		model.addAttribute("email", email);*/
-		return "transfer";
-	}
+	}*/
+
 }

@@ -18,19 +18,19 @@ import jakarta.transaction.Transactional;
 public class TransactionService {
 	
 	@Autowired
-	ITransactionRepository transactionRepository;
+	private ITransactionRepository transactionRepository;
 	
 	@Autowired
-	IAccountRepository accountRepository;
+	private IAccountRepository accountRepository;
 	
 	@Autowired
-	IUserRepository userRepository;
+	private IUserRepository userRepository;
 	
 	public List<Transaction> getAllTransactions() {
 		return transactionRepository.findAll();
 	}
 
-	public List<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
+	public Iterable<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
 		return transactionRepository.findByCreditUser(creditUser);
 	}
 
@@ -45,7 +45,7 @@ public class TransactionService {
 		UserApp beneficiaryUser= userRepository.findByEmail(transactionCreated.getBeneficiaryUser().getEmail());
 		Transaction transactionAdd = new Transaction();
 		
-		List<Transaction> transactionsOfUserAccount = this.getTransactionsByCreditUser( creditUser );
+		List<Transaction> transactionsOfUserAccount = (List<Transaction>) this.getTransactionsByCreditUser( creditUser );
 	
 		
 		if(transactionsOfUserAccount.contains(transactionCreated)) {

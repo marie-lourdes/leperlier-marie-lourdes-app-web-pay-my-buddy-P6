@@ -37,24 +37,23 @@
 		            <div class="button-styled"><input class="button-form type" type="submit" value="Pay" /></div>				
 	            </form>
 			</main>  
-				   <h2>Liste des transactions</h2>	   
+				   <h2>Transactions</h2>	   
 				   <table >
 					<thead>
 						<tr>
-							<th>Prénom</th>
 							<th>Nom</th>
-							<th>Email</th>
+							<th>Amount</th>
+							<th>Description</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${transactions}==null">
-							<td colspan="3">Vous n'avez pas effectué de transactions</td>
+						<tr th:if="${transactions.empty}">
+							<td colspan="4">Vous n'avez pas effectué de transactions</td>
 						</tr>
 						<tr th:each="transaction: ${transactions}">
-							<td><span th:text="${transaction.beneficiaryUser}"> Nom </span></td>
-							<td><span th:text="${transaction.creditUser}"> Prénom </span></td>
+							<td><span th:text="${transaction.beneficiaryUser.user.email}"> Nom </span></td>
 							<td><span th:text="${transaction.amount}"> Email</span></td>
-							<td><span th:text="${transaction.description}"> Email</span></td>
+							<td><span th:text="${transaction.description}"> Description</span></td>
 						</tr>
 					</tbody>
 				</table> 

@@ -12,14 +12,15 @@ import com.paymybuddy.webapp.utils.IOperation;
 
 @Service
 public class BankingService implements IOperation {
+	
 	@Autowired
-	TransactionService transactionService;
+	private TransactionService transactionService;
 
 	@Autowired
-	UserAppService userAppService;
+	private UserAppService userAppService;
 
 	@Autowired
-	AccountService accountService;
+	private AccountService accountService;
 
 	public void payToContact(String emailContact, String creditUserId, double amount,String description) {
 
