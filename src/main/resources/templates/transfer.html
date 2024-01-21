@@ -19,18 +19,17 @@
 					  </div>
 				    </a>
 		            <div class="login-field">
-						<div class="login-field--fontawesome">
-							<i class="fa-regular fa-envelope"></i>
-							<input th:value="${amount}"   type="number" name="amount" required  placeholder="amount"/>
-						</div>	
-					</div>
-		            <div class="login-field">
 							<div class="login-field--fontawesome">
+							<i class="fa-regular fa-envelope"></i>
 							<input th:value="${email}" type="email" name="email" required  placeholder="email"/> 
 							</div>
 					</div>
-				
-			<div class="login-field">
+					<div class="login-field">
+						<div class="login-field--fontawesome">
+							<input th:value="${amount}"   type="number" name="amount" required  placeholder="amount"/>
+						</div>	
+					</div>
+			        <div class="login-field">
 							<div class="login-field--fontawesome">
 							<input th:value="${description}" type="text" name="description" required  placeholder="description"/> 
 							</div>
@@ -38,8 +37,8 @@
 		            <div class="button-styled"><input class="button-form type" type="submit" value="Pay" /></div>				
 	            </form>
 			</main>  
-							<h2>Liste des transactions</h2>	   
-				 <!--  <table >
+				   <h2>Liste des transactions</h2>	   
+				   <table >
 					<thead>
 						<tr>
 							<th>Prénom</th>
@@ -48,16 +47,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${contacts.empty}">
-							<td colspan="3">Vous n'avez pas de contacts</td>
+						<tr th:if="${transactions}==null">
+							<td colspan="3">Vous n'avez pas effectué de transactions</td>
 						</tr>
-						<tr th:each="contact: ${contacts}">
-							<td><span th:text="${contact.lastName}"> Nom </span></td>
-							<td><span th:text="${contact.firstName}"> Prénom </span></td>
-							<td><span th:text="${contact.email}"> Email</span></td>
+						<tr th:each="transaction: ${transactions}">
+							<td><span th:text="${transaction.beneficiaryUser}"> Nom </span></td>
+							<td><span th:text="${transaction.creditUser}"> Prénom </span></td>
+							<td><span th:text="${transaction.amount}"> Email</span></td>
+							<td><span th:text="${transaction.description}"> Email</span></td>
 						</tr>
 					</tbody>
-				</table> -->
+				</table> 
 		</div>    
     </body>
 </html>

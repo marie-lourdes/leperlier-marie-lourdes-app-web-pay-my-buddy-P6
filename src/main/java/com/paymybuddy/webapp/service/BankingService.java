@@ -39,7 +39,7 @@ public class BankingService implements IOperation {
 
 			transactionService.addTransactionUserAndContact(transactionCreated);*/
 			System.out.println("amount transaction"+amount);
-			System.out.println("amount transaction"+amount);
+		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

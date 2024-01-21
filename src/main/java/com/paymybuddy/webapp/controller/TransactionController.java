@@ -2,6 +2,7 @@ package com.paymybuddy.webapp.controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.web.exchanges.HttpExchange.Principal;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.paymybuddy.webapp.domain.model.Transaction;
+import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.BankingService;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
@@ -44,7 +46,7 @@ public class TransactionController {
 			transactionCreated.setAmount(amount);
 			transactionCreated.setTransactionFees(feesTransaction);
 			transactionService.saveTransactionDB(transactionCreated);*/
-
+			transactionService.addTransactionUserAndContact(transaction);
 			bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
 					transaction.getAmount(), transaction.getDescription()); 
@@ -58,12 +60,12 @@ public class TransactionController {
 	}
 	@GetMapping("/account/transfer")
 	public String gettransfer(Model model, Principal principal) {
-		Transaction transactionCreated = new Transaction();
+		List<Transaction> allTransaction= transactionService.getAllTransactions();
 	/* double  amount=0;
 		String email="";
 		String description="";*/
 		
-		model.addAttribute(" transactionCreated ", transactionCreated );
+		model.addAttribute(" transactions ", allTransaction);
 		/*model.addAttribute(" description",  description);
 		model.addAttribute("email", email);*/
 		return "transfer";

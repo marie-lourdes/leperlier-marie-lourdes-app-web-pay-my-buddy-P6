@@ -30,7 +30,7 @@ public class TransactionService {
 		return transactionRepository.findAll();
 	}
 
-	public List<Transaction> getTransactionsByAccountCreditUser(UserApp creditUser) {
+	public List<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
 		return transactionRepository.findByCreditUser(creditUser);
 	}
 
@@ -40,25 +40,27 @@ public class TransactionService {
 /*	public void saveTransaction(Transaction transaction) {
 		transactionRepository.save(transaction);
 	}*/
-	
-/*	public Transaction addTransactionUserAndContact(String emailUser,Account accountCreditUser,Transaction transactionCreated) throws IllegalArgumentException {
-		UserApp user = userRepository.findByEmail(emailUser);
+		public void addTransactionUserAndContact(Transaction transactionCreated) throws IllegalArgumentException {
+		UserApp creditUser = userRepository.findByEmail(transactionCreated.getCreditUser().getEmail());
+		UserApp beneficiaryUser= userRepository.findByEmail(transactionCreated.getBeneficiaryUser().getEmail());
 		Transaction transactionAdd = new Transaction();
-		List<Account> userAccount= 	accountRepository.findByUser(user);
-		List<Transaction> transactionsOfUserAccount = this.getTransactionsByAccountCreditUser(userAccount);
-		Account beneficiaryAccount=transactionCreated.getAccountBeneficiaryUser();
+		
+		List<Transaction> transactionsOfUserAccount = this.getTransactionsByCreditUser( creditUser );
+	
 		
 		if(transactionsOfUserAccount.contains(transactionCreated)) {
 			throw new IllegalArgumentException("transaction already send and created");
 		
-		}else if (beneficiaryAccount==null) {
+		}else if (beneficiaryUser==null) {
 			throw new IllegalArgumentException("Incorrect accountContact  provided: ");
 		} else {
-			userAccount.addTransaction(transactionCreated);
-			accountRepository.save(userAccount);
+			creditUser.addTransaction(transactionCreated);
 			transactionRepository.save(transactionCreated);
+			userRepository.save(creditUser );
+			
 		}
-		return transactionCreated;
+		System.out.println("transactionCreated"+transactionCreated);
+		
 		/* if( userAccount.getClass() == BuddyAccount.class) {
 			 userAccount= new BuddyAccount();
 		 }else {
@@ -66,8 +68,7 @@ public class TransactionService {
 		 }*/
 	
 	}
-	
-	
+}	
 	
 	
 	// method instead use constructor too much args
