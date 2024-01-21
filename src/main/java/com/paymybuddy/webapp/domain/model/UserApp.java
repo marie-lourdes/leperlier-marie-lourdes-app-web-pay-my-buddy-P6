@@ -70,6 +70,13 @@ public class UserApp {
 		
 	}
 	
+	@OneToMany(mappedBy = "creditUser", fetch = FetchType.EAGER)
+	private List<Transaction> transactions= new ArrayList<>();
+	
+	public void addTransaction(Transaction transaction) {
+		this.transactions.add(transaction);	
+	}
+	
 	@Override
 	public String toString() {
 		return "UserApp{" + "email:" + email + ", first name:'" + firstName + '\'' + ", last name:" + lastName

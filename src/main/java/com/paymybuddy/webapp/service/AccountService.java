@@ -63,9 +63,9 @@ public class AccountService  {
 		accountRepository.updateBalanceBankingAccount(amount, user);
 	}
 
-	public Account findBuddyAccountByUser(String emailUser) {
+	public BuddyAccount findBuddyAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
-		Account buddyAccount = new BuddyAccount();
+		BuddyAccount buddyAccount = new BuddyAccount();
 
 		allAccounts.forEach(account -> {
 			if (account.getUser().getEmail().equals(emailUser) && account.getClass() == BuddyAccount.class) {
@@ -73,21 +73,26 @@ public class AccountService  {
 				buddyAccount.setCreation(account.getCreation());
 				buddyAccount.setUser(account.getUser());
 				buddyAccount.setBalance(account.getBalance());
-				System.out.println("account solde " + buddyAccount);
+				System.out.println(" buddy account  solde " + buddyAccount);
 			}
 		});
 
 		return buddyAccount;
 	}
 
-	public Account findBankingAccountByUser(String emailUser) {
+	public BankingAccount findBankingAccountByUser(String emailUser) {
 		Iterable<Account> allAccounts = accountRepository.findAll();
-		Account bankingAccount = new BankingAccount();
+		BankingAccount bankingAccount = new BankingAccount();
 
 		allAccounts.forEach(account -> {
 			if (account.getUser().getEmail().equals(emailUser) && account.getClass() == BankingAccount.class) {
+				bankingAccount.setId(account.getId());
+				bankingAccount.setCreation(account.getCreation());
+				bankingAccount.setUser(account.getUser());
 				bankingAccount.setBalance(account.getBalance());
-				System.out.println("account solde " + account);
+				//bankingAccount.setTransactions(account.getTransactions());
+		
+				System.out.println(" banking account solde " + account);
 			}
 		});
 

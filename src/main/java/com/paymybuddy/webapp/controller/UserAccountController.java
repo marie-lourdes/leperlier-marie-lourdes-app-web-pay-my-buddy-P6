@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
-import com.paymybuddy.webapp.domain.model.Account;
+import com.paymybuddy.webapp.domain.model.BankingAccount;
+import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.AccountService;
 import com.paymybuddy.webapp.service.UserAppService;
@@ -97,11 +98,11 @@ public class UserAccountController {
 		UserDTO contactCreated = new UserDTO();
 
 		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
-		Account userBuddyAccountBalance = accountService.findBuddyAccountByUser(user.getEmail());
-		Account userBankingAccountBalance = accountService.findBankingAccountByUser(user.getEmail());
+		BuddyAccount userBuddyAccountBalance = accountService.findBuddyAccountByUser(user.getEmail());
+		BankingAccount userBankingAccountBalance =  accountService.findBankingAccountByUser(user.getEmail());
 		model.addAttribute("contact", contactCreated);
 		model.addAttribute("user", user);
-		model.addAttribute("userBuddyAccount", userBuddyAccountBalance);
+	model.addAttribute("userBuddyAccount", userBuddyAccountBalance);
 		model.addAttribute("userBankingAccount", userBankingAccountBalance);
 
 		return "profil";

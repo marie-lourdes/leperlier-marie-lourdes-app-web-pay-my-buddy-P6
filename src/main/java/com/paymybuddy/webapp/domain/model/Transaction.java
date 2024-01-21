@@ -30,14 +30,14 @@ public class Transaction {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "account_credit_user_id")
-	private Account accountCreditUser;
+	@JoinColumn(name = "credit_user_id")
+	private UserApp creditUser;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "account_beneficiary_user_id")
+	@JoinColumn(name = "beneficiary_user_id")
 	//@Column(name = "account_beneficiary_user_id")
-	private Account accountBeneficiaryUser;
+	private UserApp beneficiaryUser;
 	
 	@NotNull
 	@Column(name = "description")
@@ -55,11 +55,11 @@ public class Transaction {
 	public Transaction() {
 	}
 
-	public Transaction(Date date, Account accountCreditUser, Account accountBeneficiaryUser, String description, double amount,
+	public Transaction(Date date, UserApp creditUser, UserApp beneficiaryUser, String description, double amount,
 			double transactionFees) {
 		this.date = date;
-		this.accountCreditUser= accountCreditUser;
-		this. accountBeneficiaryUser =  accountBeneficiaryUser;
+		this.creditUser= creditUser;
+		this. beneficiaryUser =  beneficiaryUser;
 		this.description = description;
 		this.amount = amount;
 		this.transactionFees = transactionFees;

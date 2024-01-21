@@ -1,12 +1,10 @@
 package com.paymybuddy.webapp.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.IAccountRepository;
@@ -25,12 +23,15 @@ public class TransactionService {
 	@Autowired
 	IAccountRepository accountRepository;
 	
+	@Autowired
+	IUserRepository userRepository;
+	
 	public List<Transaction> getAllTransactions() {
 		return transactionRepository.findAll();
 	}
 
-	public List<Transaction> getTransactionsByAccountCreditUser(Account accountCreditUser) {
-		return transactionRepository.findByAccountCreditUser(accountCreditUser);
+	public List<Transaction> getTransactionsByAccountCreditUser(UserApp creditUser) {
+		return transactionRepository.findByCreditUser(creditUser);
 	}
 
 	/*public Transaction getTransactionsByAccountId(long accountCreditUserId) {
@@ -40,10 +41,10 @@ public class TransactionService {
 		transactionRepository.save(transaction);
 	}*/
 	
-	public Transaction addTransactionUserAndContact(long accountId,Transaction transactionCreated) throws IllegalArgumentException {
-		
+/*	public Transaction addTransactionUserAndContact(String emailUser,Account accountCreditUser,Transaction transactionCreated) throws IllegalArgumentException {
+		UserApp user = userRepository.findByEmail(emailUser);
 		Transaction transactionAdd = new Transaction();
-		Account userAccount=  accountRepository.findById(accountId).get();
+		List<Account> userAccount= 	accountRepository.findByUser(user);
 		List<Transaction> transactionsOfUserAccount = this.getTransactionsByAccountCreditUser(userAccount);
 		Account beneficiaryAccount=transactionCreated.getAccountBeneficiaryUser();
 		
@@ -65,6 +66,10 @@ public class TransactionService {
 		 }*/
 	
 	}
+	
+	
+	
+	
 	// method instead use constructor too much args
 	
 	/*public Transaction createTransaction(UserApp creditUser, UserApp contact,
@@ -87,4 +92,4 @@ public class TransactionService {
 	public double calculateFees(double amountTransaction) {
 		return 0;
 	}*/
-}
+

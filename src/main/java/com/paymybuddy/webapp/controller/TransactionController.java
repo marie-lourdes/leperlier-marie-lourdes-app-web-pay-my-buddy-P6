@@ -45,7 +45,9 @@ public class TransactionController {
 			transactionCreated.setTransactionFees(feesTransaction);
 			transactionService.saveTransactionDB(transactionCreated);*/
 
-		//	bankingService.payToContact(userAppService.getUserEntityByEmail(principal.getName()).getEmail(), userAppService.getUserEntityByEmail(email).getEmail(),amount, description); 
+			bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
+					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
+					transaction.getAmount(), transaction.getDescription()); 
 		
 			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {
