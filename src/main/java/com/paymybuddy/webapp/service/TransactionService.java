@@ -33,8 +33,9 @@ public class TransactionService {
 	}
 
 	public List<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
-		return transactionRepository.findByCreditUser(creditUser);
+		 return transactionRepository.findByCreditUser(creditUser);	
 	}
+		
 
 	/*public Transaction getTransactionsByAccountId(long accountCreditUserId) {
 		return transactionRepository.findById(accountCreditUserId).get();
@@ -51,11 +52,7 @@ public class TransactionService {
 		Transaction tranfertRegistered = new Transaction();
 		List<Transaction> transactionsOfUserAccount = this.getTransactionsByCreditUser( creditUser );
 	
-		
-		if(transactionsOfUserAccount.contains(transactionCreated)) {
-			throw new IllegalArgumentException("transaction already send and created");
-		
-		}else if (beneficiaryUser==null) {
+		if (beneficiaryUser==null) {
 			throw new IllegalArgumentException("Incorrect accountContact  provided: ");
 		} else {
 			double feesTransaction = Billing.calculateFees(transactionCreated.getAmount());

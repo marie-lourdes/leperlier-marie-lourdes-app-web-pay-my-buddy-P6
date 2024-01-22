@@ -17,6 +17,7 @@ public interface IUserRepository extends JpaRepository<UserApp, String> {
 	
 	public UserApp findByFirstNameAndLastName(String firstName,String lastName);
 	
-	@Query(value = "select u from UserApp u join u.transactions where u.email=:email")
-	public List<Transaction> findUserTransaction(@Param("email")String emailUser);
+	/*@Query(value = "select u from UserApp u join u.transactions where u.email=:email")
+	public List<Transaction> findUserTransaction(@Param("email")String emailUser);*/
+
 }

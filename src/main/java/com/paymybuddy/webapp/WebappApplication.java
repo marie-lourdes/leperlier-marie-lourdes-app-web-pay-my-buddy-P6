@@ -39,17 +39,9 @@ public class WebappApplication implements CommandLineRunner {
 	@Transactional
 	@Override
 	public void run(String... args) {
-		/*UserApp creditUser = userRepository.findByEmail("testuser2@gmail.com");
-		UserApp beneficiaryUser= userRepository.findByEmail("testuser3@gmail.com");
-		Transaction tranfertRegistered = new Transaction();
-		tranfertRegistered.setDate(new Date());
-		tranfertRegistered.setCreditUser(creditUser);
-	
-		tranfertRegistered.setBeneficiaryUser(beneficiaryUser);
-		//tranfertRegistered.setBeneficiaryAccount(accountContact);
-		tranfertRegistered.setDescription("versement test2 a test3");
-		tranfertRegistered.setAmount(25.00);
-		tranfertRegistered.setTransactionFees(0.0 );
-		transactionService.addTransactionUserAndContact("testuser2@gmail.com", "testuser3@gmail.com", tranfertRegistered);*/
+	/*	UserApp user = userAppService.getUserEntityByEmail("testuser2@gmail.com");
+		System.out.println("user" + user.getFirstName());
+	List<Transaction> transactions = transactionService.getTransactionsByCreditUser( userAppService.getUserEntityByEmail("testuser2@gmail.com"));
+		System.out.println("transaction" + transactions);*/
 	}
 }

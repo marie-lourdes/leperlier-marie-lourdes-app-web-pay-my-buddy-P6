@@ -133,10 +133,11 @@ public class UserAccountController {
 			transactionService.saveTransactionDB(transactionCreated);*/
 	
 		//	transactionService.addTransactionUserAndContact(userId,contactId,transaction);
-		/*	bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
+			transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);
+			bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
 					transaction.getAmount(), transaction.getDescription()); 
-			transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);*/
+		
 			return new ModelAndView("redirect:/account/transfer");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -146,16 +147,17 @@ public class UserAccountController {
 	}
 	
 	@GetMapping("/account/transfer")
-	public String getTransfer(Model model, Principal principal) {
-		//Transaction transaction =new  Transaction();
+	public String getTransferPage(Model model, Principal principal) {
+		Transaction transaction =new  Transaction();
 		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
 	
 		List<Transaction> transactions = transactionService
-				.getTransactionsByCreditUser(user);
+				.getTransactionsByCreditUser( userAppService.getUserEntityByEmail(principal.getName()));
 
-		System.out.println("allTransaction" + transactions);
+		model.addAttribute(" transaction ", transaction);
+		System.out.println("all Transaction" + transactions);
 		model.addAttribute(" transactions ", transactions);
-		//model.addAttribute(" transaction ", transaction);
+		
 		/*
 		 * model.addAttribute(" description", description); model.addAttribute("email",
 		 * email);
