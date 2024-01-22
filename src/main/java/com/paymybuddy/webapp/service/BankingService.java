@@ -40,13 +40,13 @@ public class BankingService implements IOperation {
 
 	 transactionCreated.setCreditUser(creditUser);
 
-	 transactionCreated.setBeneficiaryUser(userContact);
-	//tranfertRegistered.setBeneficiaryAccount(accountContact);
+	 transactionCreated.setBeneficiaryUser( creditUser t);
+	 transactionCreated.setBeneficiaryAccount(userContact);
 	 transactionCreated.setDescription(description);
 	 transactionCreated.setAmount(amount);
-	// transactionCreated.setTransactionFees( feesTransaction );
+	transactionCreated.setTransactionFees( feesTransaction );*/
 
-			transactionService.addTransactionUserAndContact(transactionCreated);*/
+		//	transactionService.addTransactionUserAndContact(transactionCreated);
 			//System.out.println("amount transaction"+amount);
 		
 		} catch (Exception e) {

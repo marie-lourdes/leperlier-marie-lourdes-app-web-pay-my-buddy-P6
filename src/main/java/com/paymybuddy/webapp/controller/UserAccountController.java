@@ -133,7 +133,7 @@ public class UserAccountController {
 			transactionService.saveTransactionDB(transactionCreated);*/
 	
 		//	transactionService.addTransactionUserAndContact(userId,contactId,transaction);
-			transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);
+			//transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);
 			bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
 					transaction.getAmount(), transaction.getDescription()); 
