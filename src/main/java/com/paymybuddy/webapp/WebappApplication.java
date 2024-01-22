@@ -40,8 +40,8 @@ public class WebappApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 	/*	UserApp user = userAppService.getUserEntityByEmail("testuser2@gmail.com");
-		System.out.println("user" + user.getFirstName());
-	List<Transaction> transactions = transactionService.getTransactionsByCreditUser( userAppService.getUserEntityByEmail("testuser2@gmail.com"));
+		System.out.println("user" + user.getFirstName());*/
+/*	List<Transaction> transactions = transactionService.getTransactionsByCreditUser( userAppService.getUserEntityByEmail("testuser2@gmail.com"));
 		System.out.println("transaction" + transactions);*/
 	}
 }

@@ -51,8 +51,8 @@
 							<td colspan="3">Vous n'avez pas effectué de transactions</td>
 						</tr>
 						<tr th:each="transaction: ${transactions}">
-							<td><span th:text="${transaction.beneficiaryUser}"> Nom </span></td>
-							<td><span th:text="${transaction.amount}"> Email</span></td>
+							<td><span th:text="${transaction.beneficiaryUser.user.email}"> Nom </span></td>
+							<td><span th:text="${transaction.amount}"> Amount</span></td>
 							<td><span th:text="${transaction.description}"> Description</span></td>
 						</tr>
 					</tbody>

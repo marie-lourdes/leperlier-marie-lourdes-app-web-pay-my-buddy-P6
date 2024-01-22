@@ -65,5 +65,9 @@ public class Transaction {
 		this.amount = amount;
 		this.transactionFees = transactionFees;
 	}
-
+	@Override
+	public String toString() {
+		return "Transaction{" + "date :" + date + ", creditUser:'" + creditUser  + ",  beneficiaryUser:" +  beneficiaryUser
+				+ ", description:" +  description + ", amount:" + amount + ", transactionFees:" + transactionFees + '}';
+	}
 }
