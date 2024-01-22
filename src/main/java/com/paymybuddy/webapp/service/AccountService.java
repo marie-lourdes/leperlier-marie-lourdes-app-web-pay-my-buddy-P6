@@ -28,7 +28,7 @@ public class AccountService  {
 
 	public void addBuddyAccount(String emailUser) throws IllegalArgumentException {
 		UserApp user = new UserApp();
-		Account newAccount = new BuddyAccount();
+		BuddyAccount newAccount = new BuddyAccount();
 		List<Account> accountExisting = new ArrayList<Account>();
 		try {
 			user = userRepository.findByEmail(emailUser);

@@ -18,10 +18,10 @@ import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.AccountService;
+import com.paymybuddy.webapp.service.BankingService;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
 
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -35,9 +35,12 @@ public class UserAccountController {
 
 	@Autowired
 	private TransactionService transactionService;
+	
+	@Autowired
+	private BankingService bankingService;
 
 	@PostMapping("/sign-up-form")
-	public ModelAndView createUser(@Valid @ModelAttribute UserApp user, HttpServletResponse response)
+	public ModelAndView createUser(@Valid @ModelAttribute UserApp user)
 			throws IOException {
 		try {
 			userAppService.createUser(user);
@@ -65,7 +68,7 @@ public class UserAccountController {
 	}
 
 	@PostMapping("/save-contact")
-	public ModelAndView createContact(@ModelAttribute UserApp contact, Principal principal) throws IOException {
+	public ModelAndView createContact(@Valid @ModelAttribute UserApp contact,Principal principal) throws IOException {
 
 		try {
 			userAppService.addUserContact(contact.getEmail(), principal.getName());
@@ -116,18 +119,43 @@ public class UserAccountController {
 		return "account-success";
 	}
 	
+	@PostMapping("/save-payment")
+	public ModelAndView createPayment(@Valid  @ModelAttribute Transaction transaction,Principal principal)
+			throws IOException {
+		try {
+			//double feesTransaction = Billing.calculateFees(amount);
+	/*	Transaction transactionCreated = new Transaction();
+			transactionCreated.setDate(new Date());
+			transactionCreated.setCreditUser(userAppService.getUserEntityByEmail(principal.getName()));
+			transactionCreated.setBeneficiaryUser(userAppService.getUserEntityByEmail(email));
+			transactionCreated.setAmount(amount);
+			transactionCreated.setTransactionFees(feesTransaction);
+			transactionService.saveTransactionDB(transactionCreated);*/
+	
+		//	transactionService.addTransactionUserAndContact(userId,contactId,transaction);
+		/*	bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
+					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
+					transaction.getAmount(), transaction.getDescription()); 
+			transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);*/
+			return new ModelAndView("redirect:/account/transfer");
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			// response.setIntHeader("status",400);
+			return new ModelAndView("redirect:/error-400");
+		}
+	}
+	
 	@GetMapping("/account/transfer")
 	public String getTransfer(Model model, Principal principal) {
+		//Transaction transaction =new  Transaction();
 		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
-		System.out.println("principal user transfer view" + user.getEmail());
-		List<Transaction> allTransaction = transactionService
+	
+		List<Transaction> transactions = transactionService
 				.getTransactionsByCreditUser(user);
-		/*
-		 * double amount=0; String email=""; String description="";
-		 */
-		// System.out.println("principal user transfer view"+user.getEmail());
-		System.out.println("allTransaction" + allTransaction);
-		model.addAttribute(" transactions ", allTransaction);
+
+		System.out.println("allTransaction" + transactions);
+		model.addAttribute(" transactions ", transactions);
+		//model.addAttribute(" transaction ", transaction);
 		/*
 		 * model.addAttribute(" description", description); model.addAttribute("email",
 		 * email);

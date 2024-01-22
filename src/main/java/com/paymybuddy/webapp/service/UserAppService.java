@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.DTO.UserLoginDTO;
 import com.paymybuddy.webapp.domain.DTO.UserMapper;
+import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
+import com.paymybuddy.webapp.repository.ITransactionRepository;
 import com.paymybuddy.webapp.repository.IUserRepository;
 
 //service creation user, avec page sign up pour le controller et utilise le service d authentification
@@ -22,6 +24,10 @@ public class UserAppService {
 
 	@Autowired
 	private IUserRepository userRepository;
+	
+	
+	@Autowired
+	private ITransactionRepository transactionRepository;
 
 	@Autowired
 	private UserMapper mapper;
@@ -91,6 +97,31 @@ public class UserAppService {
 		return userContacts;
 	}
 	
+	public List<Transaction> findAllUserTransaction(String emailUser) {
+		UserApp user = userRepository.findByEmail(emailUser);
+		List<Transaction> userTransactions = user.getTransactions();
+		System.out.println("user Transactions"+ userTransactions);
+		return userTransactions;
+	}
+	
+	public void addUserTransaction( String emailUser) throws IllegalArgumentException {
+		UserApp user = new UserApp();
+		UserApp contactToAdd = new UserApp();
+
+		user = userRepository.findByEmail(emailUser);
+		List<Transaction> transactions=transactionRepository.findByCreditUser(user);
+		if (transactions == null) {
+			throw new IllegalArgumentException("Incorrect transaction provided: " );
+		} else if (user.getContacts().contains(contactToAdd)) {
+			throw new IllegalArgumentException("transaction  exist!");
+		} else {
+			for(Transaction transaction:transactions) {
+				user.addTransaction( transaction);
+			}
+		
+			userRepository.save(user);
+		}
+	}
 /*	public UserApp findOneUserContactsByName(String nameContact, String emailUser) {
 	Stream<UserApp> contactUser = this.findAllUserContacts(emailUser).stream().filter((elem) -> {
 		return elem.getFirstName().equals(nameContact);

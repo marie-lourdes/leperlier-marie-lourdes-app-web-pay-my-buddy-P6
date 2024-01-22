@@ -26,18 +26,18 @@ public class UserApp {
 	@Id
 	@NotNull
 	@Pattern(regexp = REGEX_P)
-	@Column(name = "user_id", unique= true)
+	@Column(name = "user_id", unique=true)
 	private String email;
 
-	@NotNull
+
 	@Column(name = "first_name")
 	private String firstName;
 	
-	@NotNull
+	
 	@Column(name = "last_name")
 	private String lastName;
 	
-	@NotNull
+	
 	@Column(name = "password")
 	private String password;
 
@@ -62,7 +62,8 @@ public class UserApp {
 			)
 	List<UserApp> contacts = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, 
+			orphanRemoval = true)
 	private List<Account> account;
 
 	public void addContact(UserApp contact) {
@@ -70,7 +71,8 @@ public class UserApp {
 		
 	}
 	
-	@OneToMany(mappedBy = "creditUser", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "creditUser", cascade = CascadeType.ALL, 
+			orphanRemoval = true)
 	private List<Transaction> transactions= new ArrayList<>();
 	
 	public void addTransaction(Transaction transaction) {
@@ -80,6 +82,6 @@ public class UserApp {
 	@Override
 	public String toString() {
 		return "UserApp{" + "email:" + email + ", first name:'" + firstName + '\'' + ", last name:" + lastName
-				+ ", password:" + password + ", contacts:" + contacts + ", role:" + role + '}';
+				+ ", password:" + password + ", contacts:" + contacts + ", role:" + role + ", transactions:" + transactions+ '}';
 	}
 }
