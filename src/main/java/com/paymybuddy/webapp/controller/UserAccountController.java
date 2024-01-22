@@ -154,8 +154,8 @@ public class UserAccountController {
 		List<Transaction> transactions = transactionService
 				.getTransactionsByCreditUser( userAppService.getUserEntityByEmail(principal.getName()));
 
-		model.addAttribute(" transaction ", transaction);
-		System.out.println("all Transaction" + transactions);
+		//model.addAttribute(" transaction ", transaction);
+		//System.out.println("all Transaction" + transactions);
 		model.addAttribute(" transactions ", transactions);
 		
 		/*
