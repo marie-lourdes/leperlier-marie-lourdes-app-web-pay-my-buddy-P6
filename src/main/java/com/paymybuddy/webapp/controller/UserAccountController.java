@@ -2,6 +2,7 @@ package com.paymybuddy.webapp.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,14 +149,21 @@ public class UserAccountController {
 	
 	@GetMapping("/account/transfer")
 	public String getTransferPage(Model model, Principal principal) {
-		Transaction transaction =new  Transaction();
-		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
-	
-		List<Transaction> transactions = transactionService
+		//Transaction transaction =new  Transaction();
+		//UserApp user = userAppService.getUserEntityByEmail(principal.getName());
+		List<Transaction> transactions=new ArrayList<>();
+		List<Transaction> transactionsFoundByUser = transactionService
 				.getTransactionsByCreditUser( userAppService.getUserEntityByEmail(principal.getName()));
+		for(Transaction transaction:transactionsFoundByUser) {
+			Transaction userTransactions =new  Transaction();
+			userTransactions.setBeneficiaryUser(transaction.getBeneficiaryUser());
+			userTransactions.setAmount(transaction.getAmount());
+			userTransactions.setDescription(transaction.getDescription());
+			transactions.add(userTransactions);
+		}
 
-		//model.addAttribute(" transaction ", transaction);
-		//System.out.println("all Transaction" + transactions);
+		model.addAttribute(" transaction ", new  Transaction());
+		System.out.println("all Transaction" + transactions);
 		model.addAttribute(" transactions ", transactions);
 		
 		/*

@@ -12,7 +12,7 @@
 		</header>
       <div class="container">
 	        <main>
-			<!--	<form th:action="@{/save-payment}" method="post" th:object="${transaction}">
+				<form th:action="@{/save-payment}" method="post" th:object="${transaction}">
 					<a th:href="@{/account/home}">
 					  <div class="button-styled button-home">
 								 Pay My Buddy
@@ -35,7 +35,7 @@
 							</div>
 					</div>
 		            <div class="button-styled"><input class="button-form type" type="submit" value="Pay" /></div>				
-	            </form>-->
+	            </form>
 			</main>  
 				   <h2>Transactions</h2>	   
 				   <table >
@@ -51,7 +51,7 @@
 							<td colspan="3">Vous n'avez pas effectué de transactions</td>
 						</tr>
 						<tr th:each="transaction: ${transactions}">
-							<td><span th:text="${transaction.beneficiaryUser}">Email </span></td>
+							<td><span th:text="${transaction.beneficiaryUser.email}">Email </span></td>
 							<td><span th:text="${transaction.amount}"> Amount</span></td>
 							<td><span th:text="${transaction.description}"> Description</span></td>
 						</tr>
