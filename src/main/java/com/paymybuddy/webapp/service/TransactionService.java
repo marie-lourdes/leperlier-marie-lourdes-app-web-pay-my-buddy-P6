@@ -30,7 +30,7 @@ public class TransactionService {
 		return transactionRepository.findAll();
 	}
 
-	public Iterable<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
+	public List<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
 		return transactionRepository.findByCreditUser(creditUser);
 	}
 
@@ -45,7 +45,7 @@ public class TransactionService {
 		UserApp beneficiaryUser= userRepository.findByEmail(transactionCreated.getBeneficiaryUser().getEmail());
 		Transaction transactionAdd = new Transaction();
 		
-		List<Transaction> transactionsOfUserAccount = (List<Transaction>) this.getTransactionsByCreditUser( creditUser );
+		List<Transaction> transactionsOfUserAccount = this.getTransactionsByCreditUser( creditUser );
 	
 		
 		if(transactionsOfUserAccount.contains(transactionCreated)) {
