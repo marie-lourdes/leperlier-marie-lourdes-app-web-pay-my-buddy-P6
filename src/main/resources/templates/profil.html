@@ -1,81 +1,83 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title>Profil</title>
-		<link th:href="@{/css/main.css}" rel="stylesheet" />
-		<link th:href="@{/css/profil.css}" rel="stylesheet" />
-		<script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}"
-			crossorigin="anonymous"></script>
-	</head>	
-	<body>
-		<header>
-			<div class="title-header"> Pay My Buddy</div>
-			<div class="nav-bar">
-				<a th:href="@{/account/home}">
-					<div class="button-styled button-home">
-						Pay My Buddy
-					</div>
-				</a>
-				<nav>
-					<ul>
-						<li><a th:href="@{/account/home}">Home</a></li>
-						<li><a>Transfer</a></li>
-						<li><a th:href="@{/account/profil}">Profil</a></li>
-						<li><a th:href="@{/account/contact}">Contact</a></li>
-						<li><a th:href="@{/logout}">Log off</a></li>
-						<li><a th:href="@{/sign-up}">Sign up</a></li>
-					</ul>
-				</nav>
-			</div>
-		</header>
-		<div class="container">
-			<main>
-				<section>
-					<h1>Profil</h1>
-					    <div class="section-user-info">
-							<li> Firstname: <span th:text="${user.firstName}"> Firstname </span></li>
-							<br />
-							<li> Lastname: <span th:text="${user.lastName}"> Lastname </span></li>
-							<br />
-							<li>Email: <span th:text="${user.email}"> Email </span></li>
-						 </div>
-				</section>
-				<section>
-					<h2>Accounts</h2>
-					<div class="section-user-info section-user-info--padding">
-					    <li th:if="${userBuddyAccount.balance}">Balance buddy account: 
-							<span th:text="${userBuddyAccount.balance}"> Balance buddy account </span>
-						</li>
-						<br />
-						<li th:if="${userBankingAccount.balance}">Balance bank account: 
-							<span th:text="${userBankingAccount.balance}"> Balance bank account</span>
-						</li>
-						<form th:action="@{/save-buddy-account}" method="post">
-							<div class="button-styled button-styled--profil"><input
-									class="button-form button-form--profil" type="submit"
-									value="Create Buddy Account" /></div>
-						</form>
-					</div>
-				</section>
-				<section>
-					<h2>Connections</h2>
-					<div class="section-user-info section-user-info--padding">
-						<form th:action="@{/save-contact}" method="post" th:object="${contact}">
-							<div >
-								<div class="login-field--fontawesome">
-									<i class="fa-solid fa-user"></i>
-									<input class="field-connection" th:field="*{email}" type="email" name="id-contact" required
-										placeholder="durand@email.com" />
-								</div>
-							</div>
-							<div class="button-styled button-styled button-styled--profil">
-								<input class="button-form button-form--profil" type="submit"value="Add connection" />
-							</div>
-						</form>
-					</div>
-				</section>
-			</main>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Profil</title>
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
+	<link th:href="@{/css/profil.css}" rel="stylesheet" />
+	<script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<header>
+		<div class="title-header"> Pay My Buddy</div>
+		<div class="nav-bar">
+			<a th:href="@{/account/home}">
+				<div class="button-styled button-home">
+					Pay My Buddy
+				</div>
+			</a>
+			<nav>
+				<ul>
+					<li><a th:href="@{/account/home}">Home</a></li>
+					<li><a>Transfer</a></li>
+					<li><a th:href="@{/account/profil}">Profil</a></li>
+					<li><a th:href="@{/account/contact}">Contact</a></li>
+					<li><a th:href="@{/logout}">Log off</a></li>
+					<li><a th:href="@{/sign-up}">Sign up</a></li>
+				</ul>
+			</nav>
 		</div>
-	</body>
+	</header>
+	<div class="container">
+		<main>
+			<section>
+				<h1>Profil</h1>
+				<div class="section-user-info">
+					<li> Firstname: <span th:text="${user.firstName}"> Firstname </span></li>
+					<br />
+					<li> Lastname: <span th:text="${user.lastName}"> Lastname </span></li>
+					<br />
+					<li>Email: <span th:text="${user.email}"> Email </span></li>
+				</div>
+			</section>
+			<section>
+				<h2>Accounts</h2>
+				<div class="section-user-info section-user-info--padding">
+					<li th:if="${userBuddyAccount.balance}">Balance buddy account:
+						<span th:text="${userBuddyAccount.balance}"> Balance buddy account </span>
+					</li>
+					<br />
+					<li th:if="${userBankingAccount.balance}">Balance bank account:
+						<span th:text="${userBankingAccount.balance}"> Balance bank account</span>
+					</li>
+					<form th:action="@{/save-buddy-account}" method="post">
+						<div class="button-styled button-styled--profil"><input class="button-form button-form--profil"
+								type="submit" value="Create Buddy Account" /></div>
+					</form>
+				</div>
+			</section>
+			<section>
+				<h2>Connections</h2>
+				<div class="section-user-info section-user-info--padding">
+					<form th:action="@{/save-contact}" method="post" th:object="${contact}">
+						<div>
+							<div class="login-field--fontawesome">
+								<i class="fa-solid fa-user"></i>
+								<input class="field-connection" th:field="*{email}" type="email" name="id-contact"
+									required placeholder="durand@email.com" />
+							</div>
+						</div>
+						<div class="button-styled button-styled button-styled--profil">
+							<input class="button-form button-form--profil" type="submit" value="Add connection" />
+						</div>
+					</form>
+				</div>
+			</section>
+		</main>
+	</div>
+</body>
+
 </html>

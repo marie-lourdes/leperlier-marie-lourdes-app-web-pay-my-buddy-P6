@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-    <head>
-		<meta charset="UTF-8">
-        <title>HomePage</title>
-        <link th:href="@{/css/main.css}" rel="stylesheet" />
-        <script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}" crossorigin="anonymous"></script>
-    </head>
-    <body>
-		<header>
-			<div class="title-header"> Pay My Buddy</div>	
-			<div class="nav-bar">
-				<a th:href="@{/account/home}">
-					 <div class="button-styled button-home">
-							Pay My Buddy
-					 </div>
-				</a>
-				<nav> 
-					<ul>
-						<li><a th:href="@{/account/home}">Home</a></li>
-						<li><a th:href="@{/account/transfer}">Transfer</a></li>
-						<li><a th:href= "@{/account/profil}">Profil</a></li>
-						<li><a th:href="@{/account/contact}">Contact</a></li>
-						<li><a th:href="@{/logout}">Log off</a></li>
-						<li><a th:href="@{/sign-up}">Sign up</a></li>
-					</ul>
-				</nav>
-			</div>		
-		</header>
-		<div class="container">
-			<main>
-				 <div class="text-welcome" >
-					 <i class="fa-regular fa-face-smile fontawesome-styled"></i>
-	                  Welcome to Pay My Buddy application!
-	                  <span th:text="${user.firstName}"> Prénom </span>
-	                  <div th:text="${user.email}">Email</div>
-	              </div>  
-			</main>
-		</div>          
-    </body>
+
+<head>
+	<meta charset="UTF-8">
+	<title>HomePage</title>
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
+	<script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<header>
+		<div class="title-header"> Pay My Buddy</div>
+		<div class="nav-bar">
+			<a th:href="@{/account/home}">
+				<div class="button-styled button-home">
+					Pay My Buddy
+				</div>
+			</a>
+			<nav>
+				<ul>
+					<li><a th:href="@{/account/home}">Home</a></li>
+					<li><a th:href="@{/account/transfer}">Transfer</a></li>
+					<li><a th:href="@{/account/profil}">Profil</a></li>
+					<li><a th:href="@{/account/contact}">Contact</a></li>
+					<li><a th:href="@{/logout}">Log off</a></li>
+					<li><a th:href="@{/sign-up}">Sign up</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<div class="container">
+		<main>
+			<div class="text-welcome">
+				<i class="fa-regular fa-face-smile fontawesome-styled"></i>
+				Welcome to Pay My Buddy application!
+				<span th:text="${user.firstName}"> Prénom </span>
+				<div th:text="${user.email}">Email</div>
+			</div>
+		</main>
+	</div>
+</body>
+
 </html>

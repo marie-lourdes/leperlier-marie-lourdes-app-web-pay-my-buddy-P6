@@ -1,52 +1,56 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-    <head>
-		<meta charset="UTF-8">
-        <title>Login</title>
-        <link th:href="@{/css/main.css}" rel="stylesheet" />
-        <link th:href="@{/css/login.css}" rel="stylesheet" />
-         <script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}" crossorigin="anonymous"></script>
-    </head>
-    <body>
-		<header class="header--height">
-		    <div class="title-header"> Pay My Buddy</div>	
-		</header>
-		<div class="container">
-			<div class ="login-error" th:if="${param.error}">
-	            Invalid email and password.
-	        </div>
-	        <main>
-				<form th:action="@{/login}" method="post">
-					<a th:href="@{/account/home}">
-					  <div class="button-styled button-home">
-								 Pay My Buddy
-					  </div>
-				    </a>
-		            <div class="login-field">
-							<div class="login-field--fontawesome">
-								<i class="fa-regular fa-envelope"></i>
-							<input  type="email" name="username" required  placeholder="Email"/>
-							</div>	
-						</div>
-		            <div class="login-field">
-							<div class="login-field--fontawesome">
-							<i class="fa-solid fa-asterisk"></i> 
-							<input type="password" name="password" required  placeholder="Password"/> 
-							</div>
-						</div>
-		            <div class="check-remember">
-						<div class="checkbox-customized">
-		                       <input type="checkbox" id="remember" name="remember-me" checked>
-		                       	<i class="fa-solid fa-check"></i>
-						</div>
-		                <label for="remember">
-		                    Remember Me
-		                </label>
-		            </div>
-		            <div class="button-styled"><input class="button-form" type="submit" value="Login" /></div>		      	
-	            </form>
-	            <a th:href="@{/sign-up}" class="link-sign-up">Sign-up</a>		
-			</main>   
-		</div>    
-    </body>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
+	<link th:href="@{/css/login.css}" rel="stylesheet" />
+	<script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<header class="header--height">
+		<div class="title-header"> Pay My Buddy</div>
+	</header>
+	<div class="container">
+		<div class="login-error" th:if="${param.error}">
+			Invalid email and password.
+		</div>
+		<main>
+			<form th:action="@{/login}" method="post">
+				<a th:href="@{/account/home}">
+					<div class="button-styled button-home">
+						Pay My Buddy
+					</div>
+				</a>
+				<div class="login-field">
+					<div class="login-field--fontawesome">
+						<i class="fa-regular fa-envelope"></i>
+						<input type="email" name="username" required placeholder="Email" />
+					</div>
+				</div>
+				<div class="login-field">
+					<div class="login-field--fontawesome">
+						<i class="fa-solid fa-asterisk"></i>
+						<input type="password" name="password" required placeholder="Password" />
+					</div>
+				</div>
+				<div class="check-remember">
+					<div class="checkbox-customized">
+						<input type="checkbox" id="remember" name="remember-me" checked>
+						<i class="fa-solid fa-check"></i>
+					</div>
+					<label for="remember">
+						Remember Me
+					</label>
+				</div>
+				<div class="button-styled"><input class="button-form" type="submit" value="Login" /></div>
+			</form>
+			<a th:href="@{/sign-up}" class="link-sign-up">Sign-up</a>
+		</main>
+	</div>
+</body>
+
 </html>
