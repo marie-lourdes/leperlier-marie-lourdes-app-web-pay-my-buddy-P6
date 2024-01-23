@@ -10,13 +10,30 @@
 </head>
 
 <body>
-	<header class="header--height">
+	<header>
 		<div class="title-header"> Pay My Buddy</div>
+		<div class="nav-bar">
+			<a th:href="@{/account/home}">
+				<div class="button-styled button-green">
+					Pay My Buddy
+				</div>
+			</a>
+			<nav>
+				<ul>
+					<li><a th:href="@{/account/home}">Home</a></li>
+					<li><a th:href="@{/account/transfer}">Transfer</a></li>
+					<li><a th:href="@{/account/profil}">Profil</a></li>
+					<li><a th:href="@{/account/contact}">Contact</a></li>
+					<li><a th:href="@{/logout}">Log off</a></li>
+					<li><a th:href="@{/sign-up}">Sign up</a></li>
+				</ul>
+			</nav>
+		</div>
 	</header>
 	<div class="container">
 		<main>
 			<form th:action="@{/save-payment}" method="post" th:object="${userTransaction}">
-				<a th:href="@{/account/contact}">
+				<a th:href="@{/account/profil}">
 					<div class="button-styled button-form button-connection ">
 						Add Connection
 					</div>
