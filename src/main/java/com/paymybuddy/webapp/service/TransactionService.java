@@ -47,10 +47,11 @@ public class TransactionService {
 	
 		public void addTransactionUserAndContact(String userId, String contactId,Transaction transactionCreated) throws IllegalArgumentException {
 		UserApp creditUser = userRepository.findByEmail(userId);
+		System.out.println("credit user"+creditUser);
 		UserApp beneficiaryUser= userRepository.findByEmail(contactId);
 		//Transaction transactionAdd = new Transaction();
 		Transaction tranfertRegistered = new Transaction();
-		List<Transaction> transactionsOfUserAccount = this.getTransactionsByCreditUser( creditUser );
+	//	List<Transaction> transactionsOfUserAccount = this.getTransactionsByCreditUser( creditUser );
 	
 		if (beneficiaryUser==null) {
 			throw new IllegalArgumentException("Incorrect accountContact  provided: ");
@@ -58,7 +59,7 @@ public class TransactionService {
 			double feesTransaction = Billing.calculateFees(transactionCreated.getAmount());
 			
 			tranfertRegistered.setDate(new Date());
-			tranfertRegistered.setCreditUser(transactionCreated.getCreditUser());
+			tranfertRegistered.setCreditUser( creditUser);
 		
 			tranfertRegistered.setBeneficiaryUser(transactionCreated.getBeneficiaryUser());
 			//tranfertRegistered.setBeneficiaryAccount(accountContact);

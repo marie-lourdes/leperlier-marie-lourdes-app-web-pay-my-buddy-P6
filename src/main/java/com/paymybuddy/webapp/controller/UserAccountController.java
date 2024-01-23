@@ -2,7 +2,6 @@ package com.paymybuddy.webapp.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,20 +10,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
-import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.AccountService;
-import com.paymybuddy.webapp.service.BankingService;
-import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
 
 import jakarta.validation.Valid;
+import lombok.Data;
 
+@Data
 @Controller
 public class UserAccountController {
 
@@ -33,12 +32,8 @@ public class UserAccountController {
 
 	@Autowired
 	private AccountService accountService;
-
-	@Autowired
-	private TransactionService transactionService;
 	
-	@Autowired
-	private BankingService bankingService;
+
 
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user)

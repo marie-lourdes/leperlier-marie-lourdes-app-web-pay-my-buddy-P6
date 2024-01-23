@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.paymybuddy.webapp.domain.model.Transaction;
@@ -32,12 +33,13 @@ public class TransactionController {
 	@Autowired
 	UserAppService userAppService;
 	
-	
+
 	@PostMapping("/save-payment")
 	public ModelAndView createPayment(@Valid  @ModelAttribute Transaction transaction,Principal principal)
 			throws IOException {
 		try {
-		
+			String userPrincipal=principal.getName();
+			System.out.println("principal name"+userPrincipal);
 		transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);
 	/*	bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
@@ -53,6 +55,7 @@ public class TransactionController {
 	
 	@GetMapping("/account/transfer")
 	public String getTransferPage(Model model, Principal principal) {
+		System.out.println("principal name"+principal.getName());
 		List<Transaction> transactions =new  ArrayList<Transaction>();
 		//UserApp user = userAppService.getUserEntityByEmail(principal.getName());
 		Transaction transaction=new Transaction();

@@ -26,11 +26,11 @@ public class Transaction implements Serializable{
 	@Column(name = "id_transaction")
 	private long transactionId;
 
-	@NotNull
+
 	@Column(name = "transaction_date_time ")
 	private Date date;
 
-	@NotNull
+	
 	@ManyToOne( cascade = CascadeType.ALL)
 	@JoinColumn(name = "credit_user_id")
 	private UserApp creditUser;
