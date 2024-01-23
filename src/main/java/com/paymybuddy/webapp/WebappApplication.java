@@ -31,7 +31,7 @@ public class WebappApplication implements CommandLineRunner {
 		SpringApplication.run(WebappApplication.class, args);
 	}
 
-	@Transactional
+	
 	@Override
 	public void run(String... args) {
 	/*	UserApp user = userAppService.getUserEntityByEmail("testuser2@gmail.com");
