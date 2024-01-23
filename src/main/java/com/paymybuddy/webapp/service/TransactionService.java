@@ -68,7 +68,7 @@ public class TransactionService {
 			creditUser.getTransactions().add(tranfertRegistered );
 			transactionRepository.save( tranfertRegistered );
 			userRepository.save(creditUser );
-			System.out.println(" tranfertRegistered "+ tranfertRegistered );
+			//System.out.println(" tranfertRegistered "+ tranfertRegistered );
 		}
 	
 		

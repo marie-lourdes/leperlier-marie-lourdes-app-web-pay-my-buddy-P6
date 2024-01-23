@@ -15,33 +15,35 @@
 	</header>
 	<div class="container">
 		<main>
-			<!--<form th:action="@{/save-payment}" method="post" th:object="${transaction}">
-					<a th:href="@{/account/home}">
-					  <div class="button-styled button-home">
-								 Pay My Buddy
-					  </div>
-				    </a>
-		           <div class="login-field">
-							<div class="login-field--fontawesome">
-							<i class="fa-regular fa-envelope"></i>
-							<input th:field="*{beneficiaryUser.user.email}" type="email" name="email" required  placeholder="email"/> 
-							</div>
+			<form th:action="@{/save-payment}" method="post" th:object="${userTransaction}">
+				<a th:href="@{/account/contact}">
+					<div class="button-styled button-form button-connection ">
+						Add Connection
 					</div>
-					<div class="login-field">
-						<div class="login-field--fontawesome">
-							<input th:field="*{amount}"   type="number" name="amount" required  placeholder="amount"/>
-						</div>	
+				</a>
+				<div class="login-field">
+					<div class="login-field--fontawesome">
+						<i class="fa-regular fa-envelope"></i>
+						<input th:field="*{beneficiaryUser.email}" type="email" name="email" required
+							placeholder="email" />
 					</div>
-			        <div class="login-field">
-							<div class="login-field--fontawesome">
-							<input th:field="*{description}" type="text" name="description" required  placeholder="description"/> 
-							</div>
+				</div>
+				<div class="login-field">
+					<div class="login-field--fontawesome">
+						<input th:field="*{amount}" type="number" name="amount" required placeholder="amount" />
 					</div>
-		            <div class="button-styled"><input class="button-form type" type="submit" value="Pay" /></div>				
-	            </form>-->
+				</div>
+				<div class="login-field">
+					<div class="login-field--fontawesome">
+						<input th:field="*{description}" type="text" name="description" required
+							placeholder="description" />
+					</div>
+				</div>
+				<div class="button-styled"><input class="button-form button-green" type="submit" value="Pay" /></div>
+			</form>
 		</main>
 		<h2>Transactions</h2>
-		<table>
+		<!--	<table>
 			<thead>
 				<tr>
 					<th>Nom</th>
@@ -59,7 +61,7 @@
 					<td><span th:text="${transaction.description}"> Description</span></td>
 				</tr>
 			</tbody>
-		</table>
+		</table>-->
 	</div>
 </body>
 

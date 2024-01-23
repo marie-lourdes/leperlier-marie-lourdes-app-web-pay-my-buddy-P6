@@ -121,14 +121,14 @@ public class UserAccountController {
 	}
 	
 	@PostMapping("/save-payment")
-	public ModelAndView createPayment(@Valid  @ModelAttribute("transaction") Transaction transaction,Principal principal)
+	public ModelAndView createPayment(@Valid  @ModelAttribute Transaction transaction,Principal principal)
 			throws IOException {
 		try {
 		
 		transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);
-		bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
+	/*	bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
-					transaction.getAmount(), transaction.getDescription()); 
+					transaction.getAmount(), transaction.getDescription()); */
 		
 			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {
@@ -142,7 +142,7 @@ public class UserAccountController {
 	public String getTransferPage(Model model, Principal principal) {
 		List<Transaction> transactions =new  ArrayList<Transaction>();
 		//UserApp user = userAppService.getUserEntityByEmail(principal.getName());
-	//	Transaction transaction=new Transaction();
+		Transaction transaction=new Transaction();
 		List<Transaction> transactionsFoundByUser = transactionService
 				.getTransactionsByCreditUser( userAppService.getUserEntityByEmail(principal.getName()));
 	/*for(Transaction transaction:transactionsFoundByUser) {
@@ -153,9 +153,9 @@ public class UserAccountController {
 			transactions.add(userTransactions);
 		}*/
 
-	//	model.addAttribute(" transaction ",transaction);
+		model.addAttribute("userTransaction",transaction);
 		//System.out.println("all Transaction" +  transactionsFoundByUser );
-		model.addAttribute(" transactions ", transactionsFoundByUser );
+		//model.addAttribute(" transactions ", transactionsFoundByUser );
 		
 		/*
 		 * model.addAttribute(" description", description); model.addAttribute("email",

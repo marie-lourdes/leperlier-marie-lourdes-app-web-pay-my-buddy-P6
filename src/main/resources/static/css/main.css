@@ -96,7 +96,7 @@ a {
 	text-decoration: none;
 }
 
-.button-home {
+.button-green {
 	background-image: linear-gradient(to right, rgb(111, 174, 75), rgb(133, 215, 88));
 	padding: 10px 15px;
 }
@@ -112,7 +112,7 @@ input[type="submit"] {
 	font-weight: bold;
 }
 
-input {
+input, .button-connection {
 	appearance: none;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 1rem;
@@ -183,7 +183,7 @@ main.main--error {
 	justify-content: center;
 }
 
-.button-home.button-home--error {
+.button-green.button-green--error {
 	margin-bottom: 15vh;
 }
 

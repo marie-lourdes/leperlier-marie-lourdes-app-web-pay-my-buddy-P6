@@ -10,8 +10,6 @@ import com.paymybuddy.webapp.service.BankingService;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
 
-import jakarta.transaction.Transactional;
-
 @SpringBootApplication
 public class WebappApplication implements CommandLineRunner {
 

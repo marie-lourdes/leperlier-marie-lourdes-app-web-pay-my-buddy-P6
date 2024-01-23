@@ -20,7 +20,7 @@
 		<main>
 			<form th:action="@{/sign-up-form}" method="post" th:object="${user}">
 				<a th:href="@{/account/home}">
-					<div class="button-styled button-home">
+					<div class="button-styled button-green">
 						Pay My Buddy
 					</div>
 				</a>
@@ -46,7 +46,7 @@
 						<input th:field="*{password}" type="password" name="password" required placeholder="Password" />
 					</div>
 				</div>
-				<div class="button-styled"><input class="button-form type" type="submit" value="Sign-Up" /></div>
+				<div class="button-styled"><input class="button-form" type="submit" value="Sign-Up" /></div>
 			</form>
 		</main>
 	</div>
