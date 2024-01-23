@@ -121,25 +121,16 @@ public class UserAccountController {
 	}
 	
 	@PostMapping("/save-payment")
-	public ModelAndView createPayment(@Valid  @ModelAttribute Transaction transaction,Principal principal)
+	public ModelAndView createPayment(@Valid  @ModelAttribute("transaction") Transaction transaction,Principal principal)
 			throws IOException {
 		try {
-			//double feesTransaction = Billing.calculateFees(amount);
-	/*	Transaction transactionCreated = new Transaction();
-			transactionCreated.setDate(new Date());
-			transactionCreated.setCreditUser(userAppService.getUserEntityByEmail(principal.getName()));
-			transactionCreated.setBeneficiaryUser(userAppService.getUserEntityByEmail(email));
-			transactionCreated.setAmount(amount);
-			transactionCreated.setTransactionFees(feesTransaction);
-			transactionService.saveTransactionDB(transactionCreated);*/
-	
-		//	transactionService.addTransactionUserAndContact(userId,contactId,transaction);
-			//transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);
-			bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
+		
+		transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);
+		bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
 					transaction.getAmount(), transaction.getDescription()); 
 		
-			return new ModelAndView("redirect:/account/transfer");
+			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
@@ -149,12 +140,12 @@ public class UserAccountController {
 	
 	@GetMapping("/account/transfer")
 	public String getTransferPage(Model model, Principal principal) {
-		//Transaction transaction =new  Transaction();
+		List<Transaction> transactions =new  ArrayList<Transaction>();
 		//UserApp user = userAppService.getUserEntityByEmail(principal.getName());
-		List<Transaction> transactions=new ArrayList<>();
+	//	Transaction transaction=new Transaction();
 		List<Transaction> transactionsFoundByUser = transactionService
 				.getTransactionsByCreditUser( userAppService.getUserEntityByEmail(principal.getName()));
-		for(Transaction transaction:transactionsFoundByUser) {
+	for(Transaction transaction:transactionsFoundByUser) {
 			Transaction userTransactions =new  Transaction();
 			userTransactions.setBeneficiaryUser(transaction.getBeneficiaryUser());
 			userTransactions.setAmount(transaction.getAmount());
@@ -162,9 +153,9 @@ public class UserAccountController {
 			transactions.add(userTransactions);
 		}
 
-		model.addAttribute(" transaction ", new  Transaction());
-		System.out.println("all Transaction" + transactions);
-		model.addAttribute(" transactions ", transactions);
+	//	model.addAttribute(" transaction ",transaction);
+		System.out.println("all Transaction" +  transactions );
+		model.addAttribute(" transactions ", transactions );
 		
 		/*
 		 * model.addAttribute(" description", description); model.addAttribute("email",

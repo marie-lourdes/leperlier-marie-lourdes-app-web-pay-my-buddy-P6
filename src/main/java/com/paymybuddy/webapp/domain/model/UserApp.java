@@ -81,7 +81,7 @@ public class UserApp {
 	
 	@Override
 	public String toString() {
-		return "UserApp{" + "email:" + email + ", first name:'" + firstName + '\'' + ", last name:" + lastName
+		return "UserApp{" + "email:" + email + ", first name:'" + firstName  + ", last name:" + lastName
 				+ ", password:" + password + ", contacts:" + contacts + ", role:" + role + ", transactions:" + transactions+ '}';
 	}
 }

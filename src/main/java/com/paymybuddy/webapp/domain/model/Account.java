@@ -48,6 +48,10 @@ public abstract class Account {
 	@Column(name = "creation")
 	private Date creation;
 	
-	
+	@Override
+	public String toString() {
+		return "Account{" + "id:" + id + ",user:'" + user + ",balance:" + balance
+				+ ", creation:" + creation+ '}';
+	}
 	
 }

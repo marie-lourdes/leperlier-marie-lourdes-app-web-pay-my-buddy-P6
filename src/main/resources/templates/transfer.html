@@ -12,13 +12,13 @@
 		</header>
       <div class="container">
 	        <main>
-				<form th:action="@{/save-payment}" method="post" th:object="${transaction}">
+				<!--<form th:action="@{/save-payment}" method="post" th:object="${transaction}">
 					<a th:href="@{/account/home}">
 					  <div class="button-styled button-home">
 								 Pay My Buddy
 					  </div>
 				    </a>
-		            <div class="login-field">
+		           <div class="login-field">
 							<div class="login-field--fontawesome">
 							<i class="fa-regular fa-envelope"></i>
 							<input th:field="*{beneficiaryUser.user.email}" type="email" name="email" required  placeholder="email"/> 
@@ -35,10 +35,10 @@
 							</div>
 					</div>
 		            <div class="button-styled"><input class="button-form type" type="submit" value="Pay" /></div>				
-	            </form>
+	            </form>-->
 			</main>  
 				   <h2>Transactions</h2>	   
-				   <table >
+				  <table >
 					<thead>
 						<tr>
 							<th>Nom</th>
@@ -47,9 +47,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:if="${transactions}==null">
+					<!--	<tr th:if="${transactions}==null">
 							<td colspan="3">Vous n'avez pas effectué de transactions</td>
-						</tr>
+						</tr>-->
 						<tr th:each="transaction: ${transactions}">
 							<td><span th:text="${transaction.beneficiaryUser.email}">Email </span></td>
 							<td><span th:text="${transaction.amount}"> Amount</span></td>

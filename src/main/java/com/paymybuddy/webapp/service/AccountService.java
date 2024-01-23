@@ -64,7 +64,7 @@ public class AccountService  {
 	}
 
 	public BuddyAccount findBuddyAccountByUser(String emailUser) {
-		Iterable<Account> allAccounts = accountRepository.findAll();
+		List<Account> allAccounts = accountRepository.findAll();
 		BuddyAccount buddyAccount = new BuddyAccount();
 
 		allAccounts.forEach(account -> {
@@ -73,15 +73,15 @@ public class AccountService  {
 				buddyAccount.setCreation(account.getCreation());
 				buddyAccount.setUser(account.getUser());
 				buddyAccount.setBalance(account.getBalance());
-				System.out.println(" buddy account  solde " + buddyAccount);
+			
 			}
 		});
-
+		//System.out.println(buddyAccount);
 		return buddyAccount;
 	}
 
 	public BankingAccount findBankingAccountByUser(String emailUser) {
-		Iterable<Account> allAccounts = accountRepository.findAll();
+		List<Account> allAccounts = accountRepository.findAll();
 		BankingAccount bankingAccount = new BankingAccount();
 
 		allAccounts.forEach(account -> {
@@ -92,10 +92,10 @@ public class AccountService  {
 				bankingAccount.setBalance(account.getBalance());
 				//bankingAccount.setTransactions(account.getTransactions());
 		
-				System.out.println(" banking account solde " + account);
+				
 			}
 		});
-
+		//System.out.println(bankingAccount);
 		return bankingAccount;
 	}
 }
