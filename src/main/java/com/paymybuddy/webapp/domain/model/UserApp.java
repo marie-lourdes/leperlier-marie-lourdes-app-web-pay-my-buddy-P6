@@ -32,7 +32,7 @@ public class UserApp {
 	private long id;
 	
 	@Pattern(regexp = REGEX_P)
-	@Column(name = "user_id")
+	@Column(name = "email")
 	private String email;
 
 
