@@ -7,6 +7,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -25,6 +27,10 @@ public class UserApp {
 
 	@Id
 	@NotNull
+	 @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	private long id;
+	
 	@Pattern(regexp = REGEX_P)
 	@Column(name = "user_id")
 	private String email;
@@ -66,17 +72,17 @@ public class UserApp {
 			orphanRemoval = true)
 	private List<Account> account;
 
-	public void addContact(UserApp contact) {
-		this.contacts.add(contact);
-		
-	}
-	
 	@OneToMany(mappedBy = "creditUser", cascade = CascadeType.ALL, 
 			orphanRemoval = true)
 	private List<Transaction> transactions= new ArrayList<>();
 	
 	public void addTransaction(Transaction transaction) {
 		this.transactions.add(transaction);	
+	}
+
+	public void addContact(UserApp contact) {
+		this.contacts.add(contact);
+		
 	}
 	
 	@Override

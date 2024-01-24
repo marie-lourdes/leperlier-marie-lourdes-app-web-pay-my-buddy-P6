@@ -31,12 +31,12 @@ public class Transaction implements Serializable{
 	private Date date;
 
 	
-	@ManyToOne( cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "credit_user_id")
 	private UserApp creditUser;
 
-	@NotNull
-	@ManyToOne( cascade = CascadeType.ALL)
+	
+	@ManyToOne(cascade= CascadeType.MERGE)
 	@JoinColumn(name = "beneficiary_user_id")
 	//@Column(name = "account_beneficiary_user_id")
 	private UserApp beneficiaryUser;
@@ -50,7 +50,7 @@ public class Transaction implements Serializable{
 	@Column(name = "amount")
 	private double amount;
 
-	@NotNull
+	
 	@Column(name = "transaction_fees")
 	private double transactionFees;
 

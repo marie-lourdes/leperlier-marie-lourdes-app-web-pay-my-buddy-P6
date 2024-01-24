@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -119,7 +120,7 @@ public class UserAccountController {
 		return "account-success";
 	}
 
-	
+	//@Transactional
 	@PostMapping("/save-payment")
 	public ModelAndView createPayment(@Valid  @ModelAttribute Transaction transaction,Principal principal)
 			throws IOException {
@@ -145,8 +146,8 @@ public class UserAccountController {
 		//UserApp user = userAppService.getUserEntityByEmail(principal.getName());
 		Transaction transaction=new Transaction();
 		
-	/*	List<Transaction> transactionsFoundByUser = transactionService
-				.getTransactionsByCreditUser( userAppService.getUserEntityByEmail(principal.getName()));*/
+		List<Transaction> transactionsFoundByUser = transactionService
+				.getTransactionsByCreditUser( userAppService.getUserEntityByEmail(principal.getName()));
 		
 	/*for(Transaction transaction:transactionsFoundByUser) {
 			Transaction userTransactions =new  Transaction();

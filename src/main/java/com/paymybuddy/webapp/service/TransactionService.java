@@ -68,6 +68,8 @@ public class TransactionService {
 			tranfertRegistered.setTransactionFees( feesTransaction );
 			creditUser.getTransactions().add(tranfertRegistered );
 			transactionRepository.save( tranfertRegistered );
+			
+			
 			userRepository.save(creditUser );
 			//System.out.println(" tranfertRegistered "+ tranfertRegistered );
 		}
