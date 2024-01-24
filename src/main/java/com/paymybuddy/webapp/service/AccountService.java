@@ -53,13 +53,13 @@ public class AccountService  {
 		accountRepository.save(newAccount);
 	}
 
-	public void updateBalanceBuddyAccount(String emailUserAccount, double amount) {
-		UserApp user = userRepository.findByEmail(emailUserAccount);
+	public void updateBalanceBuddyAccount(long id, double amount) {
+		UserApp user = userRepository.findById(id).get();
 		accountRepository.updateBalanceBuddyAccount(amount, user);
 	}
 	
-	public void updateBalanceBankingAccount(String emailUserAccount, double amount) {
-		UserApp user = userRepository.findByEmail(emailUserAccount);
+	public void updateBalanceBankingAccount(long id, double amount) {
+		UserApp user = userRepository.findById(id).get();
 		accountRepository.updateBalanceBankingAccount(amount, user);
 	}
 

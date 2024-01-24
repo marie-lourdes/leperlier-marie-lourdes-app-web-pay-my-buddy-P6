@@ -20,6 +20,7 @@ import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.AccountService;
+import com.paymybuddy.webapp.service.BankingService;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
 
@@ -36,9 +37,11 @@ public class UserAccountController {
 	@Autowired
 	private AccountService accountService;
 	
-	
 	@Autowired
 	private TransactionService transactionService;
+	
+	@Autowired
+	private BankingService bankingService;
 
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user)
@@ -126,9 +129,9 @@ public class UserAccountController {
 			throws IOException {
 		try {
 		transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);
-	/*	bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
+		bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
-					transaction.getAmount(), transaction.getDescription()); */
+					transaction.getAmount(), transaction.getDescription()); 
 		
 			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {
