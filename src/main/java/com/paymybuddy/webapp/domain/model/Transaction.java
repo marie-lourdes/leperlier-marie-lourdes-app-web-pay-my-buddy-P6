@@ -27,19 +27,16 @@ public class Transaction {
 	@Column(name = "id_transaction")
 	private long transactionId;
 
-
 	@Column(name = "transaction_date_time ")
 	private Date date;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "credit_user_id")
 	private UserApp creditUser;
 
-	
+	@NotNull
 	@ManyToOne(cascade=CascadeType.MERGE )
 	@JoinColumn(name = "beneficiary_user_id")
-	//@Column(name = "account_beneficiary_user_id")
 	private UserApp beneficiaryUser;
 	
 	@NotNull
@@ -51,7 +48,7 @@ public class Transaction {
 	@Column(name = "amount")
 	private double amount;
 
-	
+	@NotNull
 	@Column(name = "transaction_fees")
 	private double transactionFees;
 

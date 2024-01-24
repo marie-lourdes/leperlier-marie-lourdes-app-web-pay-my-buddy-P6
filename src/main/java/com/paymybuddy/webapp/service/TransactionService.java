@@ -45,8 +45,8 @@ public class TransactionService {
 		transactionRepository.save(transaction);
 	}*/
 	
-		public void addTransactionUserAndContact(String userId, String contactId,Transaction transactionCreated) throws IllegalArgumentException {
-		UserApp creditUser = userRepository.findByEmail(userId);
+		public void addTransactionUserAndContact(long userId, String contactId,Transaction transactionCreated) throws IllegalArgumentException {
+		UserApp creditUser =  userRepository.findById(userId).get();
 		System.out.println("credit user"+creditUser);
 		UserApp beneficiaryUser= userRepository.findByEmail(contactId);
 		//Transaction transactionAdd = new Transaction();
@@ -61,17 +61,19 @@ public class TransactionService {
 			tranfertRegistered.setDate(new Date());
 			tranfertRegistered.setCreditUser( creditUser);
 		
-			tranfertRegistered.setBeneficiaryUser(transactionCreated.getBeneficiaryUser());
+			tranfertRegistered.setBeneficiaryUser(beneficiaryUser);
 			//tranfertRegistered.setBeneficiaryAccount(accountContact);
 			tranfertRegistered.setDescription(transactionCreated.getDescription());
 			tranfertRegistered.setAmount(transactionCreated.getAmount());
 			tranfertRegistered.setTransactionFees( feesTransaction );
 			creditUser.getTransactions().add(tranfertRegistered );
+			
 			transactionRepository.save( tranfertRegistered );
-			
-			
 			userRepository.save(creditUser );
+			
+		
 			//System.out.println(" tranfertRegistered "+ tranfertRegistered );
+			//System.out.println(" credituser transaction"+ creditUser.getTransactions() );
 		}
 	
 		

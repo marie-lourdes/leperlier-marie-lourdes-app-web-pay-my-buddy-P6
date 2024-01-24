@@ -11,9 +11,6 @@ import com.paymybuddy.webapp.utils.IOperation;
 public class BankingService implements IOperation {
 	
 	@Autowired
-	private TransactionService transactionService;
-
-	@Autowired
 	private UserAppService userAppService;
 
 	@Autowired

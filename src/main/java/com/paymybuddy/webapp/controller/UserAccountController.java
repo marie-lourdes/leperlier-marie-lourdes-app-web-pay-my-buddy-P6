@@ -128,10 +128,11 @@ public class UserAccountController {
 	public ModelAndView createPayment(@Valid  @ModelAttribute Transaction transaction,Principal principal)
 			throws IOException {
 		try {
-		transactionService.addTransactionUserAndContact(principal.getName(),transaction.getBeneficiaryUser().getEmail(),transaction);
-		bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
+		long user = userAppService.getUserEntityByEmail(principal.getName()).getId();
+		transactionService.addTransactionUserAndContact( user ,transaction.getBeneficiaryUser().getEmail(),transaction);
+		/*bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
-					transaction.getAmount(), transaction.getDescription()); 
+					transaction.getAmount(), transaction.getDescription()); */
 		
 			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {
@@ -147,22 +148,22 @@ public class UserAccountController {
 		System.out.println("user principal" + principal.getName());
 		List<Transaction> transactions =new  ArrayList<Transaction>();
 		//UserApp user = userAppService.getUserEntityByEmail(principal.getName());
-		Transaction transaction=new Transaction();
+		Transaction userTransaction=new Transaction();
 		
-		List<Transaction> transactionsFoundByUser = transactionService
-				.getTransactionsByCreditUser( userAppService.getUserEntityByEmail(principal.getName()));
+		List<Transaction> transactionsFoundByUser = 
+				  userAppService.getUserEntityByEmail( principal.getName()).getTransactions();
 		
-	/*for(Transaction transaction:transactionsFoundByUser) {
+	for(Transaction transaction:transactionsFoundByUser) {
 			Transaction userTransactions =new  Transaction();
 			userTransactions.setBeneficiaryUser(transaction.getBeneficiaryUser());
 			userTransactions.setAmount(transaction.getAmount());
 			userTransactions.setDescription(transaction.getDescription());
 			transactions.add(userTransactions);
-		}*/
+		}
 
-		model.addAttribute("userTransaction",transaction);
+		model.addAttribute("userTransaction",userTransaction);
 		//System.out.println("all Transaction" +  transactionsFoundByUser );
-		//model.addAttribute(" transactions ", transactionsFoundByUser );
+		model.addAttribute(" transactions ",transactionsFoundByUser);
 		
 		/*
 		 * model.addAttribute(" description", description); model.addAttribute("email",

@@ -84,7 +84,10 @@ public class UserAppService {
 		UserApp user = userRepository.findByEmail(email);
 		return user;
 	}
-	
+	public UserApp getUserEntityByIdl(long id) {
+		UserApp user = userRepository.findById(id).get();
+		return user;
+	}
 	public UserApp getUserEntityByName(String firstName, String lastName) {
 		UserApp user = userRepository.findByFirstNameAndLastName(firstName, lastName);
 		return user;
