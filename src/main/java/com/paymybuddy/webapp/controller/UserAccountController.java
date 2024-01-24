@@ -51,7 +51,7 @@ public class UserAccountController {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
 			return new ModelAndView("redirect:/error");
-		}catch (NullPointerException e) {
+		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
 			return new ModelAndView("redirect:/error");
@@ -125,7 +125,6 @@ public class UserAccountController {
 		return "account-success";
 	}
 
-
 	@PostMapping("/save-payment")
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
 			throws IOException {
@@ -134,8 +133,8 @@ public class UserAccountController {
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(), userTransaction.getAmount(),
 					userTransaction.getDescription(), userTransaction);
 
-			return new ModelAndView("redirect:/account/profil"); 
-		}catch (IllegalArgumentException e) {
+			return new ModelAndView("redirect:/transfer-success");
+		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
 			return new ModelAndView("redirect:/error");
@@ -166,5 +165,10 @@ public class UserAccountController {
 		model.addAttribute(" transactions ", transactionsFoundByUser);
 
 		return "transfer";
+	}
+
+	@GetMapping("/transfer-success")
+	public String getTransferSucessPage() {
+		return "transfer-success";
 	}
 }
