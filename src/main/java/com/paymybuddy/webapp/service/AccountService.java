@@ -58,8 +58,14 @@ public class AccountService {
 		accountRepository.updateBalanceBuddyAccount(amount, user);
 	}
 
-	public void updateBalanceBankingAccount(long id, double amount) {
-		UserApp user = userRepository.findById(id).get();
+	public void updateBalanceBankingAccount(long id, double amount) 	throws  NullPointerException{
+		UserApp user = new UserApp();
+		try {
+			user = userRepository.findById(id).get();
+		}catch(NullPointerException e) {
+			throw new NullPointerException("this account doesn't exist");
+		}
+		
 		accountRepository.updateBalanceBankingAccount(amount, user);
 	}
 

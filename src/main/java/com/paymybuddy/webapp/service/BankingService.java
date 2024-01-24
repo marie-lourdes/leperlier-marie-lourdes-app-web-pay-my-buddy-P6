@@ -21,7 +21,7 @@ public class BankingService implements IOperation {
 	private TransactionService transactionService;
 
 	public void payToContact(String emailContact, String emailUser, double amount, String description,
-			Transaction transactionCreated) throws IllegalArgumentException {
+			Transaction transactionCreated) throws Exception {
 
 		double userBuddyAccountBalance = accountService.findBuddyAccountByUser(emailUser).getBalance();
 		if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
@@ -31,8 +31,10 @@ public class BankingService implements IOperation {
 		UserApp creditUser = userAppService.getUserEntityByEmail(emailUser);
 		String userContactEmail = userContact.getEmail();
 
-		double feesTransaction = updateBalanceContactAndBalanceCreditUserWithFeesTransaction(userContactEmail,
-				emailUser, amount);
+		
+			double feesTransaction = updateBalanceContactAndBalanceCreditUserWithFeesTransaction(userContactEmail,
+					emailUser, amount);
+		
 
 		transactionService.addTransactionUserAndContact(creditUser.getId(), userContact.getEmail(), transactionCreated);
 	}
@@ -40,12 +42,14 @@ public class BankingService implements IOperation {
 	// Mise à jour des comptes crediteur et beneficiare
 
 	public double updateBalanceContactAndBalanceCreditUserWithFeesTransaction(String contactEmail, String emailUser,
-			double amount) {
+			double amount) throws Exception{
+		double feesTransaction =0;
+		try {
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(contactEmail).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(emailUser).getBalance();
 		System.out.println("balanceCredit " + balanceCredit);
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
-		double feesTransaction = Billing.calculateFees(amount);
+	    feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
 		System.out.println("balanceCalculatedCreditUser " + balanceCalculatedCreditUser);
@@ -53,7 +57,9 @@ public class BankingService implements IOperation {
 				balanceCalculatedBeneficiaryUser);
 		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
 				balanceCalculatedCreditUser);
-
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return feesTransaction;
 	}
 
@@ -81,19 +87,23 @@ public class BankingService implements IOperation {
 	// Mise à jour du compte buddy de l utilisateur et compte bancaire du meme
 	// utilisateur
 
-	public double updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(String emailUser, double amount) {
-		double balanceBuddyAccount = accountService.findBuddyAccountByUser(emailUser).getBalance();
-		double balanceBankingAccount = accountService.findBankingAccountByUser(emailUser).getBalance();
-		double feesTransaction = Billing.calculateFees(amount);
-		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
-		double balanceCalculatedBeneficiaryUser = addAmount(balanceBankingAccount, amount);
-		double balanceCalculatedCreditUser = withdrawAmount(balanceBuddyAccount, amountWithFeesTransaction);
+	public double updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(String emailUser, double amount) throws Exception {
+		double feesTransaction =0;
+		try {
+			double balanceBuddyAccount = accountService.findBuddyAccountByUser(emailUser).getBalance();
+			double balanceBankingAccount = accountService.findBankingAccountByUser(emailUser).getBalance();
+		feesTransaction = Billing.calculateFees(amount);
+			double amountWithFeesTransaction = addAmount(amount, feesTransaction);
+			double balanceCalculatedBeneficiaryUser = addAmount(balanceBankingAccount, amount);
+			double balanceCalculatedCreditUser = withdrawAmount(balanceBuddyAccount, amountWithFeesTransaction);
 
-		accountService.updateBalanceBankingAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
-				balanceCalculatedBeneficiaryUser);
-		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
-				balanceCalculatedCreditUser);
-
+			accountService.updateBalanceBankingAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
+					balanceCalculatedBeneficiaryUser);
+			accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
+					balanceCalculatedCreditUser);
+		}catch(Exception e) {
+			e.getMessage();
+		}
 		return feesTransaction;
 	}
 
