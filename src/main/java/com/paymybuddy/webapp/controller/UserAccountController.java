@@ -50,7 +50,7 @@ public class UserAccountController {
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
-			return new ModelAndView("redirect:/error-400");
+			return new ModelAndView("redirect:/error");
 		}catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
@@ -65,10 +65,10 @@ public class UserAccountController {
 			return new ModelAndView("redirect:/account-success");
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error-400");
+			return new ModelAndView("redirect:/error");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error-400");
+			return new ModelAndView("redirect:/error");
 		}
 
 	}
@@ -81,7 +81,7 @@ public class UserAccountController {
 			return new ModelAndView("redirect:/account/contact");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error-400");
+			return new ModelAndView("redirect:/error");
 		}
 	}
 
@@ -134,7 +134,7 @@ public class UserAccountController {
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(), userTransaction.getAmount(),
 					userTransaction.getDescription(), userTransaction);
 
-			return new ModelAndView("redirect:/"); 
+			return new ModelAndView("redirect:/account/profil"); 
 		}catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
