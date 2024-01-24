@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -125,14 +124,15 @@ public class UserAccountController {
 
 	//@Transactional
 	@PostMapping("/save-payment")
-	public ModelAndView createPayment(@Valid  @ModelAttribute Transaction transaction,Principal principal)
+	public ModelAndView createPayment(@Valid  @ModelAttribute Transaction userTransaction,Principal principal)
 			throws IOException {
 		try {
-		long user = userAppService.getUserEntityByEmail(principal.getName()).getId();
-		transactionService.addTransactionUserAndContact( user ,transaction.getBeneficiaryUser().getEmail(),transaction);
-		/*bankingService.payToContact( transaction.getBeneficiaryUser().getEmail(),
+		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
+		transactionService.addTransactionUserAndContact( user.getId() , userTransaction.getBeneficiaryUser().getEmail(), userTransaction);
+		
+		bankingService.payToContact( userTransaction.getBeneficiaryUser().getEmail(),
 					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
-					transaction.getAmount(), transaction.getDescription()); */
+					userTransaction.getAmount(), userTransaction.getDescription()); 
 		
 			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {

@@ -28,21 +28,7 @@ public class BankingService implements IOperation {
 			String userContactEmail = userContact.getEmail();
 
 			double feesTransaction = updateBalanceContactAndBalanceCreditUserWithFeesTransaction(userContactEmail,
-					 emailUser, amount);
-		
-	/*Transaction transactionCreated = new Transaction();
-
-	 transactionCreated.setCreditUser(creditUser);
-
-	 transactionCreated.setBeneficiaryUser( creditUser t);
-	 transactionCreated.setBeneficiaryAccount(userContact);
-	 transactionCreated.setDescription(description);
-	 transactionCreated.setAmount(amount);
-	transactionCreated.setTransactionFees( feesTransaction );*/
-
-		//	transactionService.addTransactionUserAndContact(transactionCreated);
-			//System.out.println("amount transaction"+amount);
-		
+					 emailUser, amount);	
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -61,7 +47,7 @@ public class BankingService implements IOperation {
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
 		System.out.println("balanceCalculatedCreditUser "+balanceCalculatedCreditUser );
 		accountService.updateBalanceBuddyAccount( accountService.findBuddyAccountByUser( contactEmail).getUser().getId(), balanceCalculatedBeneficiaryUser);
-		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser( contactEmail).getUser().getId(), balanceCalculatedCreditUser);
+		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser( emailUser).getUser().getId(), balanceCalculatedCreditUser);
 
 		return feesTransaction;
 	}

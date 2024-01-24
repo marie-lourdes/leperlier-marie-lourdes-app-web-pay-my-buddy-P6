@@ -14,6 +14,7 @@ import com.paymybuddy.webapp.repository.IUserRepository;
 import com.paymybuddy.webapp.utils.Billing;
 
 import jakarta.transaction.Transactional;
+import lombok.Data;
 
 @Transactional
 @Service
@@ -27,6 +28,8 @@ public class TransactionService {
 	
 	@Autowired
 	private IUserRepository userRepository;
+	
+
 	
 	public List<Transaction> getAllTransactions() {
 		return transactionRepository.findAll();
@@ -66,16 +69,21 @@ public class TransactionService {
 			tranfertRegistered.setDescription(transactionCreated.getDescription());
 			tranfertRegistered.setAmount(transactionCreated.getAmount());
 			tranfertRegistered.setTransactionFees( feesTransaction );
-			creditUser.getTransactions().add(tranfertRegistered );
 			
-			transactionRepository.save( tranfertRegistered );
+				creditUser.getTransactions().add(tranfertRegistered);
+			}
+		
+		transactionRepository.save( tranfertRegistered );
+
+	//	if(!creditUser.getTransactions().contains(tranfertRegistered)) {
 			userRepository.save(creditUser );
+	//	}
 			
 		
 			//System.out.println(" tranfertRegistered "+ tranfertRegistered );
 			//System.out.println(" credituser transaction"+ creditUser.getTransactions() );
 		}
-	
+		
 		
 		/* if( userAccount.getClass() == BuddyAccount.class) {
 			 userAccount= new BuddyAccount();
@@ -83,7 +91,7 @@ public class TransactionService {
 			 userAccount= new BankingAccount();
 		 }*/
 	
-	}
+	
 }	
 	
 	
