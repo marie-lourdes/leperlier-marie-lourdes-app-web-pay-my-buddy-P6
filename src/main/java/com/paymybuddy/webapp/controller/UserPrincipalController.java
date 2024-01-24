@@ -1,17 +1,12 @@
 package com.paymybuddy.webapp.controller;
 
-import java.security.Principal;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import lombok.Data;
-
-/*@Controller
+@Controller
 @ResponseBody
 public class UserPrincipalController {
-	private String userPrincipal;
+/*	private String userPrincipal;
 	public UserPrincipalController (){
 		this.userPrincipal=getPrincipal() ;
 	}
