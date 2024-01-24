@@ -78,9 +78,9 @@ public class AccountService {
 				buddyAccount.setUser(account.getUser());
 				buddyAccount.setBalance(account.getBalance());
 
-			} else {
+			}/* else {
 				throw new NullPointerException("this Buddy account doesn't exist");
-			}
+			}*/
 		});
 		// System.out.println(buddyAccount);
 		return buddyAccount;
@@ -98,9 +98,9 @@ public class AccountService {
 				bankingAccount.setBalance(account.getBalance());
 				// bankingAccount.setTransactions(account.getTransactions());
 
-			} else {
+			} /*else {
 				throw new NullPointerException("this Banking  account doesn't exist");
-			}
+			}*/
 		});
 		// System.out.println(bankingAccount);
 		return bankingAccount;

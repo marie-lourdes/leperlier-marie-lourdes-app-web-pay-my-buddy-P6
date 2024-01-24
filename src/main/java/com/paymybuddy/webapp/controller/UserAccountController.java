@@ -152,17 +152,17 @@ public class UserAccountController {
 		List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(principal.getName())
 				.getTransactions();
 
-		for (Transaction transaction : transactionsFoundByUser) {
+		/*for (Transaction transaction : transactionsFoundByUser) {
 			Transaction userTransactions = new Transaction();
 			userTransactions.setBeneficiaryUser(transaction.getBeneficiaryUser());
 			userTransactions.setAmount(transaction.getAmount());
 			userTransactions.setDescription(transaction.getDescription());
 			transactions.add(userTransactions);
-		}
+		}*/
 
 		model.addAttribute("userTransaction", userTransaction);
 		// System.out.println("all Transaction" + transactionsFoundByUser );
-		model.addAttribute(" transactions ", transactionsFoundByUser);
+		model.addAttribute(" transactions ", transactionsFoundByUser  );
 
 		return "transfer";
 	}

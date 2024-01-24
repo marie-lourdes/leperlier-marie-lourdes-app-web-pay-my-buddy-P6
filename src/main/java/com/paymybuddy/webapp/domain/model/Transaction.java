@@ -19,7 +19,7 @@ import lombok.Data;
 @Entity
 @Table(name = "transaction")
 public class Transaction {
-	private final String REGEX_AMOUNT = "\\[0-9]";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_transaction")

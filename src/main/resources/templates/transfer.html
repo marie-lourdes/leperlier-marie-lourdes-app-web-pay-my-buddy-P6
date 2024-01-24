@@ -69,11 +69,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:if="${transactions}">
+			<!--	<tr th:if="${transactions}==null">
 					<td colspan="3">Vous n'avez pas effectué de transactions</td>
-				</tr>
+				</tr>-->
 				<tr th:each="transaction: ${transactions}">
-					<td><span th:text="${transaction.beneficiaryUser.email}">Email </span></td>
+					<!--<td><span th:text="${transaction.beneficiaryUser.email}">Email </span></td>-->
 					<td><span th:text="${transaction.amount}"> Amount</span></td>
 					<td><span th:text="${transaction.description}"> Description</span></td>
 				</tr>
