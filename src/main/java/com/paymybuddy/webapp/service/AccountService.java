@@ -18,7 +18,7 @@ import jakarta.transaction.Transactional;
 
 @Transactional
 @Service
-public class AccountService  {
+public class AccountService {
 
 	@Autowired
 	private IUserRepository userRepository;
@@ -57,7 +57,7 @@ public class AccountService  {
 		UserApp user = userRepository.findById(id).get();
 		accountRepository.updateBalanceBuddyAccount(amount, user);
 	}
-	
+
 	public void updateBalanceBankingAccount(long id, double amount) {
 		UserApp user = userRepository.findById(id).get();
 		accountRepository.updateBalanceBankingAccount(amount, user);
@@ -73,10 +73,10 @@ public class AccountService  {
 				buddyAccount.setCreation(account.getCreation());
 				buddyAccount.setUser(account.getUser());
 				buddyAccount.setBalance(account.getBalance());
-			
+
 			}
 		});
-		//System.out.println(buddyAccount);
+		// System.out.println(buddyAccount);
 		return buddyAccount;
 	}
 
@@ -90,12 +90,11 @@ public class AccountService  {
 				bankingAccount.setCreation(account.getCreation());
 				bankingAccount.setUser(account.getUser());
 				bankingAccount.setBalance(account.getBalance());
-				//bankingAccount.setTransactions(account.getTransactions());
-		
-				
+				// bankingAccount.setTransactions(account.getTransactions());
+
 			}
 		});
-		//System.out.println(bankingAccount);
+		// System.out.println(bankingAccount);
 		return bankingAccount;
 	}
 }

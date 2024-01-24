@@ -24,8 +24,7 @@ public class UserAppService {
 
 	@Autowired
 	private IUserRepository userRepository;
-	
-	
+
 	@Autowired
 	private ITransactionRepository transactionRepository;
 
@@ -55,7 +54,7 @@ public class UserAppService {
 		UserApp contactToAdd = new UserApp();
 
 		user = userRepository.findByEmail(emailUser);
-		contactToAdd = userRepository.findByEmail(emailContact);//verifier que le contcat est bien utilisateur inscrit
+		contactToAdd = userRepository.findByEmail(emailContact);// verifier que le contcat est bien utilisateur inscrit
 		if (contactToAdd == null) {
 			throw new IllegalArgumentException("Incorrect contact email  provided: " + emailContact);
 		} else if (user.getContacts().contains(contactToAdd)) {
@@ -66,7 +65,6 @@ public class UserAppService {
 		}
 	}
 
-	
 	public UserLoginDTO getUserLoginByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
 		UserLoginDTO userLoginDTO = mapper.UserToUserLoginDTO(user);
@@ -84,10 +82,12 @@ public class UserAppService {
 		UserApp user = userRepository.findByEmail(email);
 		return user;
 	}
+
 	public UserApp getUserEntityByIdl(long id) {
 		UserApp user = userRepository.findById(id).get();
 		return user;
 	}
+
 	public UserApp getUserEntityByName(String firstName, String lastName) {
 		UserApp user = userRepository.findByFirstNameAndLastName(firstName, lastName);
 		return user;
@@ -99,37 +99,37 @@ public class UserAppService {
 		System.out.println("userContact" + userContacts);
 		return userContacts;
 	}
-	
+
 	public List<Transaction> findAllUserTransaction(String emailUser) {
 		UserApp user = userRepository.findByEmail(emailUser);
 		List<Transaction> userTransactions = user.getTransactions();
-		System.out.println("user Transactions"+ userTransactions);
+		System.out.println("user Transactions" + userTransactions);
 		return userTransactions;
 	}
-	
-	public void addUserTransaction( String emailUser) throws IllegalArgumentException {
+
+	public void addUserTransaction(String emailUser) throws IllegalArgumentException {
 		UserApp user = new UserApp();
 		UserApp contactToAdd = new UserApp();
 
 		user = userRepository.findByEmail(emailUser);
-		List<Transaction> transactions=transactionRepository.findByCreditUser(user);
+		List<Transaction> transactions = transactionRepository.findByCreditUser(user);
 		if (transactions == null) {
-			throw new IllegalArgumentException("Incorrect transaction provided: " );
+			throw new IllegalArgumentException("Incorrect transaction provided: ");
 		} else if (user.getContacts().contains(contactToAdd)) {
 			throw new IllegalArgumentException("transaction  exist!");
 		} else {
-			for(Transaction transaction:transactions) {
-				user.addTransaction( transaction);
+			for (Transaction transaction : transactions) {
+				user.addTransaction(transaction);
 			}
-		
+
 			userRepository.save(user);
 		}
 	}
-/*	public UserApp findOneUserContactsByName(String nameContact, String emailUser) {
-	Stream<UserApp> contactUser = this.findAllUserContacts(emailUser).stream().filter((elem) -> {
-		return elem.getFirstName().equals(nameContact);
-	});
-	List<UserApp> usercontact = contactUser.collect(Collectors.toList());
-	return usercontact.get(0);
-	}*/
+	/*
+	 * public UserApp findOneUserContactsByName(String nameContact, String
+	 * emailUser) { Stream<UserApp> contactUser =
+	 * this.findAllUserContacts(emailUser).stream().filter((elem) -> { return
+	 * elem.getFirstName().equals(nameContact); }); List<UserApp> usercontact =
+	 * contactUser.collect(Collectors.toList()); return usercontact.get(0); }
+	 */
 }

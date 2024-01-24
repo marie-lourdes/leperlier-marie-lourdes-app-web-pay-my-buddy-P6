@@ -27,22 +27,22 @@ public class WebSecurity {
 			requests.requestMatchers("/transactions-billing").hasRole("ADMIN");
 			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers("/error-400").permitAll();
-			requests.requestMatchers(HttpMethod.POST,"/sign-up-form").permitAll();
+			requests.requestMatchers(HttpMethod.POST, "/sign-up-form").permitAll();
 			requests.requestMatchers("/logout-success").permitAll();
 			requests.requestMatchers("/css/**").permitAll();
 			requests.anyRequest().authenticated();
 
-		})
-		.rememberMe((remember) -> {
+		}).rememberMe((remember) -> {
 			remember.rememberMeServices(rememberMeServices(authenticationService));
 			remember.useSecureCookie(true);
 		})
-	//	.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))//empeche la redirection sur la page demandé apres authentification, session stateless
-		.formLogin(form -> form.loginPage("/login").permitAll())
-		.logout((logout) -> {
-			logout.logoutSuccessUrl("/logout-success");
-			logout.deleteCookies("JSESSIONID");
-		});
+				// .sessionManagement((session) ->
+				// session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))//empeche la
+				// redirection sur la page demandé apres authentification, session stateless
+				.formLogin(form -> form.loginPage("/login").permitAll()).logout((logout) -> {
+					logout.logoutSuccessUrl("/logout-success");
+					logout.deleteCookies("JSESSIONID");
+				});
 
 		return http.build();
 

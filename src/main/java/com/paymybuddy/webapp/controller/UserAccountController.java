@@ -35,16 +35,15 @@ public class UserAccountController {
 
 	@Autowired
 	private AccountService accountService;
-	
+
 	@Autowired
 	private TransactionService transactionService;
-	
+
 	@Autowired
 	private BankingService bankingService;
 
 	@PostMapping("/sign-up-form")
-	public ModelAndView createUser(@Valid @ModelAttribute UserApp user)
-			throws IOException {
+	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
 		try {
 			userAppService.createUser(user);
 			return new ModelAndView("redirect:/");
@@ -71,7 +70,7 @@ public class UserAccountController {
 	}
 
 	@PostMapping("/save-contact")
-	public ModelAndView createContact(@Valid @ModelAttribute UserApp contact,Principal principal) throws IOException {
+	public ModelAndView createContact(@Valid @ModelAttribute UserApp contact, Principal principal) throws IOException {
 
 		try {
 			userAppService.addUserContact(contact.getEmail(), principal.getName());
@@ -122,18 +121,15 @@ public class UserAccountController {
 		return "account-success";
 	}
 
-	//@Transactional
+	// @Transactional
 	@PostMapping("/save-payment")
-	public ModelAndView createPayment(@Valid  @ModelAttribute Transaction userTransaction,Principal principal)
+	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
 			throws IOException {
 		try {
-		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
-		transactionService.addTransactionUserAndContact( user.getId() , userTransaction.getBeneficiaryUser().getEmail(), userTransaction);
-		
-		bankingService.payToContact( userTransaction.getBeneficiaryUser().getEmail(),
-					userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
-					userTransaction.getAmount(), userTransaction.getDescription()); 
-		
+			bankingService.payToContact(userTransaction.getBeneficiaryUser().getEmail(),
+					userAppService.getUserEntityByEmail(principal.getName()).getEmail(), userTransaction.getAmount(),
+					userTransaction.getDescription(), userTransaction);
+
 			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -141,34 +137,26 @@ public class UserAccountController {
 			return new ModelAndView("redirect:/error-400");
 		}
 	}
-	
+
 	@GetMapping("/account/transfer")
 	public String getTransferPage(Model model, Principal principal) {
-		
-		System.out.println("user principal" + principal.getName());
-		List<Transaction> transactions =new  ArrayList<Transaction>();
-		//UserApp user = userAppService.getUserEntityByEmail(principal.getName());
-		Transaction userTransaction=new Transaction();
-		
-		List<Transaction> transactionsFoundByUser = 
-				  userAppService.getUserEntityByEmail( principal.getName()).getTransactions();
-		
-	for(Transaction transaction:transactionsFoundByUser) {
-			Transaction userTransactions =new  Transaction();
+		List<Transaction> transactions = new ArrayList<Transaction>();
+		Transaction userTransaction = new Transaction();
+
+		List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(principal.getName())
+				.getTransactions();
+
+		for (Transaction transaction : transactionsFoundByUser) {
+			Transaction userTransactions = new Transaction();
 			userTransactions.setBeneficiaryUser(transaction.getBeneficiaryUser());
 			userTransactions.setAmount(transaction.getAmount());
 			userTransactions.setDescription(transaction.getDescription());
 			transactions.add(userTransactions);
 		}
 
-		model.addAttribute("userTransaction",userTransaction);
-		//System.out.println("all Transaction" +  transactionsFoundByUser );
-		model.addAttribute(" transactions ",transactionsFoundByUser);
-		
-		/*
-		 * model.addAttribute(" description", description); model.addAttribute("email",
-		 * email);
-		 */
+		model.addAttribute("userTransaction", userTransaction);
+		// System.out.println("all Transaction" + transactionsFoundByUser );
+		model.addAttribute(" transactions ", transactionsFoundByUser);
 		return "transfer";
 	}
 }

@@ -8,113 +8,52 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
-import com.paymybuddy.webapp.repository.IAccountRepository;
 import com.paymybuddy.webapp.repository.ITransactionRepository;
 import com.paymybuddy.webapp.repository.IUserRepository;
 import com.paymybuddy.webapp.utils.Billing;
 
 import jakarta.transaction.Transactional;
-import lombok.Data;
 
 @Transactional
 @Service
 public class TransactionService {
-	
+
 	@Autowired
 	private ITransactionRepository transactionRepository;
-	
-	@Autowired
-	private IAccountRepository accountRepository;
-	
+
 	@Autowired
 	private IUserRepository userRepository;
-	
 
-	
 	public List<Transaction> getAllTransactions() {
 		return transactionRepository.findAll();
 	}
 
 	public List<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
-		 return transactionRepository.findByCreditUser(creditUser);	
+		return transactionRepository.findByCreditUser(creditUser);
 	}
-		
 
-	/*public Transaction getTransactionsByAccountId(long accountCreditUserId) {
-		return transactionRepository.findById(accountCreditUserId).get();
-	}*/
-	
-/*	public void saveTransaction(Transaction transaction) {
-		transactionRepository.save(transaction);
-	}*/
-	
-		public void addTransactionUserAndContact(long userId, String contactId,Transaction transactionCreated) throws IllegalArgumentException {
-		UserApp creditUser =  userRepository.findById(userId).get();
-		System.out.println("credit user"+creditUser);
-		UserApp beneficiaryUser= userRepository.findByEmail(contactId);
-		//Transaction transactionAdd = new Transaction();
-		Transaction tranfertRegistered = new Transaction();
-	//	List<Transaction> transactionsOfUserAccount = this.getTransactionsByCreditUser( creditUser );
-	
-		if (beneficiaryUser==null) {
+	public void addTransactionUserAndContact(long userId, String contactId, Transaction transactionCreated)
+			throws IllegalArgumentException {
+		UserApp creditUser = userRepository.findById(userId).get();
+		System.out.println("credit user" + creditUser);
+		UserApp beneficiaryUser = userRepository.findByEmail(contactId);
+		Transaction tranferRegistered = new Transaction();
+
+		if (beneficiaryUser == null) {
 			throw new IllegalArgumentException("Incorrect accountContact  provided: ");
 		} else {
 			double feesTransaction = Billing.calculateFees(transactionCreated.getAmount());
-			
-			tranfertRegistered.setDate(new Date());
-			tranfertRegistered.setCreditUser( creditUser);
-		
-			tranfertRegistered.setBeneficiaryUser(beneficiaryUser);
-			//tranfertRegistered.setBeneficiaryAccount(accountContact);
-			tranfertRegistered.setDescription(transactionCreated.getDescription());
-			tranfertRegistered.setAmount(transactionCreated.getAmount());
-			tranfertRegistered.setTransactionFees( feesTransaction );
-			
-				creditUser.getTransactions().add(tranfertRegistered);
-			}
-		
-		transactionRepository.save( tranfertRegistered );
 
-	//	if(!creditUser.getTransactions().contains(tranfertRegistered)) {
-			userRepository.save(creditUser );
-	//	}
-			
-		
-			//System.out.println(" tranfertRegistered "+ tranfertRegistered );
-			//System.out.println(" credituser transaction"+ creditUser.getTransactions() );
+			tranferRegistered.setDate(new Date());
+			tranferRegistered.setCreditUser(creditUser);
+			tranferRegistered.setBeneficiaryUser(beneficiaryUser);
+			tranferRegistered.setDescription(transactionCreated.getDescription());
+			tranferRegistered.setAmount(transactionCreated.getAmount());
+			tranferRegistered.setTransactionFees(feesTransaction);
+			creditUser.getTransactions().add(tranferRegistered);
 		}
-		
-		
-		/* if( userAccount.getClass() == BuddyAccount.class) {
-			 userAccount= new BuddyAccount();
-		 }else {
-			 userAccount= new BankingAccount();
-		 }*/
-	
-	
-}	
-	
-	
-	// method instead use constructor too much args
-	
-	/*public Transaction createTransaction(UserApp creditUser, UserApp contact,
-			String description, Double amount, float transactionFees) {
-		Transaction tranfertRegistered = new Transaction();
-		tranfertRegistered.setDate(new Date());
-		tranfertRegistered.setCreditUser(creditUser);
-	
-		tranfertRegistered.setBeneficiaryUser(contact);
-		//tranfertRegistered.setBeneficiaryAccount(accountContact);
-		tranfertRegistered.setDescription(description);
-		tranfertRegistered.setAmount(amount);
-		tranfertRegistered.setTransactionFees(transactionFees);
-		return tranfertRegistered;
-	}*/
-	
 
-	
-/* calcul frais de transaction
-	public double calculateFees(double amountTransaction) {
-		return 0;
-	}*/
-
+		transactionRepository.save(tranferRegistered);
+		userRepository.save(creditUser);
+	}
+}
