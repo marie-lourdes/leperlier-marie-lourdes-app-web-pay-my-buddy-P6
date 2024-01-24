@@ -62,11 +62,12 @@ public class AccountService {
 		UserApp user = new UserApp();
 		try {
 			user = userRepository.findById(id).get();
+			accountRepository.updateBalanceBankingAccount(amount, user);
+		
 		}catch(NullPointerException e) {
 			throw new NullPointerException("this account doesn't exist");
 		}
 		
-		accountRepository.updateBalanceBankingAccount(amount, user);
 	}
 
 	public BuddyAccount findBuddyAccountByUser(String emailUser) {

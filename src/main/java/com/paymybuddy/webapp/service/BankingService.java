@@ -21,7 +21,7 @@ public class BankingService implements IOperation {
 	private TransactionService transactionService;
 
 	public void payToContact(String emailContact, String emailUser, double amount, String description,
-			Transaction transactionCreated) throws Exception {
+			Transaction transactionCreated) throws IllegalArgumentException{
 
 		double userBuddyAccountBalance = accountService.findBuddyAccountByUser(emailUser).getBalance();
 		if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
@@ -34,15 +34,16 @@ public class BankingService implements IOperation {
 		
 			double feesTransaction = updateBalanceContactAndBalanceCreditUserWithFeesTransaction(userContactEmail,
 					emailUser, amount);
+
+			transactionService.addTransactionUserAndContact(creditUser.getId(), userContact.getEmail(), transactionCreated);
 		
 
-		transactionService.addTransactionUserAndContact(creditUser.getId(), userContact.getEmail(), transactionCreated);
 	}
 
 	// Mise à jour des comptes crediteur et beneficiare
 
 	public double updateBalanceContactAndBalanceCreditUserWithFeesTransaction(String contactEmail, String emailUser,
-			double amount) throws Exception{
+			double amount) {
 		double feesTransaction =0;
 		try {
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(contactEmail).getBalance();

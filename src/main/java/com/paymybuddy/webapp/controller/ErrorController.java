@@ -28,4 +28,6 @@ public class ErrorController {
 	public String getPage404() {
 		return "400";
 	}
+
+	
 }

@@ -132,15 +132,9 @@ public class UserAccountController {
 
 			return new ModelAndView("redirect:/");
 		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
+		//	System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
 			return new ModelAndView("redirect:/error-400");
-		} catch (NullPointerException e) {
-			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error-400");
-		}catch (Exception e) {
-			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error");
 		}
 	}
 
