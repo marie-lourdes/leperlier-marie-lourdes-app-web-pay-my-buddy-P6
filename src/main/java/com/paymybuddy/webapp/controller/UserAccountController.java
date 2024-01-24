@@ -146,24 +146,36 @@ public class UserAccountController {
 
 	@GetMapping("/account/transfer")
 	public String getTransferPage(Model model, Principal principal) {
-		List<Transaction> transactions = new ArrayList<Transaction>();
+		List<Transaction> transferts = new ArrayList<Transaction>();
 		Transaction userTransaction = new Transaction();
-
+		
 		List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(principal.getName())
 				.getTransactions();
-
-		/*for (Transaction transaction : transactionsFoundByUser) {
-			Transaction userTransactions = new Transaction();
-			userTransactions.setBeneficiaryUser(transaction.getBeneficiaryUser());
-			userTransactions.setAmount(transaction.getAmount());
-			userTransactions.setDescription(transaction.getDescription());
-			transactions.add(userTransactions);
+		Transaction userTransfert = new Transaction();
+		Transaction userTransfert2= new Transaction();
+	/*	for (Transaction transaction : transactionsFoundByUser) {
+	
+			userTransfert.setBeneficiaryUser(transaction.getBeneficiaryUser());
+			userTransfert.setAmount(transaction.getAmount());
+			userTransfert.setDescription(transaction.getDescription());
+			//transactions.add(userTransactions);
 		}*/
-
+	
+		//userTransfert.setBeneficiaryUser(transaction.getBeneficiaryUser());
+		userTransfert.setAmount(20.00);
+		userTransfert.setDescription("test1");
+		userTransfert2.setAmount(25.00);
+		userTransfert2.setDescription("test2");
+		transferts.add(userTransfert);
+		transferts.add(userTransfert2);
+		
+		model.addAttribute("userTransfert", userTransfert);
+		model.addAttribute("transferts", transferts);
+		
 		model.addAttribute("userTransaction", userTransaction);
 		// System.out.println("all Transaction" + transactionsFoundByUser );
-		model.addAttribute(" transactions ", transactionsFoundByUser  );
-
+		//model.addAttribute("transactions", transactionsFoundByUser  );
+		 
 		return "transfer";
 	}
 

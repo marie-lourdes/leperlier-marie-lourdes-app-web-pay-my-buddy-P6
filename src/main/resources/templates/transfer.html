@@ -60,6 +60,11 @@
 			</form>
 		</main>
 		<h2>Transactions</h2>
+				<div class="login-field">
+					<div class="login-field--fontawesome" th:object:"${userTransfert}">
+						<span th:text="${userTransfert.description}">description</span>
+					</div>
+				</div>
 		<table>
 			<thead>
 				<tr>
@@ -68,14 +73,24 @@
 					<th>Description</th>
 				</tr>
 			</thead>
-			<tbody>
-			<!--	<tr th:if="${transactions}==null">
+			<!--<tbody>
+				<tr th:if="${transactions}==null">
 					<td colspan="3">Vous n'avez pas effectué de transactions</td>
-				</tr>-->
+				</tr>
 				<tr th:each="transaction: ${transactions}">
-					<!--<td><span th:text="${transaction.beneficiaryUser.email}">Email </span></td>-->
+					<td><span th:text="${transaction.beneficiaryUser.email}">Email </span></td>
 					<td><span th:text="${transaction.amount}"> Amount</span></td>
 					<td><span th:text="${transaction.description}"> Description</span></td>
+				</tr>
+			</tbody>-->
+			<tbody>
+				<tr th:if="${transferts}==null">
+					<td colspan="3">Vous n'avez pas effectué de transactions</td>
+				</tr>
+				<tr th:each="transfert: ${transferts}">
+					<!--<td><span th:text="${transaction.beneficiaryUser.email}">Email </span></td>-->
+					<td><span th:text="${transfert.amount}"> Amount</span></td>
+					<td><span th:text="${transfert.description}"> Description</span></td>
 				</tr>
 			</tbody>
 		</table>
