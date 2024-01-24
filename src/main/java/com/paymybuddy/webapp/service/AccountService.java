@@ -26,18 +26,15 @@ public class AccountService {
 	@Autowired
 	private IAccountRepository accountRepository;
 
-	public void addBuddyAccount(String emailUser) throws IllegalArgumentException {
+	public void addBuddyAccount(String emailUser) throws IllegalArgumentException, NullPointerException {
 		UserApp user = new UserApp();
 		BuddyAccount newAccount = new BuddyAccount();
 		List<Account> accountExisting = new ArrayList<Account>();
-		try {
-			user = userRepository.findByEmail(emailUser);
-			accountExisting = accountRepository.findByUser(user);
-			if (user == null) {
-				throw new NullPointerException("user email " + emailUser + " not found");
-			}
-		} catch (NullPointerException e) {
-			System.out.println(e.getMessage());
+
+		user = userRepository.findByEmail(emailUser);
+		accountExisting = accountRepository.findByUser(user);
+		if (user == null) {
+			throw new NullPointerException("user email " + emailUser + " not found");
 		}
 
 		for (Account account : accountExisting) {
@@ -58,19 +55,19 @@ public class AccountService {
 		accountRepository.updateBalanceBuddyAccount(amount, user);
 	}
 
-	public void updateBalanceBankingAccount(long id, double amount) 	throws  NullPointerException{
+	public void updateBalanceBankingAccount(long id, double amount) throws NullPointerException {
 		UserApp user = new UserApp();
 		try {
 			user = userRepository.findById(id).get();
 			accountRepository.updateBalanceBankingAccount(amount, user);
-		
-		}catch(NullPointerException e) {
+
+		} catch (NullPointerException e) {
 			throw new NullPointerException("this account doesn't exist");
 		}
-		
+
 	}
 
-	public BuddyAccount findBuddyAccountByUser(String emailUser) {
+	public BuddyAccount findBuddyAccountByUser(String emailUser) throws NullPointerException {
 		List<Account> allAccounts = accountRepository.findAll();
 		BuddyAccount buddyAccount = new BuddyAccount();
 
@@ -81,6 +78,8 @@ public class AccountService {
 				buddyAccount.setUser(account.getUser());
 				buddyAccount.setBalance(account.getBalance());
 
+			} else {
+				throw new NullPointerException("this Buddy account doesn't exist");
 			}
 		});
 		// System.out.println(buddyAccount);
@@ -99,6 +98,8 @@ public class AccountService {
 				bankingAccount.setBalance(account.getBalance());
 				// bankingAccount.setTransactions(account.getTransactions());
 
+			} else {
+				throw new NullPointerException("this Banking  account doesn't exist");
 			}
 		});
 		// System.out.println(bankingAccount);

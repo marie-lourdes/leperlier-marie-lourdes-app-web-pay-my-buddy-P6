@@ -11,17 +11,16 @@
 			<div class="title-header"> Pay My Buddy</div>	
 		</header>
 		<div class="container">
-	        <main class="main main--error">
-		        <a href="/account/home">
-				  <div class="button-styled button-home button-home--error">
-							 Pay My Buddy
-				  </div>
-				</a>
-				<div class="text-error">
-					  <i class="fa-regular fa-face-frown  fontawesome-styled"></i>
-				      Oups,page 404! 
-				</div>        
-			</main>   
-		</div>    
+		<main class="main main--error">
+			<a th:href="@{/account/home}">
+				<div class="button-styled button-green button-green--error">
+					Pay My Buddy
+				</div>
+			</a>
+			<div class="text-error">
+				<i class="fa-regular fa-face-frown fontawesome-error"></i>
+				Oups,Page 404!
+			</div>
+		</main>    
     </body>
 </html>

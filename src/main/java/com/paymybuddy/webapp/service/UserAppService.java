@@ -78,13 +78,19 @@ public class UserAppService {
 		return userDTO;
 	}
 
-	public UserApp getUserEntityByEmail(String email) {
+	public UserApp getUserEntityByEmail(String email) throws NullPointerException{
 		UserApp user = userRepository.findByEmail(email);
+		if (user== null) {
+			throw new NullPointerException("User "+user+"doesn't exist");
+			}
 		return user;
 	}
 
-	public UserApp getUserEntityByIdl(long id) {
+	public UserApp getUserEntityById(long id) {
 		UserApp user = userRepository.findById(id).get();
+		if (user== null) {
+			throw new NullPointerException("User "+user+"doesn't exist");
+			}
 		return user;
 	}
 

@@ -12,13 +12,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "transaction")
 public class Transaction {
-
+	private final String REGEX_AMOUNT = "\\[0-9]";
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_transaction")
@@ -41,6 +42,7 @@ public class Transaction {
 	private String description;
 
 	@NotNull
+	@Positive
 	@Column(name = "amount")
 	private double amount;
 
