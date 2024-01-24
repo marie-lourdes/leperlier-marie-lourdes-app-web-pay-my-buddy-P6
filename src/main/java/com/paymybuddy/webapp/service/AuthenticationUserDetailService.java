@@ -22,7 +22,7 @@ public class AuthenticationUserDetailService implements UserDetailsService{
 	
 		@Autowired
 		private UserAppService userAccountService;
-			
+	
 		@Override
 		public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 			UserLoginDTO userDTO =userAccountService.getUserLoginByEmail(email);

@@ -8,23 +8,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.Data;
 
-@Controller
+/*@Controller
 @ResponseBody
 public class UserPrincipalController {
 	private String userPrincipal;
-	public UserPrincipalController (){}
+	public UserPrincipalController (){
+		this.userPrincipal=getPrincipal() ;
+	}
 	
-	@GetMapping("/*")
-	@ResponseBody
-	public void setPrincipal(Principal principal) {
-		System.out.println("user principal" + principal.getName());
+@GetMapping("/*")
+	public String setPrincipal(Principal principal) {
+	
 		this.userPrincipal = principal.getName();
-
+return userPrincipal;
 	}
+
 	public String getPrincipal() {
-	return userPrincipal;
 		
-	}
+ return userPrincipal;
 
+	}*/
+	
 	
 }
