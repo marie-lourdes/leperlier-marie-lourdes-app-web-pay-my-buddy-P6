@@ -4,7 +4,7 @@
 <head>
 	<title>transfert</title>
 	<link th:href="@{/css/main.css}" rel="stylesheet" />
-	<link th:href="@{/css/login.css}" rel="stylesheet" />
+	<link th:href="@{/css/form.css}" rel="stylesheet" />
 	<script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}"
 		crossorigin="anonymous"></script>
 </head>
@@ -43,35 +43,32 @@
 					<div>
 						<select th:field="*{beneficiaryUser.email}">
 							<option value=""> Select a connection </option>
-							<option th:each="contact: ${contacts}" th:value="${contact.email}" th:text="${contact.email}">
+							<option th:each="contact: ${contacts}" th:value="${contact.email}"
+								th:text="${contact.email}">
 								contact
 							</option>
 							<option th:value="${userEmail}">
 								my Buddy Account
 							</option>
-						    <option  value="my Banking Account">
+							<option value="my Banking Account">
 								my Banking Account
 							</option>
 						</select>
-
-						<!--<input th:field="*{beneficiaryUser.email}" type="email" name="email" required
-							placeholder="email" />-->
-						<div class="login-field">
-							<div class="login-field--fontawesome">
-								<input th:field="*{amount}" type="number" name="amount" required placeholder="amount" />
-							</div>
-						</div>
 					</div>
-				</div>
 
+					<div class="login-field ">
+						<input class="login-field--amount" th:field="*{amount}" type="number" name="amount" min="1"
+							required placeholder="amount" />
+						<input class=" login-field login-field--description-transaction visible"
+							th:field="*{description}" type="text" name="description" placeholder="description" />
 
-				<div class="login-field">
-					<div class="login-field--fontawesome">
-						<input th:field="*{description}" type="text" name="description" required
-							placeholder="description" />
 					</div>
-				</div>
-				<div class="button-styled"><input class="button-form button-green" type="submit" value="Pay" /></div>
+
+
+
+
+					<div class="button-styled"><input class="button-form button-green" type="submit" value="Pay" />
+					</div>
 			</form>
 			<h2>Transactions</h2>
 			<table>
