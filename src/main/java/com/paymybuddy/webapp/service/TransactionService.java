@@ -32,10 +32,10 @@ public class TransactionService {
 		return transactionRepository.findByCreditUser(creditUser);
 	}
 
-	public void addTransactionUserAndContact(long userId, String contactId, Transaction transactionCreated)
+	public void addTransaction(long userId, String contactId, Transaction transactionCreated)
 			throws IllegalArgumentException {
 		UserApp creditUser = userRepository.findById(userId).get();
-		System.out.println("credit user" + creditUser);
+		//System.out.println("credit user" + creditUser);
 		UserApp beneficiaryUser = userRepository.findByEmail(contactId);
 		Transaction tranferRegistered = new Transaction();
 
