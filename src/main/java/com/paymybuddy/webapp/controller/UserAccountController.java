@@ -43,7 +43,7 @@ public class UserAccountController {
 
 	@Autowired
 	private BankingService bankingService;
-	
+
 	@Autowired
 	private TransactionMapper transactionMapper;
 
@@ -134,9 +134,16 @@ public class UserAccountController {
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
 			throws IOException {
 		try {
-			bankingService.payToContact(userTransaction.getBeneficiaryUser().getEmail(),
-					userAppService.getUserEntityByEmail(principal.getName()).getEmail(), userTransaction.getAmount(),
-					userTransaction.getDescription(), userTransaction);
+			if(userTransaction.getBeneficiaryUser().getEmail().equals(principal.getName())) {
+				/*transfert au buddyaccount  si la valeur est "option value est "my buddy account"
+				 "my bankingaccount"*/
+			}else {
+				bankingService.payToContact(userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
+						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
+						userTransaction.getDescription(), userTransaction);
+			}
+			
+		
 
 			return new ModelAndView("redirect:/transfer-success");
 		} catch (IllegalArgumentException e) {
@@ -153,17 +160,17 @@ public class UserAccountController {
 	public String getTransferPage(Model model, Principal principal) {
 		Transaction userTransaction = new Transaction();
 		List<TransactionDTO> transactions = new ArrayList<TransactionDTO>();
-		
+
 		List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(principal.getName())
 				.getTransactions();
 		for (Transaction transaction : transactionsFoundByUser) {
-			//TransactionDTO 	 transactionUser = new TransactionDTO();
-			TransactionDTO  transactionUser=transactionMapper.TransactionToTransactionDTO(transaction);	
+			// TransactionDTO transactionUser = new TransactionDTO();
+			TransactionDTO transactionUser = transactionMapper.TransactionToTransactionDTO(transaction);
 			transactions.add(transactionUser);
 		}
-	
+
 		model.addAttribute("userTransaction", userTransaction);
-		model.addAttribute("transactions",transactions  ); 
+		model.addAttribute("transactions", transactions);
 		return "transfer";
 	}
 

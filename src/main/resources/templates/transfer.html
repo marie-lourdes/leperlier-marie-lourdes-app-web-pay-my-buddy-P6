@@ -32,24 +32,33 @@
 	</header>
 	<div class="container">
 		<main>
+			<h2>Send Money</h2>
+			<a th:href="@{/account/profil}">
+				<div class="button-styled button-form button-connection ">
+					Add Connection
+				</div>
+			</a>
 			<form th:action="@{/save-payment}" method="post" th:object="${userTransaction}">
-				<a th:href="@{/account/profil}">
-					<div class="button-styled button-form button-connection ">
-						Add Connection
-					</div>
-				</a>
-				<div class="login-field">
-					<div class="login-field--fontawesome">
-						<i class="fa-regular fa-envelope"></i>
+				<div>
+					<div>
+						<select>
+							<option value=""> Select a connection </option>
+							<option th:field="*{beneficiaryUser.email}" value="contact1">
+								contact1
+							</optionth:field="*{beneficiaryUser.email}">
+						</select>
+
 						<input th:field="*{beneficiaryUser.email}" type="email" name="email" required
 							placeholder="email" />
+						<div class="login-field">
+							<div class="login-field--fontawesome">
+								<input th:field="*{amount}" type="number" name="amount" required placeholder="amount" />
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="login-field">
-					<div class="login-field--fontawesome">
-						<input th:field="*{amount}" type="number" name="amount" required placeholder="amount" />
-					</div>
-				</div>
+
+
 				<div class="login-field">
 					<div class="login-field--fontawesome">
 						<input th:field="*{description}" type="text" name="description" required
@@ -58,26 +67,26 @@
 				</div>
 				<div class="button-styled"><input class="button-form button-green" type="submit" value="Pay" /></div>
 			</form>
-		<h2>Transactions</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Amount</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:if="${transactions}==null">
-					<td colspan="3">Vous n'avez pas effectué de transactions</td>
-				</tr>
-				<tr th:each="transaction: ${transactions}">
-					<td><span th:text="${transaction.contactName }"> Name </span></td>
-					<td><span th:text="${transaction.description}"> Description</span></td>
-					<td><span th:text="${transaction.amount}"> Amount</span></td>
-				</tr>
-			</tbody>
-		</table>
+			<h2>Transactions</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${transactions}==null">
+						<td colspan="3">Vous n'avez pas effectué de transactions</td>
+					</tr>
+					<tr th:each="transaction: ${transactions}">
+						<td><span th:text="${transaction.contactName }"> Name </span></td>
+						<td><span th:text="${transaction.description}"> Description</span></td>
+						<td><span th:text="${transaction.amount}"> Amount</span></td>
+					</tr>
+				</tbody>
+			</table>
 		</main>
 	</div>
 </body>

@@ -20,7 +20,7 @@ public class BankingService implements IOperation {
 	@Autowired
 	private TransactionService transactionService;
 
-	public void payToContact(String emailContact, String emailUser, double amount, String description,
+	public void payToContact(String emailUser,String emailContact,  double amount, String description,
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException{
 
 		double userBuddyAccountBalance = accountService.findBuddyAccountByUser(emailUser).getBalance();
@@ -64,7 +64,7 @@ public class BankingService implements IOperation {
 		return feesTransaction;
 	}
 
-	public void transferMoneyToBankingAccountUser(String userEmail, String contactEmail, double amount,
+	public void transferMoneyToBankingAccountUser(String userEmail, double amount,
 			String description) {
 		try {
 			double userBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
@@ -75,7 +75,7 @@ public class BankingService implements IOperation {
 			UserApp user = userAppService.getUserEntityByEmail(userEmail);
 
 			double feesTransaction = updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(
-					accountService.findBuddyAccountByUser(contactEmail).getUser().getEmail(), amount);
+					accountService.findBuddyAccountByUser(userEmail).getUser().getEmail(), amount);
 			/*Transaction transactionCreated = new Transaction(new Date(), user,  userAppService.getUserEntityByEmail(userId), description,
 					amount, feesTransaction);*/
 
