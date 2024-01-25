@@ -82,11 +82,11 @@ input[type="checkbox"]:checked~.fa-solid.fa-check {
 	display:none;
 }*/
 
-.login-field--amount ~ .login-field{
+.login-field--amount + .ogin-field--description-transaction-visible{
 	display:none;
 }
 
-.login-field--amount:valid~ .login-field{
+.login-field--amount:valid + .login-field--description-transaction-visible{
 	display:block;
 }
 
