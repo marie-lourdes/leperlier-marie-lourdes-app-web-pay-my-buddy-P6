@@ -34,7 +34,7 @@ public class AccountService {
 		user = userRepository.findByEmail(emailUser);
 		accountExisting = accountRepository.findByUser(user);
 		if (user == null) {
-			throw new NullPointerException("user "+emailUser+" not found");
+			throw new NullPointerException("user " + emailUser + " not found");
 		}
 
 		for (Account account : accountExisting) {
@@ -69,37 +69,37 @@ public class AccountService {
 
 	public BuddyAccount findBuddyAccountByUser(String emailUser) throws NullPointerException {
 		UserApp user = userRepository.findByEmail(emailUser);
-		List<Account>accountsFoundByUser = accountRepository.findByUser(user);
+		List<Account> accountsFoundByUser = accountRepository.findByUser(user);
 		BuddyAccount buddyAccount = new BuddyAccount();
-		
+
 		if (user == null) {
-			throw new NullPointerException("user "+emailUser+" not found");
-		}else if(accountsFoundByUser.isEmpty())  {
+			throw new NullPointerException("user " + emailUser + " not found");
+		} else if (accountsFoundByUser.isEmpty()) {
 			throw new NullPointerException("account not found");
 		}
 		accountsFoundByUser.forEach(account -> {
-			if ( account.getClass() == BuddyAccount.class) {
+			if (account.getClass() == BuddyAccount.class) {
 				buddyAccount.setId(account.getId());
 				buddyAccount.setCreation(account.getCreation());
 				buddyAccount.setUser(account.getUser());
 				buddyAccount.setBalance(account.getBalance());
-			} 
+			}
 		});
 		// System.out.println(buddyAccount);
 		return buddyAccount;
 	}
 
-	public BankingAccount findBankingAccountByUser(String emailUser) throws NullPointerException{
+	public BankingAccount findBankingAccountByUser(String emailUser) throws NullPointerException {
 		UserApp user = userRepository.findByEmail(emailUser);
-		List<Account>accountsFoundByUser = accountRepository.findByUser(user);
+		List<Account> accountsFoundByUser = accountRepository.findByUser(user);
 		BankingAccount bankingAccount = new BankingAccount();
-		
+
 		if (user == null) {
-			throw new NullPointerException("user "+emailUser+" not found");
-		}else if(accountsFoundByUser.isEmpty())  {
+			throw new NullPointerException("user " + emailUser + " not found");
+		} else if (accountsFoundByUser.isEmpty()) {
 			throw new NullPointerException("account not found");
 		}
-		
+
 		accountsFoundByUser.forEach(account -> {
 			if (account.getClass() == BankingAccount.class) {
 				bankingAccount.setId(account.getId());
