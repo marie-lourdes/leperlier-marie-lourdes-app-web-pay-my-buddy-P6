@@ -30,7 +30,7 @@ public class BankingService implements IOperation {
 		UserApp userContact = userAppService.getUserEntityByEmail(emailBeneficiaryUser);
 		UserApp creditUser = userAppService.getUserEntityByEmail(emailCreditUser);
 		String userContactEmail = userContact.getEmail();
-		transactionService.addTransaction(creditUser.getId(), userContact.getEmail(), transactionCreated);
+		transactionService.addTransaction(creditUser.getId(), userContactEmail , transactionCreated);
 			try {
 				double feesTransaction = updateBalanceContactAndBalanceCreditUserWithFeesTransaction(userContactEmail,
 						emailCreditUser, amount);
@@ -44,10 +44,10 @@ public class BankingService implements IOperation {
 
 	public double updateBalanceContactAndBalanceCreditUserWithFeesTransaction(String emailBeneficiaryUser, String emailCreditUser,
 			double amount) throws Exception{
-		double feesTransaction =0;
 		if(accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation()==null) {
-			throw new NullPointerException("Account of contact user doesn't exist");
+			throw new NullPointerException("Buddy Account of contact user doesn't exist");
 		}
+		double feesTransaction =0;	
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 		System.out.println("balanceCredit " + balanceCredit);
@@ -65,7 +65,7 @@ public class BankingService implements IOperation {
 	}
 
 	public void transferMoneyToBankingAccountUser(String userEmail, double amount,
-			String description) {
+			String description,	Transaction transactionCreated) throws IllegalArgumentException, NullPointerException{
 		try {
 			double userBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
 			if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
@@ -73,7 +73,7 @@ public class BankingService implements IOperation {
 			}
 			
 			UserApp user = userAppService.getUserEntityByEmail(userEmail);
-
+			transactionService.addTransaction(user.getId(),user.getEmail() , transactionCreated);
 			double feesTransaction = updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(
 					accountService.findBuddyAccountByUser(userEmail).getUser().getEmail(), amount);
 			/*Transaction transactionCreated = new Transaction(new Date(), user,  userAppService.getUserEntityByEmail(userId), description,
@@ -89,8 +89,11 @@ public class BankingService implements IOperation {
 	// utilisateur
 
 	public double updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(String emailUser, double amount) throws Exception {
-		double feesTransaction =0;
+		if(accountService.findBankingAccountByUser(emailUser).getCreation()==null) {
+			throw new NullPointerException("Banking Account of user doesn't exist");
+		}
 		
+		double feesTransaction =0;	
 			double balanceBuddyAccount = accountService.findBuddyAccountByUser(emailUser).getBalance();
 			double balanceBankingAccount = accountService.findBankingAccountByUser(emailUser).getBalance();
 		feesTransaction = Billing.calculateFees(amount);

@@ -134,16 +134,17 @@ public class UserAccountController {
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
 			throws IOException {
 		try {
-			if(userTransaction.getBeneficiaryUser().getEmail().equals(principal.getName())) {
+			if(userTransaction.getBeneficiaryUser().getEmail().equals("my Banking Account")) {
+				bankingService.transferMoneyToBankingAccountUser(principal.getName(),userTransaction.getAmount(),
+						userTransaction.getDescription(), userTransaction);
 				/*transfert au buddyaccount  si la valeur est "option value est "my buddy account"
 				 "my bankingaccount"*/
 			}else {
 				bankingService.payToContact(userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
 						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
-						userTransaction.getDescription(), userTransaction);
+						userTransaction.getDescription(), userTransaction);	
 			}
 			
-		
 
 			return new ModelAndView("redirect:/transfer-success");
 		} catch (IllegalArgumentException e) {
@@ -160,15 +161,18 @@ public class UserAccountController {
 	public String getTransferPage(Model model, Principal principal) {
 		Transaction userTransaction = new Transaction();
 		List<TransactionDTO> transactions = new ArrayList<TransactionDTO>();
-
-		List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(principal.getName())
+		String userEmail= principal.getName();
+		List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(userEmail)
 				.getTransactions();
 		for (Transaction transaction : transactionsFoundByUser) {
 			// TransactionDTO transactionUser = new TransactionDTO();
 			TransactionDTO transactionUser = transactionMapper.TransactionToTransactionDTO(transaction);
 			transactions.add(transactionUser);
 		}
+		List<UserApp> allContact = userAppService.findAllUserContacts(principal.getName());
 
+		model.addAttribute("userEmail", userEmail);
+		model.addAttribute("contacts", allContact);
 		model.addAttribute("userTransaction", userTransaction);
 		model.addAttribute("transactions", transactions);
 		return "transfer";
