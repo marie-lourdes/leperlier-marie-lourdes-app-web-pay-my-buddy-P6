@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.paymybuddy.webapp.domain.DTO.TransactionDTO;
+import com.paymybuddy.webapp.domain.DTO.TransactionMapper;
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
@@ -41,6 +43,9 @@ public class UserAccountController {
 
 	@Autowired
 	private BankingService bankingService;
+	
+	@Autowired
+	private TransactionMapper transactionMapper;
 
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
@@ -146,36 +151,19 @@ public class UserAccountController {
 
 	@GetMapping("/account/transfer")
 	public String getTransferPage(Model model, Principal principal) {
-		List<Transaction> transferts = new ArrayList<Transaction>();
 		Transaction userTransaction = new Transaction();
+		List<TransactionDTO> transactions = new ArrayList<TransactionDTO>();
 		
 		List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(principal.getName())
 				.getTransactions();
-		Transaction userTransfert = new Transaction();
-		Transaction userTransfert2= new Transaction();
-	/*	for (Transaction transaction : transactionsFoundByUser) {
+		for (Transaction transaction : transactionsFoundByUser) {
+			//TransactionDTO 	 transactionUser = new TransactionDTO();
+			TransactionDTO  transactionUser=transactionMapper.TransactionToTransactionDTO(transaction);	
+			transactions.add(transactionUser);
+		}
 	
-			userTransfert.setBeneficiaryUser(transaction.getBeneficiaryUser());
-			userTransfert.setAmount(transaction.getAmount());
-			userTransfert.setDescription(transaction.getDescription());
-			//transactions.add(userTransactions);
-		}*/
-	
-		//userTransfert.setBeneficiaryUser(transaction.getBeneficiaryUser());
-		userTransfert.setAmount(20.00);
-		userTransfert.setDescription("test1");
-		userTransfert2.setAmount(25.00);
-		userTransfert2.setDescription("test2");
-		transferts.add(userTransfert);
-		transferts.add(userTransfert2);
-		
-		model.addAttribute("userTransfert", userTransfert);
-		model.addAttribute("transferts", transferts);
-		
 		model.addAttribute("userTransaction", userTransaction);
-		// System.out.println("all Transaction" + transactionsFoundByUser );
-		//model.addAttribute("transactions", transactionsFoundByUser  );
-		 
+		model.addAttribute("transactions",transactions  ); 
 		return "transfer";
 	}
 
