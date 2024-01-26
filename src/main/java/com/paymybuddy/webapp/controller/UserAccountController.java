@@ -24,6 +24,7 @@ import com.paymybuddy.webapp.service.AccountService;
 import com.paymybuddy.webapp.service.BankingService;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
+import com.paymybuddy.webapp.utils.Constants;
 
 import jakarta.validation.Valid;
 import lombok.Data;
@@ -134,8 +135,8 @@ public class UserAccountController {
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
 			throws IOException {
 		try {
-			if(userTransaction.getBeneficiaryUser().getEmail().equals("my Banking Account")) {
-				bankingService.transferMoneyToBankingAccountUser(principal.getName(),userTransaction.getAmount(),
+			if(userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
+				bankingService.transferMoneyToBankingAccountUser(principal.getName(),Constants.BANKING_ACCOUNT,userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 				/*transfert au buddyaccount  si la valeur est "option value est "my buddy account"
 				 "my bankingaccount"*/

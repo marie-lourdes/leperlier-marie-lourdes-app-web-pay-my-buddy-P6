@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.utils.Billing;
+import com.paymybuddy.webapp.utils.Constants;
 import com.paymybuddy.webapp.utils.IOperation;
 
 @Service
@@ -20,8 +21,8 @@ public class BankingService implements IOperation {
 	@Autowired
 	private TransactionService transactionService;
 
-	public void payToContact(String emailCreditUser,String emailBeneficiaryUser,  double amount, String description,
-			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException{
+	public void payToContact(String emailCreditUser, String emailBeneficiaryUser, double amount, String description,
+			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 
 		double userBuddyAccountBalance = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 		if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
@@ -30,56 +31,76 @@ public class BankingService implements IOperation {
 		UserApp userContact = userAppService.getUserEntityByEmail(emailBeneficiaryUser);
 		UserApp creditUser = userAppService.getUserEntityByEmail(emailCreditUser);
 		String userContactEmail = userContact.getEmail();
-		transactionService.addTransaction(creditUser.getId(), userContactEmail , transactionCreated);
-			try {
-				double feesTransaction = updateBalanceContactAndBalanceCreditUserWithFeesTransaction(userContactEmail,
-						emailCreditUser, amount);
-			} catch (Exception e) {
-			
-				e.getMessage();
-			}
+		transactionService.addTransaction(creditUser.getId(), userContactEmail, transactionCreated);
+		try {
+			double feesTransaction = updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(userContactEmail,
+					emailCreditUser, amount);
+		} catch (Exception e) {
+
+			e.getMessage();
+		}
 	}
 
 	// Mise à jour des comptes crediteur et beneficiare
 
-	public double updateBalanceContactAndBalanceCreditUserWithFeesTransaction(String emailBeneficiaryUser, String emailCreditUser,
-			double amount) throws Exception{
-		if(accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation()==null) {
+	public double updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailBeneficiaryUser,
+			String emailCreditUser, double amount) throws Exception {
+		if (accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation() == null) {
 			throw new NullPointerException("Buddy Account of contact user doesn't exist");
 		}
-		double feesTransaction =0;	
+		double feesTransaction = 0;
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 		System.out.println("balanceCredit " + balanceCredit);
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
-	    feesTransaction = Billing.calculateFees(amount);
+		feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
 		System.out.println("balanceCalculatedCreditUser " + balanceCalculatedCreditUser);
-		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
+
+		accountService.updateBalanceBuddyAccount(
+				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
 				balanceCalculatedBeneficiaryUser);
-		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
-				balanceCalculatedCreditUser);
-		
+		accountService.updateBalanceBuddyAccount(
+				accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(), balanceCalculatedCreditUser);
+
 		return feesTransaction;
 	}
 
-	public void transferMoneyToBankingAccountUser(String userEmail, double amount,
-			String description,	Transaction transactionCreated) throws IllegalArgumentException, NullPointerException{
+	public void transferMoneyToBankingAccountUser(String userEmail, String typeAccountBeneficiary, double amount,
+			String description, Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		try {
 			double userBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
 			if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
 				throw new Exception("balance/amount of transaction is negative");
 			}
-			
-			UserApp user = userAppService.getUserEntityByEmail(userEmail);
-			transactionService.addTransaction(user.getId(),user.getEmail() , transactionCreated);
-			double feesTransaction = updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(
-					accountService.findBuddyAccountByUser(userEmail).getUser().getEmail(), amount);
-			/*Transaction transactionCreated = new Transaction(new Date(), user,  userAppService.getUserEntityByEmail(userId), description,
-					amount, feesTransaction);*/
 
-			//transactionService.addTransactionUserAndContact( userId,contactId,transactionCreated);
+			UserApp user = userAppService.getUserEntityByEmail(userEmail);
+			transactionService.addTransaction(user.getId(), user.getEmail(), transactionCreated);
+			updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(
+					accountService.findBuddyAccountByUser(userEmail).getUser().getEmail(), typeAccountBeneficiary,
+					amount);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	// !!!regrouper les deux emthodes qui ont quasiment la meme implementation sauf
+	// l appel de la method acourndService.findbuddyaccount, et findBankingAccount
+
+	public void transferMoneyToBuddyAccountUser(String userEmail, String typeAccountBeneficiary, double amount,
+			String description, Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
+		try {
+			double userBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
+			if (isPaymentAuthorized(amount, userBankingAccountBalance)) {
+				throw new Exception("balance/amount of transaction is negative");
+			}
+
+			UserApp user = userAppService.getUserEntityByEmail(userEmail);
+			transactionService.addTransaction(user.getId(), user.getEmail(), transactionCreated);
+			updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(
+					accountService.findBankingAccountByUser(userEmail).getUser().getEmail(), typeAccountBeneficiary,
+					amount);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -88,25 +109,33 @@ public class BankingService implements IOperation {
 	// Mise à jour du compte buddy de l utilisateur et compte bancaire du meme
 	// utilisateur
 
-	public double updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(String emailUser, double amount) throws Exception {
-		if(accountService.findBankingAccountByUser(emailUser).getCreation()==null) {
+	public void updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(String emailUser,
+			String typeAccountBeneficiary, double amount) throws Exception {
+		if (accountService.findBankingAccountByUser(emailUser).getCreation() == null) {
 			throw new NullPointerException("Banking Account of user doesn't exist");
 		}
-		
-		double feesTransaction =0;	
-			double balanceBuddyAccount = accountService.findBuddyAccountByUser(emailUser).getBalance();
-			double balanceBankingAccount = accountService.findBankingAccountByUser(emailUser).getBalance();
+		double balanceCalculatedBuddyAccountUser = 0;
+		double balanceCalculatedBankingAccountUser = 0;
+		double feesTransaction = 0;
+		double balanceBuddyAccount = accountService.findBuddyAccountByUser(emailUser).getBalance();
+		double balanceBankingAccount = accountService.findBankingAccountByUser(emailUser).getBalance();
 		feesTransaction = Billing.calculateFees(amount);
-			double amountWithFeesTransaction = addAmount(amount, feesTransaction);
-			double balanceCalculatedBeneficiaryUser = addAmount(balanceBankingAccount, amount);
-			double balanceCalculatedCreditUser = withdrawAmount(balanceBuddyAccount, amountWithFeesTransaction);
+		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
 
-			accountService.updateBalanceBankingAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
-					balanceCalculatedBeneficiaryUser);
-			accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
-					balanceCalculatedCreditUser);
-		
-		return feesTransaction;
+		if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
+			balanceCalculatedBankingAccountUser = addAmount(balanceBankingAccount, amount);
+			balanceCalculatedBuddyAccountUser = withdrawAmount(balanceBuddyAccount, amountWithFeesTransaction);
+		} else if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
+			balanceCalculatedBuddyAccountUser = addAmount(balanceBuddyAccount, amount - feesTransaction);
+			// deduction des frais appliqué sur le compte beneficiare de l application et
+			// non le compte bancaire qui est crediteur mais hors application
+			balanceCalculatedBankingAccountUser = withdrawAmount(balanceBankingAccount, 0);
+		}
+
+		accountService.updateBalanceBankingAccount(accountService.findBankingAccountByUser(emailUser).getUser().getId(),
+				balanceCalculatedBankingAccountUser);
+		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
+				balanceCalculatedBuddyAccountUser);
 	}
 
 	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
