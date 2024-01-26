@@ -78,22 +78,19 @@ input[type="checkbox"]:checked~.fa-solid.fa-check {
 	text-decoration: underline;
 }
 
-/*.login-field--description-transaction {
-	display:none;
-}*/
-
-.login-field--amount + .login-field--description-transaction-visible{
-	display:none;
+.login-field--amount+.login-field--description-transaction-visible {
+	display: none;
 }
 
-.login-field--amount:valid + .login-field--description-transaction-visible{
-	display:block;
+.login-field--amount:valid+.login-field--description-transaction-visible {
+	display: block;
 }
 
 input.login-field--amount {
-	color:#000;
+	color: #000;
 
 }
+
 .login-error {
 	color: #E32D14;
 }

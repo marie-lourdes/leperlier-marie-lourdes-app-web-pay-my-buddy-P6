@@ -1,5 +1,7 @@
 package com.paymybuddy.webapp.service;
 
+import java.text.DecimalFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,13 +58,12 @@ public class BankingService implements IOperation {
 		feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
-		System.out.println("balanceCalculatedCreditUser " + balanceCalculatedCreditUser);
-
+		System.out.println("balanceCalculatedCreditUser1 " + balanceCalculatedCreditUser);
 		accountService.updateBalanceBuddyAccount(
 				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
-				balanceCalculatedBeneficiaryUser);
+				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
 		accountService.updateBalanceBuddyAccount(
-				accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(), balanceCalculatedCreditUser);
+				accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(), this.formatBalanceAccount(balanceCalculatedCreditUser));
 
 		return feesTransaction;
 	}
@@ -129,13 +130,13 @@ public class BankingService implements IOperation {
 			balanceCalculatedBuddyAccountUser = addAmount(balanceBuddyAccount, amount - feesTransaction);
 			// deduction des frais appliqué sur le compte beneficiare de l application et
 			// non le compte bancaire qui est crediteur mais hors application
-			balanceCalculatedBankingAccountUser = withdrawAmount(balanceBankingAccount, 0);
+			balanceCalculatedBankingAccountUser = withdrawAmount(balanceBankingAccount, amount);
 		}
 
 		accountService.updateBalanceBankingAccount(accountService.findBankingAccountByUser(emailUser).getUser().getId(),
-				balanceCalculatedBankingAccountUser);
+				this.formatBalanceAccount(balanceCalculatedBankingAccountUser));
 		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
-				balanceCalculatedBuddyAccountUser);
+				this.formatBalanceAccount(balanceCalculatedBuddyAccountUser));
 	}
 
 	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
@@ -152,6 +153,11 @@ public class BankingService implements IOperation {
 		return withdraw(balanceBeneficiaryUser, payment);
 	}
 
+	public double formatBalanceAccount(double balance) throws Exception {
+		double Result= formatResultDecimalOperation (balance);
+		return Result;
+	}
+	
 	@Override
 	public double add(double balance, double amount) {
 		return balance + amount;
