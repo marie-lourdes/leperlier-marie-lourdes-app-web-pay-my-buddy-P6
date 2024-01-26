@@ -8,7 +8,7 @@ public interface IOperation {
 	public boolean isOperationAuthorized (double amount,double userAccountBalance );
 	
 	default public double formatResultDecimalOperation (Double result) {
-         return Math.round(result * 100.0) / 100.0;   
+         return Math.round(result * 100.00) / 100.00;   
 	}
 	
 }

@@ -57,7 +57,7 @@ public class BankingService implements IOperation {
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
-		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
+		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, feesTransaction);
 		System.out.println("balanceCalculatedCreditUser1 " + balanceCalculatedCreditUser);
 		accountService.updateBalanceBuddyAccount(
 				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
@@ -125,7 +125,7 @@ public class BankingService implements IOperation {
 
 		if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
 			balanceCalculatedBankingAccountUser = addAmount(balanceBankingAccount, amount);
-			balanceCalculatedBuddyAccountUser = withdrawAmount(balanceBuddyAccount, amountWithFeesTransaction);
+			balanceCalculatedBuddyAccountUser = withdrawAmount(balanceBuddyAccount, feesTransaction);
 		} else if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
 			balanceCalculatedBuddyAccountUser = addAmount(balanceBuddyAccount, amount - feesTransaction);
 			// deduction des frais appliqué sur le compte beneficiare de l application et
