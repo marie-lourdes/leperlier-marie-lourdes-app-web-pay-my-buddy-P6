@@ -85,7 +85,7 @@ public class BankingService implements IOperation {
 		}
 	}
 
-	// !!!regrouper les deux emthodes qui ont quasiment la meme implementation sauf
+	// !!!regrouper les deux méthodes qui ont quasiment la meme implementation sauf
 	// l appel de la method acourndService.findbuddyaccount, et findBankingAccount
 
 	public void transferMoneyToBuddyAccountUser(String userEmail, String typeAccountBeneficiary, double amount,

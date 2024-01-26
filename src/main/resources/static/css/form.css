@@ -82,7 +82,7 @@ input[type="checkbox"]:checked~.fa-solid.fa-check {
 	display:none;
 }*/
 
-.login-field--amount + .ogin-field--description-transaction-visible{
+.login-field--amount + .login-field--description-transaction-visible{
 	display:none;
 }
 
