@@ -8,14 +8,7 @@ public interface IOperation {
 	public boolean isOperationAuthorized (double amount,double userAccountBalance );
 	
 	default public double formatResultDecimalOperation (Double result) {
-		DecimalFormat decimalFormat =new DecimalFormat ("0.00");
-		String	resultFormatted=decimalFormat.format(result); 
-		return Double.parseDouble(resultFormatted);
-		
-		
-		/* System.out.print(result);
-         return Math.round(result * 100.0) / 100.0;*/
-       
+         return Math.round(result * 100.0) / 100.0;   
 	}
 	
 }
