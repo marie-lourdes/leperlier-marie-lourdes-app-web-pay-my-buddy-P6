@@ -177,6 +177,10 @@ public class UserAccountController {
 		for (Transaction transaction : transactionsFoundByUser) {
 			// TransactionDTO transactionUser = new TransactionDTO();
 			TransactionDTO transactionUser = transactionMapper.TransactionToTransactionDTO(transaction);
+			
+			if(transaction.getBeneficiaryUser().getEmail().equals(userEmail)) {
+				transactionUser.setContactName("Me");
+			}
 			transactions.add(transactionUser);
 		}
 		List<UserApp> allContact = userAppService.findAllUserContacts(principal.getName());
