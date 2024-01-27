@@ -11,15 +11,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.paymybuddy.webapp.domain.DTO.TransactionDTO;
+import com.paymybuddy.webapp.domain.DTO.TransactionMapper;
 import com.paymybuddy.webapp.domain.model.Transaction;
+import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.BankingService;
-import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
+import com.paymybuddy.webapp.utils.Constants;
 
 import jakarta.validation.Valid;
-import lombok.Data;
 
 
 @Controller
@@ -27,18 +30,12 @@ public class TransactionController {
 	
 	@Autowired
 	private BankingService bankingService;
-	
-	@Autowired
-	private TransactionService transactionService;
-	
+
 	@Autowired
 	private UserAppService userAppService;
 
+	@Autowired
+	private TransactionMapper transactionMapper;
 	private String userPrincipal;
 
-
-	public String getUserPrincipal() {
-		return userPrincipal;
-			
-		}
 }

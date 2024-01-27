@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.paymybuddy.webapp.domain.DTO.TransactionDTO;
@@ -40,13 +41,18 @@ public class UserAccountController {
 	private AccountService accountService;
 
 	@Autowired
-	private TransactionService transactionService;
-
-	@Autowired
 	private BankingService bankingService;
 
 	@Autowired
 	private TransactionMapper transactionMapper;
+	
+	@GetMapping("/*")
+	@ResponseBody
+	public String getPrincipal(Principal principal){
+		System.out.println(principal.getName());
+		return principal.getName();
+			
+		}
 
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
@@ -91,6 +97,36 @@ public class UserAccountController {
 		}
 	}
 
+	@PostMapping("/save-payment")
+	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
+			throws IOException {
+		try {
+			if(userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
+				bankingService.transferMoneyToBankingAccountUser(principal.getName(),Constants.BANKING_ACCOUNT,userTransaction.getAmount(),
+						userTransaction.getDescription(), userTransaction);
+				/*transfert au buddyaccount  si la valeur  "option value est "my buddy account" ou
+				 "my bankingaccount" dans le template transfer.html*/
+			}else if(userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
+				bankingService.transferMoneyToBuddyAccountUser(principal.getName(),Constants.BUDDY_ACCOUNT,userTransaction.getAmount(),
+						userTransaction.getDescription(), userTransaction);
+			}
+			else {
+				bankingService.payToContact(userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
+						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
+						userTransaction.getDescription(), userTransaction);	
+			}
+			
+			return new ModelAndView("redirect:/transfer-success");
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			// response.setIntHeader("status",400);
+			return new ModelAndView("redirect:/error");
+		} catch (NullPointerException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("redirect:/error");
+		}
+	}
+	
 	@GetMapping("/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
@@ -129,37 +165,6 @@ public class UserAccountController {
 	@GetMapping("/account-success")
 	public String getSignUpSucessPage() {
 		return "account-success";
-	}
-
-	@PostMapping("/save-payment")
-	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
-			throws IOException {
-		try {
-			if(userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
-				bankingService.transferMoneyToBankingAccountUser(principal.getName(),Constants.BANKING_ACCOUNT,userTransaction.getAmount(),
-						userTransaction.getDescription(), userTransaction);
-				/*transfert au buddyaccount  si la valeur  "option value est "my buddy account" ou
-				 "my bankingaccount" dans le template transfer.html*/
-			}else if(userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
-				bankingService.transferMoneyToBuddyAccountUser(principal.getName(),Constants.BUDDY_ACCOUNT,userTransaction.getAmount(),
-						userTransaction.getDescription(), userTransaction);
-			}
-			else {
-				bankingService.payToContact(userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
-						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
-						userTransaction.getDescription(), userTransaction);	
-			}
-			
-
-			return new ModelAndView("redirect:/transfer-success");
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-			// response.setIntHeader("status",400);
-			return new ModelAndView("redirect:/error");
-		} catch (NullPointerException e) {
-			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error");
-		}
 	}
 
 	@GetMapping("/account/transfer")

@@ -8,7 +8,7 @@ import com.paymybuddy.webapp.domain.model.UserApp;
 
 import jakarta.transaction.Transactional;
 
-@Transactional
+
 public interface IUserRepository extends JpaRepository<UserApp, Long> {
 
 	public UserApp findByEmail(String email);

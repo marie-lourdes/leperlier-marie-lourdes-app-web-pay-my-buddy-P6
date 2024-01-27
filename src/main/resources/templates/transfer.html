@@ -75,7 +75,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:if="${transactions}==null">
+					<tr th:if="${transactions.empty}">
 						<td colspan="3">Vous n'avez pas effectué de transactions</td>
 					</tr>
 					<tr th:each="transaction: ${transactions}">
