@@ -47,9 +47,11 @@ public class BankingService implements IOperation {
 
 	public double updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailBeneficiaryUser,
 			String emailCreditUser, double amount) throws Exception {
+		
 		if (accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation() == null) {
 			throw new NullPointerException("Buddy Account of contact user doesn't exist");
 		}
+		
 		double feesTransaction = 0;
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
@@ -57,8 +59,9 @@ public class BankingService implements IOperation {
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
-		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, feesTransaction);
+		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction );
 		System.out.println("balanceCalculatedCreditUser1 " + balanceCalculatedCreditUser);
+		
 		accountService.updateBalanceBuddyAccount(
 				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
@@ -91,6 +94,7 @@ public class BankingService implements IOperation {
 
 	public void transferMoneyToBuddyAccountUser(String userEmail, String typeAccountBeneficiary, double amount,
 			String description, Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
+		
 		try {
 			double userBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
 			if (isPaymentAuthorized(amount, userBankingAccountBalance)) {
@@ -125,7 +129,7 @@ public class BankingService implements IOperation {
 
 		if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
 			balanceCalculatedBankingAccountUser = addAmount(balanceBankingAccount, amount);
-			balanceCalculatedBuddyAccountUser = withdrawAmount(balanceBuddyAccount, feesTransaction);
+			balanceCalculatedBuddyAccountUser = withdrawAmount(balanceBuddyAccount, amountWithFeesTransaction);
 		} else if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
 			balanceCalculatedBuddyAccountUser = addAmount(balanceBuddyAccount, amount - feesTransaction);
 			// deduction des frais appliqué sur le compte beneficiare de l application et

@@ -50,21 +50,27 @@ public class AccountService {
 		accountRepository.save(newAccount);
 	}
 
-	public void updateBalanceBuddyAccount(long id, double amount) {
-		UserApp user = userRepository.findById(id).get();
-		accountRepository.updateBalanceBuddyAccount(amount, user);
+	public void updateBalanceBuddyAccount(long id, double amount) throws NullPointerException{
+		UserApp user = new UserApp();
+		
+		try {
+			user = userRepository.findById(id).get();
+			accountRepository.updateBalanceBuddyAccount(amount, user);
+		} catch (NullPointerException e) {
+			throw new NullPointerException("this buddy account doesn't exist");
+		}
 	}
 
 	public void updateBalanceBankingAccount(long id, double amount) throws NullPointerException {
 		UserApp user = new UserApp();
+		
 		try {
 			user = userRepository.findById(id).get();
 			accountRepository.updateBalanceBankingAccount(amount, user);
 
 		} catch (NullPointerException e) {
-			throw new NullPointerException("this account doesn't exist");
+			throw new NullPointerException("this banking account doesn't exist");
 		}
-
 	}
 
 	public BuddyAccount findBuddyAccountByUser(String emailUser) throws NullPointerException {
