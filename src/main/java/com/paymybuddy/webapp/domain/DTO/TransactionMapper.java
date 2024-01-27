@@ -10,7 +10,7 @@ public class TransactionMapper {
 	public TransactionDTO TransactionToTransactionDTO(Transaction transaction) {
 		String contactName = transaction.getBeneficiaryUser().getFirstName() +" " + transaction.getBeneficiaryUser().getLastName();
 	    String description = transaction.getDescription();	
-	    double amount = transaction.getAmount();		
+	   long amount = transaction.getAmount();		
 	     
 		return new TransactionDTO (contactName , description,amount);
 	}

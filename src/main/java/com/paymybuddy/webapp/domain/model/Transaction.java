@@ -44,7 +44,7 @@ public class Transaction {
 	@NotNull
 	@Positive
 	@Column(name = "amount")
-	private double amount;
+	private long amount;
 
 	@NotNull
 	@Column(name = "transaction_fees")
@@ -53,7 +53,7 @@ public class Transaction {
 	public Transaction() {
 	}
 
-	public Transaction(Date date, UserApp creditUser, UserApp beneficiaryUser, String description, double amount,
+	public Transaction(Date date, UserApp creditUser, UserApp beneficiaryUser, String description, long amount,
 			double transactionFees) {
 		this.date = date;
 		this.creditUser = creditUser;

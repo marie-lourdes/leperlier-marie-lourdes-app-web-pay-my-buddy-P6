@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.paymybuddy.webapp.domain.model.UserApp;
 
-import jakarta.transaction.Transactional;
-
 
 public interface IUserRepository extends JpaRepository<UserApp, Long> {
 

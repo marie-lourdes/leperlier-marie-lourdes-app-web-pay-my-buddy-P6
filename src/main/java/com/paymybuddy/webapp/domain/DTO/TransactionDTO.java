@@ -6,10 +6,10 @@ import lombok.Data;
 public class TransactionDTO {
 	private String contactName ;
 	private String description ;
-	private  double amount ;
+	private  long amount ;
 	
 	public TransactionDTO(){}
-	public TransactionDTO(String contactName ,String description,double amount  ){
+	public TransactionDTO(String contactName ,String description,long amount  ){
 		this.contactName=contactName;
 		this.description=description;
 		this.amount=amount;
