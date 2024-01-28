@@ -17,5 +17,7 @@ public interface ITransactionRepository extends JpaRepository<Transaction, Long>
 	 
 	 @Query(value = " select  t from Transaction t  where t.creditUser.email=:email  ")
 	 Page<Transaction> findAll( @Param("email") String email,Pageable pageable);
+	 
+	 Page<Transaction> findAll( Pageable pageable);
 }
 
