@@ -11,7 +11,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public interface ITransactionRepository extends JpaRepository<Transaction, Long> {
 	//@Query(value = " select  t from Transaction t  where t.creditUser.email=:email  ")
-	public List<Transaction> findByCreditUser( UserApp user);
+	List<Transaction> findByCreditUser( UserApp user);
 
 }
 

@@ -9,10 +9,10 @@ import com.paymybuddy.webapp.domain.model.UserApp;
 
 public interface IUserRepository extends JpaRepository<UserApp, Long> {
 
-	public UserApp findByEmail(String email);
-	public Optional<UserApp> findById(Long id);
+	 UserApp findByEmail(String email);
+	 Optional<UserApp> findById(Long id);
 	
-	public UserApp findByFirstNameAndLastName(String firstName,String lastName);
+	 UserApp findByFirstNameAndLastName(String firstName,String lastName);
 	
 	/*@Query(value = "select u from UserApp u join u.transactions where u.email=:email")
 	public List<Transaction> findUserTransaction(@Param("email")String emailUser);*/
