@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.webapp.domain.model.Transaction;
@@ -60,8 +61,7 @@ public class TransactionService {
 		userRepository.save(creditUser);
 	}
 
-	public Page<Transaction> findTransactionsPaginated(int pageNber, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNber - 1, pageSize);
-		return transactionRepository.findAll(pageable);
+	Page<Transaction> findTransactionsPaginatedByUser(Pageable pageable, String email) {
+		return transactionRepository.findAll(email,pageable);
 	}
 }

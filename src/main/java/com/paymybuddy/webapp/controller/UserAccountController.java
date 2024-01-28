@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,17 +44,20 @@ public class UserAccountController {
 
 	@Autowired
 	private BankingService bankingService;
+	
+	@Autowired
+	private TransactionService transactionService;
 
 	@Autowired
 	private TransactionMapper transactionMapper;
-	
+
 	@GetMapping("/*")
 	@ResponseBody
-	public String getPrincipal(Principal principal){
+	public String getPrincipal(Principal principal) {
 		System.out.println(principal.getName());
 		return principal.getName();
-			
-		}
+
+	}
 
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
@@ -101,21 +106,22 @@ public class UserAccountController {
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
 			throws IOException {
 		try {
-			if(userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
-				bankingService.transferMoneyToBankingAccountUser(principal.getName(),Constants.BANKING_ACCOUNT,userTransaction.getAmount(),
-						userTransaction.getDescription(), userTransaction);
-				/*transfert au buddyaccount  si la valeur  "option value est "my buddy account" ou
-				 "my bankingaccount" dans le template transfer.html*/
-			}else if(userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
-				bankingService.transferMoneyToBuddyAccountUser(principal.getName(),Constants.BUDDY_ACCOUNT,userTransaction.getAmount(),
-						userTransaction.getDescription(), userTransaction);
-			}
-			else {
+			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
+				bankingService.transferMoneyToBankingAccountUser(principal.getName(), Constants.BANKING_ACCOUNT,
+						userTransaction.getAmount(), userTransaction.getDescription(), userTransaction);
+				/*
+				 * transfert au buddyaccount si la valeur "option value est "my buddy account"
+				 * ou "my bankingaccount" dans le template transfer.html
+				 */
+			} else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
+				bankingService.transferMoneyToBuddyAccountUser(principal.getName(), Constants.BUDDY_ACCOUNT,
+						userTransaction.getAmount(), userTransaction.getDescription(), userTransaction);
+			} else {
 				bankingService.payToContact(userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
 						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
-						userTransaction.getDescription(), userTransaction);	
+						userTransaction.getDescription(), userTransaction);
 			}
-			
+
 			return new ModelAndView("redirect:/transfer-success");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -126,7 +132,7 @@ public class UserAccountController {
 			return new ModelAndView("redirect:/error");
 		}
 	}
-	
+
 	@GetMapping("/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
@@ -168,30 +174,33 @@ public class UserAccountController {
 	}
 
 	@GetMapping("/account/transfer")
-	public String getTransferPage(Model model, Principal principal) {
-		Transaction userTransaction = new Transaction();
+	public String getTransferPage( Model model, Principal principal) {
+		//Transaction userTransaction = new Transaction();
 		List<TransactionDTO> transactions = new ArrayList<TransactionDTO>();
-		String userEmail= principal.getName();
-		List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(userEmail)
-				.getTransactions();
+		String userEmail = principal.getName();
+    
+		List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(userEmail).getTransactions();
+	
 		for (Transaction transaction : transactionsFoundByUser) {
 			// TransactionDTO transactionUser = new TransactionDTO();
 			TransactionDTO transactionUser = transactionMapper.TransactionToTransactionDTO(transaction);
-			
-			if(transaction.getBeneficiaryUser().getEmail().equals(userEmail)) {
+
+			if (transaction.getBeneficiaryUser().getEmail().equals(userEmail)) {
 				transactionUser.setContactName("Me");
 			}
 			transactions.add(transactionUser);
 		}
 		List<UserApp> allContact = userAppService.findAllUserContacts(principal.getName());
-
+		//getTransactionsPaginated(1, model, principal);
 		model.addAttribute("userEmail", userEmail);
 		model.addAttribute("contacts", allContact);
-		model.addAttribute("userTransaction", userTransaction);
-		model.addAttribute("transactions", transactions);
+	//	model.addAttribute("userTransaction", userTransaction);
+		//model.addAttribute("transactions", transactions);
 		return "transfer";
 	}
 
+//--------------------------------------------
+	
 	@GetMapping("/transfer-success")
 	public String getTransferSucessPage() {
 		return "transfer-success";

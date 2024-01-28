@@ -3,6 +3,9 @@ package com.paymybuddy.webapp.service;
 import java.text.DecimalFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.webapp.domain.model.Transaction;
@@ -143,6 +146,12 @@ public class BankingService implements IOperation {
 				this.formatBalanceAccount(balanceCalculatedBuddyAccountUser));
 	}
 
+	public Page<Transaction> getTransactionsByUser(int pageNber, int pageSize, String email) {
+		  // Sort sort = Sort.by(userId).descending();
+		Pageable pageable = PageRequest.of(pageNber - 1, pageSize);
+		return 	transactionService.findTransactionsPaginatedByUser(pageable, email);
+	}
+	
 	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
 		return isOperationAuthorized(payment, userAccountBalance);
 	}

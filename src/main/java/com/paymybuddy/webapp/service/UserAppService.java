@@ -102,7 +102,7 @@ public class UserAppService {
 	public List<UserApp> findAllUserContacts(String emailUser) {
 		UserApp user = userRepository.findByEmail(emailUser);
 		List<UserApp> userContacts = user.getContacts();
-		System.out.println("userContact" + userContacts);
+	//	System.out.println("userContact" + userContacts);
 		return userContacts;
 	}
 
