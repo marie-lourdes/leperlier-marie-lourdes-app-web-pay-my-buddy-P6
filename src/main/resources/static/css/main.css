@@ -112,18 +112,29 @@ input[type="submit"] {
 	font-weight: bold;
 }
 
-input, .button-connection {
-	appearance: none;
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 1rem;
-}
-
 .button-form {
 	padding: 10px 50px;
 	background-color: #2145D8;
 	border: 0;
 	cursor: pointer;
 }
+
+input, select, .button-connection {
+	appearance: none;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 1rem;
+	padding: 10px 50px;
+}
+ select {
+	 appearance: auto;
+ }
+.button-connection {
+	display: flex;
+	align-items: center;
+	padding: 0 50px;
+	height: 2.5rem;
+}
+
 
 /*css table contact*/
 

@@ -1,13 +1,77 @@
 @charset "UTF-8";
-form.form--transaction {
-	width: 70%;
+
+form.form--transaction,.header-send-money,section .form--transaction,.pagination {
+	width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+}
+form.form--transaction div {
+	margin: 10px 0;
+}
+
+section .form--transaction {
+min-height: 15vh;
+}
+
+.header-send-money {
+	justify-content: space-between;
+	align-items: center;
+margin-bottom: 0;
+
+}
+
+.header-send-money h2 {
+margin:0;
+}
+
+section .form--transaction {
+	justify-content: space-evenly;
+	padding: 50px;
+	background-color: rgba(198, 195, 195, 0.5);
+	align-items: baseline;
+	box-sizing: border-box;
+}
+
+.login-field--amount+.login-field--description-transaction-visible {
+	display: none;
+}
+
+.login-field--amount:valid+.login-field--description-transaction-visible {
+	display: block;
+}
+
+input.login-field--amount,
+select {
+	color: #000;
+	padding: 10px 25px;
 }
 
 table.table--transaction {
 	width: 100%;
 	border: 1px solid #000;
+	flex-direction: column;
 }
 
- thead, tbody, tbody tr{
-	 border:0;
- }
+thead,
+tbody,
+tbody tr {
+	border: 0;
+}
+
+
+ table.table--transaction thead th {
+	
+	background-color: rgb(111, 174, 75);
+	color:#fff;
+}
+section.pagination {
+	justify-content: center;
+	/*border: 2px rgba(213, 215, 222, 0.5) solid;*/
+}
+
+section.pagination div a{
+	border: 2px rgba(213, 215, 222, 0.5) solid;
+	padding:10px;
+	color: #2145D8;
+	font-weight: bold;
+}
