@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.webapp.domain.model.Transaction;
@@ -35,7 +38,7 @@ public class TransactionService {
 	public void addTransaction(long userId, String contactId, Transaction transactionCreated)
 			throws IllegalArgumentException {
 		UserApp creditUser = userRepository.findById(userId).get();
-		//System.out.println("credit user" + creditUser);
+		// System.out.println("credit user" + creditUser);
 		UserApp beneficiaryUser = userRepository.findByEmail(contactId);
 		Transaction tranferRegistered = new Transaction();
 
@@ -55,5 +58,10 @@ public class TransactionService {
 
 		transactionRepository.save(tranferRegistered);
 		userRepository.save(creditUser);
+	}
+
+	public Page<Transaction> findTransactionsPaginated(int pageNber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNber - 1, pageSize);
+		return transactionRepository.findAll(pageable);
 	}
 }
