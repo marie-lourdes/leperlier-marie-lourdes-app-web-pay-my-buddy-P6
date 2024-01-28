@@ -6,7 +6,7 @@ import com.paymybuddy.webapp.domain.model.UserApp;
 
 @Component
 public class UserMapper {
-	public UserLoginDTO UserToUserLoginDTO(UserApp user) {
+	public UserLoginDTO userToUserLoginDTO(UserApp user) {
 		String email = user.getEmail();
 		String password = user.getPassword();
 	    String role = user.getRole();
@@ -14,7 +14,7 @@ public class UserMapper {
 		return new UserLoginDTO (email,password,role);
 	}
 	
-	public UserDTO UserToUserDTO(UserApp user) {
+	public UserDTO userToUserDTO(UserApp user) {
 		String email = user.getEmail();
 	    String firstName = user.getFirstName();	
 	    String lastName = user.getLastName();	

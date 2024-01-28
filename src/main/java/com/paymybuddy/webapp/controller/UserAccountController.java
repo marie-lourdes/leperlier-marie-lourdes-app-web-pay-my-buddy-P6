@@ -175,49 +175,31 @@ public class UserAccountController {
 
 	@GetMapping("/account/transfer")
 	public String getTransferPage( Model model, Principal principal) {
-		//Transaction userTransaction = new Transaction();
-		List<TransactionDTO> transactions = new ArrayList<TransactionDTO>();
 		String userEmail = principal.getName();
-    
-		List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(userEmail).getTransactions();
-	
-		for (Transaction transaction : transactionsFoundByUser) {
-			// TransactionDTO transactionUser = new TransactionDTO();
-			TransactionDTO transactionUser = transactionMapper.TransactionToTransactionDTO(transaction);
+		
+		List<UserApp> allContacts = userAppService.findAllUserContacts(userEmail );
+		this.getHistoricalTransactionsByUser(1, model, principal);
 
-			if (transaction.getBeneficiaryUser().getEmail().equals(userEmail)) {
-				transactionUser.setContactName("Me");
-			}
-			transactions.add(transactionUser);
-		}
-		List<UserApp> allContact = userAppService.findAllUserContacts(principal.getName());
-		getTransactionsPaginated(1, model, principal);
-		model.addAttribute("userEmail", userEmail);
-		model.addAttribute("contacts", allContact);
-	//	model.addAttribute("userTransaction", userTransaction);
-		//model.addAttribute("transactions", transactions);
+		model.addAttribute("contacts", allContacts);
 		return "transfer";
 	}
 
 	@GetMapping("/page/{pageNber}")
-	public String getTransactionsPaginated(@PathVariable int pageNber, Model model, Principal principal) {
+	public String getHistoricalTransactionsByUser(@PathVariable int pageNber, Model model, Principal principal) {
 		String userEmail = principal.getName();
 		Transaction userTransaction = new Transaction();
 		List<TransactionDTO> transactions = new ArrayList<TransactionDTO>();
+		
 		int pageSize = 3;
 	    Page <Transaction > page = bankingService.getTransactionsByUser(pageNber, pageSize,userEmail);
-	    List <Transaction > listTransactions  = page.getContent();
-	//	List<Transaction> transactionsFoundByUser = userAppService.getUserEntityByEmail(userEmail).getTransactions();
-		
+	    List <Transaction > listTransactions  = page.getContent();	
 		for (Transaction transaction : listTransactions) {
-	
-			TransactionDTO transactionUser = transactionMapper.TransactionToTransactionDTO(transaction);
-			if (transaction.getCreditUser().getEmail().equals(userEmail)) {
+			TransactionDTO transactionUser = transactionMapper.transactionToTransactionDTO(transaction);	
 				if (transaction.getBeneficiaryUser().getEmail().equals(userEmail)) {
 					transactionUser.setContactName("Me");
 				}
 				transactions.add(transactionUser);
-			}
+			
 		}
 
 	    model.addAttribute("currentPage", pageNber);

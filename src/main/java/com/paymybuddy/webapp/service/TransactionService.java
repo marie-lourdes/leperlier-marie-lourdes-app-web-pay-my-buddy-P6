@@ -61,7 +61,7 @@ public class TransactionService {
 		userRepository.save(creditUser);
 	}
 
-	Page<Transaction> findTransactionsPaginatedByUser(Pageable pageable, String email) {
-		return transactionRepository.findAll(email,pageable);
+	public Page<Transaction> findTransactionsPaginatedByUser( String userEmail, Pageable pageable) {
+		return transactionRepository.findAll(userEmail,pageable);
 	}
 }

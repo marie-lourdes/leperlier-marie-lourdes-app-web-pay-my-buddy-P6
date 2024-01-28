@@ -6,6 +6,7 @@
 	<link th:href="@{/css/main.css}" rel="stylesheet" />
 	<link th:href="@{/css/form.css}" rel="stylesheet" />
 	<link th:href="@{/css/transaction.css}" rel="stylesheet" />
+
 	<script type="text/javascript" th:src="@{https://kit.fontawesome.com/365efc5f07.js}"
 		crossorigin="anonymous"></script>
 </head>
@@ -33,84 +34,87 @@
 	</header>
 	<div class="container">
 		<main>
-			<h2>Send Money</h2>
-			<a th:href="@{/account/profil}">
-				<div class="button-styled button-form button-connection ">
-					Add Connection
+			<section >
+				<div class="header-send-money">
+					<h2>Send Money</h2>
+					<a th:href="@{/account/profil}">
+					<section class="button-styled button-form button-connection ">
+						Add Connection
+				</a>
 				</div>
-			</a>
-			<form th:action="@{/save-payment}" method="post" th:object="${userTransaction}">
-				<div>
-					<div>
-						<select th:field="*{beneficiaryUser.email}">
-							<option value=""> Select a connection </option>
-							<option th:each="contact: ${contacts}" th:value="${contact.email}"
-								th:text="${contact.email}">
-								contact
-							</option>
-							<option value="my Buddy Account">
-								my Buddy Account
-							</option>
-							<option value="my Banking Account">
-								my Banking Account
-							</option>
-						</select>
-					</div>
-
-					<div class="login-field ">
-						<input class="login-field--amount" th:field="*{amount}" type="number" name="amount" min="1"
-							required placeholder="amount" />
-						<input class=" login-field login-field--description-transaction-visible"
-							th:field="*{description}" type="text" name="description" required
-							placeholder="description" />
-					</div>
-					<div class="button-styled"><input class="button-form button-green" type="submit" value="Pay" />
-					</div>
-			</form class="form--transaction">
-			<h2>Transactions</h2>
-			<table>
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Description</th>
-						<th>Amount</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:if="${transactions.empty}">
-						<td colspan="3">Vous n'avez pas effectué de transactions</td>
-					</tr>
-					<tr th:each="transaction: ${transactions}">
-						<td><span th:text="${transaction.contactName }"> Name </span></td>
-						<td><span th:text="${transaction.description}"> Description</span></td>
-						<td><span th:text="${transaction.amount}"> Amount</span></td>
-					</tr>
-				</tbody>
-			</table>
-			<div th:if="${totalPages >= 1}">
-				<div>
-					<div th:text="${totalItems}">
-						Total Rows
-					</div>
-					<div>
-						<a th:if="${currentPage}>1 " th:href="@{'/page/' + ${currentPage - 1}}">Prev</a>
-						<span th:unless="${currentPage}>1">Prev</span>
-					</div>
-					<div>
-						<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-							<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}" th:text="${i}">current page</a>
-							<span th:unless="${currentPage != i}" th:text="${i}">current page</span>
-						</span>
-					</div>
-					<div>
-						<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
-						<span th:unless="${currentPage < totalPages}">Next</span>
-					</div>
-
-				</div>
+			
+	<form class="form--transaction" th:action="@{/save-payment}" method="post" th:object="${userTransaction}">
+		<div>
+			<div>
+				<select th:field="*{beneficiaryUser.email}">
+					<option value=""> Select a connection </option>
+					<option th:each="contact: ${contacts}" th:value="${contact.email}" th:text="${contact.email}">
+						contact
+					</option>
+					<option value="my Buddy Account">
+						my Buddy Account
+					</option>
+					<option value="my Banking Account">
+						my Banking Account
+					</option>
+				</select>
+			</div>
+			
+			<div class="login-field ">
+				<input class="login-field--amount" th:field="*{amount}" type="number" name="amount" min="1" required
+					placeholder="amount" />
+				<input class=" login-field login-field--description-transaction-visible" th:field="*{description}" type="text"
+					name="description" required placeholder="description" />
+			</div>
+			<div class="button-styled"><input class="button-form button-green" type="submit" value="Pay" />
+		</div>
+	</form>
+	</section>
+	<section>
+		<h2>Transactions</h2>
+		<table class="table--transaction">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${transactions.empty}">
+					<td colspan="3">Vous n'avez pas effectué de transactions</td>
+				</tr>
+				<tr th:each="transaction: ${transactions}">
+					<td><span th:text="${transaction.contactName }"> Name </span></td>
+					<td><span th:text="${transaction.description}"> Description</span></td>
+					<td><span th:text="${transaction.amount}"> Amount</span></td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+	<div th:if="${totalPages >= 1}" class="pagination">
+		<div>
+			<div th:text="${totalItems}">
+				Total Rows
+			</div>
+			<div>
+				<a th:if="${currentPage}>1 " th:href="@{'/page/' + ${currentPage - 1}}">Prev</a>
+				<span th:unless="${currentPage}>1">Prev</span>
+			</div>
+			<div>
+				<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+					<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}" th:text="${i}">current page</a>
+					<span th:unless="${currentPage != i}" th:text="${i}">current page</span>
+				</span>
+			</div>
+			<div>
+				<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+				<span th:unless="${currentPage < totalPages}">Next</span>
 			</div>
 
-		</main>
+		</div>
+	</div>
+	</main>
 	</div>
 </body>
 

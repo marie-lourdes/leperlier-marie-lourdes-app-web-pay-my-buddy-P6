@@ -67,14 +67,14 @@ public class UserAppService {
 
 	public UserLoginDTO getUserLoginByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
-		UserLoginDTO userLoginDTO = mapper.UserToUserLoginDTO(user);
+		UserLoginDTO userLoginDTO = mapper.userToUserLoginDTO(user);
 		System.out.println(userLoginDTO);
 		return userLoginDTO;
 	}
 
 	public UserDTO getUserByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
-		UserDTO userDTO = mapper.UserToUserDTO(user);
+		UserDTO userDTO = mapper.userToUserDTO(user);
 		return userDTO;
 	}
 

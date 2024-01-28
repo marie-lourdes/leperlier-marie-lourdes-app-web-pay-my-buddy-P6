@@ -149,7 +149,7 @@ public class BankingService implements IOperation {
 	public Page<Transaction> getTransactionsByUser(int pageNber, int pageSize, String email) {
 		  // Sort sort = Sort.by(userId).descending();
 		Pageable pageable = PageRequest.of(pageNber - 1, pageSize);
-		return 	transactionService.findTransactionsPaginatedByUser(pageable, email);
+		return 	transactionService.findTransactionsPaginatedByUser( email,pageable);
 	}
 	
 	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {

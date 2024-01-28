@@ -1,4 +1,13 @@
 @charset "UTF-8";
-.form--transaction {
-	width: 100%;
+form.form--transaction {
+	width: 70%;
 }
+
+table.table--transaction {
+	width: 100%;
+	border: 1px solid #000;
+}
+
+ thead, tbody, tbody tr{
+	 border:0;
+ }

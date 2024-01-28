@@ -7,7 +7,7 @@ import com.paymybuddy.webapp.domain.model.Transaction;
 @Component
 public class TransactionMapper {
 	
-	public TransactionDTO TransactionToTransactionDTO(Transaction transaction) {
+	public TransactionDTO transactionToTransactionDTO(Transaction transaction) {
 		String contactName = transaction.getBeneficiaryUser().getFirstName() +" " + transaction.getBeneficiaryUser().getLastName();
 	    String description = transaction.getDescription();	
 	   long amount = transaction.getAmount();		
