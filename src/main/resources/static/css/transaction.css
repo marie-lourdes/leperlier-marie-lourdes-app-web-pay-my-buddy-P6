@@ -64,9 +64,10 @@ tbody tr {
 	background-color: rgb(111, 174, 75);
 	color:#fff;
 }
+
 section.pagination {
 	justify-content: center;
-	/*border: 2px rgba(213, 215, 222, 0.5) solid;*/
+	margin-top: 10px;
 }
 
 section.pagination div a{

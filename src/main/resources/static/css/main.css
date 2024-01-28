@@ -92,6 +92,10 @@ main.main--customized {
 	justify-content: flex-start;
 }
 
+main.main--transaction {
+	min-height: 45vh;
+}
+
 a {
 	text-decoration: none;
 }
@@ -119,22 +123,25 @@ input[type="submit"] {
 	cursor: pointer;
 }
 
-input, select, .button-connection {
+input,
+select,
+.button-connection {
 	appearance: none;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 1rem;
 	padding: 10px 50px;
 }
- select {
-	 appearance: auto;
- }
+
+select {
+	appearance: auto;
+}
+
 .button-connection {
 	display: flex;
 	align-items: center;
 	padding: 0 50px;
 	height: 2.5rem;
 }
-
 
 /*css table contact*/
 
