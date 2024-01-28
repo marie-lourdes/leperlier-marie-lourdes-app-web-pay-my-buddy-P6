@@ -86,7 +86,28 @@
 					</tr>
 				</tbody>
 			</table>
+			<div th:if="${totalPages >= 1}">
+				<div>
+					<div th:text="${totalItems}">
+						Total Rows
+					</div>
+					<div>
+						<a th:if="${currentPage}>1 " th:href="@{'/page/' + ${currentPage - 1}}">Prev</a>
+						<span th:unless="${currentPage}>1">Prev</span>
+					</div>
+					<div>
+						<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+							<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}" th:text="${i}">current page</a>
+							<span th:unless="${currentPage != i}" th:text="${i}">current page</span>
+						</span>
+					</div>
+					<div>
+						<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+						<span th:unless="${currentPage < totalPages}">Next</span>
+					</div>
 
+				</div>
+			</div>
 
 		</main>
 	</div>
