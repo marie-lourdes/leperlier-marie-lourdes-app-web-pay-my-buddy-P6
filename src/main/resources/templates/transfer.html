@@ -42,7 +42,6 @@
 						Add Connection
 					</a>
 				</div>
-
 				<form class="form--transaction" th:action="@{/save-payment}" method="post"
 					th:object="${userTransaction}">
 
@@ -60,27 +59,25 @@
 								<option value="my Banking Account">
 									my Banking Account
 								</option>
-
 							</select>
 							<i class="fa-solid fa-caret-down"></i></label>
 					</div>
-
 					<div class="login-field login-field--form-transaction ">
-
 						<input class="login-field--amount" th:field="*{amount}" type="number" name="amount" min="1"
-							required placeholder="amount" />	
-							<span class="symbol-euro" >€</span>	
-							<button class="button-up"
-								onclick="this.parentNode.querySelector('input[type=number]').stepUp()"><i
-									class="fa-solid fa-caret-up"></i></button>
-							<button class="button-down"
-								onclick="this.parentNode.querySelector('input[type=number]').stepDown()"><i
-									class="fa-solid fa-caret-down"></i></button>
+							required placeholder="amount" />
+						<span class="symbol-euro">€</span>
+						<button class="button-up"
+							onclick="this.parentNode.querySelector('input[type=number]').stepUp()"><i
+								class="fa-solid fa-caret-up"></i></button>
+						<button class="button-down"
+							onclick="this.parentNode.querySelector('input[type=number]').stepDown()"><i
+								class="fa-solid fa-caret-down"></i></button>
 						<input class=" login-field login-field--description-transaction-visible"
 							th:field="*{description}" type="text" name="description" required
 							placeholder="description" />
 					</div>
-					<div class="button-styled"><input class="button-form button-green button-green--transaction" type="submit" value="Pay" />
+					<div class="button-styled"><input class="button-form button-green button-green--transaction"
+							type="submit" value="Pay" />
 				</form>
 			</section>
 			<section class="section--transaction">
