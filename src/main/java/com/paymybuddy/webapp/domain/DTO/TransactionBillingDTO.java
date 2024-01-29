@@ -1,5 +1,8 @@
 package com.paymybuddy.webapp.domain.DTO;
 
+import lombok.Data;
+
+@Data
 public class TransactionBillingDTO {
 	private String userCreditName;
 	private String contactName ;

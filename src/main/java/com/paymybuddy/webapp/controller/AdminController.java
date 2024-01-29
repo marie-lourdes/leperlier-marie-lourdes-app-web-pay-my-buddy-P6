@@ -11,11 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.paymybuddy.webapp.domain.DTO.TransactionDTO;
+import com.paymybuddy.webapp.domain.DTO.TransactionBillingDTO;
 import com.paymybuddy.webapp.domain.DTO.TransactionMapper;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.service.AdminService;
-import com.paymybuddy.webapp.service.TransactionService;
 
 @Controller
 public class AdminController {
@@ -24,21 +23,24 @@ public class AdminController {
 
 	@Autowired
 	private TransactionMapper transactionMapper;
-	/*@GetMapping("/admin/transactions-billing")
+	
+	@GetMapping("/admin/transactions-billing")
 	public String getHistoricalTransactionsWithFees( Model model, Principal principal) {
-		
-	}*/
+		this.getransactionsPaginated(1, model, principal);
+		return "transactions-billing";
+	}
+	
 	@GetMapping("/admin/page/{pageNber}")
-	public String getHistoricalTransactionsWithFees(@PathVariable int pageNber, Model model, Principal principal) {
+	public String getransactionsPaginated(@PathVariable int pageNber, Model model, Principal principal) {
 		String userEmail = principal.getName();
 		Transaction userTransaction = new Transaction();
-		List<TransactionDTO> transactions = new ArrayList<TransactionDTO>();
+		List<TransactionBillingDTO> transactions = new ArrayList<TransactionBillingDTO>();
 		
-		int pageSize = 3;
+		int pageSize = 10;
 	    Page <Transaction > page =  adminService.getAllTransactionsWithFees(pageNber, pageSize);
 	    List <Transaction > listTransactions  = page.getContent();	
 		for (Transaction transaction : listTransactions) {
-			TransactionDTO transactionUser = transactionMapper.transactionToTransactionDTO(transaction);	
+			TransactionBillingDTO transactionUser = transactionMapper.transactionToTransactionBillingDTO(transaction);	
 			
 				transactions.add(transactionUser);
 			
