@@ -14,7 +14,7 @@ form.form--transaction div {
 }
 
 .section--transaction {
-	width:100%;
+	width: 100%;
 }
 
 section .form--transaction {
@@ -62,13 +62,15 @@ select,
 	margin-top: 5px;
 	margin-left: 15px;
 }
-.login-field--amount:valid ~ .button-down{
+
+.login-field--amount:valid~.button-down {
 	top: 20.1rem;
 }
 
-.login-field--amount:valid ~ button{
+.login-field--amount:valid~button {
 	height: 22px;
 }
+
 .button-down {
 	top: 20.5rem;
 }
@@ -121,7 +123,7 @@ select,
 }
 
 input.login-field--amount {
-	appearance:none;
+	appearance: none;
 	position: relative;
 
 }
@@ -139,11 +141,10 @@ tbody tr {
 }
 
 table.table--transaction thead th {
-
 	background-color: rgb(111, 174, 75);
 	color: #fff;
 }
 
- .button-green.button-green--transaction{
-	 padding: 10px 86px;
- }
+.button-green.button-green--transaction {
+	padding: 10px 86px;
+}

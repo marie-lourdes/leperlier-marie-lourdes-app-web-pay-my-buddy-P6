@@ -107,9 +107,9 @@
 			<section th:if="${totalPages >= 1}" class="section--transaction pagination">
 				<div>
 					<a th:if="${currentPage}>1 " th:href="@{'/page/' + ${currentPage - 1}}">
-						<<< /a>
+						<<</a>
 							<span th:unless="${currentPage}>1">
-								<<< /span>
+								<<</span>
 				</div>
 				<div>
 					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
