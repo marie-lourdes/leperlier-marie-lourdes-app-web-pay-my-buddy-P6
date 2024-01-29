@@ -1,10 +1,10 @@
 package com.paymybuddy.webapp.domain.DTO;
 
 public class TransactionBillingDTO {
+	private String userCreditName;
 	private String contactName ;
 	private String description ;
-	private  long amount ;
-	private String userCreditName;
+	private  long amount ;	
 	private double fees ;
 	
 	public TransactionBillingDTO(){}
