@@ -32,24 +32,19 @@ public class AdminController {
 	
 	@GetMapping("/admin/page/{pageNber}")
 	public String getransactionsPaginated(@PathVariable int pageNber, Model model, Principal principal) {
-		String userEmail = principal.getName();
-		Transaction userTransaction = new Transaction();
 		List<TransactionBillingDTO> transactions = new ArrayList<TransactionBillingDTO>();
 		
 		int pageSize = 10;
 	    Page <Transaction > page =  adminService.getAllTransactionsWithFees(pageNber, pageSize);
 	    List <Transaction > listTransactions  = page.getContent();	
-		for (Transaction transaction : listTransactions) {
-			TransactionBillingDTO transactionUser = transactionMapper.transactionToTransactionBillingDTO(transaction);	
-			
-				transactions.add(transactionUser);
-			
+		for (Transaction elem : listTransactions) {
+			TransactionBillingDTO transaction = transactionMapper.transactionToTransactionBillingDTO(elem);		
+				transactions.add(transaction);	
 		}
 
 	    model.addAttribute("currentPage", pageNber);
 	    model.addAttribute("totalPages", page.getTotalPages());
 	    model.addAttribute("totalItems", page.getTotalElements());
-		model.addAttribute("userTransaction", userTransaction);
 		model.addAttribute("transactions", transactions);
 		return "transactions-billing";
 		}

@@ -12,7 +12,7 @@ import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 
 public interface ITransactionRepository extends JpaRepository<Transaction, Long> {
-	//@Query(value = " select  t from Transaction t  where t.creditUser.email=:email  ")
+	
 	 List<Transaction> findByCreditUser( UserApp user);
 	 
 	 @Query(value = " select  t from Transaction t  where t.creditUser.email=:email  ")

@@ -40,11 +40,11 @@
 				<table class="table--transaction">
 					<thead>
 						<tr>
-							<th>User credit</th>
+							<th>Credit User</th>
 							<th>Connection</th>
 							<th>Amount</th>
 								<th>Description</th>
-							<th>fees</th>
+							<th>Fees</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -52,11 +52,11 @@
 							<td colspan="5">Any transactions</td>
 						</tr>
 						<tr th:each="transaction: ${transactions}">
-							<td><span th:text="${transaction.contactName }">Connections </span></td>
-							<td><span th:text="${transaction.userCreditName}"> Description </span></td>
+							<td><span th:text="${transaction.userCreditName}"> Credit User </span></td>
+							<td><span th:text="${transaction.contactName }">Connection</span></td>
 							<td><span th:text="${transaction.amount}"> Amount </span></td>
 							<td><span th:text="${transaction.description}"> Description </span></td>
-							<td><span th:text="${transaction.fees}">fees </span></td>
+							<td><span th:text="${transaction.fees}">Fees </span></td>
 						</tr>
 					</tbody>
 				</table>
