@@ -125,9 +125,13 @@ select,
 input.login-field--amount {
 	appearance: none;
 	position: relative;
-
+	text-align: right;
 }
 
+.symbol-euro {
+	position: relative;
+	right:2.5rem;
+}
 table.table--transaction {
 	width: 100%;
 	border: 1px solid #000;

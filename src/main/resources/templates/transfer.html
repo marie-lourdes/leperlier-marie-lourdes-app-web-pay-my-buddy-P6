@@ -68,7 +68,8 @@
 					<div class="login-field login-field--form-transaction ">
 
 						<input class="login-field--amount" th:field="*{amount}" type="number" name="amount" min="1"
-							required placeholder="amount" />		
+							required placeholder="amount" />	
+							<span class="symbol-euro" >€</span>	
 							<button class="button-up"
 								onclick="this.parentNode.querySelector('input[type=number]').stepUp()"><i
 									class="fa-solid fa-caret-up"></i></button>
