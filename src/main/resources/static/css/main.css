@@ -8,8 +8,11 @@ body {
 h1,
 h2 {
 	color: #3E3B3D;
+	font-weight: normal;
 }
-
+h2 {
+	font-size: 1.5rem;
+}
 section {
 	display: flex;
 	justify-content: space-between;
@@ -62,7 +65,7 @@ nav ul {
 	display: flex;
 	justify-content: space-around;
 	align-items: baseline;
-	color: #3E3B3D;
+	
 	padding-left: 0;
 }
 
@@ -74,11 +77,15 @@ nav ul li {
 	margin: 0 10px;
 }
 
+nav ul li a {
+	color: #3E3B3D;
+}
+
 nav ul li a:hover {
 	color: #2145D8;
 }
 
-.container {
+main.container {
 	margin: auto 0;
 	width: auto;
 }
@@ -93,7 +100,7 @@ main.main--customized {
 }
 
 main.main--transaction {
-	min-height: 45vh;
+	min-height: 56vh;
 }
 
 a {
@@ -123,8 +130,7 @@ input[type="submit"] {
 	cursor: pointer;
 }
 
-input,
-select,
+input,select,
 .button-connection {
 	appearance: none;
 	font-family: Helvetica, Arial, sans-serif;
@@ -132,9 +138,9 @@ select,
 	padding: 10px 50px;
 }
 
-select {
+/*select {
 	appearance: auto;
-}
+}*/
 
 .button-connection {
 	display: flex;

@@ -1,27 +1,35 @@
 @charset "UTF-8";
 
-form.form--transaction,.header-send-money,section .form--transaction,.pagination {
+form.form--transaction,
+.header-send-money,
+section .form--transaction,
+.pagination {
 	width: 100%;
-		display: flex;
-		flex-wrap: wrap;
+	display: flex;
+	flex-wrap: wrap;
 }
+
 form.form--transaction div {
 	margin: 10px 0;
 }
 
+.section--transaction {
+	width:100%;
+}
+
 section .form--transaction {
-min-height: 15vh;
+	min-height: 15vh;
 }
 
 .header-send-money {
 	justify-content: space-between;
 	align-items: center;
-margin-bottom: 0;
+	margin-bottom: 0;
 
 }
 
 .header-send-money h2 {
-margin:0;
+	margin: 0;
 }
 
 section .form--transaction {
@@ -32,18 +40,90 @@ section .form--transaction {
 	box-sizing: border-box;
 }
 
-.login-field--amount+.login-field--description-transaction-visible {
-	display: none;
-}
-
-.login-field--amount:valid+.login-field--description-transaction-visible {
-	display: block;
+input.login-field--amount {
+	position: relative;
 }
 
 input.login-field--amount,
-select {
+select,
+.login-field--description-transaction-visible {
 	color: #000;
 	padding: 10px 25px;
+	border-radius: 0;
+}
+
+.login-field--amount~.login-field--description-transaction-visible {
+	display: none;
+
+}
+
+.login-field--amount:valid~.login-field--description-transaction-visible {
+	display: block;
+	margin-top: 5px;
+	margin-left: 15px;
+}
+.login-field--amount:valid ~ .button-down{
+	top: 20.1rem;
+}
+
+.login-field--amount:valid ~ button{
+	height: 22px;
+}
+.button-down {
+	top: 20.5rem;
+}
+
+.button-up,
+.button-down {
+	appearance: none;
+	position: absolute;
+	right: auto;
+	width: 43px;
+	height: 23px;
+	line-height: 1;
+
+}
+
+
+section.pagination {
+	justify-content: center;
+	margin-top: 10px;
+}
+
+section.pagination div a {
+	border: 2px rgba(213, 215, 222, 0.5) solid;
+	padding: 10px;
+	color: #2145D8;
+	font-weight: bold;
+}
+
+.select-contact {
+	border: 1px solid #000;
+	background: #fff;
+	padding-right: 10px;
+}
+
+.select-contact label>select {
+	border: 0;
+	outline: 0;
+}
+
+.select-contact label>select:focus {
+	background: rgba(198, 195, 195, 0.2);
+}
+
+input.login-field--amount,
+select,
+.login-field--description-transaction-visible,
+.button-up,
+.button-down {
+	border: 1px solid #000;
+}
+
+input.login-field--amount {
+	appearance:none;
+	position: relative;
+
 }
 
 table.table--transaction {
@@ -58,21 +138,12 @@ tbody tr {
 	border: 0;
 }
 
+table.table--transaction thead th {
 
- table.table--transaction thead th {
-	
 	background-color: rgb(111, 174, 75);
-	color:#fff;
+	color: #fff;
 }
 
-section.pagination {
-	justify-content: center;
-	margin-top: 10px;
-}
-
-section.pagination div a{
-	border: 2px rgba(213, 215, 222, 0.5) solid;
-	padding:10px;
-	color: #2145D8;
-	font-weight: bold;
-}
+ .button-green.button-green--transaction{
+	 padding: 10px 86px;
+ }
