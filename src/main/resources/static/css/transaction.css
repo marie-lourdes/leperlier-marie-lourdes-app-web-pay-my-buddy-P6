@@ -70,21 +70,26 @@ select,
 .login-field--amount:valid~button {
 	height: 22px;
 }
-
-.button-down {
-	top: 20.5rem;
-}
-
 .button-up,
 .button-down {
 	appearance: none;
-	position: absolute;
-	right: auto;
+	position: relative;
+	
 	width: 43px;
-	height: 23px;
+	height: 24px;
 	line-height: 1;
 
 }
+.button-down {
+	top: 0.7rem;
+	left: -4.8rem;
+}
+.button-up{
+	    top: -0.68rem;
+    left: -1.8rem;
+}
+
+
 
 
 section.pagination {
