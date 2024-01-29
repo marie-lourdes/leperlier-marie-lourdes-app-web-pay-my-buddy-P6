@@ -63,13 +63,7 @@ select,
 	margin-left: 15px;
 }
 
-.login-field--amount:valid~.button-down {
-	top: 20.1rem;
-}
 
-.login-field--amount:valid~button {
-	height: 22px;
-}
 .button-up,
 .button-down {
 	appearance: none;
@@ -86,11 +80,12 @@ select,
 }
 .button-up{
 	    top: -0.68rem;
-    left: -1.8rem;
+    left: -1.75rem;
 }
 
-
-
+.login-field--amount:valid~.button-down {
+	top: 0.75rem;
+}
 
 section.pagination {
 	justify-content: center;
