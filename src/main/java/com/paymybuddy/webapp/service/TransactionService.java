@@ -32,9 +32,9 @@ public class TransactionService {
 		return transactionRepository.findAll();
 	}
 
-	public List<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
+	/*public List<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
 		return transactionRepository.findByCreditUser(creditUser);
-	}
+	}*/
 
 	public void addTransaction(long userId, String contactId, Transaction transactionCreated)
 			throws IllegalArgumentException {
@@ -63,5 +63,9 @@ public class TransactionService {
 
 	public Page<Transaction> findTransactionsPaginatedByUser( String userEmail, Pageable pageable) {
 		return transactionRepository.findAll(userEmail,pageable);
+	}
+	
+	public Page<Transaction> findAllTransactionsPaginated( Pageable pageable) {
+		return transactionRepository.findAll(pageable);
 	}
 }

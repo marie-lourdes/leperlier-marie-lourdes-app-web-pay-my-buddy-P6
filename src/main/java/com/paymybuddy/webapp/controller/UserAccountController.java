@@ -51,14 +51,6 @@ public class UserAccountController {
 	@Autowired
 	private TransactionMapper transactionMapper;
 
-	@GetMapping("/*")
-	@ResponseBody
-	public String getPrincipal(Principal principal) {
-		System.out.println(principal.getName());
-		return principal.getName();
-
-	}
-
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
 		try {

@@ -50,11 +50,11 @@ public class BankingService implements IOperation {
 
 	public double updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailBeneficiaryUser,
 			String emailCreditUser, double amount) throws Exception {
-		
+
 		if (accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation() == null) {
 			throw new NullPointerException("Buddy Account of contact user doesn't exist");
 		}
-		
+
 		double feesTransaction = 0;
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
@@ -62,14 +62,15 @@ public class BankingService implements IOperation {
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
-		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction );
+		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
 		System.out.println("balanceCalculatedCreditUser1 " + balanceCalculatedCreditUser);
-		
+
 		accountService.updateBalanceBuddyAccount(
 				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
 		accountService.updateBalanceBuddyAccount(
-				accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(), this.formatBalanceAccount(balanceCalculatedCreditUser));
+				accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
+				this.formatBalanceAccount(balanceCalculatedCreditUser));
 
 		return feesTransaction;
 	}
@@ -97,7 +98,7 @@ public class BankingService implements IOperation {
 
 	public void transferMoneyToBuddyAccountUser(String userEmail, String typeAccountBeneficiary, double amount,
 			String description, Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
-		
+
 		try {
 			double userBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
 			if (isPaymentAuthorized(amount, userBankingAccountBalance)) {
@@ -147,11 +148,10 @@ public class BankingService implements IOperation {
 	}
 
 	public Page<Transaction> getTransactionsByUser(int pageNber, int pageSize, String email) {
-		  // Sort sort = Sort.by(userId).descending();
 		Pageable pageable = PageRequest.of(pageNber - 1, pageSize);
-		return 	transactionService.findTransactionsPaginatedByUser( email,pageable);
+		return transactionService.findTransactionsPaginatedByUser(email, pageable);
 	}
-	
+
 	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
 		return isOperationAuthorized(payment, userAccountBalance);
 	}
@@ -167,10 +167,10 @@ public class BankingService implements IOperation {
 	}
 
 	public double formatBalanceAccount(double balance) throws Exception {
-		double Result= formatResultDecimalOperation (balance);
+		double Result = formatResultDecimalOperation(balance);
 		return Result;
 	}
-	
+
 	@Override
 	public double add(double balance, double amount) {
 		return balance + amount;
