@@ -30,7 +30,7 @@ public class WebSecurity {
 			requests.requestMatchers("/account/profil").hasRole("USER");
 			requests.requestMatchers("/transfert-success").hasRole("USER");
 			requests.requestMatchers("/account-success").hasRole("USER");
-			requests.requestMatchers("/logout-success").hasRole("USER");		
+			requests.requestMatchers("/logout-success").permitAll();
 			requests.requestMatchers("/sign-up").permitAll();
 			requests.requestMatchers(HttpMethod.POST, "/sign-up-form").permitAll();
 			requests.requestMatchers("/css/**").permitAll();

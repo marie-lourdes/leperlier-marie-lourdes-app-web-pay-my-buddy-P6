@@ -15,6 +15,7 @@ import com.paymybuddy.webapp.domain.DTO.TransactionBillingDTO;
 import com.paymybuddy.webapp.domain.DTO.TransactionMapper;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.service.AdminService;
+import com.paymybuddy.webapp.service.UserAppService;
 
 @Controller
 public class AdminController {
@@ -23,6 +24,11 @@ public class AdminController {
 
 	@Autowired
 	private TransactionMapper transactionMapper;
+
+	@Autowired
+	private UserAppService userAppService;
+	
+
 	
 	@GetMapping("/admin/transactions-billing")
 	public String getHistoricalTransactionsWithFees( Model model, Principal principal) {

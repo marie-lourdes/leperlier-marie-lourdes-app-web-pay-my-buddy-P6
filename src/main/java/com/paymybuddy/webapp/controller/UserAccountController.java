@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.paymybuddy.webapp.domain.DTO.TransactionDTO;
@@ -28,13 +27,14 @@ import com.paymybuddy.webapp.service.BankingService;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
 import com.paymybuddy.webapp.utils.Constants;
+import com.paymybuddy.webapp.utils.IRole;
 
 import jakarta.validation.Valid;
 import lombok.Data;
 
 @Data
 @Controller
-public class UserAccountController {
+public class UserAccountController  implements IRole {
 
 	@Autowired
 	private UserAppService userAppService;
@@ -51,6 +51,8 @@ public class UserAccountController {
 	@Autowired
 	private TransactionMapper transactionMapper;
 
+
+	
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
 		try {
@@ -84,7 +86,7 @@ public class UserAccountController {
 
 	@PostMapping("/save-contact")
 	public ModelAndView createContact(@Valid @ModelAttribute UserApp contact, Principal principal) throws IOException {
-
+		
 		try {
 			userAppService.addUserContact(contact.getEmail(), principal.getName());
 			return new ModelAndView("redirect:/account/contact");
@@ -134,6 +136,13 @@ public class UserAccountController {
 
 	@GetMapping("/account/home")
 	public String getHomePage(Model model, Principal principal) {
+		try {
+			isUserOrAdmin( model,  principal,  "home");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
 		model.addAttribute("user", user);
 		return "home";
@@ -206,4 +215,19 @@ public class UserAccountController {
 	public String getTransferSucessPage() {
 		return "transfer-success";
 	}
+
+	public String isUserOrAdmin( Model model, Principal principal, String view) throws Exception {
+		return this.verifRolePrincipalInView( model, principal, view);
+	}
+	
+	@Override
+	public String verifRolePrincipalInView( Model model, Principal principal, String view) throws Exception{
+		String userRole= userAppService.getUserLoginByEmail(principal.getName()).getRole();
+		boolean isUser=userRole.equals("USER");
+		boolean isAdmin=userRole.equals("ADMIN");
+		model.addAttribute("isUser",isUser);
+		model.addAttribute("isAdmin",isAdmin);
+		return view;
+	}
+	
 }
