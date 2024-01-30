@@ -1,15 +1,19 @@
 package com.paymybuddy.webapp.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.paymybuddy.webapp.utils.IRole;
+
 @Controller
 public class LoginController {
 	@Autowired
-	private UserAccountController userAccountController ; 
-
+	private IRole role;
+	
 	@GetMapping("/login") //
 	public String getLoginPage() {
 		return "login";
@@ -24,7 +28,7 @@ public class LoginController {
 	@GetMapping("/logout") //
 	public String getLogoutPage(Model model, java.security.Principal principal) {
 		try {
-			userAccountController.isUserOrAdmin(model, principal, "logout");
+			this.isUserOrAdmin(model, principal, "logout");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
@@ -36,6 +40,10 @@ public class LoginController {
 	@GetMapping("/logout-success")
 	public String getLogoutSuccessPage() {
 		return "logout-success";
+	}
+	
+	public String isUserOrAdmin(Model model, Principal principal, String view) throws Exception {
+		return role.verifRolePrincipalInView(model, principal, view);
 	}
 	/*
 	 * @PostMapping("/login")//traitement formulaire et generation token avec JWT

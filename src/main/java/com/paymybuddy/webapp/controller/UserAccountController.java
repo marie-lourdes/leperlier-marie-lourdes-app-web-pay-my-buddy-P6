@@ -34,8 +34,11 @@ import lombok.Data;
 
 @Data
 @Controller
-public class UserAccountController implements IRole {
+public class UserAccountController {
 
+	@Autowired
+	private IRole role;
+	
 	@Autowired
 	private UserAppService userAppService;
 
@@ -228,17 +231,6 @@ public class UserAccountController implements IRole {
 	}
 
 	public String isUserOrAdmin(Model model, Principal principal, String view) throws Exception {
-		return this.verifRolePrincipalInView(model, principal, view);
+		return role.verifRolePrincipalInView(model, principal, view);
 	}
-
-	@Override
-	public String verifRolePrincipalInView(Model model, Principal principal, String view) throws Exception {
-		String userRole = userAppService.getUserLoginByEmail(principal.getName()).getRole();
-		boolean isUser = userRole.equals("USER");
-		boolean isAdmin = userRole.equals("ADMIN");
-		model.addAttribute("isUser", isUser);
-		model.addAttribute("isAdmin", isAdmin);
-		return view;
-	}
-
 }

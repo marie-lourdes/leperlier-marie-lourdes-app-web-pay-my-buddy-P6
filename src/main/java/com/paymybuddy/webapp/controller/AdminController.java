@@ -17,11 +17,13 @@ import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.AdminService;
 import com.paymybuddy.webapp.service.UserAppService;
+import com.paymybuddy.webapp.utils.IRole;
 
 @Controller
 public class AdminController {
 	@Autowired
-	private UserAccountController userAccountController;
+	private IRole role;
+	
 	@Autowired
 	private AdminService adminService;
 
@@ -34,7 +36,7 @@ public class AdminController {
 	@GetMapping("/admin/profil")
 	public String getProfilPage(Model model, Principal principal) {
 		try {
-			userAccountController.isUserOrAdmin(model, principal,  "profil-admin");
+			this.isUserOrAdmin(model, principal,  "profil-admin");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
@@ -47,7 +49,7 @@ public class AdminController {
 	@GetMapping("/admin/transactions-billing")
 	public String getHistoricalTransactionsWithFees(Model model, Principal principal) {
 		try {
-			userAccountController.isUserOrAdmin(model, principal,  "transactions-billing");
+			this.isUserOrAdmin(model, principal,  "transactions-billing");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
@@ -73,5 +75,8 @@ public class AdminController {
 		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("transactions", transactions);
 		return "transactions-billing";
+	}
+	public String isUserOrAdmin(Model model, Principal principal, String view) throws Exception {
+		return role.verifRolePrincipalInView(model, principal, view);
 	}
 }
