@@ -1,11 +1,11 @@
 package com.paymybuddy.webapp.utils;
 
 public interface IOperation {
-	public double add(double balance, double amount); 
-	public double withdraw(double balance, double amount) ;
-	public boolean isOperationAuthorized (double amount,double userAccountBalance );
+	 double add(double balance, double amount); 
+	 double withdraw(double balance, double amount) ;
+	 boolean isOperationAuthorized (double amount,double userAccountBalance );
 	
-	default public double formatResultDecimalOperation (Double result) {
+	default double formatResultDecimalOperation (Double result) {
          return Math.round(result * 100.00) / 100.00;   
 	}
 	
