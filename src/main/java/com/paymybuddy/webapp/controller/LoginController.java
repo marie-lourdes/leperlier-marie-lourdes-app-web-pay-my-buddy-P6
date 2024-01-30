@@ -1,12 +1,15 @@
 package com.paymybuddy.webapp.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.web.exchanges.HttpExchange.Principal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginController {
-	/*@Autowired
-	private UserAccount userAccount ; */
+	@Autowired
+	private UserAccountController userAccountController ; 
 
 	@GetMapping("/login") //
 	public String getLoginPage() {
@@ -20,8 +23,15 @@ public class LoginController {
 	}*/
 	
 	@GetMapping("/logout") //
-	public String getLogoutPage() {
+	public String getLogoutPage(Model model, java.security.Principal principal) {
+		try {
+			userAccountController.isUserOrAdmin(model, principal, "logout");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
 		return "logout";
+		
 	}
 
 	@GetMapping("/logout-success")

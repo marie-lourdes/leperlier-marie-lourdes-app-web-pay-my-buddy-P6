@@ -25,9 +25,9 @@ public class WebSecurity {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((requests) -> {
 			requests.requestMatchers("/admin/transactions-billing").hasRole("ADMIN");
-			requests.requestMatchers("/account/contact").hasRole("USER");
-			requests.requestMatchers("/account/transfer").hasRole("USER");
-			requests.requestMatchers("/account/profil").hasRole("USER");
+			//requests.requestMatchers("/account/contact").hasRole("USER");
+			//requests.requestMatchers("/account/transfer").hasRole("USER");
+			//requests.requestMatchers("/account/profil").hasRole("USER");
 			requests.requestMatchers("/transfert-success").hasRole("USER");
 			requests.requestMatchers("/account-success").hasRole("USER");
 			requests.requestMatchers("/logout-success").permitAll();

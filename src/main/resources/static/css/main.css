@@ -85,8 +85,8 @@ nav ul li a:hover {
 	color: #2145D8;
 }
 
-main.container {
-	margin: auto 0;
+.container {
+	margin: 0 5%;
 	width: auto;
 }
 

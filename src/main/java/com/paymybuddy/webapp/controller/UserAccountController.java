@@ -34,7 +34,7 @@ import lombok.Data;
 
 @Data
 @Controller
-public class UserAccountController  implements IRole {
+public class UserAccountController implements IRole {
 
 	@Autowired
 	private UserAppService userAppService;
@@ -44,15 +44,13 @@ public class UserAccountController  implements IRole {
 
 	@Autowired
 	private BankingService bankingService;
-	
+
 	@Autowired
 	private TransactionService transactionService;
 
 	@Autowired
 	private TransactionMapper transactionMapper;
 
-
-	
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
 		try {
@@ -86,7 +84,7 @@ public class UserAccountController  implements IRole {
 
 	@PostMapping("/save-contact")
 	public ModelAndView createContact(@Valid @ModelAttribute UserApp contact, Principal principal) throws IOException {
-		
+
 		try {
 			userAppService.addUserContact(contact.getEmail(), principal.getName());
 			return new ModelAndView("redirect:/account/contact");
@@ -134,15 +132,20 @@ public class UserAccountController  implements IRole {
 		return "sign-up";
 	}
 
+	/*@GetMapping("/logout")
+	public String getLogoutPage(Model model, Principal principal) {
+
+	}*/
+
 	@GetMapping("/account/home")
 	public String getHomePage(Model model, Principal principal) {
 		try {
-			isUserOrAdmin( model,  principal,  "home");
+			isUserOrAdmin(model, principal, "home");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
 		}
-		
+
 		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
 		model.addAttribute("user", user);
 		return "home";
@@ -157,6 +160,13 @@ public class UserAccountController  implements IRole {
 
 	@GetMapping("/account/profil") //
 	public String getProfilPage(Model model, Principal principal) {
+		try {
+			isUserOrAdmin(model, principal, "profil");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
+
 		UserDTO contactCreated = new UserDTO();
 		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
 		BuddyAccount userBuddyAccountBalance = accountService.findBuddyAccountByUser(user.getEmail());
@@ -175,10 +185,10 @@ public class UserAccountController  implements IRole {
 	}
 
 	@GetMapping("/account/transfer")
-	public String getTransferPage( Model model, Principal principal) {
+	public String getTransferPage(Model model, Principal principal) {
 		String userEmail = principal.getName();
-		
-		List<UserApp> allContacts = userAppService.findAllUserContacts(userEmail );
+
+		List<UserApp> allContacts = userAppService.findAllUserContacts(userEmail);
 		this.getHistoricalTransactionsByUser(1, model, principal);
 
 		model.addAttribute("contacts", allContacts);
@@ -190,44 +200,44 @@ public class UserAccountController  implements IRole {
 		String userEmail = principal.getName();
 		Transaction userTransaction = new Transaction();
 		List<TransactionDTO> transactions = new ArrayList<TransactionDTO>();
-		
+
 		int pageSize = 3;
-	    Page <Transaction > page = bankingService.getTransactionsByUser(pageNber, pageSize,userEmail);
-	    List <Transaction > listTransactions  = page.getContent();	
+		Page<Transaction> page = bankingService.getTransactionsByUser(pageNber, pageSize, userEmail);
+		List<Transaction> listTransactions = page.getContent();
 		for (Transaction transaction : listTransactions) {
-			TransactionDTO transactionUser = transactionMapper.transactionToTransactionDTO(transaction);	
-				if (transaction.getBeneficiaryUser().getEmail().equals(userEmail)) {
-					transactionUser.setContactName("Me");
-				}
-				transactions.add(transactionUser);
-			
+			TransactionDTO transactionUser = transactionMapper.transactionToTransactionDTO(transaction);
+			if (transaction.getBeneficiaryUser().getEmail().equals(userEmail)) {
+				transactionUser.setContactName("Me");
+			}
+			transactions.add(transactionUser);
+
 		}
 
-	    model.addAttribute("currentPage", pageNber);
-	    model.addAttribute("totalPages", page.getTotalPages());
-	    model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("currentPage", pageNber);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("userTransaction", userTransaction);
 		model.addAttribute("transactions", transactions);
 		return "transfer";
-		}
-	
+	}
+
 	@GetMapping("/transfer-success")
 	public String getTransferSucessPage() {
 		return "transfer-success";
 	}
 
-	public String isUserOrAdmin( Model model, Principal principal, String view) throws Exception {
-		return this.verifRolePrincipalInView( model, principal, view);
+	public String isUserOrAdmin(Model model, Principal principal, String view) throws Exception {
+		return this.verifRolePrincipalInView(model, principal, view);
 	}
-	
+
 	@Override
-	public String verifRolePrincipalInView( Model model, Principal principal, String view) throws Exception{
-		String userRole= userAppService.getUserLoginByEmail(principal.getName()).getRole();
-		boolean isUser=userRole.equals("USER");
-		boolean isAdmin=userRole.equals("ADMIN");
-		model.addAttribute("isUser",isUser);
-		model.addAttribute("isAdmin",isAdmin);
+	public String verifRolePrincipalInView(Model model, Principal principal, String view) throws Exception {
+		String userRole = userAppService.getUserLoginByEmail(principal.getName()).getRole();
+		boolean isUser = userRole.equals("USER");
+		boolean isAdmin = userRole.equals("ADMIN");
+		model.addAttribute("isUser", isUser);
+		model.addAttribute("isAdmin", isAdmin);
 		return view;
 	}
-	
+
 }
