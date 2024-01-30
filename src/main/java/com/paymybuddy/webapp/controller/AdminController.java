@@ -24,9 +24,6 @@ public class AdminController {
 
 	@Autowired
 	private TransactionMapper transactionMapper;
-
-	@Autowired
-	private UserAppService userAppService;
 	
 	@GetMapping("/admin/transactions-billing")
 	public String getHistoricalTransactionsWithFees( Model model, Principal principal) {

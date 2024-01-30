@@ -140,7 +140,7 @@ public class UserAccountController  implements IRole {
 			isUserOrAdmin( model,  principal,  "home");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
 		}
 		
 		UserApp user = userAppService.getUserEntityByEmail(principal.getName());

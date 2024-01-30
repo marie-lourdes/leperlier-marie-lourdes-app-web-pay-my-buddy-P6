@@ -18,8 +18,9 @@
 			</a>
 			<nav>
 				<ul>
-					<li th:if="${isAdmin}"><a th:href="@{/admin/transactions-billing}">Historical Transactions</a>
-						</liclass>
+					<li th:if="${isAdmin}">
+						<a th:href="@{/admin/transactions-billing}">Historical Transactions</a>
+					</li>
 					<li><a th:href="@{/account/home}">Home</a></li>
 					<li th:if="${isUser}"><a th:href="@{/account/transfer}">Transfer</a></li>
 					<li><a th:href="@{/account/profil}">Profil</a></li>
