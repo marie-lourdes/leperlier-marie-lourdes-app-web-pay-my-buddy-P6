@@ -3,6 +3,7 @@ package com.paymybuddy.webapp.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,8 @@ import com.paymybuddy.webapp.utils.IRole;
 @Controller
 public class LoginController {
 	
+	@Autowired
+	@Qualifier("principalRole")
 	private IRole role;
 	
 	@GetMapping("/login") //

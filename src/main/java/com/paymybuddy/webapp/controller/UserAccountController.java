@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,7 @@ import com.paymybuddy.webapp.service.BankingService;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
 import com.paymybuddy.webapp.utils.Constants;
-import com.paymybuddy.webapp.utils.RoleImpl;
+import com.paymybuddy.webapp.utils.IRole;
 
 import jakarta.validation.Valid;
 import lombok.Data;
@@ -37,7 +38,8 @@ import lombok.Data;
 public class UserAccountController {
 
 	@Autowired
-	private RoleImpl role;
+	@Qualifier("principalRole")
+	private IRole role;
 	
 	@Autowired
 	private UserAppService userAppService;

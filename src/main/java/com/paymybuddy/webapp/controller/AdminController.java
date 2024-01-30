@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,8 @@ import com.paymybuddy.webapp.utils.IRole;
 @Controller
 public class AdminController {
 	
+	@Autowired
+	@Qualifier("principalRole")
 	private IRole role;
 	
 	@Autowired
