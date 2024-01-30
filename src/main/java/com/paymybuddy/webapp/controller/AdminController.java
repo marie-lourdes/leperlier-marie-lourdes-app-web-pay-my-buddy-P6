@@ -21,7 +21,9 @@ import com.paymybuddy.webapp.service.UserAppService;
 @Controller
 public class AdminController {
 	@Autowired
-	private  AdminService  adminService;
+	private UserAccountController userAccountController;
+	@Autowired
+	private AdminService adminService;
 
 	@Autowired
 	private UserAppService userAppService;
@@ -29,35 +31,47 @@ public class AdminController {
 	@Autowired
 	private TransactionMapper transactionMapper;
 
-	@GetMapping("/admin/profil") //
+	@GetMapping("/admin/profil")
 	public String getProfilPage(Model model, Principal principal) {
+		try {
+			userAccountController.isUserOrAdmin(model, principal,  "profil-admin");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
 		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
 		model.addAttribute("user", user);
-return "profil-admin";
+		return "profil-admin";
 	}
-	
+
 	@GetMapping("/admin/transactions-billing")
-	public String getHistoricalTransactionsWithFees( Model model, Principal principal) {
+	public String getHistoricalTransactionsWithFees(Model model, Principal principal) {
+		try {
+			userAccountController.isUserOrAdmin(model, principal,  "transactions-billing");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
 		this.getransactionsPaginated(1, model, principal);
 		return "transactions-billing";
 	}
-	
+
 	@GetMapping("/admin/page/{pageNber}")
 	public String getransactionsPaginated(@PathVariable int pageNber, Model model, Principal principal) {
 		List<TransactionBillingDTO> transactions = new ArrayList<TransactionBillingDTO>();
-		
+
 		int pageSize = 10;
-	    Page <Transaction > page =  adminService.getAllTransactionsWithFees(pageNber, pageSize);
-	    List <Transaction > listTransactions  = page.getContent();	
+		Page<Transaction> page = adminService.getAllTransactionsWithFees(pageNber, pageSize);
+		List<Transaction> listTransactions = page.getContent();
 		for (Transaction elem : listTransactions) {
-			TransactionBillingDTO transaction = transactionMapper.transactionToTransactionBillingDTO(elem);		
-				transactions.add(transaction);	
+			TransactionBillingDTO transaction = transactionMapper.transactionToTransactionBillingDTO(elem);
+			transactions.add(transaction);
 		}
 
-	    model.addAttribute("currentPage", pageNber);
-	    model.addAttribute("totalPages", page.getTotalPages());
-	    model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("currentPage", pageNber);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("transactions", transactions);
 		return "transactions-billing";
-		}
+	}
 }
