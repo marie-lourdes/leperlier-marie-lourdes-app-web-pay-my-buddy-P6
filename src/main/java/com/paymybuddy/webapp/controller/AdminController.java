@@ -28,8 +28,6 @@ public class AdminController {
 	@Autowired
 	private UserAppService userAppService;
 	
-
-	
 	@GetMapping("/admin/transactions-billing")
 	public String getHistoricalTransactionsWithFees( Model model, Principal principal) {
 		this.getransactionsPaginated(1, model, principal);
