@@ -26,7 +26,8 @@
 					</li>
 					<li><a th:href="@{/account/home}">Home</a></li>
 					<li th:if="${isUser}"><a th:href="@{/account/transfer}">Transfer</a></li>
-					<li><a th:href="@{/account/profil}">Profil</a></li>
+					<li th:if="${isUser}"><a th:href="@{/account/profil}">Profil</a></li>
+					<li  th:if="${isAdmin}"><a th:href="@{/admin/profil}">Profil</a></li>
 					<li th:if="${isUser}"><a th:href="@{/account/contact}">Contact</a></li>
 					<li><a th:href="@{/logout}">Log off</a></li>
 					<li><a th:href="@{/sign-up}">Sign up</a></li>
@@ -44,39 +45,6 @@
 					<li> Lastname: <span th:text="${user.lastName}"> Lastname </span></li>
 					<br />
 					<li>Email: <span th:text="${user.email}"> Email </span></li>
-				</div>
-			</section>
-			<section th:if="${isUser}">
-				<h2>Accounts</h2>
-				<div class="section-user-info section-user-info--padding">
-					<li th:if="${userBuddyAccount.creation}!=null">Balance buddy account:
-						<span th:text="${userBuddyAccount.balance}"> Balance buddy account </span>
-					</li>
-					<br />
-					<li th:if="${userBankingAccount.creation}!=null">Balance bank account:
-						<span th:text="${userBankingAccount.balance}"> Balance bank account</span>
-					</li>
-					<form th:action="@{/save-buddy-account}" method="post">
-						<div class="button-styled button-styled--profil"><input class="button-form button-form--profil"
-								type="submit" value="Create Buddy Account" /></div>
-					</form>
-				</div>
-			</section>
-			<section th:if="${isUser}">
-				<h2>Connections</h2>
-				<div class="section-user-info section-user-info--padding">
-					<form th:action="@{/save-contact}" method="post" th:object="${contact}">
-						<div>
-							<div class="login-field--fontawesome">
-								<i class="fa-solid fa-user"></i>
-								<input class="field-connection" th:field="*{email}" type="email" name="id-contact"
-									required placeholder="durand@email.com" />
-							</div>
-						</div>
-						<div class="button-styled button-styled button-styled--profil">
-							<input class="button-form button-form--profil" type="submit" value="Add connection" />
-						</div>
-					</form>
 				</div>
 			</section>
 		</main>

@@ -171,6 +171,7 @@ public class UserAccountController implements IRole {
 		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
 		BuddyAccount userBuddyAccountBalance = accountService.findBuddyAccountByUser(user.getEmail());
 		BankingAccount userBankingAccountBalance = accountService.findBankingAccountByUser(user.getEmail());
+		
 		model.addAttribute("contact", contactCreated);
 		model.addAttribute("user", user);
 		model.addAttribute("userBuddyAccount", userBuddyAccountBalance);

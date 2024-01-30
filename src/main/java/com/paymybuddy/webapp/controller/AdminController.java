@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.paymybuddy.webapp.domain.DTO.TransactionBillingDTO;
 import com.paymybuddy.webapp.domain.DTO.TransactionMapper;
 import com.paymybuddy.webapp.domain.model.Transaction;
+import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.AdminService;
 import com.paymybuddy.webapp.service.UserAppService;
 
@@ -23,7 +24,17 @@ public class AdminController {
 	private  AdminService  adminService;
 
 	@Autowired
+	private UserAppService userAppService;
+
+	@Autowired
 	private TransactionMapper transactionMapper;
+
+	@GetMapping("/admin/profil") //
+	public String getProfilPage(Model model, Principal principal) {
+		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
+		model.addAttribute("user", user);
+return "profil-admin";
+	}
 	
 	@GetMapping("/admin/transactions-billing")
 	public String getHistoricalTransactionsWithFees( Model model, Principal principal) {
