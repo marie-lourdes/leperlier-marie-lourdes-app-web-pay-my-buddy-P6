@@ -27,7 +27,7 @@ import com.paymybuddy.webapp.service.BankingService;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
 import com.paymybuddy.webapp.utils.Constants;
-import com.paymybuddy.webapp.utils.IRole;
+import com.paymybuddy.webapp.utils.RoleImpl;
 
 import jakarta.validation.Valid;
 import lombok.Data;
@@ -37,7 +37,7 @@ import lombok.Data;
 public class UserAccountController {
 
 	@Autowired
-	private IRole role;
+	private RoleImpl role;
 	
 	@Autowired
 	private UserAppService userAppService;
@@ -143,7 +143,7 @@ public class UserAccountController {
 	@GetMapping("/account/home")
 	public String getHomePage(Model model, Principal principal) {
 		try {
-			isUserOrAdmin(model, principal, "home");
+			this.isUserOrAdmin(model, principal, "home");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
@@ -164,7 +164,7 @@ public class UserAccountController {
 	@GetMapping("/account/profil") //
 	public String getProfilPage(Model model, Principal principal) {
 		try {
-			isUserOrAdmin(model, principal, "profil");
+			this.isUserOrAdmin(model, principal, "profil");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
@@ -233,4 +233,6 @@ public class UserAccountController {
 	public String isUserOrAdmin(Model model, Principal principal, String view) throws Exception {
 		return role.verifRolePrincipalInView(model, principal, view);
 	}
+
+
 }
