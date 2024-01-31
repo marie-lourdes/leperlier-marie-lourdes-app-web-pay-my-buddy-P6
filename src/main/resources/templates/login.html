@@ -20,7 +20,7 @@
 		</div>
 		<main>
 			<form th:action="@{/login}" method="post">
-				<a th:href="@{/account/home}">
+				<a th:href="@{/home}">
 					<div class="button-styled button-green">
 						Pay My Buddy
 					</div>
@@ -48,7 +48,7 @@
 				</div>
 				<div class="button-styled"><input class="button-form" type="submit" value="Login" /></div>
 			</form>
-			<a th:href="@{/sign-up}" class="link-sign-up">Sign-up</a>
+			<a th:href="@{home/sign-up}" class="link-sign-up">Sign-up</a>
 		</main>
 	</div>
 </body>

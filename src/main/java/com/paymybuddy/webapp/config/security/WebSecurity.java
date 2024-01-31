@@ -24,14 +24,14 @@ public class WebSecurity {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((requests) -> {
-			requests.requestMatchers("/admin/transactions-billing").hasRole("ADMIN");
+			requests.requestMatchers("/home/transactions-billing").hasRole("ADMIN");
 			//requests.requestMatchers("/account/contact").hasRole("USER");
 			//requests.requestMatchers("/account/transfer").hasRole("USER");
 			//requests.requestMatchers("/account/profil").hasRole("USER");
 			requests.requestMatchers("/transfert-success").hasRole("USER");
 			requests.requestMatchers("/account-success").hasRole("USER");
 			requests.requestMatchers("/logout-success").permitAll();
-			requests.requestMatchers("/sign-up").permitAll();
+			requests.requestMatchers("/home/sign-up").permitAll();
 			requests.requestMatchers(HttpMethod.POST, "/sign-up-form").permitAll();
 			requests.requestMatchers("/css/**").permitAll();
 			requests.anyRequest().authenticated();
