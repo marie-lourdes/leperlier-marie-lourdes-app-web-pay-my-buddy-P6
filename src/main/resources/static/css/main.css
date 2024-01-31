@@ -85,6 +85,11 @@ nav ul li a:hover {
 	color: #2145D8;
 }
 
+ nav > ul > li:hover + ul .active--home  {
+		display:none;
+	}
+
+
 .container {
 	margin: 0 10vw;
 	width: auto;

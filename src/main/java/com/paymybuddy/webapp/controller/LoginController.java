@@ -7,8 +7,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.paymybuddy.webapp.domain.DTO.UserLoginDTO;
+import com.paymybuddy.webapp.domain.model.UserApp;
+import com.paymybuddy.webapp.service.UserAppService;
 import com.paymybuddy.webapp.utils.IRole;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class LoginController {
@@ -17,16 +25,32 @@ public class LoginController {
 	@Qualifier("roleImpl")
 	private IRole role;
 	
+	@Autowired
+	private UserAppService userAppService;
+
 	@GetMapping("/login") //
-	public String getLoginPage() {
+	public String getLoginPage(Model model ) {
+		UserLoginDTO userCreated = new UserLoginDTO();
+		model.addAttribute("user", userCreated);
 		return "login";
 	}
 	
-	/*@PostMapping("/login") //
-	public UserLoginDTO saveLogin(@ModelAttribute UserLoginDTO user){
-		UserLoginDTO current =userAccount.getUserLoginByEmail(user.getEmail());
-		return current;
-	}*/
+	@PostMapping("/login") //
+	public ModelAndView saveLogin(@Valid @ModelAttribute UserApp user){
+		try {
+		userAppService.createUser(user);
+		return new ModelAndView("redirect:/home");
+	} catch (IllegalArgumentException e) {
+		System.out.println(e.getMessage());
+		// response.setIntHeader("status",400);
+		return new ModelAndView("redirect:/error");
+	} catch (NullPointerException e) {
+		System.out.println(e.getMessage());
+		// response.setIntHeader("status",400);
+		return new ModelAndView("redirect:/error");
+	}
+	
+	}
 	
 	@GetMapping("/logout") //
 	public String getLogoutPage(Model model, java.security.Principal principal) {

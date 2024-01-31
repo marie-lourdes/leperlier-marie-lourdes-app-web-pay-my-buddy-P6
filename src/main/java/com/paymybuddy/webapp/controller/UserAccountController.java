@@ -60,7 +60,7 @@ public class UserAccountController {
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
 		try {
 			userAppService.createUser(user);
-			return new ModelAndView("redirect:/");
+			return new ModelAndView("redirect:/home");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
@@ -130,7 +130,7 @@ public class UserAccountController {
 		}
 	}
 
-	@GetMapping("/sign-up")
+	@GetMapping("home/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
 		model.addAttribute("user", userCreated);

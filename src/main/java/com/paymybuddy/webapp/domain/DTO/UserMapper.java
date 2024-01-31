@@ -19,7 +19,9 @@ public class UserMapper {
 		String email = user.getEmail();
 	    String firstName = user.getFirstName();	
 	    String lastName = user.getLastName();	
+	    String role = user.getRole();
+		
 	     
-		return new UserDTO (id,email, firstName,lastName);
+		return new UserDTO (id,email, firstName,lastName, role);
 	}
 }

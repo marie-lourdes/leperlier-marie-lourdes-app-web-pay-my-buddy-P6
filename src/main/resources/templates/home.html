@@ -23,7 +23,7 @@
 					<li th:if="${isAdmin}">
 						<a th:href="@{/home/transactions-billing}">Historical Transactions</a>
 					</li>
-					<li><a th:href="@{/home}">Home</a></li>
+					<li class="link--home"><a th:href="@{/home}">Home</a></liclass="active--home">
 					<li th:if="${isUser}"><a th:href="@{/home/transfer}">Transfer</a></li>
 					<li th:if="${isUser}"><a th:href="@{/home/profil}">Profil</a></li>
 					<li  th:if="${isAdmin}"><a th:href="@{/home/profil/admin}">Profil</a></li>
@@ -33,6 +33,14 @@
 				</ul>
 			</nav>
 		</div>
+		
+		 <!--<ul>
+              <li class="active--home"><a th:href="#">home</a> &#8594;</li> 
+              <li class="active--transfer"><a th:href="#electronics/">Electronics</a> &#8594;</liclass="active--home">
+              <li class="active--profil"><a th:href="#">electronics/computers/">Computers</a> &#8594;</liclass="active--home">
+              <li>Laptops</li>
+            </ul>-->
+		
 	</header>
 	<div class="container">
 		<main>
