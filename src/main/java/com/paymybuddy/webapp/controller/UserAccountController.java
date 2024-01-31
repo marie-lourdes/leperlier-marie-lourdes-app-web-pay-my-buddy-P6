@@ -158,7 +158,7 @@ public class UserAccountController {
 
 	@GetMapping("/account/contact") // enpoint template contacts
 	public String getUserContact(Model model, Principal principal) {
-		List<UserApp> allContact = userAppService.findAllUserContacts(principal.getName());
+		List<UserApp> allContact = userAppService.getAllUserContacts(principal.getName());
 		model.addAttribute("contacts", allContact);
 		return "contacts";
 	}
@@ -195,7 +195,7 @@ public class UserAccountController {
 	public String getTransferPage(Model model, Principal principal) {
 		String userEmail = principal.getName();
 
-		List<UserApp> allContacts = userAppService.findAllUserContacts(userEmail);
+		List<UserApp> allContacts = userAppService.getAllUserContacts(userEmail);
 		this.getHistoricalTransactionsByUser(1, model, principal);
 
 		model.addAttribute("contacts", allContacts);

@@ -10,9 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.DTO.UserLoginDTO;
 import com.paymybuddy.webapp.domain.DTO.UserMapper;
-import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
-import com.paymybuddy.webapp.repository.ITransactionRepository;
 import com.paymybuddy.webapp.repository.IUserRepository;
 
 //service creation user, avec page sign up pour le controller et utilise le service d authentification
@@ -24,9 +22,6 @@ public class UserAppService {
 
 	@Autowired
 	private IUserRepository userRepository;
-
-	@Autowired
-	private ITransactionRepository transactionRepository;
 
 	@Autowired
 	private UserMapper mapper;
@@ -84,14 +79,6 @@ public class UserAppService {
 		return userDTO;
 	}
 
-	/*public UserApp getUserEntityByEmail(String email) throws NullPointerException{
-		UserApp user = userRepository.findByEmail(email);
-		if (user== null) {
-			throw new NullPointerException("User "+user+"doesn't exist");
-			}
-		return user;
-	}*/
-
 	public UserDTO getUserEntityById(long id) {
 		UserApp user = userRepository.findById(id).get();
 		UserDTO userDTO = mapper.userToUserDTO(user);
@@ -101,7 +88,7 @@ public class UserAppService {
 		return userDTO;
 	}
 
-	public List<UserApp> findAllUserContacts(String emailUser) {
+	public List<UserApp> getAllUserContacts(String emailUser) {
 		UserApp user = userRepository.findByEmail(emailUser);
 		if ( user == null) {
 			throw new NullPointerException("User "+ user +"doesn't exist");
@@ -111,12 +98,4 @@ public class UserAppService {
 	//	System.out.println("userContact" + userContacts);
 		return userContacts;
 	}
-
-	public List<Transaction> findAllUserTransaction(String emailUser) {
-		UserApp user = userRepository.findByEmail(emailUser);
-		List<Transaction> userTransactions = user.getTransactions();
-		System.out.println("user Transactions" + userTransactions);
-		return userTransactions;
-	}
-
 }
