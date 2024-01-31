@@ -60,17 +60,6 @@ public class AccountService {
 		accountRepository.save(newAccount);
 	}
 
-	public void updateBalanceBuddyAccount(long id, double amount) throws NullPointerException {
-		UserApp user = new UserApp();
-
-		try {
-			user = userRepository.findById(id).get();
-			accountRepository.updateBalanceBuddyAccount(amount, user);
-		} catch (NullPointerException e) {
-			throw new NullPointerException("this buddy account doesn't exist");
-		}
-	}
-
 	public void updateBalanceAccount(long id, double amount, String typeAccountBeneficiary)
 			throws NullPointerException {
 

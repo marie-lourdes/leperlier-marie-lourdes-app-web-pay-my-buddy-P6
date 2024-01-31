@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.Transaction;
-import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.utils.Billing;
 import com.paymybuddy.webapp.utils.Constants;
 import com.paymybuddy.webapp.utils.IFormat;
@@ -72,12 +72,11 @@ public class BankingService {
 		System.out.println("balanceCalculatedCreditUser1 "
 				+ formatter.formatResultDecimalOperation(balanceCalculatedBeneficiaryUser));
 
-		accountService.updateBalanceBuddyAccount(
+		accountService.updateBalanceAccount(
 				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
-		accountService.updateBalanceBuddyAccount(
-				accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedCreditUser));
+				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser), Constants.BUDDY_ACCOUNT);
+		accountService.updateBalanceAccount(accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
+				this.formatBalanceAccount(balanceCalculatedCreditUser), Constants.BUDDY_ACCOUNT);
 	}
 
 	public void transferMoneyToBankingAccountUser(String userEmail, String typeAccountBeneficiary, double amount,
@@ -153,7 +152,8 @@ public class BankingService {
 	}
 
 	public Page<Transaction> getTransactionsByUser(int pageNber, int pageSize, String email) {
-		Pageable pageable = PageRequest.of(pageNber - 1, pageSize);
+		Sort sort = Sort.by("date").descending();
+		Pageable pageable = PageRequest.of(pageNber - 1, pageSize, sort);
 		return transactionService.findTransactionsPaginatedByUser(email, pageable);
 	}
 
