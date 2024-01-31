@@ -5,7 +5,7 @@ public interface IOperation {
 	 double withdraw(double balance, double amount) ;
 	 boolean isOperationAuthorized (double amount,double userAccountBalance );
 	
-	double formatResultDecimalOperation (double result) ;
+
       
 	
 }

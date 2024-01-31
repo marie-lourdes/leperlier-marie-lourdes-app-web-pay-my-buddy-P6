@@ -15,15 +15,15 @@ import com.paymybuddy.webapp.utils.IFormat;
 import com.paymybuddy.webapp.utils.IOperation;
 
 @Service
-public class BankingService  {
+public class BankingService {
 	@Autowired
 	@Qualifier("operationFormatImpl")
-	private IOperation operationFormatImpl ;
-	
+	private IOperation operationFormatImpl;
+
 	@Autowired
 	@Qualifier("formatterImpl")
 	private IFormat formatter;
-	
+
 	@Autowired
 	private UserAppService userAppService;
 
@@ -45,8 +45,7 @@ public class BankingService  {
 		String userContactEmail = userContact.getEmail();
 		transactionService.addTransaction(creditUser.getId(), userContactEmail, transactionCreated);
 		try {
-		 this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(userContactEmail,
-					emailCreditUser, amount);
+			this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(userContactEmail, emailCreditUser, amount);
 		} catch (Exception e) {
 
 			e.getMessage();
@@ -67,17 +66,17 @@ public class BankingService  {
 		System.out.println("balanceCredit " + balanceCredit);
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 		double feesTransaction = Billing.calculateFees(amount);
-		double amountWithFeesTransaction = addAmount(amount, feesTransaction );
+		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
-		System.out.println("balanceCalculatedCreditUser1 " +formatter. formatResultDecimalOperation(balanceCalculatedBeneficiaryUser));
+		System.out.println("balanceCalculatedCreditUser1 "
+				+ formatter.formatResultDecimalOperation(balanceCalculatedBeneficiaryUser));
 
 		accountService.updateBalanceBuddyAccount(
 				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
-			this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
+				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
 		accountService.updateBalanceBuddyAccount(
 				accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedCreditUser));
-
 	}
 
 	public void transferMoneyToBankingAccountUser(String userEmail, String typeAccountBeneficiary, double amount,
@@ -133,23 +132,23 @@ public class BankingService  {
 		double balanceBuddyAccount = accountService.findBuddyAccountByUser(emailUser).getBalance();
 		double balanceBankingAccount = accountService.findBankingAccountByUser(emailUser).getBalance();
 		double feesTransaction = Billing.calculateFees(amount);
-		
-		double amountWithFeesTransaction = addAmount(amount, feesTransaction );
+
+		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
 
 		if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
 			balanceCalculatedBankingAccountUser = addAmount(balanceBankingAccount, amount);
 			balanceCalculatedBuddyAccountUser = withdrawAmount(balanceBuddyAccount, amountWithFeesTransaction);
 		} else if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
-			balanceCalculatedBuddyAccountUser = addAmount(balanceBuddyAccount, amount - feesTransaction );
+			balanceCalculatedBuddyAccountUser = addAmount(balanceBuddyAccount, amount - feesTransaction);
 			// deduction des frais appliqué sur le compte beneficiare de l application et
 			// non le compte bancaire qui est crediteur mais hors application
 			balanceCalculatedBankingAccountUser = withdrawAmount(balanceBankingAccount, amount);
 		}
 
 		accountService.updateBalanceAccount(accountService.findBankingAccountByUser(emailUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedBankingAccountUser),Constants.BANKING_ACCOUNT);
+				this.formatBalanceAccount(balanceCalculatedBankingAccountUser), Constants.BANKING_ACCOUNT);
 		accountService.updateBalanceAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedBuddyAccountUser),Constants.BUDDY_ACCOUNT);
+				this.formatBalanceAccount(balanceCalculatedBuddyAccountUser), Constants.BUDDY_ACCOUNT);
 	}
 
 	public Page<Transaction> getTransactionsByUser(int pageNber, int pageSize, String email) {
@@ -172,9 +171,8 @@ public class BankingService  {
 	}
 
 	public double formatBalanceAccount(double balance) throws Exception {
-		double result = formatter.formatResultDecimalOperation(balance); 
+		double result = formatter.formatResultDecimalOperation(balance);
 		return result;
 	}
-
 
 }

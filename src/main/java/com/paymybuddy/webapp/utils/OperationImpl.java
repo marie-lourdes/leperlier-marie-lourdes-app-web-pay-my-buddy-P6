@@ -1,7 +1,5 @@
 package com.paymybuddy.webapp.utils;
 
-import java.text.DecimalFormat;
-
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
@@ -30,9 +28,4 @@ public class OperationImpl implements IOperation{
 		return isAuthorized;
 	}
 	
-	@Override
-	public double formatResultDecimalOperation (double result) {	
-    return Math.round(result * 100.00) / 100.00;  
-		
-	}
 }
