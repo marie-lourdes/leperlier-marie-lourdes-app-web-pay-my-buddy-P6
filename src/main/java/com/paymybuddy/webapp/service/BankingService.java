@@ -18,7 +18,7 @@ import com.paymybuddy.webapp.utils.IOperation;
 public class BankingService {
 	@Autowired
 	@Qualifier("operationFormatImpl")
-	private IOperation operationFormatImpl;
+	private IOperation operation;
 
 	@Autowired
 	@Qualifier("formatterImpl")
@@ -157,17 +157,17 @@ public class BankingService {
 	}
 
 	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
-		return operationFormatImpl.isOperationAuthorized(payment, userAccountBalance);
+		return operation.isOperationAuthorized(payment, userAccountBalance);
 	}
 
 	// Calcul des comptes -tranfert
 
 	public double addAmount(double balanceCreditUser, double payment) {
-		return operationFormatImpl.add(balanceCreditUser, payment);
+		return operation.add(balanceCreditUser, payment);
 	}
 
 	public double withdrawAmount(double balanceBeneficiaryUser, double payment) {
-		return operationFormatImpl.withdraw(balanceBeneficiaryUser, payment);
+		return operation.withdraw(balanceBeneficiaryUser, payment);
 	}
 
 	public double formatBalanceAccount(double balance) throws Exception {
