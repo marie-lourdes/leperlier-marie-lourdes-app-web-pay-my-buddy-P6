@@ -24,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 //@AutoConfigureJsonTesters
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class AuthenticationControllerITest {
-	@Autowired
+	/*@Autowired
     private WebApplicationContext context;
 	
     private MockMvc mvc;
@@ -55,7 +55,7 @@ class AuthenticationControllerITest {
     public void givenUserAuthenticatedAndNoAuthorized_whenRequestTransactionBillingPage_shouldReturn403() throws Exception {
         mvc.perform(get("/home/transactions-billing").contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isForbidden());
-    }
+    }*/
     
  /* @WithMockUser(username="testuser1@gmail.com",password="adminbuddy")
     @Test

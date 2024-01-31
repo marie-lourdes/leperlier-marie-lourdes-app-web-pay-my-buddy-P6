@@ -19,7 +19,7 @@
 			Invalid email and password.
 		</div>
 		<main>
-			<form th:action="@{/login}" method="post" th:object="${user}">
+			<form th:action="@{/login}" method="post">
 				<a th:href="@{/home}">
 					<div class="button-styled button-green">
 						Pay My Buddy
@@ -28,13 +28,13 @@
 				<div class="login-field">
 					<div class="login-field--fontawesome">
 						<i class="fa-regular fa-envelope"></i>
-						<input th:field="*{email}" type="email" name="username" required placeholder="Email" />
+						<input type="email" name="username" required placeholder="Email" />
 					</div>
 				</div>
 				<div class="login-field">
 					<div class="login-field--fontawesome">
 						<i class="fa-solid fa-asterisk"></i>
-						<input th:field="*{password}" type="password" name="password" required placeholder="Password" />
+						<input  type="password" name="password" required placeholder="Password" />
 					</div>
 				</div>
 				<div class="check-remember">
