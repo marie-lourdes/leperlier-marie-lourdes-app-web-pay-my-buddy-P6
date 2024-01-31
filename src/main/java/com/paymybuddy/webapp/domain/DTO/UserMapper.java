@@ -15,10 +15,11 @@ public class UserMapper {
 	}
 	
 	public UserDTO userToUserDTO(UserApp user) {
+		long id= user.getId();
 		String email = user.getEmail();
 	    String firstName = user.getFirstName();	
 	    String lastName = user.getLastName();	
 	     
-		return new UserDTO (email, firstName,lastName);
+		return new UserDTO (id,email, firstName,lastName);
 	}
 }

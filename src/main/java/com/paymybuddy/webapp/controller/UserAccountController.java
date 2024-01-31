@@ -114,7 +114,7 @@ public class UserAccountController {
 				bankingService.transferMoneyToBuddyAccountUser(principal.getName(), Constants.BUDDY_ACCOUNT,
 						userTransaction.getAmount(), userTransaction.getDescription(), userTransaction);
 			} else {
-				bankingService.payToContact(userAppService.getUserEntityByEmail(principal.getName()).getEmail(),
+				bankingService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
 						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 			}
@@ -151,7 +151,7 @@ public class UserAccountController {
 			e.getMessage();
 		}
 
-		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
+		UserDTO user = userAppService.getUserByEmail(principal.getName());
 		model.addAttribute("user", user);
 		return "home";
 	}
@@ -173,7 +173,8 @@ public class UserAccountController {
 		}
 
 		UserDTO contactCreated = new UserDTO();
-		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
+
+		UserDTO user = userAppService.getUserByEmail(principal.getName());
 		BuddyAccount userBuddyAccountBalance = accountService.findBuddyAccountByUser(user.getEmail());
 		BankingAccount userBankingAccountBalance = accountService.findBankingAccountByUser(user.getEmail());
 		

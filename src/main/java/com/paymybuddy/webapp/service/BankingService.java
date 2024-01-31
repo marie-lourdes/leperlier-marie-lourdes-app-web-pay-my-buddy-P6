@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.utils.Billing;
@@ -40,8 +41,8 @@ public class BankingService {
 		if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
 			throw new IllegalArgumentException("balance/amount of transaction is negative");
 		}
-		UserApp userContact = userAppService.getUserEntityByEmail(emailBeneficiaryUser);
-		UserApp creditUser = userAppService.getUserEntityByEmail(emailCreditUser);
+		UserDTO userContact = userAppService.getUserByEmail(emailBeneficiaryUser);
+		UserDTO creditUser = userAppService.getUserByEmail(emailCreditUser);
 		String userContactEmail = userContact.getEmail();
 		transactionService.addTransaction(creditUser.getId(), userContactEmail, transactionCreated);
 		try {
@@ -87,7 +88,7 @@ public class BankingService {
 				throw new Exception("balance/amount of transaction is negative");
 			}
 
-			UserApp user = userAppService.getUserEntityByEmail(userEmail);
+			UserDTO user = userAppService.getUserByEmail(userEmail);
 			transactionService.addTransaction(user.getId(), user.getEmail(), transactionCreated);
 			this.updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(
 					accountService.findBuddyAccountByUser(userEmail).getUser().getEmail(), typeAccountBeneficiary,
@@ -109,7 +110,7 @@ public class BankingService {
 				throw new Exception("balance/amount of transaction is negative");
 			}
 
-			UserApp user = userAppService.getUserEntityByEmail(userEmail);
+			UserDTO user = userAppService.getUserByEmail(userEmail);
 			transactionService.addTransaction(user.getId(), user.getEmail(), transactionCreated);
 			updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(
 					accountService.findBankingAccountByUser(userEmail).getUser().getEmail(), typeAccountBeneficiary,

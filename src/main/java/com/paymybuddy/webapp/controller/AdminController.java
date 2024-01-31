@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.paymybuddy.webapp.domain.DTO.TransactionBillingDTO;
 import com.paymybuddy.webapp.domain.DTO.TransactionMapper;
+import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.Transaction;
-import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.AdminService;
 import com.paymybuddy.webapp.service.UserAppService;
 import com.paymybuddy.webapp.utils.IRole;
@@ -44,7 +44,7 @@ public class AdminController {
 			// TODO Auto-generated catch block
 			e.getMessage();
 		}
-		UserApp user = userAppService.getUserEntityByEmail(principal.getName());
+		UserDTO user = userAppService.getUserByEmail(principal.getName());
 		model.addAttribute("user", user);
 		return "profil-admin";
 	}

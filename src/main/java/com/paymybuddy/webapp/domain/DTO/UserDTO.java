@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
+	private long id;
 	private String email;
 	private String firstName;
 	private String lastName;
@@ -12,7 +13,8 @@ public class UserDTO {
 
 	}
 
-	public UserDTO(String email, String firstName, String lastName) {
+	public UserDTO(long id,String email, String firstName, String lastName) {
+		this.id=id;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -20,6 +22,6 @@ public class UserDTO {
 
 	@Override
 	public String toString() {
-		return "UserDTO{" + "email:" + email + ", firstName:" + firstName + ", lastName:" + lastName + '}';
+		return "UserDTO{" +" id "+ id+"email:" + email + ", firstName:" + firstName + ", lastName:" + lastName + '}';
 	}
 }

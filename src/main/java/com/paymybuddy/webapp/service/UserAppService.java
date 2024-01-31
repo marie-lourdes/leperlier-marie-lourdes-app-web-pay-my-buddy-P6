@@ -68,40 +68,46 @@ public class UserAppService {
 	public UserLoginDTO getUserLoginByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
 		UserLoginDTO userLoginDTO = mapper.userToUserLoginDTO(user);
+		if (userLoginDTO == null) {
+			throw new NullPointerException("User "+user+"doesn't exist");
+			}
 		System.out.println(userLoginDTO);
 		return userLoginDTO;
 	}
 
-	public UserDTO getUserByEmail(String email) {
+	public 	UserDTO getUserByEmail(String email) throws NullPointerException{
 		UserApp user = userRepository.findByEmail(email);
 		UserDTO userDTO = mapper.userToUserDTO(user);
+		if (userDTO == null) {
+			throw new NullPointerException("User "+user+"doesn't exist");
+			}
 		return userDTO;
 	}
 
-	public UserApp getUserEntityByEmail(String email) throws NullPointerException{
+	/*public UserApp getUserEntityByEmail(String email) throws NullPointerException{
 		UserApp user = userRepository.findByEmail(email);
 		if (user== null) {
 			throw new NullPointerException("User "+user+"doesn't exist");
 			}
 		return user;
-	}
+	}*/
 
-	public UserApp getUserEntityById(long id) {
+	public UserDTO getUserEntityById(long id) {
 		UserApp user = userRepository.findById(id).get();
-		if (user== null) {
-			throw new NullPointerException("User "+user+"doesn't exist");
+		UserDTO userDTO = mapper.userToUserDTO(user);
+		if (userDTO== null) {
+			throw new NullPointerException("User "+userDTO+"doesn't exist");
 			}
-		return user;
-	}
-
-	public UserApp getUserEntityByName(String firstName, String lastName) {
-		UserApp user = userRepository.findByFirstNameAndLastName(firstName, lastName);
-		return user;
+		return userDTO;
 	}
 
 	public List<UserApp> findAllUserContacts(String emailUser) {
 		UserApp user = userRepository.findByEmail(emailUser);
+		if ( user == null) {
+			throw new NullPointerException("User "+ user +"doesn't exist");
+			}
 		List<UserApp> userContacts = user.getContacts();
+		
 	//	System.out.println("userContact" + userContacts);
 		return userContacts;
 	}
@@ -113,29 +119,4 @@ public class UserAppService {
 		return userTransactions;
 	}
 
-	public void addUserTransaction(String emailUser) throws IllegalArgumentException {
-		UserApp user = new UserApp();
-		UserApp contactToAdd = new UserApp();
-
-		user = userRepository.findByEmail(emailUser);
-		List<Transaction> transactions = transactionRepository.findByCreditUser(user);
-		if (transactions == null) {
-			throw new IllegalArgumentException("Incorrect transaction provided: ");
-		} else if (user.getContacts().contains(contactToAdd)) {
-			throw new IllegalArgumentException("transaction  exist!");
-		} else {
-			for (Transaction transaction : transactions) {
-				user.addTransaction(transaction);
-			}
-
-			userRepository.save(user);
-		}
-	}
-	/*
-	 * public UserApp findOneUserContactsByName(String nameContact, String
-	 * emailUser) { Stream<UserApp> contactUser =
-	 * this.findAllUserContacts(emailUser).stream().filter((elem) -> { return
-	 * elem.getFirstName().equals(nameContact); }); List<UserApp> usercontact =
-	 * contactUser.collect(Collectors.toList()); return usercontact.get(0); }
-	 */
 }
