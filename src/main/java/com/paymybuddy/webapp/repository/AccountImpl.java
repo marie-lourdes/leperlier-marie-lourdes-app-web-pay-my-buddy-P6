@@ -48,12 +48,13 @@ public class AccountImpl implements IBalance {
 	@Override
 	public void updateBalance(long id, double amount, String typeAccountBeneficiary) throws Exception {
 		UserApp user = new UserApp();
+		user = userRepository.findById(id).get();
 		if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
-			user = userRepository.findById(id).get();
-			accountRepository.updateBalanceBankingAccount(amount, user);
-		} else if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
-			user = userRepository.findById(id).get();
+			
 			accountRepository.updateBalanceBuddyAccount(amount, user);
+		} else if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
+			
+			accountRepository.updateBalanceBankingAccount(amount, user);
 		}
 	}
 }

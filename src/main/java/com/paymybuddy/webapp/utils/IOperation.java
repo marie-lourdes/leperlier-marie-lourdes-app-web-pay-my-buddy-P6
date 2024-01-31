@@ -5,8 +5,7 @@ public interface IOperation {
 	 double withdraw(double balance, double amount) ;
 	 boolean isOperationAuthorized (double amount,double userAccountBalance );
 	
-	default double formatResultDecimalOperation (Double result) {
-         return Math.round(result * 100.00) / 100.00;   
-	}
+	double formatResultDecimalOperation (double result) ;
+      
 	
 }

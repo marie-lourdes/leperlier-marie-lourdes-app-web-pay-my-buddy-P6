@@ -1,8 +1,7 @@
 package com.paymybuddy.webapp.service;
 
-import java.text.DecimalFormat;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,10 @@ import com.paymybuddy.webapp.utils.Constants;
 import com.paymybuddy.webapp.utils.IOperation;
 
 @Service
-public class BankingService implements IOperation {
+public class BankingService  {
+	@Autowired
+	@Qualifier("operationFormatImpl")
+	private IOperation operationFormatImpl ;
 
 	@Autowired
 	private UserAppService userAppService;
@@ -38,7 +40,7 @@ public class BankingService implements IOperation {
 		String userContactEmail = userContact.getEmail();
 		transactionService.addTransaction(creditUser.getId(), userContactEmail, transactionCreated);
 		try {
-			double feesTransaction = updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(userContactEmail,
+		 this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(userContactEmail,
 					emailCreditUser, amount);
 		} catch (Exception e) {
 
@@ -48,31 +50,29 @@ public class BankingService implements IOperation {
 
 	// Mise à jour des comptes crediteur et beneficiare
 
-	public double updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailBeneficiaryUser,
+	public void updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailBeneficiaryUser,
 			String emailCreditUser, double amount) throws Exception {
 
 		if (accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation() == null) {
 			throw new NullPointerException("Buddy Account of contact user doesn't exist");
 		}
 
-		double feesTransaction = 0;
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 		System.out.println("balanceCredit " + balanceCredit);
 		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
-		feesTransaction = Billing.calculateFees(amount);
-		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
+		double feesTransaction = Billing.calculateFees(amount);
+		double amountWithFeesTransaction = addAmount(amount, feesTransaction );
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
-		System.out.println("balanceCalculatedCreditUser1 " + balanceCalculatedCreditUser);
+		System.out.println("balanceCalculatedCreditUser1 " + operationFormatImpl. formatResultDecimalOperation(balanceCalculatedBeneficiaryUser));
 
 		accountService.updateBalanceBuddyAccount(
 				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
+			this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
 		accountService.updateBalanceBuddyAccount(
 				accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedCreditUser));
 
-		return feesTransaction;
 	}
 
 	public void transferMoneyToBankingAccountUser(String userEmail, String typeAccountBeneficiary, double amount,
@@ -85,7 +85,7 @@ public class BankingService implements IOperation {
 
 			UserApp user = userAppService.getUserEntityByEmail(userEmail);
 			transactionService.addTransaction(user.getId(), user.getEmail(), transactionCreated);
-			updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(
+			this.updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(
 					accountService.findBuddyAccountByUser(userEmail).getUser().getEmail(), typeAccountBeneficiary,
 					amount);
 		} catch (Exception e) {
@@ -125,17 +125,17 @@ public class BankingService implements IOperation {
 		}
 		double balanceCalculatedBuddyAccountUser = 0;
 		double balanceCalculatedBankingAccountUser = 0;
-		double feesTransaction = 0;
 		double balanceBuddyAccount = accountService.findBuddyAccountByUser(emailUser).getBalance();
 		double balanceBankingAccount = accountService.findBankingAccountByUser(emailUser).getBalance();
-		feesTransaction = Billing.calculateFees(amount);
-		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
+		double feesTransaction = Billing.calculateFees(amount);
+		
+		double amountWithFeesTransaction = addAmount(amount, feesTransaction );
 
 		if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
 			balanceCalculatedBankingAccountUser = addAmount(balanceBankingAccount, amount);
 			balanceCalculatedBuddyAccountUser = withdrawAmount(balanceBuddyAccount, amountWithFeesTransaction);
 		} else if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
-			balanceCalculatedBuddyAccountUser = addAmount(balanceBuddyAccount, amount - feesTransaction);
+			balanceCalculatedBuddyAccountUser = addAmount(balanceBuddyAccount, amount - feesTransaction );
 			// deduction des frais appliqué sur le compte beneficiare de l application et
 			// non le compte bancaire qui est crediteur mais hors application
 			balanceCalculatedBankingAccountUser = withdrawAmount(balanceBankingAccount, amount);
@@ -153,40 +153,24 @@ public class BankingService implements IOperation {
 	}
 
 	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
-		return isOperationAuthorized(payment, userAccountBalance);
+		return operationFormatImpl.isOperationAuthorized(payment, userAccountBalance);
 	}
 
 	// Calcul des comptes -tranfert
 
 	public double addAmount(double balanceCreditUser, double payment) {
-		return add(balanceCreditUser, payment);
+		return operationFormatImpl.add(balanceCreditUser, payment);
 	}
 
 	public double withdrawAmount(double balanceBeneficiaryUser, double payment) {
-		return withdraw(balanceBeneficiaryUser, payment);
+		return operationFormatImpl.withdraw(balanceBeneficiaryUser, payment);
 	}
 
 	public double formatBalanceAccount(double balance) throws Exception {
-		double Result = formatResultDecimalOperation(balance);
-		return Result;
+		double result = operationFormatImpl.formatResultDecimalOperation(balance);
+	 
+		return result;
 	}
 
-	@Override
-	public double add(double balance, double amount) {
-		return balance + amount;
-	}
 
-	@Override
-	public double withdraw(double balance, double amount) {
-		return balance - amount;
-	}
-
-	@Override
-	public boolean isOperationAuthorized(double amount, double userAccountBalance) {
-		boolean isAuthorized = false;
-		if (userAccountBalance <= 0 || amount <= 0) {
-			isAuthorized = true;
-		}
-		return isAuthorized;
-	}
 }
