@@ -92,7 +92,7 @@ public class UserAccountController {
 
 		try {
 			userAppService.addUserContact(contact.getEmail(), principal.getName());
-			return new ModelAndView("redirect:/account/contact");
+			return new ModelAndView("redirect:/home/contact");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			return new ModelAndView("redirect:/error");
@@ -142,7 +142,7 @@ public class UserAccountController {
 
 	}*/
 
-	@GetMapping("/account/home")
+	@GetMapping("/home")
 	public String getHomePage(Model model, Principal principal) {
 		try {
 			this.isUserOrAdmin(model, principal, "home");
@@ -156,14 +156,14 @@ public class UserAccountController {
 		return "home";
 	}
 
-	@GetMapping("/account/contact") // enpoint template contacts
+	@GetMapping("/home/contact") // enpoint template contacts
 	public String getUserContact(Model model, Principal principal) {
 		List<UserApp> allContact = userAppService.getAllUserContacts(principal.getName());
 		model.addAttribute("contacts", allContact);
 		return "contacts";
 	}
 
-	@GetMapping("/account/profil") //
+	@GetMapping("/home/profil") //
 	public String getProfilPage(Model model, Principal principal) {
 		try {
 			this.isUserOrAdmin(model, principal, "profil");
@@ -191,7 +191,7 @@ public class UserAccountController {
 		return "account-success";
 	}
 
-	@GetMapping("/account/transfer")
+	@GetMapping("/home/transfer")
 	public String getTransferPage(Model model, Principal principal) {
 		String userEmail = principal.getName();
 

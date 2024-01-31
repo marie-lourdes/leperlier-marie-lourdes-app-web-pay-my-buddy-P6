@@ -48,11 +48,5 @@ public class LoginController {
 	public String isUserOrAdmin(Model model, Principal principal, String view) throws Exception {
 		return role.verifRolePrincipalInView(model, principal, view);
 	}
-	/*
-	 * @PostMapping("/login")//traitement formulaire et generation token avec JWT
-	 * public ModelAndView loginForm() { return new ModelAndView("redirect:/"); }
-	 */
-
-	
 	
 }

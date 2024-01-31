@@ -36,7 +36,7 @@ public class AdminController {
 	@Autowired
 	private TransactionMapper transactionMapper;
 
-	@GetMapping("/admin/profil")
+	@GetMapping("/home/profil/admin")
 	public String getProfilPage(Model model, Principal principal) {
 		try {
 			this.isUserOrAdmin(model, principal,  "profil-admin");
@@ -49,7 +49,7 @@ public class AdminController {
 		return "profil-admin";
 	}
 
-	@GetMapping("/admin/transactions-billing")
+	@GetMapping("/home/transactions-billing")
 	public String getHistoricalTransactionsWithFees(Model model, Principal principal) {
 		try {
 			this.isUserOrAdmin(model, principal,  "transactions-billing");
