@@ -14,7 +14,7 @@ import com.paymybuddy.webapp.utils.IRole;
 public class LoginController {
 	
 	@Autowired
-	@Qualifier("principalRole")
+	@Qualifier("roleImpl")
 	private IRole role;
 	
 	@GetMapping("/login") //

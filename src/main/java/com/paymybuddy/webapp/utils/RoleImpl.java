@@ -11,7 +11,7 @@ import com.paymybuddy.webapp.service.UserAppService;
 import lombok.Data;
 
 @Data
-@Component(value="principalRole")
+@Component(value="roleImpl")
 public class RoleImpl  implements  IRole{
 	@Autowired
 	private UserAppService userAppService;

@@ -5,8 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.webapp.AccountFactory;
+import com.paymybuddy.webapp.AccountFactory.AccountType;
 import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
@@ -19,13 +22,17 @@ import jakarta.transaction.Transactional;
 
 @Transactional
 @Service
-public class AccountService implements IAccount {
+public class AccountService  {
 
 	@Autowired
 	private IUserRepository userRepository;
 
 	@Autowired
 	private IAccountRepository accountRepository;
+	
+	@Autowired
+	@Qualifier("accountImpl")
+	private IAccount account;
 
 	public void addBuddyAccount(String emailUser) throws IllegalArgumentException, NullPointerException {
 		UserApp user = new UserApp();
@@ -75,15 +82,14 @@ public class AccountService implements IAccount {
 	}
 
 	public BuddyAccount findBuddyAccountByUser(String emailUser) throws NullPointerException {
-		return  (BuddyAccount) findAccountByUser(emailUser, new BuddyAccount());
+		return (BuddyAccount) account.findAccountByUser(emailUser, AccountFactory.makeAccount(AccountType.BUDDY_ACCOUNT));
 	}
 
-	public BankingAccount findBankingAccountByUser(String emailUser) throws NullPointerException {
-		 
-		return  (BankingAccount) findAccountByUser(emailUser, new BankingAccount());
+	public BankingAccount findBankingAccountByUser(String emailUser) throws NullPointerException {	 
+		return (BankingAccount) account.findAccountByUser(emailUser, AccountFactory.makeAccount(AccountType.BANKING_ACCOUNT));
 	}
 
-	@Override
+	/*@Override
 	public Account findAccountByUser(String emailUser, Account userAccount) {
 		UserApp user = userRepository.findByEmail(emailUser);
 		List<Account> accountsFoundByUser = accountRepository.findByUser(user);
@@ -106,5 +112,5 @@ public class AccountService implements IAccount {
 		});
 // System.out.println(bankingAccount);
 		return userAccount;
-	}
+	}*/
 }

@@ -24,7 +24,7 @@ import com.paymybuddy.webapp.utils.IRole;
 public class AdminController {
 	
 	@Autowired
-	@Qualifier("principalRole")
+	@Qualifier("roleImpl")
 	private IRole role;
 	
 	@Autowired

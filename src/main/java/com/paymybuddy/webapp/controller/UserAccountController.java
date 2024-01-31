@@ -38,7 +38,7 @@ import lombok.Data;
 public class UserAccountController {
 
 	@Autowired
-	@Qualifier("principalRole")
+	@Qualifier("roleImpl")
 	private IRole role;
 	
 	@Autowired
