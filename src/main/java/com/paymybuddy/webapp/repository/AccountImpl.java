@@ -6,28 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.paymybuddy.webapp.domain.model.Account;
-import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
+import com.paymybuddy.webapp.utils.Constants;
 
 import lombok.Data;
 
 @Data
-@Component(value="accountImpl")
-public class AccountImpl implements IAccount {
+@Component(value = "accountImpl")
+public class AccountImpl implements IBalance {
 	@Autowired
 	private IUserRepository userRepository;
 
 	@Autowired
 	private IAccountRepository accountRepository;
-	
+
 	private UserApp user;
-	private List<Account> accountsFoundByUser ;
+	private List<Account> accountsFoundByUser;
 
 	@Override
-	public Account findAccountByUser(String emailUser, Account userAccount) {
-		 user = userRepository.findByEmail(emailUser);
-		 accountsFoundByUser = accountRepository.findByUser(user);
-		
+	public Account findAccountByUser(String emailUser, Account userAccount)  throws Exception{
+		user = userRepository.findByEmail(emailUser);
+		accountsFoundByUser = accountRepository.findByUser(user);
+
 		if (user == null) {
 			throw new NullPointerException("user " + emailUser + " not found");
 		} else if (accountsFoundByUser.isEmpty()) {
@@ -35,13 +35,25 @@ public class AccountImpl implements IAccount {
 		}
 
 		accountsFoundByUser.forEach(account -> {
-			if (account.getClass() == BankingAccount.class) {
+			if (account.getClass() == userAccount.getClass()) {
 				userAccount.setId(account.getId());
 				userAccount.setCreation(account.getCreation());
 				userAccount.setUser(account.getUser());
-				userAccount.setBalance(account.getBalance());			
+				userAccount.setBalance(account.getBalance());
 			}
 		});
 		return userAccount;
+	}
+
+	@Override
+	public void updateBalance(long id, double amount, String typeAccountBeneficiary) throws Exception {
+		UserApp user = new UserApp();
+		if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
+			user = userRepository.findById(id).get();
+			accountRepository.updateBalanceBankingAccount(amount, user);
+		} else if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
+			user = userRepository.findById(id).get();
+			accountRepository.updateBalanceBuddyAccount(amount, user);
+		}
 	}
 }

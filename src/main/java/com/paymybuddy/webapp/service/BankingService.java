@@ -141,10 +141,10 @@ public class BankingService implements IOperation {
 			balanceCalculatedBankingAccountUser = withdrawAmount(balanceBankingAccount, amount);
 		}
 
-		accountService.updateBalanceBankingAccount(accountService.findBankingAccountByUser(emailUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedBankingAccountUser));
-		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedBuddyAccountUser));
+		accountService.updateBalanceAccount(accountService.findBankingAccountByUser(emailUser).getUser().getId(),
+				this.formatBalanceAccount(balanceCalculatedBankingAccountUser),Constants.BANKING_ACCOUNT);
+		accountService.updateBalanceAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
+				this.formatBalanceAccount(balanceCalculatedBuddyAccountUser),Constants.BUDDY_ACCOUNT);
 	}
 
 	public Page<Transaction> getTransactionsByUser(int pageNber, int pageSize, String email) {

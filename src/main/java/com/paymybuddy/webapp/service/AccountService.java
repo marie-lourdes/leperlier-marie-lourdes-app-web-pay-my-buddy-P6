@@ -16,23 +16,25 @@ import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.IAccount;
 import com.paymybuddy.webapp.repository.IAccountRepository;
+import com.paymybuddy.webapp.repository.IBalance;
 import com.paymybuddy.webapp.repository.IUserRepository;
+import com.paymybuddy.webapp.utils.Constants;
 
 import jakarta.transaction.Transactional;
 
 @Transactional
 @Service
-public class AccountService  {
+public class AccountService {
 
 	@Autowired
 	private IUserRepository userRepository;
 
 	@Autowired
 	private IAccountRepository accountRepository;
-	
+
 	@Autowired
 	@Qualifier("accountImpl")
-	private IAccount account;
+	private IBalance account;
 
 	public void addBuddyAccount(String emailUser) throws IllegalArgumentException, NullPointerException {
 		UserApp user = new UserApp();
@@ -58,9 +60,9 @@ public class AccountService  {
 		accountRepository.save(newAccount);
 	}
 
-	public void updateBalanceBuddyAccount(long id, double amount) throws NullPointerException{
+	public void updateBalanceBuddyAccount(long id, double amount) throws NullPointerException {
 		UserApp user = new UserApp();
-		
+
 		try {
 			user = userRepository.findById(id).get();
 			accountRepository.updateBalanceBuddyAccount(amount, user);
@@ -69,48 +71,62 @@ public class AccountService  {
 		}
 	}
 
-	public void updateBalanceBankingAccount(long id, double amount) throws NullPointerException {
-		UserApp user = new UserApp();
-		
-		try {
-			user = userRepository.findById(id).get();
-			accountRepository.updateBalanceBankingAccount(amount, user);
+	public void updateBalanceAccount(long id, double amount, String typeAccountBeneficiary)
+			throws NullPointerException {
 
+		try {
+			account.updateBalance(id, amount, typeAccountBeneficiary);
 		} catch (NullPointerException e) {
 			throw new NullPointerException("this banking account doesn't exist");
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
 		}
 	}
 
 	public BuddyAccount findBuddyAccountByUser(String emailUser) throws NullPointerException {
-		return (BuddyAccount) account.findAccountByUser(emailUser, AccountFactory.makeAccount(AccountType.BUDDY_ACCOUNT));
-	}
+		BuddyAccount userBuddyAccount = null;
 
-	public BankingAccount findBankingAccountByUser(String emailUser) throws NullPointerException {	 
-		return (BankingAccount) account.findAccountByUser(emailUser, AccountFactory.makeAccount(AccountType.BANKING_ACCOUNT));
-	}
+		try {
+			userBuddyAccount = (BuddyAccount) account.findAccountByUser(emailUser,
+					AccountFactory.makeAccount(AccountType.BUDDY));
 
-	/*@Override
-	public Account findAccountByUser(String emailUser, Account userAccount) {
-		UserApp user = userRepository.findByEmail(emailUser);
-		List<Account> accountsFoundByUser = accountRepository.findByUser(user);
-		//BankingAccount bankingAccount = new BankingAccount();
-
-		if (user == null) {
-			throw new NullPointerException("user " + emailUser + " not found");
-		} else if (accountsFoundByUser.isEmpty()) {
-			throw new NullPointerException("account not found");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		accountsFoundByUser.forEach(account -> {
-			if (account.getClass() == BankingAccount.class) {
-				userAccount.setId(account.getId());
-				userAccount.setCreation(account.getCreation());
-				userAccount.setUser(account.getUser());
-				userAccount.setBalance(account.getBalance());
-				// bankingAccount.setTransactions(account.getTransactions());
-			}
-		});
-// System.out.println(bankingAccount);
-		return userAccount;
-	}*/
+		return userBuddyAccount;
+	}
+
+	public BankingAccount findBankingAccountByUser(String emailUser) throws NullPointerException {
+		BankingAccount userBankingAccount = null;
+
+		try {
+			userBankingAccount = (BankingAccount) account.findAccountByUser(emailUser,
+					AccountFactory.makeAccount(AccountType.BANKING));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userBankingAccount;
+	}
+
+	/*
+	 * @Override public Account findAccountByUser(String emailUser, Account
+	 * userAccount) { UserApp user = userRepository.findByEmail(emailUser);
+	 * List<Account> accountsFoundByUser = accountRepository.findByUser(user);
+	 * //BankingAccount bankingAccount = new BankingAccount();
+	 * 
+	 * if (user == null) { throw new NullPointerException("user " + emailUser +
+	 * " not found"); } else if (accountsFoundByUser.isEmpty()) { throw new
+	 * NullPointerException("account not found"); }
+	 * 
+	 * accountsFoundByUser.forEach(account -> { if (account.getClass() ==
+	 * BankingAccount.class) { userAccount.setId(account.getId());
+	 * userAccount.setCreation(account.getCreation());
+	 * userAccount.setUser(account.getUser());
+	 * userAccount.setBalance(account.getBalance()); //
+	 * bankingAccount.setTransactions(account.getTransactions()); } }); //
+	 * System.out.println(bankingAccount); return userAccount; }
+	 */
 }

@@ -10,14 +10,14 @@ public class AccountFactory {
 	}
 
 	public enum AccountType {
-		BANKING_ACCOUNT, BUDDY_ACCOUNT
+		BANKING, BUDDY
 	};
 
 	public static Account makeAccount(AccountType type) {
 		switch (type) {
-		case BANKING_ACCOUNT:
+		case BANKING:
 			return new BankingAccount();
-		case BUDDY_ACCOUNT:
+		case BUDDY:
 			return new BuddyAccount();
 		}
 		return new BuddyAccount();
