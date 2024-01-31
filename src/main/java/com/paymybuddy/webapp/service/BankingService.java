@@ -11,6 +11,7 @@ import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.utils.Billing;
 import com.paymybuddy.webapp.utils.Constants;
+import com.paymybuddy.webapp.utils.IFormat;
 import com.paymybuddy.webapp.utils.IOperation;
 
 @Service
@@ -18,7 +19,11 @@ public class BankingService  {
 	@Autowired
 	@Qualifier("operationFormatImpl")
 	private IOperation operationFormatImpl ;
-
+	
+	@Autowired
+	@Qualifier("formatterImpl")
+	private IFormat formatter;
+	
 	@Autowired
 	private UserAppService userAppService;
 
@@ -64,7 +69,7 @@ public class BankingService  {
 		double feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = addAmount(amount, feesTransaction );
 		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
-		System.out.println("balanceCalculatedCreditUser1 " + operationFormatImpl. formatResultDecimalOperation(balanceCalculatedBeneficiaryUser));
+		System.out.println("balanceCalculatedCreditUser1 " +formatter. formatResultDecimalOperation(balanceCalculatedBeneficiaryUser));
 
 		accountService.updateBalanceBuddyAccount(
 				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
@@ -167,8 +172,7 @@ public class BankingService  {
 	}
 
 	public double formatBalanceAccount(double balance) throws Exception {
-		double result = operationFormatImpl.formatResultDecimalOperation(balance);
-	 
+		double result = formatter.formatResultDecimalOperation(balance); 
 		return result;
 	}
 
