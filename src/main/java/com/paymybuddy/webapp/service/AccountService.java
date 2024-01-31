@@ -11,6 +11,7 @@ import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
+import com.paymybuddy.webapp.repository.IAccount;
 import com.paymybuddy.webapp.repository.IAccountRepository;
 import com.paymybuddy.webapp.repository.IUserRepository;
 
@@ -18,7 +19,7 @@ import jakarta.transaction.Transactional;
 
 @Transactional
 @Service
-public class AccountService {
+public class AccountService implements IAccount {
 
 	@Autowired
 	private IUserRepository userRepository;
@@ -74,31 +75,19 @@ public class AccountService {
 	}
 
 	public BuddyAccount findBuddyAccountByUser(String emailUser) throws NullPointerException {
-		UserApp user = userRepository.findByEmail(emailUser);
-		List<Account> accountsFoundByUser = accountRepository.findByUser(user);
-		BuddyAccount buddyAccount = new BuddyAccount();
-
-		if (user == null) {
-			throw new NullPointerException("user " + emailUser + " not found");
-		} else if (accountsFoundByUser.isEmpty()) {
-			throw new NullPointerException("account not found");
-		}
-		accountsFoundByUser.forEach(account -> {
-			if (account.getClass() == BuddyAccount.class) {
-				buddyAccount.setId(account.getId());
-				buddyAccount.setCreation(account.getCreation());
-				buddyAccount.setUser(account.getUser());
-				buddyAccount.setBalance(account.getBalance());
-			}
-		});
-		// System.out.println(buddyAccount);
-		return buddyAccount;
+		return  (BuddyAccount) findAccountByUser(emailUser, new BuddyAccount());
 	}
 
 	public BankingAccount findBankingAccountByUser(String emailUser) throws NullPointerException {
+		 
+		return  (BankingAccount) findAccountByUser(emailUser, new BankingAccount());
+	}
+
+	@Override
+	public Account findAccountByUser(String emailUser, Account userAccount) {
 		UserApp user = userRepository.findByEmail(emailUser);
 		List<Account> accountsFoundByUser = accountRepository.findByUser(user);
-		BankingAccount bankingAccount = new BankingAccount();
+		//BankingAccount bankingAccount = new BankingAccount();
 
 		if (user == null) {
 			throw new NullPointerException("user " + emailUser + " not found");
@@ -108,14 +97,14 @@ public class AccountService {
 
 		accountsFoundByUser.forEach(account -> {
 			if (account.getClass() == BankingAccount.class) {
-				bankingAccount.setId(account.getId());
-				bankingAccount.setCreation(account.getCreation());
-				bankingAccount.setUser(account.getUser());
-				bankingAccount.setBalance(account.getBalance());
+				userAccount.setId(account.getId());
+				userAccount.setCreation(account.getCreation());
+				userAccount.setUser(account.getUser());
+				userAccount.setBalance(account.getBalance());
 				// bankingAccount.setTransactions(account.getTransactions());
 			}
 		});
-		// System.out.println(bankingAccount);
-		return bankingAccount;
+// System.out.println(bankingAccount);
+		return userAccount;
 	}
 }
