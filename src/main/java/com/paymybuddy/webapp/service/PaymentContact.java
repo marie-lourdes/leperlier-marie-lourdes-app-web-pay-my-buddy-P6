@@ -13,9 +13,6 @@ import lombok.Data;
 @Component(value = "paymentContact")
 public class PaymentContact implements IPayment {
 
-	@Autowired
-	@Qualifier("operationFormatImpl")
-	private IOperation operation;
 
 	@Autowired
 	@Qualifier("formatterImpl")
@@ -23,33 +20,44 @@ public class PaymentContact implements IPayment {
 
 	@Autowired
 	private AccountService accountService;
+	
+	private double balanceCalculatedBeneficiaryUser ;
 
+	private double balanceCalculatedCreditUser ;
+	
 	@Override
-	public void pay(String emailCreditUser, String emailBeneficiaryUser, double balanceCredit,
-			double balanceBeneficiary, double amount, String description) {
+	public void pay(String emailCreditUser, String emailBeneficiaryUser,double amount) {
 		double userBuddyAccountBalance = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 
 		if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
 			throw new IllegalArgumentException("balance/amount of transaction is negative");
 		}
-
-		System.out.println("balanceCredit " + balanceCredit);
-		double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
-		double feesTransaction = Billing.calculateFees(amount);
-		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
-		double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
+		
+		this.calculBalance(emailCreditUser,  emailBeneficiaryUser, amount);
+		
 		try {
-			this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(emailCreditUser, emailBeneficiaryUser,
-					balanceCalculatedCreditUser, balanceCalculatedBeneficiaryUser, amount);
+			this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(emailCreditUser, emailBeneficiaryUser);
 		} catch (Exception e) {
 
 			e.getMessage();
 		}
 	};
 
+	public void calculBalance(String emailCreditUser, String emailBeneficiaryUser, double amount) {
+		balanceCalculatedBeneficiaryUser = 0;
+		balanceCalculatedCreditUser =0;
+		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
+		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
+		System.out.println("balanceCredit " + balanceCredit);
+		
+		double feesTransaction = Billing.calculateFees(amount);
+		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
+		this.balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
+		 this.balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
+	}
+
 	public void updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailCreditUser,
-			String emailBeneficiaryUser, double balanceCalculatedCreditUser, double balanceCalculatedBeneficiaryUser,
-			double amount) throws Exception {
+			String emailBeneficiaryUser) throws Exception {
 
 		if (accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation() == null) {
 			throw new NullPointerException("Buddy Account of contact user doesn't exist");

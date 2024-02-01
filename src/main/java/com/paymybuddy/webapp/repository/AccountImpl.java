@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.UserApp;
+import com.paymybuddy.webapp.service.Billing;
+import com.paymybuddy.webapp.service.IOperation;
 import com.paymybuddy.webapp.utils.Constants;
 
 import lombok.Data;
@@ -15,7 +17,10 @@ import lombok.Data;
 @Data
 @Component(value = "accountImpl")
 public class AccountImpl implements IBalance {
-	
+
+	@Autowired
+	@Qualifier("operationFormatImpl")
+	private IOperation operation;
 
 	@Autowired
 	private IUserRepository userRepository;

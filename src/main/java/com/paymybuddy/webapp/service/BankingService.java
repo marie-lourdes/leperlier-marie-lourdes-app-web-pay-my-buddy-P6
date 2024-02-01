@@ -39,10 +39,9 @@ public class BankingService {
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		
 
-		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
-		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
+	
 		
-		payment.pay(emailCreditUser, emailBeneficiaryUser ,balanceCredit ,balanceBeneficiary, amount, description);
+		payment.pay(emailCreditUser, emailBeneficiaryUser, amount);
 		
 		UserDTO userContact = userAppService.getUserByEmail(emailBeneficiaryUser);
 		UserDTO creditUser = userAppService.getUserByEmail(emailCreditUser);
