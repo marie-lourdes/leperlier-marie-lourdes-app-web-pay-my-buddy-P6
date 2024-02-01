@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Component(value = "accountImpl")
-public class AccountImpl implements IBalance {
+public class AccountImpl implements IAccount {
 	@Autowired
 	private IUserRepository userRepository;
 
@@ -45,16 +45,5 @@ public class AccountImpl implements IBalance {
 		return userAccount;
 	}
 
-	@Override
-	public void updateBalance(long id, double amount, String typeAccountBeneficiary) throws Exception {
-		UserApp user = new UserApp();
-		user = userRepository.findById(id).get();
-		if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
-			
-			accountRepository.updateBalanceBuddyAccount(amount, user);
-		} else if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
-			
-			accountRepository.updateBalanceBankingAccount(amount, user);
-		}
-	}
+	
 }

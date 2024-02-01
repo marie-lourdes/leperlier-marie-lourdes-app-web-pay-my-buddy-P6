@@ -1,4 +1,4 @@
-package com.paymybuddy.webapp.utils;
+package com.paymybuddy.webapp.service;
 
 import org.springframework.stereotype.Component;
 
