@@ -14,11 +14,9 @@ import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
-import com.paymybuddy.webapp.repository.IAccount;
 import com.paymybuddy.webapp.repository.IAccountRepository;
 import com.paymybuddy.webapp.repository.IBalance;
 import com.paymybuddy.webapp.repository.IUserRepository;
-import com.paymybuddy.webapp.utils.Constants;
 
 import jakarta.transaction.Transactional;
 
@@ -100,22 +98,4 @@ public class AccountService {
 		return userBankingAccount;
 	}
 
-	/*
-	 * @Override public Account findAccountByUser(String emailUser, Account
-	 * userAccount) { UserApp user = userRepository.findByEmail(emailUser);
-	 * List<Account> accountsFoundByUser = accountRepository.findByUser(user);
-	 * //BankingAccount bankingAccount = new BankingAccount();
-	 * 
-	 * if (user == null) { throw new NullPointerException("user " + emailUser +
-	 * " not found"); } else if (accountsFoundByUser.isEmpty()) { throw new
-	 * NullPointerException("account not found"); }
-	 * 
-	 * accountsFoundByUser.forEach(account -> { if (account.getClass() ==
-	 * BankingAccount.class) { userAccount.setId(account.getId());
-	 * userAccount.setCreation(account.getCreation());
-	 * userAccount.setUser(account.getUser());
-	 * userAccount.setBalance(account.getBalance()); //
-	 * bankingAccount.setTransactions(account.getTransactions()); } }); //
-	 * System.out.println(bankingAccount); return userAccount; }
-	 */
 }

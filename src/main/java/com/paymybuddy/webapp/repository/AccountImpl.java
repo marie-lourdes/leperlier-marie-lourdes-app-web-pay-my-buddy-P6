@@ -3,6 +3,7 @@ package com.paymybuddy.webapp.repository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.paymybuddy.webapp.domain.model.Account;
@@ -13,7 +14,9 @@ import lombok.Data;
 
 @Data
 @Component(value = "accountImpl")
-public class AccountImpl implements IAccount {
+public class AccountImpl implements IBalance {
+	
+
 	@Autowired
 	private IUserRepository userRepository;
 
@@ -22,6 +25,7 @@ public class AccountImpl implements IAccount {
 
 	private UserApp user;
 	private List<Account> accountsFoundByUser;
+	
 
 	@Override
 	public Account findAccountByUser(String emailUser, Account userAccount)  throws Exception{
@@ -44,6 +48,18 @@ public class AccountImpl implements IAccount {
 		});
 		return userAccount;
 	}
-
+	
+	@Override
+	public void updateBalance(long id, double amount, String typeAccountBeneficiary) throws Exception {
+		 user = new UserApp();
+		user = userRepository.findById(id).get();
+		if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
+			
+			accountRepository.updateBalanceBuddyAccount(amount, user);
+		} else if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
+			
+			accountRepository.updateBalanceBankingAccount(amount, user);
+		}
+	}
 	
 }
