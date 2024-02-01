@@ -2,11 +2,16 @@ package com.paymybuddy.webapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
-import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.utils.IFormat;
 
-public class PaymentContact extends PaymentDecorator {
+import lombok.Data;
+
+@Data
+@Component(value="paymentContact")
+public class PaymentContact implements IPayment {
+	
 	@Autowired
 	@Qualifier("operationFormatImpl")
 	private IOperation operation;
@@ -17,29 +22,10 @@ public class PaymentContact extends PaymentDecorator {
 	
 	@Autowired
 	private AccountService accountService;
-	
-	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
-		return operation.isOperationAuthorized(payment, userAccountBalance);
-	}
 
-	// Calcul des comptes -tranfert
-
-	public double addAmount(double balanceCreditUser, double payment) {
-		return operation.add(balanceCreditUser, payment);
-	}
-
-	public double withdrawAmount(double balanceBeneficiaryUser, double payment) {
-		return operation.withdraw(balanceBeneficiaryUser, payment);
-	}
-
-	public double formatBalanceAccount(double balance) throws Exception {
-		double result = formatter.formatResultDecimalOperation(balance);
-		return result;
-	}
 	
 	 @Override
-	public void pay(String emailCreditUser, String emailBeneficiaryUser, double amount, String description,
-				Transaction transactionCreated) {
+	public void pay(String emailCreditUser, String emailBeneficiaryUser, double amount, String description) {
 
 			double userBuddyAccountBalance = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 			if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
@@ -55,6 +41,24 @@ public class PaymentContact extends PaymentDecorator {
 			double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
 		
 	 }
+		
+		public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
+			return operation.isOperationAuthorized(payment, userAccountBalance);
+		}
 
+		// Calcul des comptes -tranfert
+
+		public double addAmount(double balanceCreditUser, double payment) {
+			return operation.add(balanceCreditUser, payment);
+		}
+
+		public double withdrawAmount(double balanceBeneficiaryUser, double payment) {
+			return operation.withdraw(balanceBeneficiaryUser, payment);
+		}
+
+		public double formatBalanceAccount(double balance) throws Exception {
+			double result = formatter.formatResultDecimalOperation(balance);
+			return result;
+		}
 
 }
