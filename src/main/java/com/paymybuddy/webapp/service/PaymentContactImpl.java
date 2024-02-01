@@ -11,8 +11,11 @@ import lombok.Data;
 
 @Data
 @Component(value = "paymentContact")
-public class PaymentContact implements IPayment {
+public class PaymentContactImpl implements IPayment {
 
+	@Autowired
+	@Qualifier("operationImpl")
+	private IOperation operation;
 
 	@Autowired
 	@Qualifier("formatterImpl")
@@ -43,6 +46,10 @@ public class PaymentContact implements IPayment {
 		}
 	};
 
+	@Override
+	 public  void pay (String emailUser,double amount,String typeAccountUser) {}
+
+	@Override
 	public void calculBalance(String emailCreditUser, String emailBeneficiaryUser, double amount) {
 		balanceCalculatedBeneficiaryUser = 0;
 		balanceCalculatedCreditUser =0;
@@ -51,11 +58,16 @@ public class PaymentContact implements IPayment {
 		System.out.println("balanceCredit " + balanceCredit);
 		
 		double feesTransaction = Billing.calculateFees(amount);
-		double amountWithFeesTransaction = addAmount(amount, feesTransaction);
-		this.balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
-		 this.balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
+		double amountWithFeesTransaction = operation.add(amount, feesTransaction);
+		this.balanceCalculatedBeneficiaryUser =operation.add(balanceBeneficiary, amount);
+		 this.balanceCalculatedCreditUser =  operation.withdraw(balanceCredit, amountWithFeesTransaction);
 	}
 
+	@Override
+	public void calculBalance(String userEmail, double amount,String typeAccountBeneficiary) {
+		
+	}
+	
 	public void updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailCreditUser,
 			String emailBeneficiaryUser) throws Exception {
 
@@ -72,16 +84,6 @@ public class PaymentContact implements IPayment {
 
 	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
 		return operation.isOperationAuthorized(payment, userAccountBalance);
-	}
-
-	// Calcul des comptes -tranfert
-
-	public double addAmount(double balanceCreditUser, double payment) {
-		return operation.add(balanceCreditUser, payment);
-	}
-
-	public double withdrawAmount(double balanceBeneficiaryUser, double payment) {
-		return operation.withdraw(balanceBeneficiaryUser, payment);
 	}
 
 	public double formatBalanceAccount(double balance) throws Exception {

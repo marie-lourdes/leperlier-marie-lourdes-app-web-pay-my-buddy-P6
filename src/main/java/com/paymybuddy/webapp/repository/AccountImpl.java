@@ -19,10 +19,6 @@ import lombok.Data;
 public class AccountImpl implements IBalance {
 
 	@Autowired
-	@Qualifier("operationFormatImpl")
-	private IOperation operation;
-
-	@Autowired
 	private IUserRepository userRepository;
 
 	@Autowired

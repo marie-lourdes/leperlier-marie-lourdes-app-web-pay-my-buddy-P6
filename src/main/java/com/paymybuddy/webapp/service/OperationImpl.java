@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import lombok.Data;
 
 @Data
-@Component(value="operationFormatImpl")
+@Component(value="operationImpl")
 public class OperationImpl implements IOperation{
 	private double resultFormattedParsed;
 	

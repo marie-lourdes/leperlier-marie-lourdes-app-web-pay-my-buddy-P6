@@ -103,7 +103,7 @@ public class UserAccountController {
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
 			throws IOException {
 		try {
-		/*	if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
+			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
 				bankingService.transferMoneyToBankingAccountUser(principal.getName(), Constants.BANKING_ACCOUNT,
 						userTransaction.getAmount(), userTransaction.getDescription(), userTransaction);
 				// transfert au buddyaccount si la valeur "option value est "my buddy account"
@@ -116,10 +116,8 @@ public class UserAccountController {
 				bankingService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
 						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
-			}*/
-			bankingService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
-					userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
-					userTransaction.getDescription(), userTransaction);
+			}
+		
 			return new ModelAndView("redirect:/transfer-success");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());

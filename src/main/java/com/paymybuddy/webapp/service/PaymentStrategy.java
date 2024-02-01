@@ -17,6 +17,10 @@ public class PaymentStrategy {
 	private  IPayment paymentContact ;
 	
 	@Autowired
+	@Qualifier("paymentUserImpl")
+	private  IPayment paymentUser ;
+	
+	@Autowired
 	private AccountService accountService;
 	@Autowired
 	private TransactionService transactionService;
@@ -24,9 +28,15 @@ public class PaymentStrategy {
 	private UserAppService userAppService;
 
 
-	public  void pay(String emailCreditUser, String emailBeneficiaryUser, double balanceCredit, double balanceBeneficiary,double amount, String description) {
+	public  void pay(String emailCreditUser, String emailBeneficiaryUser,double amount) {
 
-		paymentContact.pay(emailCreditUser, emailBeneficiaryUser,  balanceCredit, balanceBeneficiary,  amount, description);
+		paymentContact.pay(emailCreditUser, emailBeneficiaryUser,  amount );
+		
+	}
+	
+	public  void pay(String userEmail, double amount,String typeAccountUser) {
+
+		paymentUser.pay(userEmail,  amount,typeAccountUser);
 		
 	}
 
