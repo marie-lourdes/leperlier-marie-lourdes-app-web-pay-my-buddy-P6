@@ -1,12 +1,10 @@
-package com.paymybuddy.webapp.utils;
+package com.paymybuddy.webapp.service;
 
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-
-import com.paymybuddy.webapp.service.UserAppService;
 
 import lombok.Data;
 

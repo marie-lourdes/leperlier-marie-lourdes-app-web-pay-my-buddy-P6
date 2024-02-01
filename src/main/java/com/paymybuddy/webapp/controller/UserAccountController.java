@@ -25,10 +25,10 @@ import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.AccountService;
 import com.paymybuddy.webapp.service.BankingService;
+import com.paymybuddy.webapp.service.IRole;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
 import com.paymybuddy.webapp.utils.Constants;
-import com.paymybuddy.webapp.utils.IRole;
 
 import jakarta.validation.Valid;
 import lombok.Data;

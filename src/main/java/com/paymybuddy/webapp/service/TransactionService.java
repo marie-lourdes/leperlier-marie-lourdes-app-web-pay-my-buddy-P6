@@ -12,7 +12,6 @@ import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.ITransactionRepository;
 import com.paymybuddy.webapp.repository.IUserRepository;
-import com.paymybuddy.webapp.utils.Billing;
 
 import jakarta.transaction.Transactional;
 

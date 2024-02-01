@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.paymybuddy.webapp.service.IRole;
 import com.paymybuddy.webapp.service.UserAppService;
-import com.paymybuddy.webapp.utils.IRole;
 
 @Controller
 public class LoginController {
