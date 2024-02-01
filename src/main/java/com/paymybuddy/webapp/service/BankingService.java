@@ -16,6 +16,14 @@ import com.paymybuddy.webapp.utils.IFormat;
 @Service
 public class BankingService {
 	@Autowired
+	@Qualifier("operationFormatImpl")
+	private IOperation operation;
+	
+	@Autowired
+	@Qualifier("formatterImpl")
+	private IFormat formatter;
+	
+	@Autowired
 	private PaymentStrategy payment;
 
 	@Autowired
@@ -30,39 +38,24 @@ public class BankingService {
 	public void payToContact(String emailCreditUser, String emailBeneficiaryUser, double amount, String description,
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		
+
+		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
+		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
+		
+		payment.pay(emailCreditUser, emailBeneficiaryUser ,balanceCredit ,balanceBeneficiary, amount, description);
+		
 		UserDTO userContact = userAppService.getUserByEmail(emailBeneficiaryUser);
 		UserDTO creditUser = userAppService.getUserByEmail(emailCreditUser);
-		
-		
-		
-
 		transactionService.addTransaction(creditUser.getId(),emailCreditUser, transactionCreated);
-		try {
-			this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction( emailCreditUser,emailBeneficiaryUser,balanceCalculatedCreditUser,balanceCalculatedBeneficiaryUser, amount);
-		} catch (Exception e) {
-
-			e.getMessage();
-		}
+		
 	}
 
 	// Mise à jour des comptes crediteur et beneficiare
 
-	public void updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailCreditUser,String emailBeneficiaryUser,
-				double balanceCalculatedCreditUser,	double balanceCalculatedBeneficiaryUser, double amount) throws Exception {
 
-		if (accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation() == null) {
-			throw new NullPointerException("Buddy Account of contact user doesn't exist");
-		}
-	
-		accountService.updateBalanceAccount(
-				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser), Constants.BUDDY_ACCOUNT);
-		accountService.updateBalanceAccount(accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedCreditUser), Constants.BUDDY_ACCOUNT);
-	}
 
 	
-	public void transferMoneyToBankingAccountUser(String userEmail, String typeAccountBeneficiary, double amount,
+	/*public void transferMoneyToBankingAccountUser(String userEmail, String typeAccountBeneficiary, double amount,
 			String description, Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		try {
 			double userBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
@@ -138,7 +131,7 @@ public class BankingService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-	}
+	}*/
 
 	// Mise à jour du compte buddy de l utilisateur et compte bancaire du meme
 	// utilisateur
@@ -160,7 +153,14 @@ public class BankingService {
 		Pageable pageable = PageRequest.of(pageNber - 1, pageSize, sort);
 		return transactionService.findTransactionsPaginatedByUser(email, pageable);
 	}
-
-
-
+	
+/*-----------dans les class payments impl----------------*/
+	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
+		return operation.isOperationAuthorized(payment, userAccountBalance);
+	}
+	
+	public double formatBalanceAccount(double balance) throws Exception {
+		double result = formatter.formatResultDecimalOperation(balance);
+		return result;
+	}
 }

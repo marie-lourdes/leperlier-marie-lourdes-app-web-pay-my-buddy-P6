@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.paymybuddy.webapp.utils.IFormat;
+import com.paymybuddy.webapp.domain.DTO.UserDTO;
 
 import lombok.Data;
 
@@ -18,13 +18,16 @@ public class PaymentStrategy {
 	
 	@Autowired
 	private AccountService accountService;
+	@Autowired
+	private TransactionService transactionService;
+	@Autowired
+	private UserAppService userAppService;
 
 
-	public  void pay(String emailCreditUser, String emailBeneficiaryUser,double amount, String description) {
+	public  void pay(String emailCreditUser, String emailBeneficiaryUser, double balanceCredit, double balanceBeneficiary,double amount, String description) {
 
-		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
-		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 		paymentContact.pay(emailCreditUser, emailBeneficiaryUser,  balanceCredit, balanceBeneficiary,  amount, description);
-	} ;
+		
+	}
 
 }
