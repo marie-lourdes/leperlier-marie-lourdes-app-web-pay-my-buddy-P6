@@ -10,7 +10,7 @@ import com.paymybuddy.webapp.utils.IFormat;
 import lombok.Data;
 
 @Data
-@Component(value = "paymentContact")
+@Component(value = "paymentUserImpl")
 public class PaymentUserImpl implements IPayment {
 
 	@Autowired

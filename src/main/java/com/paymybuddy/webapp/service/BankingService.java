@@ -16,7 +16,7 @@ import com.paymybuddy.webapp.utils.IFormat;
 @Service
 public class BankingService {
 	@Autowired
-	@Qualifier("operationFormatImpl")
+	@Qualifier("operationImpl")
 	private IOperation operation;
 	
 	@Autowired
@@ -48,9 +48,6 @@ public class BankingService {
 
 	// Mise à jour des comptes crediteur et beneficiare
 
-
-
-	
 	public void transferMoneyToBankingAccountUser(String userEmail, double amount,
 			String description, Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		try {

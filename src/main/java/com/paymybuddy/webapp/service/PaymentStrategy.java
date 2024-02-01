@@ -13,7 +13,7 @@ import lombok.Data;
 public class PaymentStrategy {
 
 	@Autowired
-	@Qualifier("paymentContact")
+	@Qualifier("paymentContactImpl")
 	private  IPayment paymentContact ;
 	
 	@Autowired

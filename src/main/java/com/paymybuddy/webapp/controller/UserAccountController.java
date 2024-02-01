@@ -104,13 +104,13 @@ public class UserAccountController {
 			throws IOException {
 		try {
 			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
-				bankingService.transferMoneyToBankingAccountUser(principal.getName(), Constants.BANKING_ACCOUNT,
+				bankingService.transferMoneyToBankingAccountUser(principal.getName(),
 						userTransaction.getAmount(), userTransaction.getDescription(), userTransaction);
 				// transfert au buddyaccount si la valeur "option value est "my buddy account"
 				//  ou "my bankingaccount" dans le template transfer.html
 				 
 			}else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
-				bankingService.transferMoneyToBuddyAccountUser(principal.getName(), Constants.BUDDY_ACCOUNT,
+				bankingService.transferMoneyToBuddyAccountUser(principal.getName(), 
 						userTransaction.getAmount(), userTransaction.getDescription(), userTransaction);
 			} else {
 				bankingService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
