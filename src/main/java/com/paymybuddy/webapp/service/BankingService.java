@@ -15,6 +15,8 @@ import com.paymybuddy.webapp.utils.IFormat;
 
 @Service
 public class BankingService {
+	@Autowired
+	private PaymentStrategy payment;
 
 	@Autowired
 	private UserAppService userAppService;

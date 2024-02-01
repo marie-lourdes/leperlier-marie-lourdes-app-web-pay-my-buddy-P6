@@ -22,26 +22,27 @@ public class PaymentContact implements IPayment {
 	
 	@Autowired
 	private AccountService accountService;
-
+	
 	
 	 @Override
-	public void pay(String emailCreditUser, String emailBeneficiaryUser, double amount, String description) {
+	public void pay(String emailCreditUser, String emailBeneficiaryUser,double balanceCredit , double balanceBeneficiary , double amount, String description) {
 
 			double userBuddyAccountBalance = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 			if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
 				throw new IllegalArgumentException("balance/amount of transaction is negative");
 			}
 			
-			double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
-			double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 			System.out.println("balanceCredit " + balanceCredit);
 			double balanceCalculatedBeneficiaryUser = addAmount(balanceBeneficiary, amount);
 			double feesTransaction = Billing.calculateFees(amount);
 			double amountWithFeesTransaction = addAmount(amount, feesTransaction);
 			double balanceCalculatedCreditUser = withdrawAmount(balanceCredit, amountWithFeesTransaction);
 		
+			
 	 }
 		
+	 
+	 
 		public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
 			return operation.isOperationAuthorized(payment, userAccountBalance);
 		}
