@@ -7,12 +7,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.utils.Constants;
 import com.paymybuddy.webapp.utils.IFormat;
 
+@Transactional
 @Service
 public class BankingService {
 	@Autowired
