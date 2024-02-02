@@ -13,17 +13,17 @@ import com.paymybuddy.webapp.service.UserAppService;
 
 @Controller
 public class LoginController {
-	
+
 	@Autowired
 	@Qualifier("roleImpl")
 	private IRole role;
-	
+
 	@GetMapping("/login") //
-	public String getLoginPage(Model model ) {
+	public String getLoginPage(Model model) {
 
 		return "login";
 	}
-	
+
 	@GetMapping("/logout") //
 	public String getLogoutPage(Model model, java.security.Principal principal) {
 		try {
@@ -32,19 +32,19 @@ public class LoginController {
 			// TODO Auto-generated catch block
 			e.getMessage();
 		}
-		String breadcrumbLogOff= "Log Off";
-		model.addAttribute("breadcrumbLogOff",breadcrumbLogOff);
+		String breadcrumbLogOff = "Log Off";
+		model.addAttribute("breadcrumbLogOff", breadcrumbLogOff);
 		return "logout";
-		
+
 	}
 
 	@GetMapping("/logout-success")
 	public String getLogoutSuccessPage() {
 		return "logout-success";
 	}
-	
+
 	public String isUserOrAdmin(Model model, Principal principal, String view) throws Exception {
 		return role.verifRolePrincipalInView(model, principal, view);
 	}
-	
+
 }

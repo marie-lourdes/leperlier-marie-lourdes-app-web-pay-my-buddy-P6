@@ -22,11 +22,11 @@ import com.paymybuddy.webapp.service.UserAppService;
 
 @Controller
 public class AdminController {
-	
+
 	@Autowired
 	@Qualifier("roleImpl")
 	private IRole role;
-	
+
 	@Autowired
 	private AdminService adminService;
 
@@ -39,16 +39,17 @@ public class AdminController {
 	@GetMapping("/home/profil/admin")
 	public String getProfilPage(Model model, Principal principal) {
 		try {
-			this.isUserOrAdmin(model, principal,  "profil-admin");
-			String breadcrumbTransactions= "Historical Transactions";
-			model.addAttribute("breadcrumbTransactions",breadcrumbTransactions);
+			this.isUserOrAdmin(model, principal, "profil-admin");
+			String breadcrumbTransactions = "Historical Transactions";
+			model.addAttribute("breadcrumbTransactions", breadcrumbTransactions);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
 		}
+		
 		UserDTO user = userAppService.getUserByEmail(principal.getName());
-		String breadcrumbProfilAdmin= "Profil";
-		model.addAttribute("breadcrumbProfilAdmin",breadcrumbProfilAdmin);
+		String breadcrumbProfilAdmin = "Profil";
+		model.addAttribute("breadcrumbProfilAdmin", breadcrumbProfilAdmin);
 		model.addAttribute("user", user);
 		return "profil-admin";
 	}
@@ -56,16 +57,16 @@ public class AdminController {
 	@GetMapping("/home/transactions-billing")
 	public String getHistoricalTransactionsWithFees(Model model, Principal principal) {
 		try {
-			this.isUserOrAdmin(model, principal,  "transactions-billing");
+			this.isUserOrAdmin(model, principal, "transactions-billing");
 			this.getransactionsPaginated(1, model, principal);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
 		}
-		
-		String breadcrumbTransactions= "Historical Transactions";
-		model.addAttribute("breadcrumbTransactions",breadcrumbTransactions);
+
+		String breadcrumbTransactions = "Historical Transactions";
+		model.addAttribute("breadcrumbTransactions", breadcrumbTransactions);
 		return "transactions-billing";
 	}
 
@@ -87,6 +88,7 @@ public class AdminController {
 		model.addAttribute("transactions", transactions);
 		return "transactions-billing";
 	}
+
 	public String isUserOrAdmin(Model model, Principal principal, String view) throws Exception {
 		return role.verifRolePrincipalInView(model, principal, view);
 	}
