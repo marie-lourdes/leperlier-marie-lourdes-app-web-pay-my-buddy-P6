@@ -89,11 +89,18 @@ nav ul li a:hover {
 		display:none;
 	}
 
-.breadcrumb {
+#breadcrumb {
 	display: inline-flex;
     justify-content: flex-start;
     width: 100%;
     padding-left: 0;
+}
+
+#home:active{
+	color:#2145D8;
+}
+.link-home {
+	display:none;
 }
 
 .container {
