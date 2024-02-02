@@ -73,11 +73,11 @@ li {
 	list-style: none;
 }
 
-nav ul li {
+ul li {
 	margin: 0 10px;
 }
 
-nav ul li a {
+ ul li a {
 	color: #3E3B3D;
 }
 
@@ -89,6 +89,12 @@ nav ul li a:hover {
 		display:none;
 	}
 
+.breadcrumb {
+	display: inline-flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding-left: 0;
+}
 
 .container {
 	margin: 0 10vw;
