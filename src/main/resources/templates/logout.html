@@ -16,7 +16,7 @@
 					Pay My Buddy
 				</div>
 			</a>
-				<nav>
+			<nav>
 				<ul>
 					<li th:if="${isAdmin}">
 						<a th:href="@{/home/transactions-billing}">Historical Transactions</a>
@@ -24,13 +24,17 @@
 					<li><a th:href="@{/home}">Home</a></li>
 					<li th:if="${isUser}"><a th:href="@{/home/transfer}">Transfer</a></li>
 					<li th:if="${isUser}"><a th:href="@{/home/profil}">Profil</a></li>
-					<li  th:if="${isAdmin}"><a th:href="@{/home/profil/admin}">Profil</a></li>
+					<li th:if="${isAdmin}"><a th:href="@{/home/profil/admin}">Profil</a></li>
 					<li th:if="${isUser}"><a th:href="@{/home/contact}">Contact</a></li>
 					<li><a th:href="@{/logout}">Log off</a></li>
 					<li><a th:href="@{home/sign-up}">Sign up</a></li>
 				</ul>
 			</nav>
 		</div>
+		<ul id="breadcrumb">
+			<li class="link-home"> Home / </li>
+			<li th:text="${breadcrumbLogOff}" class="link-active"></li>	
+		</ul>
 	</header>
 	<div class="container">
 		<main>

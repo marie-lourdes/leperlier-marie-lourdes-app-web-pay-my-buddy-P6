@@ -10,16 +10,17 @@ h2 {
 	color: #3E3B3D;
 	font-weight: normal;
 }
+
 h2 {
 	font-size: 1.5rem;
 }
+
 section {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
 	width: 70%;
-
 }
 
 header,
@@ -81,7 +82,7 @@ ul li {
 	color: #3E3B3D;
 }
 
-nav ul li a:hover {
+nav ul li a:hover, .link-home {
 	color: #2145D8;
 }
 
@@ -93,14 +94,12 @@ nav ul li a:hover {
 	display: inline-flex;
     justify-content: flex-start;
     width: 100%;
-    padding-left: 0;
+    padding: 15px;
+    margin-top: 0;
 }
 
-#home:active{
-	color:#2145D8;
-}
-.link-home {
-	display:none;
+.link-active {
+	color:rgb(138, 137, 137);
 }
 
 .container {
@@ -156,10 +155,6 @@ input,select,
 	padding: 10px 50px 10px 5px;
 }
 
-/*select {
-	appearance: auto;
-}*/
-
 .button-connection {
 	display: flex;
 	align-items: center;
@@ -184,8 +179,7 @@ tbody tr {
 	text-align: center;
 }
 
-thead {
-	/*background-color: rgba(205,201,201,0.5);*/
+thead, #breadcrumb {
 	background-color: rgba(198, 195, 195, 0.5);
 }
 
@@ -194,7 +188,7 @@ thead th {
 	color: rgb(111, 174, 75);
 }
 
-tbody tr {
+tbody tr{
 	background-color: rgba(240, 237, 237, 0.5);
 }
 

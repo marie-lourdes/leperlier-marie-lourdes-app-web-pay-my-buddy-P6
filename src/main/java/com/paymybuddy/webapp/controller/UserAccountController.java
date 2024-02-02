@@ -132,6 +132,9 @@ public class UserAccountController {
 	@GetMapping("home/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
+		
+		String breadcrumbSignUp= "Sign Up";
+		model.addAttribute("breadcrumbSignUp",breadcrumbSignUp);
 		model.addAttribute("user", userCreated);
 		return "sign-up";
 	}
@@ -151,6 +154,8 @@ public class UserAccountController {
 		}
 
 		UserDTO user = userAppService.getUserByEmail(principal.getName());
+		String breadcrumbHome= "Home /";
+		model.addAttribute("breadcrumbHome",breadcrumbHome);
 		model.addAttribute("user", user);
 		return "home";
 	}
@@ -158,6 +163,9 @@ public class UserAccountController {
 	@GetMapping("/home/contact") // enpoint template contacts
 	public String getUserContact(Model model, Principal principal) {
 		List<UserApp> allContact = userAppService.getAllUserContacts(principal.getName());
+		
+		String breadcrumbContact= "Contact";
+		model.addAttribute("breadcrumbContact",breadcrumbContact);
 		model.addAttribute("contacts", allContact);
 		return "contacts";
 	}
@@ -165,7 +173,7 @@ public class UserAccountController {
 	@GetMapping("/home/profil") //
 	public String getProfilPage(Model model, Principal principal) {
 		try {
-			this.isUserOrAdmin(model, principal, "profil");
+			this.isUserOrAdmin(model, principal, "profil");	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
@@ -177,6 +185,8 @@ public class UserAccountController {
 		BuddyAccount userBuddyAccountBalance = accountService.findBuddyAccountByUser(user.getEmail());
 		BankingAccount userBankingAccountBalance = accountService.findBankingAccountByUser(user.getEmail());
 		
+		String breadcrumbProfil= "Profil";
+		model.addAttribute("breadcrumbProfil",breadcrumbProfil);
 		model.addAttribute("contact", contactCreated);
 		model.addAttribute("user", user);
 		model.addAttribute("userBuddyAccount", userBuddyAccountBalance);
@@ -196,7 +206,9 @@ public class UserAccountController {
 
 		List<UserApp> allContacts = userAppService.getAllUserContacts(userEmail);
 		this.getHistoricalTransactionsByUser(1, model, principal);
-
+		
+		String breadcrumbTransfer= "Transfer";
+		model.addAttribute("breadcrumbTransfer",breadcrumbTransfer);
 		model.addAttribute("contacts", allContacts);
 		return "transfer";
 	}

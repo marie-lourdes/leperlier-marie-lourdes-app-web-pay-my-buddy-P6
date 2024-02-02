@@ -40,11 +40,15 @@ public class AdminController {
 	public String getProfilPage(Model model, Principal principal) {
 		try {
 			this.isUserOrAdmin(model, principal,  "profil-admin");
+			String breadcrumbTransactions= "Historical Transactions";
+			model.addAttribute("breadcrumbTransactions",breadcrumbTransactions);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
 		}
 		UserDTO user = userAppService.getUserByEmail(principal.getName());
+		String breadcrumbProfilAdmin= "Profil";
+		model.addAttribute("breadcrumbProfilAdmin",breadcrumbProfilAdmin);
 		model.addAttribute("user", user);
 		return "profil-admin";
 	}
@@ -53,11 +57,15 @@ public class AdminController {
 	public String getHistoricalTransactionsWithFees(Model model, Principal principal) {
 		try {
 			this.isUserOrAdmin(model, principal,  "transactions-billing");
+			this.getransactionsPaginated(1, model, principal);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
 		}
-		this.getransactionsPaginated(1, model, principal);
+		
+		String breadcrumbTransactions= "Historical Transactions";
+		model.addAttribute("breadcrumbTransactions",breadcrumbTransactions);
 		return "transactions-billing";
 	}
 

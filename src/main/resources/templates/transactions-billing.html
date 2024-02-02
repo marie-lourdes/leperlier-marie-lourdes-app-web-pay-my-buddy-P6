@@ -34,6 +34,10 @@
 				</ul>
 			</nav>
 		</div>
+			<ul id="breadcrumb">
+			<li class="link-home"> Home / </li>
+			<li th:if="${isAdmin}" th:text="${breadcrumbTransactions}" class="link-active"></li>
+		</ul>
 	</header>
 	<div class="container">
 		<main class="main--transaction">

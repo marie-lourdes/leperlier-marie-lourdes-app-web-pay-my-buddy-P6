@@ -32,6 +32,8 @@ public class LoginController {
 			// TODO Auto-generated catch block
 			e.getMessage();
 		}
+		String breadcrumbLogOff= "Log Off";
+		model.addAttribute("breadcrumbLogOff",breadcrumbLogOff);
 		return "logout";
 		
 	}

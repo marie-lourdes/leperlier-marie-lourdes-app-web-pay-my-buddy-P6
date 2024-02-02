@@ -1,58 +1,75 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhml"
-	xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-       <link th:href="@{/css/main.css}" rel="stylesheet" />
-       <title>contact</title>
-    </head>
-	<body>
-		<header>
-			<div class="title-header"> Pay My Buddy</div>	
-				<div class="nav-bar">
-					<a th:href="@{/home}">
-						 <div class="button-styled button-green">
-								Pay My Buddy
-						 </div>
-					</a>
-					<nav> 
-						<ul>
-							<li><a th:href="@{/home}">Home</a></li>
-							<li><a th:href="@{/home/transfer}">Transfer</a></li>
-							<li><a th:href= "@{/home/profil}">Profil</a></li>
-							<li><a th:href="@{/home/contact}">Contact</a></li>
-							<li><a th:href="@{/logout}">Log off</a></li>
-							<li><a th:href="@{home/sign-up}">Sign up</a></li>
-						</ul>
-					</nav>
-				</div>				
-		</header>	
-		<div class="container">
-			<main class="main--customized ">
-				<h1>Liste des contacts</h1>	   
-				   <table >
-					<thead>
-						<tr>
-							<th>Prénom</th>
-							<th>Nom</th>
-							<th>Email</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:if="${contacts.empty}">
-							<td colspan="3">Vous n'avez pas de contacts</td>
-						</tr>
-						<tr th:each="contact: ${contacts}">
-							<td><span th:text="${contact.lastName}"> Nom </span></td>
-							<td><span th:text="${contact.firstName}"> Prénom </span></td>
-							<td><span th:text="${contact.email}"> Email</span></td>
-						</tr>
-					</tbody>
-				</table>				  		
-			</main>	
+<html xmlns="http://www.w3.org/1999/xhml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
+	<title>contact</title>
+</head>
+
+<body>
+	<header>
+		<div class="title-header"> Pay My Buddy</div>
+		<div class="nav-bar">
+			<a th:href="@{/home}">
+				<div class="button-styled button-green">
+					Pay My Buddy
+				</div>
+			</a>
+			<nav>
+				<ul>
+					<li class="link-home"> Home / </li>
+					<li>
+						<a th:href="@{/home/transfer}">Transfer
+
+						</a>
+					</li>
+					<li>
+						<a th:href="@{/home/profil}">Profil</a>
+					</li>
+					<li>
+						<a th:href="@{/home/contact}">Contact</a>
+					</li>
+					<li>
+						<a th:href="@{/logout}">Log off</a>
+					</li>
+					<li>
+						<a th:href="@{home/sign-up}">Sign up</a>
+					</li>
+				</ul>
+			</nav>
 		</div>
-	</body>
+		<ul id="breadcrumb">
+			<li class="link-home"> Home / </li>
+			<li th:text="${breadcrumbContact}" class="link-active"></li>	
+		</ul>
+	</header>
+	<div class="container">
+		<main class="main--customized ">
+			<h1>Liste des contacts</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Prénom</th>
+						<th>Nom</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${contacts.empty}">
+						<td colspan="3">Vous n'avez pas de contacts</td>
+					</tr>
+					<tr th:each="contact: ${contacts}">
+						<td><span th:text="${contact.lastName}"> Nom </span></td>
+						<td><span th:text="${contact.firstName}"> Prénom </span></td>
+						<td><span th:text="${contact.email}"> Email</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</main>
+	</div>
+</body>
 
 </html>
