@@ -37,11 +37,11 @@ public class BankingService {
 
 	public void payToContact(String emailCreditUser, String emailBeneficiaryUser, double amount, String description,
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
-		
-		payment.pay(emailCreditUser, emailBeneficiaryUser, amount);
-		
 		UserDTO userContact = userAppService.getUserByEmail(emailBeneficiaryUser);
 		UserDTO creditUser = userAppService.getUserByEmail(emailCreditUser);
+		payment.pay(emailCreditUser, emailBeneficiaryUser, amount);
+		
+		
 		transactionService.addTransaction(creditUser.getId(),emailCreditUser, transactionCreated);
 		
 	}
@@ -52,13 +52,14 @@ public class BankingService {
 			String description, Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		try {
 			double userBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
+			
 			if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
 				throw new Exception("balance/amount of transaction is negative");
 			}
-
+			UserDTO user = userAppService.getUserByEmail(userEmail);
 			payment.pay(userEmail, amount, Constants.BANKING_ACCOUNT);
 			
-			UserDTO user = userAppService.getUserByEmail(userEmail);
+		
 			transactionService.addTransaction(user.getId(), user.getEmail(), transactionCreated);
 			
 		} catch (Exception e) {
@@ -74,13 +75,14 @@ public class BankingService {
 
 		try {
 			double userBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
+			
 			if (isPaymentAuthorized(amount, userBankingAccountBalance)) {
 				throw new Exception("balance/amount of transaction is negative");
 			}
-
+			UserDTO user = userAppService.getUserByEmail(userEmail);
 			payment.pay(userEmail, amount, Constants.BUDDY_ACCOUNT);
 			
-			UserDTO user = userAppService.getUserByEmail(userEmail);
+			
 			transactionService.addTransaction(user.getId(), user.getEmail(), transactionCreated);
 	
 		} catch (Exception e) {

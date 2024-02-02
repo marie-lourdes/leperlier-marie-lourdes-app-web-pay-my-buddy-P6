@@ -36,7 +36,7 @@ public class PaymentStrategy {
 	
 	public  void pay(String userEmail, double amount,String typeAccountUser) {
 
-		paymentUser.pay(userEmail,  amount,typeAccountUser);
+		paymentUser.pay(userEmail,  amount, typeAccountUser);
 		
 	}
 

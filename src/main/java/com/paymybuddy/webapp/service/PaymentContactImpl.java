@@ -30,12 +30,7 @@ public class PaymentContactImpl implements IPayment {
 	
 	@Override
 	public void pay(String emailCreditUser, String emailBeneficiaryUser,double amount) {
-		double userBuddyAccountBalance = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
-
-		if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
-			throw new IllegalArgumentException("balance/amount of transaction is negative");
-		}
-		
+	
 		this.calculBalance(emailCreditUser,  emailBeneficiaryUser, amount);
 		
 		try {
