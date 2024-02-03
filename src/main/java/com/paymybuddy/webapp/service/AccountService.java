@@ -1,34 +1,20 @@
 package com.paymybuddy.webapp.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.webapp.AccountFactory;
 import com.paymybuddy.webapp.AccountFactory.AccountType;
-import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
-import com.paymybuddy.webapp.domain.model.UserApp;
-import com.paymybuddy.webapp.repository.IAccountRepository;
-import com.paymybuddy.webapp.repository.IUserRepository;
 
 import jakarta.transaction.Transactional;
 
 @Transactional
 @Service
 public class AccountService {
-
-	@Autowired
-	private IUserRepository userRepository;
-
-	@Autowired
-	private IAccountRepository accountRepository;
-
+	
 	@Autowired
 	@Qualifier("accountImpl")
 	private IBalance account;
@@ -80,7 +66,7 @@ public class AccountService {
 					AccountFactory.makeAccount(AccountType.BANKING));
 			if (userBankingAccount == null) {
 				
-				throw new NullPointerException(" Bankink Account not found for "+ emailUser);
+				throw new NullPointerException(" Banking Account not found for "+ emailUser);
 			} 
 		} catch (Exception e) {
 			e.getMessage();

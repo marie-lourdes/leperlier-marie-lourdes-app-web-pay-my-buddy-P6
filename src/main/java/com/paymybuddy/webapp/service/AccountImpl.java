@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.paymybuddy.webapp.AccountFactory;
@@ -29,9 +28,8 @@ public class AccountImpl implements IBalance {
 	@Autowired
 	private IAccountRepository accountRepository;
 
-	private UserApp user;
 	private List<Account> accountsFoundByUser;
-	
+
 	@Override
 	public void addBuddyAccount(String emailUser) throws Exception {
 		UserApp user = new UserApp();
@@ -40,10 +38,6 @@ public class AccountImpl implements IBalance {
 
 		user = userRepository.findByEmail(emailUser);
 		accountExisting = accountRepository.findByUser(user);
-		if (user == null) {
-			throw new NullPointerException("user " + emailUser + " not found");
-		}
-
 		for (Account account : accountExisting) {
 			if (account.getUser().getEmail().equals(emailUser)) {
 				throw new IllegalArgumentException(
@@ -56,9 +50,11 @@ public class AccountImpl implements IBalance {
 
 		accountRepository.save(newAccount);
 	}
-	
+
 	@Override
-	public Account findAccountByUser(String emailUser, Account userAccount)  throws Exception{
+	public Account findAccountByUser(String emailUser, Account userAccount) throws Exception {
+		UserApp user = new UserApp();
+		user = userRepository.findByEmail(emailUser);
 		accountsFoundByUser = accountRepository.findByUser(user);
 		accountsFoundByUser.forEach(account -> {
 			if (account.getClass() == userAccount.getClass()) {
@@ -70,18 +66,18 @@ public class AccountImpl implements IBalance {
 		});
 		return userAccount;
 	}
-	
+
 	@Override
 	public void updateBalance(long id, double amount, String typeAccountBeneficiary) throws Exception {
-		 user = new UserApp();
+		UserApp user = new UserApp();
 		user = userRepository.findById(id).get();
 		if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
-			
+
 			accountRepository.updateBalanceBuddyAccount(amount, user);
 		} else if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
-			
+
 			accountRepository.updateBalanceBankingAccount(amount, user);
 		}
 	}
-	
+
 }

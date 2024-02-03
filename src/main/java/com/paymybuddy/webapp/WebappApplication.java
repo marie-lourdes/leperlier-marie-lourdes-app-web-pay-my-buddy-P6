@@ -6,8 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.paymybuddy.webapp.domain.model.Transaction;
-import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.IUserRepository;
 import com.paymybuddy.webapp.service.BankingService;
 import com.paymybuddy.webapp.service.TransactionService;

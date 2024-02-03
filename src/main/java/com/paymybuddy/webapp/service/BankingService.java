@@ -44,7 +44,7 @@ public class BankingService {
 		payment.pay(emailCreditUser, emailBeneficiaryUser, amount);
 		
 		
-		transactionService.addTransaction(creditUser.getId(),emailCreditUser, transactionCreated);
+		transactionService.addTransaction(creditUser.getId(),emailBeneficiaryUser, transactionCreated);
 		
 	}
 
@@ -56,7 +56,7 @@ public class BankingService {
 			double userBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
 			
 			if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
-				throw new Exception("balance/amount of transaction is negative");
+				throw new Exception("balance Buddy Account/amount of transaction is negative");
 			}
 			UserDTO user = userAppService.getUserByEmail(userEmail);
 			payment.pay(userEmail, amount, Constants.BANKING_ACCOUNT);
@@ -79,7 +79,7 @@ public class BankingService {
 			double userBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
 			
 			if (isPaymentAuthorized(amount, userBankingAccountBalance)) {
-				throw new Exception("balance/amount of transaction is negative");
+				throw new Exception("balance Banking Account/amount of transaction is negative");
 			}
 			UserDTO user = userAppService.getUserByEmail(userEmail);
 			payment.pay(userEmail, amount, Constants.BUDDY_ACCOUNT);

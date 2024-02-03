@@ -103,19 +103,22 @@ public class UserAccountController {
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
 			throws IOException {
 		try {
-			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
+			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT) ) {
 				bankingService.transferMoneyToBankingAccountUser(principal.getName(),
 						userTransaction.getAmount(), userTransaction.getDescription(), userTransaction);
+				System.out.println("-------------------transferMoneyToBankingAccountUser-------------");
 				// transfert au buddyaccount si la valeur "option value est "my buddy account"
 				//  ou "my bankingaccount" dans le template transfer.html
 				 
-			}else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
+			}else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)  ) {
 				bankingService.transferMoneyToBuddyAccountUser(principal.getName(), 
 						userTransaction.getAmount(), userTransaction.getDescription(), userTransaction);
+				System.out.println("-------------------transferMoneyToBuddyAccountUser-------------");
 			} else {
 				bankingService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
 						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
+				System.out.println("-------------------payToContact-------------");
 			}
 		
 			return new ModelAndView("redirect:/transfer-success");

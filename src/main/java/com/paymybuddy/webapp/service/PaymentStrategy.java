@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.paymybuddy.webapp.domain.DTO.UserDTO;
-
 import lombok.Data;
 
 @Data

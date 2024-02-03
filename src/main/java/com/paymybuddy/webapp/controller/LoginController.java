@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.paymybuddy.webapp.service.IRole;
-import com.paymybuddy.webapp.service.UserAppService;
 
 @Controller
 public class LoginController {

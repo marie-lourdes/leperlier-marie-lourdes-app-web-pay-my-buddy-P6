@@ -34,11 +34,11 @@ public class TransactionService {
 	 * return transactionRepository.findByCreditUser(creditUser); }
 	 */
 
-	public void addTransaction(long userId, String contactId, Transaction transactionCreated)
+	public void addTransaction(long userId, String emailContact, Transaction transactionCreated)
 			throws IllegalArgumentException {
 		UserApp creditUser = userRepository.findById(userId).get();
 		// System.out.println("credit user" + creditUser);
-		UserApp beneficiaryUser = userRepository.findByEmail(contactId);
+		UserApp beneficiaryUser = userRepository.findByEmail(emailContact);
 		Transaction tranferRegistered = new Transaction();
 
 		if (beneficiaryUser == null) {
