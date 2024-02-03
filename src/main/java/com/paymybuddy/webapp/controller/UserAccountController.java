@@ -47,10 +47,6 @@ public class UserAccountController {
 	@Autowired
 	private AccountService accountService;
 
-
-
-	
-
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
 		try {
@@ -94,8 +90,6 @@ public class UserAccountController {
 		}
 	}
 
-
-
 	@GetMapping("home/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
@@ -105,11 +99,6 @@ public class UserAccountController {
 		model.addAttribute("user", userCreated);
 		return "sign-up";
 	}
-
-	/*@GetMapping("/logout")
-	public String getLogoutPage(Model model, Principal principal) {
-
-	}*/
 
 	@GetMapping("/home")
 	public String getHomePage(Model model, Principal principal) {
@@ -147,7 +136,6 @@ public class UserAccountController {
 		}
 
 		UserDTO contactCreated = new UserDTO();
-
 		UserDTO user = userAppService.getUserByEmail(principal.getName());
 		BuddyAccount userBuddyAccountBalance = accountService.findBuddyAccountByUser(user.getEmail());
 		BankingAccount userBankingAccountBalance = accountService.findBankingAccountByUser(user.getEmail());
@@ -170,6 +158,4 @@ public class UserAccountController {
 	public String isUserOrAdmin(Model model, Principal principal, String view) throws Exception {
 		return role.verifRolePrincipalInView(model, principal, view);
 	}
-
-
 }
