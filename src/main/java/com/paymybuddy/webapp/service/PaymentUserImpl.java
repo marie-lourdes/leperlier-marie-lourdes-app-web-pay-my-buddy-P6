@@ -64,34 +64,12 @@ public class PaymentUserImpl implements IPayment {
 			// non le compte bancaire qui est crediteur mais hors application
 			this.balanceCalculatedCreditUser = operation.withdraw(balanceBankingAccount, amount);
 		}
-
-		System.out.println(" balanceCalculatedBeneficiaryUser" + balanceCalculatedBeneficiaryUser);
-		System.out.println("   balanceCalculatedCreditUser" + balanceCalculatedCreditUser);
 	}
 
 	@Override
 	public void calculBalance(String emailCreditUser, String emailBeneficiaryUser, double amount) {
 
 	}
-
-	/*
-	 * public void
-	 * updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String
-	 * emailCreditUser, String emailBeneficiaryUser) throws Exception {
-	 * 
-	 * if (accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation()
-	 * == null) { throw new
-	 * NullPointerException("Buddy Account of contact user doesn't exist"); }
-	 * 
-	 * accountService.updateBalanceAccount(
-	 * accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId()
-	 * , this.formatBalanceAccount(balanceCalculatedBeneficiaryUser),
-	 * Constants.BUDDY_ACCOUNT);
-	 * accountService.updateBalanceAccount(accountService.findBuddyAccountByUser(
-	 * emailCreditUser).getUser().getId(),
-	 * this.formatBalanceAccount(balanceCalculatedCreditUser),
-	 * Constants.BUDDY_ACCOUNT); }
-	 */
 
 	public void updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(String emailUser,
 			String typeAccountBeneficiary, double balanceCalculatedBankingAccount,
@@ -104,10 +82,6 @@ public class PaymentUserImpl implements IPayment {
 				this.formatBalanceAccount(balanceCalculatedBankingAccount), Constants.BANKING_ACCOUNT);
 		accountService.updateBalanceAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedBuddyAccountUser), Constants.BUDDY_ACCOUNT);
-	}
-
-	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
-		return operation.isOperationAuthorized(payment, userAccountBalance);
 	}
 
 	public double formatBalanceAccount(double balance) throws Exception {
