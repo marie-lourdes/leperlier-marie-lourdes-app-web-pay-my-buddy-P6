@@ -1,15 +1,20 @@
-package com.paymybuddy.webapp.repository;
+package com.paymybuddy.webapp.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.paymybuddy.webapp.AccountFactory;
+import com.paymybuddy.webapp.AccountFactory.AccountType;
 import com.paymybuddy.webapp.domain.model.Account;
+import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
-import com.paymybuddy.webapp.service.Billing;
-import com.paymybuddy.webapp.service.IOperation;
+import com.paymybuddy.webapp.repository.IAccountRepository;
+import com.paymybuddy.webapp.repository.IUserRepository;
 import com.paymybuddy.webapp.utils.Constants;
 
 import lombok.Data;
@@ -27,18 +32,34 @@ public class AccountImpl implements IBalance {
 	private UserApp user;
 	private List<Account> accountsFoundByUser;
 	
-
 	@Override
-	public Account findAccountByUser(String emailUser, Account userAccount)  throws Exception{
-		user = userRepository.findByEmail(emailUser);
-		accountsFoundByUser = accountRepository.findByUser(user);
+	public void addBuddyAccount(String emailUser) throws Exception {
+		UserApp user = new UserApp();
+		BuddyAccount newAccount = (BuddyAccount) AccountFactory.makeAccount(AccountType.BUDDY);
+		List<Account> accountExisting = new ArrayList<Account>();
 
+		user = userRepository.findByEmail(emailUser);
+		accountExisting = accountRepository.findByUser(user);
 		if (user == null) {
 			throw new NullPointerException("user " + emailUser + " not found");
-		} else if (accountsFoundByUser.isEmpty()) {
-			throw new NullPointerException("account not found");
 		}
 
+		for (Account account : accountExisting) {
+			if (account.getUser().getEmail().equals(emailUser)) {
+				throw new IllegalArgumentException(
+						" BuddyAccount already exist, " + "birthdate is: " + account.getCreation());
+			}
+		}
+		newAccount.setBalance(80.0);
+		newAccount.setUser(user);
+		newAccount.setCreation(new Date());
+
+		accountRepository.save(newAccount);
+	}
+	
+	@Override
+	public Account findAccountByUser(String emailUser, Account userAccount)  throws Exception{
+		accountsFoundByUser = accountRepository.findByUser(user);
 		accountsFoundByUser.forEach(account -> {
 			if (account.getClass() == userAccount.getClass()) {
 				userAccount.setId(account.getId());

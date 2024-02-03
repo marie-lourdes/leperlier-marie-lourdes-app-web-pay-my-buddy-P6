@@ -15,7 +15,6 @@ import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.IAccountRepository;
-import com.paymybuddy.webapp.repository.IBalance;
 import com.paymybuddy.webapp.repository.IUserRepository;
 
 import jakarta.transaction.Transactional;
@@ -35,28 +34,13 @@ public class AccountService {
 	private IBalance account;
 
 	public void addBuddyAccount(String emailUser) throws IllegalArgumentException, NullPointerException {
-		UserApp user = new UserApp();
-		BuddyAccount newAccount = new BuddyAccount();
-		List<Account> accountExisting = new ArrayList<Account>();
-
-		user = userRepository.findByEmail(emailUser);
-		accountExisting = accountRepository.findByUser(user);
-		if (user == null) {
-			throw new NullPointerException("user " + emailUser + " not found");
-		}
-
-		for (Account account : accountExisting) {
-			if (account.getUser().getEmail().equals(emailUser)) {
-				throw new IllegalArgumentException(
-						" BuddyAccount already exist, " + "birthdate is: " + account.getCreation());
-			}
-		}
-		newAccount.setBalance(80.0);
-		newAccount.setUser(user);
-		newAccount.setCreation(new Date());
-
-		accountRepository.save(newAccount);
-	}
+                   try {
+					account.addBuddyAccount(emailUser);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+}
 
 	public void updateBalanceAccount(long id, double amount, String typeAccountBeneficiary)
 			throws NullPointerException {
@@ -76,10 +60,13 @@ public class AccountService {
 		try {
 			userBuddyAccount = (BuddyAccount) account.findAccountByUser(emailUser,
 					AccountFactory.makeAccount(AccountType.BUDDY));
-
+			if (userBuddyAccount == null) {
+		
+				throw new NullPointerException(" Buddy Account not found for "+ emailUser);
+			} 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
+		
 		}
 
 		return userBuddyAccount;
@@ -91,9 +78,12 @@ public class AccountService {
 		try {
 			userBankingAccount = (BankingAccount) account.findAccountByUser(emailUser,
 					AccountFactory.makeAccount(AccountType.BANKING));
+			if (userBankingAccount == null) {
+				
+				throw new NullPointerException(" Bankink Account not found for "+ emailUser);
+			} 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
 		}
 		return userBankingAccount;
 	}
