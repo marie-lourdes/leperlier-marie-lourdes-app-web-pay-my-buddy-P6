@@ -77,9 +77,6 @@ public class PaymentContactImpl implements IPayment {
 				this.formatBalanceAccount(balanceCalculatedCreditUser), Constants.BUDDY_ACCOUNT);
 	}
 
-	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
-		return operation.isOperationAuthorized(payment, userAccountBalance);
-	}
 
 	public double formatBalanceAccount(double balance) throws Exception {
 		double result = formatter.formatResultDecimalOperation(balance);
