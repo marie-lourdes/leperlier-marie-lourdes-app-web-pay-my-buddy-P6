@@ -17,8 +17,7 @@ public class TransactionMapper {
 	}
 
 	public TransactionBillingDTO transactionToTransactionBillingDTO(Transaction transaction) {
-		String userCreditName = transaction.getCreditUser().getFirstName() + " "
-				+ transaction.getBeneficiaryUser().getLastName();
+		String userCreditName = transaction.getCreditUser().getFirstName();
 		String contactName = transaction.getBeneficiaryUser().getFirstName() + " "
 				+ transaction.getBeneficiaryUser().getLastName();
 		String description = transaction.getDescription();

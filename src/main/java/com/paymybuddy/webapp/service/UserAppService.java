@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.DTO.UserLoginDTO;
@@ -35,10 +36,14 @@ public class UserAppService {
 				throw new IllegalArgumentException("Email already exist!");
 			}
 		} else {
+			userCreated.setEmail(userApp.getEmail());
+			userCreated.setFirstName(StringUtils.capitalize(userApp.getFirstName()));
+			userCreated.setLastName(StringUtils.capitalize(userApp.getLastName()));
 			String userPassword = userApp.getPassword();
 			String userPasswordEncoded = passwordEncoder.encode(userPassword);
-			userApp.setPassword(userPasswordEncoded);
-			userCreated = userRepository.save(userApp);
+			userCreated.setPassword(userPasswordEncoded);
+		
+			userRepository.save(userCreated);
 		}
 
 		return userCreated;
@@ -64,38 +69,38 @@ public class UserAppService {
 		UserApp user = userRepository.findByEmail(email);
 		UserLoginDTO userLoginDTO = mapper.userToUserLoginDTO(user);
 		if (userLoginDTO == null) {
-			throw new NullPointerException("User "+user+"doesn't exist");
-			}
+			throw new NullPointerException("User " + user + "doesn't exist");
+		}
 		System.out.println(userLoginDTO);
 		return userLoginDTO;
 	}
 
-	public 	UserDTO getUserByEmail(String email) throws NullPointerException{
+	public UserDTO getUserByEmail(String email) throws NullPointerException {
 		UserApp user = userRepository.findByEmail(email);
 		UserDTO userDTO = mapper.userToUserDTO(user);
 		if (userDTO == null) {
-			throw new NullPointerException("User "+user+"doesn't exist");
-			}
+			throw new NullPointerException("User " + user + "doesn't exist");
+		}
 		return userDTO;
 	}
 
 	public UserDTO getUserEntityById(long id) {
 		UserApp user = userRepository.findById(id).get();
 		UserDTO userDTO = mapper.userToUserDTO(user);
-		if (userDTO== null) {
-			throw new NullPointerException("User "+userDTO+"doesn't exist");
-			}
+		if (userDTO == null) {
+			throw new NullPointerException("User " + userDTO + "doesn't exist");
+		}
 		return userDTO;
 	}
 
 	public List<UserApp> getAllUserContacts(String emailUser) {
 		UserApp user = userRepository.findByEmail(emailUser);
-		if ( user == null) {
-			throw new NullPointerException("User "+ user +"doesn't exist");
-			}
+		if (user == null) {
+			throw new NullPointerException("User " + user + "doesn't exist");
+		}
 		List<UserApp> userContacts = user.getContacts();
-		
-	//	System.out.println("userContact" + userContacts);
+
+		// System.out.println("userContact" + userContacts);
 		return userContacts;
 	}
 }
