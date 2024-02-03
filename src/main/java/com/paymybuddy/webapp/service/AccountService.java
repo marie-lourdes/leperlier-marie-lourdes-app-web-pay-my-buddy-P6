@@ -14,19 +14,20 @@ import jakarta.transaction.Transactional;
 @Transactional
 @Service
 public class AccountService {
-	
+
 	@Autowired
 	@Qualifier("accountImpl")
 	private IBalance account;
 
 	public void addBuddyAccount(String emailUser) throws IllegalArgumentException, NullPointerException {
-                   try {
-					account.addBuddyAccount(emailUser);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-}
+		try {
+			account.addBuddyAccount(emailUser);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 	public void updateBalanceAccount(long id, double amount, String typeAccountBeneficiary)
 			throws NullPointerException {
@@ -47,12 +48,12 @@ public class AccountService {
 			userBuddyAccount = (BuddyAccount) account.findAccountByUser(emailUser,
 					AccountFactory.makeAccount(AccountType.BUDDY));
 			if (userBuddyAccount == null) {
-		
-				throw new NullPointerException(" Buddy Account not found for "+ emailUser);
-			} 
+
+				throw new NullPointerException(" Buddy Account not found for " + emailUser);
+			}
 		} catch (Exception e) {
 			e.getMessage();
-		
+
 		}
 
 		return userBuddyAccount;
@@ -65,9 +66,9 @@ public class AccountService {
 			userBankingAccount = (BankingAccount) account.findAccountByUser(emailUser,
 					AccountFactory.makeAccount(AccountType.BANKING));
 			if (userBankingAccount == null) {
-				
-				throw new NullPointerException(" Banking Account not found for "+ emailUser);
-			} 
+
+				throw new NullPointerException(" Banking Account not found for " + emailUser);
+			}
 		} catch (Exception e) {
 			e.getMessage();
 		}

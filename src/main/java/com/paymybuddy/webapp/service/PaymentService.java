@@ -18,7 +18,8 @@ import com.paymybuddy.webapp.utils.IFormat;
 
 @Transactional
 @Service
-public class BankingService implements IAuthorizationPayment {
+public class PaymentService implements IAuthorizationPayment {
+
 	@Autowired
 	@Qualifier("operationImpl")
 	private IOperation operation;
@@ -42,8 +43,6 @@ public class BankingService implements IAuthorizationPayment {
 	public void payToContact(String emailCreditUser, String emailBeneficiaryUser, double amount, String description,
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		try {
-			UserDTO creditUser = userAppService.getUserByEmail(emailCreditUser);
-
 			double userBuddyAccountCreditUserBalance = accountService.findBuddyAccountByUser(emailCreditUser)
 					.getBalance();
 			Date userBuddyAccountBeneficiaryUser = accountService.findBuddyAccountByUser(emailCreditUser).getCreation();
@@ -54,7 +53,7 @@ public class BankingService implements IAuthorizationPayment {
 			}
 
 			payment.pay(emailCreditUser, emailBeneficiaryUser, amount);
-			transactionService.addTransaction(creditUser.getId(), emailBeneficiaryUser, transactionCreated);
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -64,8 +63,7 @@ public class BankingService implements IAuthorizationPayment {
 	public void transferMoneyToBankingAccountUser(String userEmail, double amount, String description,
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		try {
-			UserDTO user = userAppService.getUserByEmail(userEmail);
-
+		
 			double userBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
 			Date userBankingAccount = accountService.findBankingAccountByUser(userEmail).getCreation();
 			if (userBankingAccount == null) {
@@ -75,8 +73,7 @@ public class BankingService implements IAuthorizationPayment {
 			}
 
 			payment.pay(userEmail, amount, Constants.BANKING_ACCOUNT);
-			transactionService.addTransaction(user.getId(), user.getEmail(), transactionCreated);
-
+		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

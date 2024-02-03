@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.webapp.repository.IUserRepository;
-import com.paymybuddy.webapp.service.BankingService;
+import com.paymybuddy.webapp.service.PaymentService;
 import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
 
@@ -21,7 +21,7 @@ public class WebappApplication implements CommandLineRunner {
 	TransactionService transactionService;
 
 	@Autowired
-	BankingService bankingService;
+	PaymentService bankingService;
 	
 	@Autowired
 	IUserRepository userRepository;
@@ -33,13 +33,7 @@ public class WebappApplication implements CommandLineRunner {
 	@Transactional
 	@Override
 	public void run(String... args) {
-		/*UserApp user=userAppService.getUserEntityById(2);
-		UserApp contact=userAppService.getUserEntityById(3);
-		Transaction transactionCreated = new Transaction();
-		transactionCreated.setBeneficiaryUser(contact);
-		transactionCreated.setAmount(10);
-		transactionCreated.setDescription("versement");
-		 transactionService.addTransactionUserAndContact(2, contact.getEmail(), transactionCreated);*/
+
 		
 	}
 }

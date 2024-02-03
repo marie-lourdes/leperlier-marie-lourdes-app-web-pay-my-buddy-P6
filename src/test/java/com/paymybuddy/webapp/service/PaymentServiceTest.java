@@ -1,19 +1,22 @@
 package com.paymybuddy.webapp.service;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.utils.IFormat;
 
-class BankingServiceTest {
+@SpringBootTest
+class PaymentServiceTest {
 	@Autowired
-	private BankingService bankingServiceUnderTest;
+	private PaymentService paymentServiceTest;
 	
 	@MockBean
 	@Qualifier("operationImpl")
@@ -37,15 +40,29 @@ class BankingServiceTest {
 	
 	private static UserDTO userTest2 ;
 	
-	/*@BeforeAll
+	@BeforeAll
 	static void setUp() {
 		 userTest2 = new UserDTO();
+		 userTest2.setId(1);
 		 userTest2.setEmail("userTest@email.com");
-		 userTest2.setFirstName("first);
-	}*/
+		 userTest2.setFirstName("Firstnameusertest");
+		 userTest2.setFirstName("Lastnameusertest");
+		 userTest2.setRole("USER");
+		 
+		 userTest2 = new UserDTO();
+		 userTest2.setId(1);
+		 userTest2.setEmail("userTest@email.com");
+		 userTest2.setFirstName("Firstnameusertest");
+		 userTest2.setFirstName("Lastnameusertest");
+		 userTest2.setRole("USER");
+	}
 
 	@Test
-	void test() {
+	void testPayToContact() {
+		when(userAppService.getUserByEmail("userTest@email.com")).thenReturn(userTest2 );
+		when( accountService.findBuddyAccountByUser("userTest@email.com").getBalance()).thenReturn(380.00);
+		when( accountService.findBuddyAccountByUser("userTest@email.com").getBalance()).thenReturn(380.00);
+		 accountService.findBuddyAccountByUser("userBeneficiaryTest@email.com");
 		fail("Not yet implemented");
 	}
 

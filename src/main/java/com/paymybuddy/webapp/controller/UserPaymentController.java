@@ -17,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.paymybuddy.webapp.domain.DTO.TransactionDTO;
 import com.paymybuddy.webapp.domain.DTO.TransactionMapper;
+import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
-import com.paymybuddy.webapp.service.BankingService;
+import com.paymybuddy.webapp.service.PaymentService;
+import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAppService;
 import com.paymybuddy.webapp.utils.Constants;
 
@@ -31,7 +33,10 @@ public class UserPaymentController {
 	private UserAppService userAppService;
 
 	@Autowired
-	private BankingService bankingService;
+	private PaymentService bankingService;
+	
+	@Autowired
+	private TransactionService transactionService;
 
 	@Autowired
 	private TransactionMapper transactionMapper;
@@ -39,23 +44,31 @@ public class UserPaymentController {
 	@PostMapping("/save-payment")
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
 			throws IOException {
+
+		UserDTO creditUser = userAppService.getUserByEmail(principal.getName());
+
 		try {
+			// transfert au buddyaccount si la valeur "option value est "my buddy account"
+			// ou "my bankingaccount" dans le template transfer.html
 			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
 				bankingService.transferMoneyToBankingAccountUser(principal.getName(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 				System.out.println("-------------------transferMoneyToBankingAccountUser-------------");
-				// transfert au buddyaccount si la valeur "option value est "my buddy account"
-				// ou "my bankingaccount" dans le template transfer.html
-
+				
+				transactionService.addTransaction( creditUser.getId(),  creditUser.getEmail(), userTransaction);
+				
 			} else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
 				bankingService.transferMoneyToBuddyAccountUser(principal.getName(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 				System.out.println("-------------------transferMoneyToBuddyAccountUser-------------");
+				
+				transactionService.addTransaction( creditUser.getId(),  creditUser.getEmail(), userTransaction);
 			} else {
 				bankingService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
 						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 				System.out.println("-------------------payToContact-------------");
+			transactionService.addTransaction(creditUser.getId(), userTransaction.getBeneficiaryUser().getEmail(), userTransaction);
 			}
 
 			return new ModelAndView("redirect:/transfer-success");
