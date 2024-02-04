@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.utils.Constants;
 import com.paymybuddy.webapp.utils.IFormat;
 
@@ -60,10 +61,9 @@ public class PaymentContactImpl implements IPayment {
 	}
 
 	@Override
-	public void calculBalance(String userEmail, double amount, String typeAccountBeneficiary) {
-
-	}
-
+	 public   void calculBalance(String userEmail,  double amount,String typeAccountBeneficairyUser) {}
+	
+	
 	public void updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailCreditUser,
 			String emailBeneficiaryUser) throws Exception {
 
@@ -71,11 +71,11 @@ public class PaymentContactImpl implements IPayment {
 			throw new NullPointerException("Buddy Account of contact user doesn't exist");
 		}
 
-		accountService.updateBalanceAccount(
+		accountService.updateBalanceBankingAccount(
 				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser), Constants.BUDDY_ACCOUNT);
-		accountService.updateBalanceAccount(accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
-				this.formatBalanceAccount(balanceCalculatedCreditUser), Constants.BUDDY_ACCOUNT);
+				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
+		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
+				this.formatBalanceAccount(balanceCalculatedCreditUser));
 	}
 
 	public double formatBalanceAccount(double balance) throws Exception {

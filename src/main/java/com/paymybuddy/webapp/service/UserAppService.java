@@ -84,13 +84,13 @@ public class UserAppService {
 		return userDTO;
 	}
 
-	public UserDTO getUserEntityById(long id) {
-		UserApp user = userRepository.findById(id).get();
-		UserDTO userDTO = mapper.userToUserDTO(user);
-		if (userDTO == null) {
-			throw new NullPointerException("User " + userDTO + "doesn't exist");
+	public UserApp getUserEntityByEmail(String email) {
+		UserApp user =  userRepository.findByEmail(email);
+		
+		if (user== null) {
+			throw new NullPointerException("User " + user + "doesn't exist");
 		}
-		return userDTO;
+		return user;
 	}
 
 	public List<UserApp> getAllUserContacts(String emailUser) {

@@ -33,7 +33,7 @@ public class UserPaymentController {
 	private UserAppService userAppService;
 
 	@Autowired
-	private PaymentService bankingService;
+	private PaymentService paymentService;
 	
 	@Autowired
 	private TransactionService transactionService;
@@ -51,20 +51,20 @@ public class UserPaymentController {
 			// transfert au buddyaccount si la valeur "option value est "my buddy account"
 			// ou "my bankingaccount" dans le template transfer.html
 			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
-				bankingService.transferMoneyToBankingAccountUser(principal.getName(), userTransaction.getAmount(),
+				paymentService.transferMoneyToBankingAccountUser(principal.getName(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 				System.out.println("-------------------transferMoneyToBankingAccountUser-------------");
 				
 				transactionService.addTransaction( creditUser.getId(),  creditUser.getEmail(), userTransaction);
 				
 			} else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
-				bankingService.transferMoneyToBuddyAccountUser(principal.getName(), userTransaction.getAmount(),
+				paymentService.transferMoneyToBuddyAccountUser(principal.getName(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 				System.out.println("-------------------transferMoneyToBuddyAccountUser-------------");
 				
 				transactionService.addTransaction( creditUser.getId(),  creditUser.getEmail(), userTransaction);
 			} else {
-				bankingService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
+				paymentService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
 						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 				System.out.println("-------------------payToContact-------------");
@@ -102,7 +102,7 @@ public class UserPaymentController {
 		List<TransactionDTO> transactions = new ArrayList<TransactionDTO>();
 
 		int pageSize = 3;
-		Page<Transaction> page = bankingService.getTransactionsByUser(pageNber, pageSize, userEmail);
+		Page<Transaction> page = paymentService.getTransactionsByUser(pageNber, pageSize, userEmail);
 		List<Transaction> listTransactions = page.getContent();
 		for (Transaction transaction : listTransactions) {
 			TransactionDTO transactionUser = transactionMapper.transactionToTransactionDTO(transaction);

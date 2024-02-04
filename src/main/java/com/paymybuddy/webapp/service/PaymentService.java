@@ -64,14 +64,14 @@ public class PaymentService implements IAuthorizationPayment {
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		try {
 		
-			double userBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
+			double userCreditBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
 			Date userBankingAccount = accountService.findBankingAccountByUser(userEmail).getCreation();
 			if (userBankingAccount == null) {
 				throw new Exception("Banking Account not found");
-			} else if (isPaymentAuthorized(amount, userBuddyAccountBalance)) {
+			} else if (isPaymentAuthorized(amount, userCreditBuddyAccountBalance)) {
 				throw new Exception("balance Buddy Account/amount of transaction is negative");
 			}
-
+			
 			payment.pay(userEmail, amount, Constants.BANKING_ACCOUNT);
 		
 		} catch (Exception e) {
@@ -83,17 +83,17 @@ public class PaymentService implements IAuthorizationPayment {
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 
 		try {
-			double userBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
-			Date userBuddyAccount = accountService.findBankingAccountByUser(userEmail).getCreation();
+			double userCreditBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
+			Date userBuddyAccount = accountService.findBuddyAccountByUser(userEmail).getCreation();
 			if (userBuddyAccount == null) {
 				throw new Exception("Buddy Account not found");
-			} else if (isPaymentAuthorized(amount, userBankingAccountBalance)) {
+			} else if (isPaymentAuthorized(amount, userCreditBankingAccountBalance)) {
 				throw new Exception("balance Banking Account/amount of transaction is negative");
 			}
-			UserDTO user = userAppService.getUserByEmail(userEmail);
+
 			payment.pay(userEmail, amount, Constants.BUDDY_ACCOUNT);
 
-			transactionService.addTransaction(user.getId(), user.getEmail(), transactionCreated);
+
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -110,4 +110,8 @@ public class PaymentService implements IAuthorizationPayment {
 	public boolean isPaymentAuthorized(double payment, double userAccountBalance) {
 		return operation.isOperationAuthorized(payment, userAccountBalance);
 	}
+
 }
+
+
+

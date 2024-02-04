@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.paymybuddy.webapp.AccountFactory;
 import com.paymybuddy.webapp.AccountFactory.AccountType;
 import com.paymybuddy.webapp.domain.model.Account;
+import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.IAccountRepository;
@@ -68,16 +69,14 @@ public class AccountImpl implements IBalance {
 	}
 
 	@Override
-	public void updateBalance(long id, double amount, String typeAccountBeneficiary) throws Exception {
+	public void updateBalance(long id, double amount, Account account) throws Exception {
 		UserApp user = new UserApp();
 		user = userRepository.findById(id).get();
-		if (typeAccountBeneficiary.equals(Constants.BUDDY_ACCOUNT)) {
-
+		
+		if (account.getClass() == BuddyAccount.class) {
 			accountRepository.updateBalanceBuddyAccount(amount, user);
-		} else if (typeAccountBeneficiary.equals(Constants.BANKING_ACCOUNT)) {
-
+		} else if (account.getClass() == BankingAccount.class) {
 			accountRepository.updateBalanceBankingAccount(amount, user);
 		}
 	}
-
 }

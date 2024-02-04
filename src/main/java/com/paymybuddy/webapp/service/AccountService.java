@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.webapp.AccountFactory;
 import com.paymybuddy.webapp.AccountFactory.AccountType;
+import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
 
@@ -29,18 +30,28 @@ public class AccountService {
 
 	}
 
-	public void updateBalanceAccount(long id, double amount, String typeAccountBeneficiary)
+	public void updateBalanceBuddyAccount(long id, double amount)
 			throws NullPointerException {
 
 		try {
-			account.updateBalance(id, amount, typeAccountBeneficiary);
+			account.updateBalance(id, amount, AccountFactory.makeAccount(AccountType.BUDDY));
 		} catch (NullPointerException e) {
 			throw new NullPointerException("this banking account doesn't exist");
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
+	public void updateBalanceBankingAccount(long id, double amount)
+			throws NullPointerException {
 
+		try {
+			account.updateBalance(id, amount, AccountFactory.makeAccount(AccountType.BANKING));
+		} catch (NullPointerException e) {
+			throw new NullPointerException("this banking account doesn't exist");
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	public BuddyAccount findBuddyAccountByUser(String emailUser) throws NullPointerException {
 		BuddyAccount userBuddyAccount = null;
 
