@@ -5,6 +5,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,8 @@ import jakarta.validation.Valid;
 
 @Controller
 public class UserPaymentController {
+	private static final Logger log = LogManager.getLogger(UserPaymentController.class);
+	
 	@Autowired
 	private UserAppService userAppService;
 
@@ -44,11 +48,8 @@ public class UserPaymentController {
 	@PostMapping("/save-payment")
 	public ModelAndView createPayment(@Valid @ModelAttribute Transaction userTransaction, Principal principal)
 			throws IOException {
-
-		UserDTO creditUser = userAppService.getUserByEmail(principal.getName());
-
 		try {
-			
+			UserDTO creditUser = userAppService.getUserByEmail(principal.getName());
 			// transfert au buddyaccount si la valeur "option value est "my buddy account"
 			// ou "my bankingaccount" dans le template transfer.html
 			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
@@ -74,11 +75,11 @@ public class UserPaymentController {
 
 			return new ModelAndView("redirect:/transfer-success");
 		} catch (NullPointerException e) {
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 			return new ModelAndView("redirect:/error-404");
 		}
 		catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());	
+			log.error(e.getMessage());
 			return new ModelAndView();
 		}
 	}
