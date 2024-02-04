@@ -39,7 +39,7 @@ public class PaymentUserImpl implements IPayment {
 	}
 
 	@Override
-	public void calculBalance(String userEmail, double amount, String typeAccountBeneficairyUser) throws Exception {
+	public void calculBalance(String userEmail, double amount, String typeAccountBeneficiaryUser) throws Exception {
 
 		double balanceBuddyAccount = accountService.findBuddyAccountByUser(userEmail).getBalance();
 		double balanceBankingAccount = accountService.findBankingAccountByUser(userEmail).getBalance();
@@ -48,20 +48,21 @@ public class PaymentUserImpl implements IPayment {
 
 		double feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = operation.add(amount, feesTransaction);
-		if (typeAccountBeneficairyUser.equals(Constants.BANKING_ACCOUNT)) {
+		if (typeAccountBeneficiaryUser.equals(Constants.BANKING_ACCOUNT)) {
 			balanceBankingAccountCalculated = operation.add(balanceBankingAccount, amount);
 			balanceBuddyAccountCalculated = operation.withdraw(balanceBuddyAccount, amountWithFeesTransaction);
 			this.updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(userEmail,
 					balanceBankingAccountCalculated, balanceBuddyAccountCalculated);
 		}
-		if (typeAccountBeneficairyUser.equals(Constants.BUDDY_ACCOUNT)) {
+		if (typeAccountBeneficiaryUser.equals(Constants.BUDDY_ACCOUNT)) {
 			balanceBuddyAccountCalculated = operation.add(balanceBuddyAccount, amount - feesTransaction);
 			// deduction des frais appliqué sur le compte beneficiare de l application et
 			// non le compte bancaire qui est crediteur mais hors application
 			balanceBankingAccountCalculated = operation.withdraw(balanceBankingAccount, amount);
+			this.updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(userEmail,
+					balanceBankingAccountCalculated, balanceBuddyAccountCalculated);
 		}
-		this.updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(userEmail,
-				balanceBankingAccountCalculated, balanceBuddyAccountCalculated);
+		
 	}
 
 	@Override
