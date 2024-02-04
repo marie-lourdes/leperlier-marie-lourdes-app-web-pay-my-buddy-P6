@@ -52,10 +52,9 @@ public class PaymentContactImpl implements IPayment {
 		balanceCalculatedCreditUser = 0;
 		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
 		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
-		System.out.println("balanceCredit " + balanceCredit);
-
 		double feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = operation.add(amount, feesTransaction);
+		
 		this.balanceCalculatedBeneficiaryUser = operation.add(balanceBeneficiary, amount);
 		this.balanceCalculatedCreditUser = operation.withdraw(balanceCredit, amountWithFeesTransaction);
 	}
@@ -76,6 +75,10 @@ public class PaymentContactImpl implements IPayment {
 				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
 		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedCreditUser));
+		System.out.println("balanceCalculatedBeneficiaryUser"+balanceCalculatedBeneficiaryUser);
+		System.out.println("balanceCalculatedBeneficiaryUserformatted"+this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
+		System.out.println("balanceCalculatedCreditUser"+balanceCalculatedCreditUser);
+		System.out.println("balanceCalculatedCreditUser formatted"+this.formatBalanceAccount(balanceCalculatedCreditUser));
 	}
 
 	public double formatBalanceAccount(double balance) throws Exception {

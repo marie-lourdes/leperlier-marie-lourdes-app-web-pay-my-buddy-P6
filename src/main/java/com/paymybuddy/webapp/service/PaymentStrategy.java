@@ -37,5 +37,4 @@ public class PaymentStrategy {
 		paymentUser.pay(userEmail,  amount, typeAccountUser);
 		
 	}
-
 }

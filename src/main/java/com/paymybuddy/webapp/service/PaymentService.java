@@ -32,9 +32,6 @@ public class PaymentService implements IAuthorizationPayment {
 	private PaymentStrategy payment;
 
 	@Autowired
-	private UserAppService userAppService;
-
-	@Autowired
 	private AccountService accountService;
 
 	@Autowired
@@ -92,9 +89,6 @@ public class PaymentService implements IAuthorizationPayment {
 			}
 
 			payment.pay(userEmail, amount, Constants.BUDDY_ACCOUNT);
-
-
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
