@@ -39,59 +39,48 @@ public class PaymentService implements IAuthorizationPayment {
 
 	public void payToContact(String emailCreditUser, String emailBeneficiaryUser, double amount, String description,
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
-		try {
-			double userBuddyAccountCreditUserBalance = accountService.findBuddyAccountByUser(emailCreditUser)
-					.getBalance();
-			Date userBuddyAccountBeneficiaryUser = accountService.findBuddyAccountByUser(emailCreditUser).getCreation();
-			if (userBuddyAccountBeneficiaryUser == null) {
-				throw new Exception("Buddy Account not found");
-			} else if (isPaymentAuthorized(amount, userBuddyAccountCreditUserBalance)) {
-				throw new Exception("balance Buddy Account/amount of transaction is negative");
-			}
+		Date userBuddyAccountBeneficiaryUser = null;
+		double userBuddyAccountCreditUserBalance = 0;
 
-			payment.pay(emailCreditUser, emailBeneficiaryUser, amount);
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		userBuddyAccountCreditUserBalance = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
+		userBuddyAccountBeneficiaryUser = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation();
+		System.out.println("userBuddyAccountBeneficiaryUser" + userBuddyAccountBeneficiaryUser);
+		if (userBuddyAccountBeneficiaryUser == null) {
+			throw new NullPointerException("Buddy Account not found");
+		} else if (isPaymentAuthorized(amount, userBuddyAccountCreditUserBalance)) {
+			throw new IllegalArgumentException("balance Buddy Account/amount of transaction is negative");
 		}
+		payment.pay(emailCreditUser, emailBeneficiaryUser, amount);
 
 	}
 
 	public void transferMoneyToBankingAccountUser(String userEmail, double amount, String description,
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
-		try {
-		
-			double userCreditBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
-			Date userBankingAccount = accountService.findBankingAccountByUser(userEmail).getCreation();
-			if (userBankingAccount == null) {
-				throw new Exception("Banking Account not found");
-			} else if (isPaymentAuthorized(amount, userCreditBuddyAccountBalance)) {
-				throw new Exception("balance Buddy Account/amount of transaction is negative");
-			}
-			
-			payment.pay(userEmail, amount, Constants.BANKING_ACCOUNT);
-		
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+
+		double userCreditBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
+		Date userBankingAccount = accountService.findBankingAccountByUser(userEmail).getCreation();
+		if (userBankingAccount == null) {
+			throw new NullPointerException("Banking Account not found");
+		} else if (isPaymentAuthorized(amount, userCreditBuddyAccountBalance)) {
+			throw new IllegalArgumentException("balance Buddy Account/amount of transaction is negative");
 		}
+
+		payment.pay(userEmail, amount, Constants.BANKING_ACCOUNT);
+
 	}
 
 	public void transferMoneyToBuddyAccountUser(String userEmail, double amount, String description,
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 
-		try {
-			double userCreditBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
-			Date userBuddyAccount = accountService.findBuddyAccountByUser(userEmail).getCreation();
-			if (userBuddyAccount == null) {
-				throw new Exception("Buddy Account not found");
-			} else if (isPaymentAuthorized(amount, userCreditBankingAccountBalance)) {
-				throw new Exception("balance Banking Account/amount of transaction is negative");
-			}
-
-			payment.pay(userEmail, amount, Constants.BUDDY_ACCOUNT);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		double userCreditBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
+		Date userBuddyAccount = accountService.findBuddyAccountByUser(userEmail).getCreation();
+		if (userBuddyAccount == null) {
+			throw new NullPointerException("Buddy Account not found");
+		} else if (isPaymentAuthorized(amount, userCreditBankingAccountBalance)) {
+			throw new IllegalArgumentException("balance Banking Account/amount of transaction is negative");
 		}
+
+		payment.pay(userEmail, amount, Constants.BUDDY_ACCOUNT);
 	}
 
 	public Page<Transaction> getTransactionsByUser(int pageNber, int pageSize, String email) {
@@ -106,6 +95,3 @@ public class PaymentService implements IAuthorizationPayment {
 	}
 
 }
-
-
-

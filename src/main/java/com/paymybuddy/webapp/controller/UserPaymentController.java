@@ -48,6 +48,7 @@ public class UserPaymentController {
 		UserDTO creditUser = userAppService.getUserByEmail(principal.getName());
 
 		try {
+			
 			// transfert au buddyaccount si la valeur "option value est "my buddy account"
 			// ou "my bankingaccount" dans le template transfer.html
 			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
@@ -72,13 +73,13 @@ public class UserPaymentController {
 			}
 
 			return new ModelAndView("redirect:/transfer-success");
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-			// response.setIntHeader("status",400);
-			return new ModelAndView("redirect:/error");
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error");
+			return new ModelAndView("redirect:/error-404");
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());	
+			return new ModelAndView();
 		}
 	}
 

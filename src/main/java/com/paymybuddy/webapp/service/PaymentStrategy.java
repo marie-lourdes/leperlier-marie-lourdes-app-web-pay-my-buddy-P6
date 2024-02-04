@@ -26,13 +26,13 @@ public class PaymentStrategy {
 	private UserAppService userAppService;
 
 
-	public  void pay(String emailCreditUser, String emailBeneficiaryUser,double amount) throws Exception {
+	public  void pay(String emailCreditUser, String emailBeneficiaryUser,double amount)  {
 
 		paymentContact.pay(emailCreditUser, emailBeneficiaryUser,  amount );
 		
 	}
 	
-	public  void pay(String userEmail, double amount,String typeAccountUser) throws Exception {
+	public  void pay(String userEmail, double amount,String typeAccountUser) {
 
 		paymentUser.pay(userEmail,  amount, typeAccountUser);
 		

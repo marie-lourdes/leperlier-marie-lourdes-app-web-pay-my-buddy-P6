@@ -46,7 +46,7 @@ public class UserAccountController {
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
-			return new ModelAndView("redirect:/error");
+			return new ModelAndView();
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 			// response.setIntHeader("status",400);
@@ -61,10 +61,10 @@ public class UserAccountController {
 			return new ModelAndView("redirect:/account-success");
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error");
+			return new ModelAndView("redirect:/error-404");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error");
+			return new ModelAndView();
 		}
 
 	}
@@ -77,7 +77,7 @@ public class UserAccountController {
 			return new ModelAndView("redirect:/home/contact");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			return new ModelAndView("redirect:/error");
+			return new ModelAndView("redirect:/error-400");
 		}
 	}
 

@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class ErrorController {
 
 	@GetMapping("/error")
-	public String getPage404(HttpServletRequest request) {
+	public String getPageError(HttpServletRequest request) {
 		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
 		if (status != null) {
@@ -27,4 +27,5 @@ public class ErrorController {
 
 		return "error";
 	}
+
 }
