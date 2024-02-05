@@ -89,17 +89,14 @@ public class UserAccountService {
 		}
 	}
 
-	public void addBuddyAccount(String emailUser) throws Exception {
+	public BuddyAccount addBuddyAccount(String emailUser) throws Exception {
 		log.debug(" Creating Buddy Account {} of user {} ", emailUser);
-		BuddyAccount existingBuddyAccount = this.findBuddyAccountByUser(emailUser);
+		
+		BuddyAccount buddyAccountCreated=null ;
+		buddyAccountCreated =account.addBuddyAccount(emailUser);
 
-		if (existingBuddyAccount != null) {
-			if (existingBuddyAccount.getUser().getEmail().equals(emailUser)) {
-				throw new IllegalArgumentException("Buddy Account already exist!");
-			}
-		}
-		account.addBuddyAccount(emailUser);
 		log.debug("Buddy account  created  successfully for user : {}", emailUser);
+		return buddyAccountCreated ;
 	}
 
 	public void updateBalanceBuddyAccount(long id, double amount) throws NullPointerException {

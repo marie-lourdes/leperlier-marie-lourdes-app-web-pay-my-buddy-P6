@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import com.paymybuddy.webapp.controller.UserPaymentController;
-
 import lombok.Data;
 
 @Data
