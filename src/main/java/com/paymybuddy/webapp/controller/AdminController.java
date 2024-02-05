@@ -18,7 +18,7 @@ import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.service.AdminService;
 import com.paymybuddy.webapp.service.IRole;
-import com.paymybuddy.webapp.service.UserAccountService;
+import com.paymybuddy.webapp.service.UserService;
 
 @Controller
 public class AdminController {
@@ -31,7 +31,7 @@ public class AdminController {
 	private AdminService adminService;
 
 	@Autowired
-	private UserAccountService userAppService;
+	private UserService userAppService;
 
 	@Autowired
 	private TransactionMapper transactionMapper;

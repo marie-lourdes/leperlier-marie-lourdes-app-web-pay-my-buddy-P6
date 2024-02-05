@@ -21,8 +21,8 @@ import com.paymybuddy.webapp.utils.ConstantsException;
 //service creation user, avec page sign up pour le controller et utilise le service d authentification
 @Transactional
 @Service
-public class UserAccountService {
-	private static final Logger log = LogManager.getLogger(UserAccountService.class);
+public class UserService {
+	private static final Logger log = LogManager.getLogger(UserService.class);
 
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -81,6 +81,20 @@ public class UserAccountService {
 		}
 	}
 
+	public List<UserApp> getAllUserContacts(String emailUser) throws NullPointerException {
+		log.debug(" Retrieving all contacts of Userof user {} ", emailUser);
+		UserApp user = userRepository.findByEmail(emailUser);
+		if (user == null) {
+			throw new NullPointerException(ConstantsException.USER_NULL_EXCEPTION + emailUser);
+		}
+		List<UserApp> userContacts = user.getContacts();
+		if (userContacts.isEmpty()) {
+			log.error("Contacts not found of user:{}", emailUser);
+		}
+		log.debug("Contacts retrieved successfully of user: {} ", emailUser);
+		return userContacts;
+	}
+
 	public UserLoginDTO getUserLoginByEmail(String email) throws NullPointerException {
 		UserApp user = userRepository.findByEmail(email);
 		UserLoginDTO userLoginDTO = mapper.userToUserLoginDTO(user);
@@ -109,17 +123,4 @@ public class UserAccountService {
 		return user;
 	}
 
-	public List<UserApp> getAllUserContacts(String emailUser) throws NullPointerException {
-		log.debug(" Retrieving all contacts of Userof user {} ", emailUser);
-		UserApp user = userRepository.findByEmail(emailUser);
-		if (user == null) {
-			throw new NullPointerException(ConstantsException.USER_NULL_EXCEPTION + emailUser);
-		}
-		List<UserApp> userContacts = user.getContacts();
-		if (userContacts.isEmpty()) {
-			log.error("Contacts not found of user:{}", emailUser);
-		}
-		log.debug("Contacts retrieved successfully of user: {} ", emailUser);
-		return userContacts;
-	}
 }

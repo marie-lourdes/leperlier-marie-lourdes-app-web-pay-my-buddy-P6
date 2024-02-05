@@ -30,7 +30,7 @@ class PaymentServiceTest {
 	private PaymentStrategy payment;
 
 	@MockBean
-	private UserAccountService userAppService;
+	private UserService userAppService;
 
 	@MockBean
 	private AccountService accountService;

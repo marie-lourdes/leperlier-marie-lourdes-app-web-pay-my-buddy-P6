@@ -23,7 +23,7 @@ public class PaymentStrategy {
 	@Autowired
 	private TransactionService transactionService;
 	@Autowired
-	private UserAccountService userAppService;
+	private UserService userAppService;
 
 
 	public  void pay(String emailCreditUser, String emailBeneficiaryUser,double amount)  {

@@ -24,7 +24,7 @@ import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.PaymentService;
 import com.paymybuddy.webapp.service.TransactionService;
-import com.paymybuddy.webapp.service.UserAccountService;
+import com.paymybuddy.webapp.service.UserService;
 import com.paymybuddy.webapp.utils.Constants;
 
 import jakarta.validation.Valid;
@@ -34,7 +34,7 @@ public class UserPaymentController {
 	private static final Logger log = LogManager.getLogger(UserPaymentController.class);
 
 	@Autowired
-	private UserAccountService userAppService;
+	private UserService userAppService;
 
 	@Autowired
 	private PaymentService paymentService;
