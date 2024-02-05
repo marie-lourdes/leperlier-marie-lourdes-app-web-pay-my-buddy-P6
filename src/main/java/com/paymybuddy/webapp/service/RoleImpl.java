@@ -18,6 +18,7 @@ public class RoleImpl implements IRole {
 	private static final Logger log = LogManager.getLogger(RoleImpl.class);
 	@Autowired
 	private UserAccountService userAppService;
+	
 	private boolean isUser;
 	private boolean isAdmin;
 	private String userRole;
