@@ -72,13 +72,10 @@ public class UserAccountController {
 			buddyAccountCreated=userAccountService.addBuddyAccount(principal.getName());
 			return new ModelAndView("redirect:/account-success");
 
-		} catch (IllegalArgumentException e) {
-			 log .error(e.getMessage());
-			return new ModelAndView("redirect:/error");
 		} catch (Exception e) {
 			 log .error(e.getMessage());
 			return new ModelAndView("redirect:/error");
-		}
+		} 
 	}
 
 	@GetMapping("/home")

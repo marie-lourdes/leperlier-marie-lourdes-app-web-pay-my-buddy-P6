@@ -33,14 +33,14 @@ public class AccountImpl implements IBalance {
 	public BuddyAccount addBuddyAccount(String emailUser) throws Exception {
 		UserApp user = new UserApp();
 		user = userRepository.findByEmail(emailUser);
-		BuddyAccount existingBuddyAccount = (BuddyAccount) this.findAccountByUser(emailUser,new BuddyAccount());
 		BuddyAccount newAccount = (BuddyAccount) AccountFactory.makeAccount(AccountType.BUDDY);
-		
-			if (existingBuddyAccount != null) {
-				if (existingBuddyAccount.getUser().getEmail().equals(emailUser)) {
-					throw new IllegalArgumentException("Buddy Account already exist!");
-				}
+
+		BuddyAccount existingBuddyAccount = (BuddyAccount) this.findAccountByUser(emailUser, new BuddyAccount());
+		if (existingBuddyAccount != null) {
+			if (existingBuddyAccount.getUser().getEmail().equals(emailUser)) {
+				throw new IllegalArgumentException("Buddy Account already exist!");
 			}
+		}
 
 		newAccount.setBalance(80.0);
 		newAccount.setUser(user);
@@ -70,7 +70,7 @@ public class AccountImpl implements IBalance {
 	public void updateBalance(long id, double amount, Account account) throws Exception {
 		UserApp user = new UserApp();
 		user = userRepository.findById(id).get();
-		
+
 		if (account.getClass() == BuddyAccount.class) {
 			accountRepository.updateBalanceBuddyAccount(amount, user);
 		} else if (account.getClass() == BankingAccount.class) {
