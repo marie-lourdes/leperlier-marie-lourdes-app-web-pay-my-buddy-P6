@@ -90,7 +90,7 @@ public class UserAccountService {
 	}
 
 	public void addBuddyAccount(String emailUser) throws Exception {
-		log.debug(" Creating Buddy Account {} of user {} ",  emailUser);
+		log.debug(" Creating Buddy Account {} of user {} ", emailUser);
 		BuddyAccount existingBuddyAccount = this.findBuddyAccountByUser(emailUser);
 
 		if (existingBuddyAccount != null) {
@@ -99,7 +99,7 @@ public class UserAccountService {
 			}
 		}
 		account.addBuddyAccount(emailUser);
-		log.debug("Buddy account  created  successfully for user : {}",  emailUser);
+		log.debug("Buddy account  created  successfully for user : {}", emailUser);
 	}
 
 	public void updateBalanceBuddyAccount(long id, double amount) throws NullPointerException {
@@ -109,7 +109,7 @@ public class UserAccountService {
 		} catch (NullPointerException e) {
 			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION);
 		} catch (Exception e) {
-			log.error("Failed to update amount Buddy Account"+e.getMessage());
+			log.error("Failed to update amount Buddy Account" + e.getMessage());
 		}
 		log.debug("Amount Buddy Account updated successfully");
 	}
@@ -121,7 +121,7 @@ public class UserAccountService {
 		} catch (NullPointerException e) {
 			throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION);
 		} catch (Exception e) {
-			log.error("Failed to update amount Buddy Account"+e.getMessage());
+			log.error("Failed to update amount Buddy Account" + e.getMessage());
 		}
 		log.debug("Amount Banking Account updated successfully");
 	}
@@ -137,9 +137,9 @@ public class UserAccountService {
 				throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION + " for " + emailUser);
 			}
 		} catch (Exception e) {
-			log.debug(" Failed to retrieve Buddy Account of user {} " +e.getMessage(), emailUser);			
+			log.debug(" Failed to retrieve Buddy Account of user {} " + e.getMessage(), emailUser);
 		}
-		log.debug("Buddy Account retrieved successfully: {}",userBuddyAccount);
+		log.debug("Buddy Account retrieved successfully: {}", userBuddyAccount);
 		return userBuddyAccount;
 	}
 
@@ -154,9 +154,9 @@ public class UserAccountService {
 				throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION + " for " + emailUser);
 			}
 		} catch (Exception e) {
-			log.debug(" Failed to retrieve Banking Account of user {} " +e.getMessage(), emailUser);		
+			log.debug(" Failed to retrieve Banking Account of user {} " + e.getMessage(), emailUser);
 		}
-		log.debug("Banking Account retrieved successfully: {}",userBankingAccount);
+		log.debug("Banking Account retrieved successfully: {}", userBankingAccount);
 		return userBankingAccount;
 	}
 
@@ -184,7 +184,7 @@ public class UserAccountService {
 		return userLoginDTO;
 	}
 
-	public UserDTO getUserByEmail(String email)  {
+	public UserDTO getUserByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
 		UserDTO userDTO = mapper.userToUserDTO(user);
 		if (userDTO == null) {

@@ -52,24 +52,23 @@ public class UserPaymentController {
 			UserDTO creditUser = userAppService.getUserByEmail(principal.getName());
 			// transfert au buddyaccount si la valeur "option value est "my buddy account"
 			// ou "my bankingaccount" dans le template transfer.html
+
 			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
 				paymentService.transferMoneyToBankingAccountUser(principal.getName(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
-				System.out.println("-------------------transferMoneyToBankingAccountUser-------------");
 
 				transactionService.addTransaction(creditUser.getId(), creditUser.getEmail(), userTransaction);
 
 			} else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
 				paymentService.transferMoneyToBuddyAccountUser(principal.getName(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
-				System.out.println("-------------------transferMoneyToBuddyAccountUser-------------");
 
 				transactionService.addTransaction(creditUser.getId(), creditUser.getEmail(), userTransaction);
 			} else {
 				paymentService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
 						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
-				System.out.println("-------------------payToContact-------------");
+
 				transactionService.addTransaction(creditUser.getId(), userTransaction.getBeneficiaryUser().getEmail(),
 						userTransaction);
 			}
@@ -98,7 +97,7 @@ public class UserPaymentController {
 		} catch (Exception e) {
 			log.error("Failed to retrieve tranfer page" + e.getMessage());
 		}
-		log.info(" Tranfer page successfull retrieved" );
+		log.info(" Tranfer page successfull retrieved");
 		return "transfer";
 	}
 
@@ -128,7 +127,7 @@ public class UserPaymentController {
 		} catch (Exception e) {
 			log.error("Failed to retrieve page  of transaction" + e.getMessage());
 		}
-		log.info(" Page  of transaction successfull retrieved" );
+		log.info(" Page  of transaction successfull retrieved");
 		return "transfer";
 	}
 
