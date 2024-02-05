@@ -21,8 +21,8 @@ import com.paymybuddy.webapp.utils.ConstantsException;
 //service creation user, avec page sign up pour le controller et utilise le service d authentification
 @Transactional
 @Service
-public class UserAppService {
-	private static final Logger log = LogManager.getLogger(UserAppService.class);
+public class UserAccountService {
+	private static final Logger log = LogManager.getLogger(UserAccountService.class);
 
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 

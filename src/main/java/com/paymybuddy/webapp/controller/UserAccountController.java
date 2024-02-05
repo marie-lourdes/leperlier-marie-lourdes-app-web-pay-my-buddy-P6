@@ -21,7 +21,7 @@ import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.AccountService;
 import com.paymybuddy.webapp.service.IRole;
-import com.paymybuddy.webapp.service.UserAppService;
+import com.paymybuddy.webapp.service.UserAccountService;
 
 import jakarta.validation.Valid;
 import lombok.Data;
@@ -36,7 +36,7 @@ public class UserAccountController {
 	private IRole role;
 
 	@Autowired
-	private UserAppService userAppService;
+	private UserAccountService userAppService;
 
 	@Autowired
 	private AccountService accountService;
