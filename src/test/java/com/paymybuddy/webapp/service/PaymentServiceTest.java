@@ -16,7 +16,7 @@ import com.paymybuddy.webapp.utils.IFormat;
 @SpringBootTest
 class PaymentServiceTest {
 	@Autowired
-	private PaymentService paymentServiceTest;
+	private PaymentService paymentServiceTUnderest;
 	
 	@MockBean
 	@Qualifier("operationImpl")

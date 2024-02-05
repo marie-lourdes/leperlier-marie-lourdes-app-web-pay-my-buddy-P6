@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.paymybuddy.webapp.domain.model.Account;
-import com.paymybuddy.webapp.utils.Constants;
 import com.paymybuddy.webapp.utils.IFormat;
 
 import lombok.Data;
@@ -30,32 +28,32 @@ public class PaymentContactImpl implements IPayment {
 	private double balanceCalculatedCreditUser;
 
 	@Override
-	public void pay(String emailCreditUser, String emailBeneficiaryUser, double amount) throws Exception{
+	public void pay(String emailCreditUser, String emailBeneficiaryUser, double amount) throws Exception {
 		this.calculBalance(emailCreditUser, emailBeneficiaryUser, amount);
-		this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(emailCreditUser, emailBeneficiaryUser);	
+		this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(emailCreditUser, emailBeneficiaryUser);
 	}
 
 	@Override
-	public void pay(String emailUser, double amount, String typeAccountUser) throws Exception{
+	public void pay(String emailUser, double amount, String typeAccountUser) throws Exception {
 	}
 
 	@Override
-	public void calculBalance(String emailCreditUser, String emailBeneficiaryUser, double amount) throws Exception{
+	public void calculBalance(String emailCreditUser, String emailBeneficiaryUser, double amount) throws Exception {
 		balanceCalculatedBeneficiaryUser = 0;
 		balanceCalculatedCreditUser = 0;
 		double balanceBeneficiary = userAccountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
 		double balanceCredit = userAccountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 		double feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = operation.add(amount, feesTransaction);
-		
+
 		this.balanceCalculatedBeneficiaryUser = operation.add(balanceBeneficiary, amount);
 		this.balanceCalculatedCreditUser = operation.withdraw(balanceCredit, amountWithFeesTransaction);
 	}
 
 	@Override
-	 public   void calculBalance(String userEmail,  double amount,String typeAccountBeneficairyUser) throws Exception{}
-	
-	
+	public void calculBalance(String userEmail, double amount, String typeAccountBeneficairyUser) throws Exception {
+	}
+
 	public void updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailCreditUser,
 			String emailBeneficiaryUser) throws Exception {
 
@@ -66,12 +64,15 @@ public class PaymentContactImpl implements IPayment {
 		userAccountService.updateBalanceBankingAccount(
 				userAccountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
-		userAccountService.updateBalanceBuddyAccount(userAccountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
+		userAccountService.updateBalanceBuddyAccount(
+				userAccountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedCreditUser));
-		System.out.println("balanceCalculatedBeneficiaryUser"+balanceCalculatedBeneficiaryUser);
-		System.out.println("balanceCalculatedBeneficiaryUserformatted"+this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
-		System.out.println("balanceCalculatedCreditUser"+balanceCalculatedCreditUser);
-		System.out.println("balanceCalculatedCreditUser formatted"+this.formatBalanceAccount(balanceCalculatedCreditUser));
+		System.out.println("balanceCalculatedBeneficiaryUser" + balanceCalculatedBeneficiaryUser);
+		System.out.println("balanceCalculatedBeneficiaryUserformatted"
+				+ this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
+		System.out.println("balanceCalculatedCreditUser" + balanceCalculatedCreditUser);
+		System.out.println(
+				"balanceCalculatedCreditUser formatted" + this.formatBalanceAccount(balanceCalculatedCreditUser));
 	}
 
 	public double formatBalanceAccount(double balance) throws Exception {
