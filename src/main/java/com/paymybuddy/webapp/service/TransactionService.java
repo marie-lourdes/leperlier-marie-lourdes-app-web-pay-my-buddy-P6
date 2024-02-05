@@ -41,6 +41,8 @@ public class TransactionService {
 
 		if (beneficiaryUser == null) {
 			throw new IllegalArgumentException("Incorrect accountContact  provided: ");
+		}else if(transactionCreated.getAmount()<=0) {
+			throw new IllegalArgumentException("Amount of transaction is negative");
 		} else {
 			double feesTransaction = Billing.calculateFees(transactionCreated.getAmount());
 
@@ -80,4 +82,5 @@ public class TransactionService {
 			 log.debug("all transactions : {}retrieved successfully for admin");
 		return transactionsPage;
 	}
+		
 }

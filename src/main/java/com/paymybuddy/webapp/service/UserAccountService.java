@@ -174,30 +174,30 @@ public class UserAccountService {
 		return userContacts;
 	}
 
-	public UserLoginDTO getUserLoginByEmail(String email) throws NullPointerException {
+	public UserLoginDTO getUserLoginByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
 		UserLoginDTO userLoginDTO = mapper.userToUserLoginDTO(user);
 		if (userLoginDTO == null) {
-			throw new NullPointerException(ConstantsException.USER_NULL_EXCEPTION + email);
+			log.error(ConstantsException.USER_NULL_EXCEPTION + email);
 		}
 		System.out.println(userLoginDTO);
 		return userLoginDTO;
 	}
 
-	public UserDTO getUserByEmail(String email) throws NullPointerException {
+	public UserDTO getUserByEmail(String email)  {
 		UserApp user = userRepository.findByEmail(email);
 		UserDTO userDTO = mapper.userToUserDTO(user);
 		if (userDTO == null) {
-			throw new NullPointerException(ConstantsException.USER_NULL_EXCEPTION + email);
+			log.error(ConstantsException.USER_NULL_EXCEPTION + email);
 		}
 		return userDTO;
 	}
 
-	public UserApp getUserEntityByEmail(String email) throws NullPointerException {
+	public UserApp getUserEntityByEmail(String email) {
 		UserApp user = userRepository.findByEmail(email);
 
 		if (user == null) {
-			throw new NullPointerException(ConstantsException.USER_NULL_EXCEPTION + email);
+			log.error(ConstantsException.USER_NULL_EXCEPTION + email);
 		}
 		return user;
 	}

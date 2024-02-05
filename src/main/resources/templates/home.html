@@ -27,7 +27,7 @@
 					<li th:if="${isAdmin}"><a th:href="@{/home/profil/admin}">Profil</a></li>
 					<li th:if="${isUser}"><a th:href="@{/home/contact}">Contact</a></li>
 					<li><a th:href="@{/logout}">Log off</a></li>
-					<li><a th:href="@{home/sign-up}">Sign up</a></li>
+					<li th:if="${isAdmin}"><a th:href="@{/home/sign-up}">Sign up</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -37,11 +37,11 @@
 	</header>
 	<div class="container">
 		<main>
-			<div class="text-welcome">
-				<i class="fa-regular fa-face-smile fontawesome-styled"></i>
+			<div th:if="${user}!= null"class="text-welcome">
+				
 				Welcome to Pay My Buddy application!
-				<span th:text="${user.firstName}"> Prénom </span>
-				<div th:text="${user.email}">Email</div>
+				<span th:if="${user.firstName}!= null" th:text="${user.firstName}"> Prénom </span>
+				<div th:if="${user.email}== null" th:text="${user.email}"> Prénom </div>	
 			</div>
 		</main>
 	</div>

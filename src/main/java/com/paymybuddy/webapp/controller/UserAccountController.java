@@ -39,8 +39,13 @@ public class UserAccountController {
 
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
+		try {
 		userAccountService.createUser(user);
 		return new ModelAndView("redirect:/home");
+		} catch (IllegalArgumentException e) {
+			 log.error(e.getMessage());
+			return new ModelAndView("redirect:/error");
+		}
 	}
 
 	@PostMapping("/save-contact")
@@ -91,7 +96,7 @@ public class UserAccountController {
 		return "home";
 	}
 
-	@GetMapping("home/sign-up")
+	@GetMapping("/home/sign-up")
 	public String getSignUpPage(Model model) {
 		UserApp userCreated = new UserApp();
 		try {
