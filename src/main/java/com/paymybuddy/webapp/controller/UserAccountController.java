@@ -122,7 +122,6 @@ public class UserAccountController {
 			model.addAttribute("contacts", allContact);
 		}catch (Exception e) {
 			log.error("Failed to retrieve contact page " + e.getMessage());
-			return "error";
 		}
 		log.info("Contact page  successfull retrieved");
 		return "contact";

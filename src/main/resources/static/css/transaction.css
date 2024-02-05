@@ -70,21 +70,17 @@ select,
 	position: relative;
 	
 	width: 43px;
-	height: 24px;
+	height: 21px;
 	line-height: 1;
 
 }
 .button-down {
-	top: 0.7rem;
+	top: 0.55rem;
 	left: -4.8rem;
 }
 .button-up{
-	    top: -0.68rem;
+	top: -0.63rem;
     left: -1.75rem;
-}
-
-.login-field--amount:valid~.button-down {
-	top: 0.75rem;
 }
 
 section.pagination {
