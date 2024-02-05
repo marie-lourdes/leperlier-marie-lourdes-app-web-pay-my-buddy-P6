@@ -33,14 +33,14 @@ public class TransactionService {
 	}
 
 	public void addTransaction(long userId, String emailContact, Transaction transactionCreated)
-			throws IllegalArgumentException {
+			throws IllegalArgumentException,NullPointerException {
 		UserApp creditUser = userRepository.findById(userId).get();
 		// System.out.println("credit user" + creditUser);
 		UserApp beneficiaryUser = userRepository.findByEmail(emailContact);
 		Transaction tranferRegistered = new Transaction();
 
 		if (beneficiaryUser == null) {
-			throw new IllegalArgumentException("Incorrect accountContact  provided: ");
+			throw new NullPointerException(" Account beneficiary  not found ");
 		}else if(transactionCreated.getAmount()<=0) {
 			throw new IllegalArgumentException("Amount of transaction is negative");
 		} else {
