@@ -73,7 +73,7 @@ public class UserAppService {
 		if (contactToAdd == null) {
 			throw new NullPointerException("Contact not found: " + emailContact);
 		} else if (user.getContacts().contains(contactToAdd)) {
-			throw new IllegalArgumentException("Contact already exist!"+emailContact);
+			throw new IllegalArgumentException("Contact already exist!" + emailContact);
 		} else {
 			user.addContact(contactToAdd);
 			userRepository.save(user);
@@ -110,16 +110,16 @@ public class UserAppService {
 	}
 
 	public List<UserApp> getAllUserContacts(String emailUser) throws NullPointerException {
-		log.debug(" Retrieving all contacts of Userof user {} ",  emailUser);
+		log.debug(" Retrieving all contacts of Userof user {} ", emailUser);
 		UserApp user = userRepository.findByEmail(emailUser);
 		if (user == null) {
 			throw new NullPointerException(ConstantsException.USER_NULL_EXCEPTION + emailUser);
 		}
 		List<UserApp> userContacts = user.getContacts();
 		if (userContacts.isEmpty()) {
-			throw new NullPointerException("Contacts not found" + userContacts);
+			log.error("Contacts not found of user:{}", emailUser);
 		}
-		log.debug("Contacts retrieved successfully of user  {}", emailUser);
+		log.debug("Contacts retrieved successfully of user: {} ", emailUser);
 		return userContacts;
 	}
 }

@@ -88,7 +88,8 @@ public class UserAccountController {
 			model.addAttribute("breadcrumbHome", breadcrumbHome);
 			model.addAttribute("user", user);
 		} catch (Exception e) {
-			log.error("Failed to retrieve homepage" + e.getMessage());
+			log.error("Failed to retrieve homepage " + e.getMessage());
+			return "error";
 		}
 		log.info(" Homepage successfull retrieved");
 		return "home";
@@ -103,7 +104,8 @@ public class UserAccountController {
 			model.addAttribute("user", userCreated);
 
 		} catch (Exception e) {
-			log.error("Failed to retrieve sign up page" + e.getMessage());
+			log.error("Failed to retrieve sign up page " + e.getMessage());
+			return "error";
 		}
 		log.info(" Sign up page successfull retrieved");
 		return "sign-up";
@@ -117,12 +119,12 @@ public class UserAccountController {
 			String breadcrumbContact = "Contact";
 			model.addAttribute("breadcrumbContact", breadcrumbContact);
 			model.addAttribute("contacts", allContact);
-
-		} catch (Exception e) {
-			log.error("Failed to retrieve contact page" + e.getMessage());
+		}catch (Exception e) {
+			log.error("Failed to retrieve contact page " + e.getMessage());
+			return "error";
 		}
 		log.info("Contact page  successfull retrieved");
-		return "contacts";
+		return "contact";
 	}
 
 	@GetMapping("/home/profil") //
@@ -143,7 +145,7 @@ public class UserAccountController {
 			model.addAttribute("userBankingAccount", userBankingAccountBalance);
 		} catch (Exception e) {
 			log.error("Failed to retrieve profil page" + e.getMessage());
-
+			return "error";
 		}
 		log.info("Profil page  successfull retrieved");
 		return "profil";
@@ -159,6 +161,7 @@ public class UserAccountController {
 			role.verifRolePrincipalInView(model, principal, view);
 		} catch (Exception e) {
 			log.error("Failed to retrieve role admin and role user in view {}" + e.getMessage(), view);
+		
 		}
 	}
 }

@@ -52,7 +52,7 @@ public class PaymentService implements IAuthorizationPayment {
 		System.out.println("userBuddyAccountBeneficiaryUser" + userBuddyAccountBeneficiaryUser);
 		if (userBuddyAccountBeneficiaryUser == null) {
 		
-			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION);
+			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION+ ": " +emailBeneficiaryUser);
 		} else if (isPaymentAuthorized(amount, userBuddyAccountCreditUserBalance)) {
 			throw new IllegalArgumentException(ConstantsException.PAYMENT_ARGUMENT_EXCEPTION);
 		}
@@ -67,7 +67,7 @@ public class PaymentService implements IAuthorizationPayment {
 		double userCreditBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
 		Date userBankingAccount = accountService.findBankingAccountByUser(userEmail).getCreation();
 		if (userBankingAccount == null) {
-			throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION);
+			throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION+": " + userEmail);
 		} else if (isPaymentAuthorized(amount, userCreditBuddyAccountBalance)) {
 			throw new IllegalArgumentException(ConstantsException.PAYMENT_ARGUMENT_EXCEPTION);
 		}
@@ -82,7 +82,7 @@ public class PaymentService implements IAuthorizationPayment {
 		double userCreditBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
 		Date userBuddyAccount = accountService.findBuddyAccountByUser(userEmail).getCreation();
 		if (userBuddyAccount == null) {
-			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION);
+			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION +": " + userEmail);
 		} else if (isPaymentAuthorized(amount, userCreditBankingAccountBalance)) {
 			throw new IllegalArgumentException(ConstantsException.PAYMENT_ARGUMENT_EXCEPTION);
 		}

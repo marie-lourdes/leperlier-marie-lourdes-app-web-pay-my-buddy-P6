@@ -3,6 +3,8 @@ package com.paymybuddy.webapp.service;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +20,8 @@ import jakarta.transaction.Transactional;
 @Transactional
 @Service
 public class TransactionService {
-
+	private static final Logger log = LogManager.getLogger(TransactionService.class);
+	
 	@Autowired
 	private ITransactionRepository transactionRepository;
 
@@ -55,10 +58,26 @@ public class TransactionService {
 	}
 
 	public Page<Transaction> findTransactionsPaginatedByUser(String userEmail, Pageable pageable) {
-		return transactionRepository.findAll(userEmail, pageable);
+		 Page<Transaction> transactionsPage=null;
+		 log.debug("Retrieving  all transactions of user: {}",userEmail);
+		try {
+			 transactionsPage=transactionRepository.findAll(userEmail, pageable);
+		} catch(Exception e) {
+			log.error("Failed to retrieve alltransactions of user: {}",userEmail);
+		}
+		 log.debug("all transactions of user: {}retrieved successfully",userEmail);
+		return transactionsPage;
 	}
 
 	public Page<Transaction> findAllTransactionsPaginated(Pageable pageable) {
-		return transactionRepository.findAll(pageable);
+		 Page<Transaction> transactionsPage=null;
+		 log.debug("Retrieving  all transactions for admin");
+		 try {
+			 transactionsPage= transactionRepository.findAll(pageable);
+		 } catch(Exception e) {
+				log.error("Failed to retrieve all transactions for admin");
+			}
+			 log.debug("all transactions : {}retrieved successfully for admin");
+		return transactionsPage;
 	}
 }
