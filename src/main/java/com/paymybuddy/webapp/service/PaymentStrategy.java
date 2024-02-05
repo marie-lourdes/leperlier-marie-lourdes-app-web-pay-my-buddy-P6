@@ -18,23 +18,11 @@ public class PaymentStrategy {
 	@Qualifier("paymentUserImpl")
 	private  IPayment paymentUser ;
 	
-	@Autowired
-	private AccountService userAccountService;
-	@Autowired
-	private TransactionService transactionService;
-	@Autowired
-	private UserAccountService userAppService;
-
-
 	public  void pay(String emailCreditUser, String emailBeneficiaryUser,double amount)  {
-
-		paymentContact.pay(emailCreditUser, emailBeneficiaryUser,  amount );
-		
+		paymentContact.pay(emailCreditUser, emailBeneficiaryUser,  amount );		
 	}
 	
 	public  void pay(String userEmail, double amount,String typeAccountUser) {
-
-		paymentUser.pay(userEmail,  amount, typeAccountUser);
-		
+		paymentUser.pay(userEmail,  amount, typeAccountUser);		
 	}
 }

@@ -53,27 +53,15 @@ public class PaymentUserImpl implements IPayment {
 		if (typeAccountBeneficiaryUser.equals(Constants.BANKING_ACCOUNT)) {
 			balanceBankingAccountCalculated = operation.add(balanceBankingAccount, amount);
 			balanceBuddyAccountCalculated = operation.withdraw(balanceBuddyAccount, amountWithFeesTransaction);
-
-			System.out.println("balanceBankingAccountCalculated" + balanceBankingAccountCalculated);
-			System.out.println("balanceBankingAccountCalculated rformatted"
-					+ this.formatBalanceAccount(balanceBankingAccountCalculated));
-			System.out.println("balanceBuddyAccount" + balanceBuddyAccountCalculated);
-			System.out.println("balanceBuddyAccountCalculated formatted"
-					+ this.formatBalanceAccount(balanceBuddyAccountCalculated));
 		}
+		
 		if (typeAccountBeneficiaryUser.equals(Constants.BUDDY_ACCOUNT)) {
 			balanceBuddyAccountCalculated = operation.add(balanceBuddyAccount, amount - feesTransaction);
 			// deduction des frais appliqué sur le compte beneficiare de l application et
 			// non le compte bancaire qui est crediteur mais hors application
 			balanceBankingAccountCalculated = operation.withdraw(balanceBankingAccount, amount);
-
-			System.out.println("balanceBankingAccountCalculated" + balanceBankingAccountCalculated);
-			System.out.println("balanceBankingAccountCalculated rformatted"
-					+ this.formatBalanceAccount(balanceBankingAccountCalculated));
-			System.out.println("balanceBuddyAccount" + balanceBuddyAccountCalculated);
-			System.out.println("balanceBuddyAccountCalculated formatted"
-					+ this.formatBalanceAccount(balanceBuddyAccountCalculated));
 		}
+		
 		this.updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(userEmail,
 				this.formatBalanceAccount(balanceBankingAccountCalculated),
 				this.formatBalanceAccount(balanceBuddyAccountCalculated));

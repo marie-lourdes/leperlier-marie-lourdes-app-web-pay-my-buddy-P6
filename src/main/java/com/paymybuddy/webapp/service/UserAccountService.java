@@ -99,67 +99,69 @@ public class UserAccountService {
 			}
 		}
 		account.addBuddyAccount(emailUser);
-
+		log.debug("Buddy account  created  successfully for user : {}",  emailUser);
 	}
 
 	public void updateBalanceBuddyAccount(long id, double amount) throws NullPointerException {
-
+		log.debug("Updating amount  Buddy Account of user ");
 		try {
 			account.updateBalance(id, amount, AccountFactory.makeAccount(AccountType.BUDDY));
 		} catch (NullPointerException e) {
 			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION);
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
+		} catch (Exception e) {
+			log.error("Failed to update amount Buddy Account"+e.getMessage());
 		}
+		log.debug("Amount Buddy Account updated successfully");
 	}
 
 	public void updateBalanceBankingAccount(long id, double amount) throws NullPointerException {
-
+		log.debug("Updating amount  Banking Account of user ");
 		try {
 			account.updateBalance(id, amount, AccountFactory.makeAccount(AccountType.BANKING));
 		} catch (NullPointerException e) {
 			throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION);
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
+		} catch (Exception e) {
+			log.error("Failed to update amount Buddy Account"+e.getMessage());
 		}
+		log.debug("Amount Banking Account updated successfully");
 	}
 
 	public BuddyAccount findBuddyAccountByUser(String emailUser) throws NullPointerException {
+		log.debug(" Retrieving Buddy Account of user {} ", emailUser);
 		BuddyAccount userBuddyAccount = null;
 
 		try {
 			userBuddyAccount = (BuddyAccount) account.findAccountByUser(emailUser,
 					AccountFactory.makeAccount(AccountType.BUDDY));
 			if (userBuddyAccount == null) {
-
 				throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION + " for " + emailUser);
 			}
 		} catch (Exception e) {
-			e.getMessage();
-
+			log.debug(" Failed to retrieve Buddy Account of user {} " +e.getMessage(), emailUser);			
 		}
-
+		log.debug("Buddy Account retrieved successfully: {}",userBuddyAccount);
 		return userBuddyAccount;
 	}
 
 	public BankingAccount findBankingAccountByUser(String emailUser) throws NullPointerException {
+		log.debug(" Retrieving Banking Account of user {} ", emailUser);
 		BankingAccount userBankingAccount = null;
 
 		try {
 			userBankingAccount = (BankingAccount) account.findAccountByUser(emailUser,
 					AccountFactory.makeAccount(AccountType.BANKING));
 			if (userBankingAccount == null) {
-
 				throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION + " for " + emailUser);
 			}
 		} catch (Exception e) {
-			e.getMessage();
+			log.debug(" Failed to retrieve Banking Account of user {} " +e.getMessage(), emailUser);		
 		}
+		log.debug("Banking Account retrieved successfully: {}",userBankingAccount);
 		return userBankingAccount;
 	}
 
 	public List<UserApp> getAllUserContacts(String emailUser) throws NullPointerException {
-		log.debug(" Retrieving all contacts of Userof user {} ", emailUser);
+		log.debug(" Retrieving all contacts of user {} ", emailUser);
 		UserApp user = userRepository.findByEmail(emailUser);
 		if (user == null) {
 			throw new NullPointerException(ConstantsException.USER_NULL_EXCEPTION + emailUser);

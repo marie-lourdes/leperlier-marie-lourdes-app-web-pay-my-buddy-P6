@@ -33,9 +33,6 @@ class PaymentServiceTest {
 	private UserAccountService userAppService;
 
 	@MockBean
-	private AccountService accountService;
-
-	@MockBean
 	private TransactionService transactionService;
 	
 	private static UserDTO userTest2 ;
