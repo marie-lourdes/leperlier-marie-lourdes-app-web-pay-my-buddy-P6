@@ -29,11 +29,6 @@ public class TransactionService {
 		return transactionRepository.findAll();
 	}
 
-	/*
-	 * public List<Transaction> getTransactionsByCreditUser(UserApp creditUser) {
-	 * return transactionRepository.findByCreditUser(creditUser); }
-	 */
-
 	public void addTransaction(long userId, String emailContact, Transaction transactionCreated)
 			throws IllegalArgumentException {
 		UserApp creditUser = userRepository.findById(userId).get();

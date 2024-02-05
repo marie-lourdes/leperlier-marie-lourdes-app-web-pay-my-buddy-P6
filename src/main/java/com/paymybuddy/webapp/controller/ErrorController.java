@@ -16,16 +16,17 @@ public class ErrorController {
 
 		if (status != null) {
 			Integer statusCode = Integer.valueOf(status.toString());
+			if (statusCode == HttpStatus.BAD_REQUEST.value()) {
+				return "400";
 
-			if (statusCode == HttpStatus.NOT_FOUND.value()) {
+			} else if (statusCode == HttpStatus.NOT_FOUND.value()) {
 				return "404";
 			} else if (statusCode == HttpStatus.FORBIDDEN.value()) {
 				return "403";
-			} else if (statusCode == HttpStatus.BAD_REQUEST.value())
-				return "400";
+			}
+			
 		}
-
 		return "error";
 	}
-
+	
 }

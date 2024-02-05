@@ -9,6 +9,8 @@ import com.paymybuddy.webapp.AccountFactory.AccountType;
 import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
+import com.paymybuddy.webapp.domain.model.UserApp;
+import com.paymybuddy.webapp.utils.ConstantsException;
 
 import jakarta.transaction.Transactional;
 
@@ -20,14 +22,17 @@ public class AccountService {
 	@Qualifier("accountImpl")
 	private IBalance account;
 
-	public void addBuddyAccount(String emailUser) throws IllegalArgumentException, NullPointerException {
-		try {
-			account.addBuddyAccount(emailUser);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void addBuddyAccount(String emailUser) throws Exception {
+		
+			BuddyAccount existingBuddyAccount  = this.findBuddyAccountByUser(emailUser);
 
+			if (existingBuddyAccount != null) {
+				if (existingBuddyAccount.getUser().getEmail().equals(emailUser)) {
+					throw new IllegalArgumentException("Buddy Account already exist!");
+				}
+			}
+			account.addBuddyAccount(emailUser);
+		
 	}
 
 	public void updateBalanceBuddyAccount(long id, double amount)
@@ -36,7 +41,7 @@ public class AccountService {
 		try {
 			account.updateBalance(id, amount, AccountFactory.makeAccount(AccountType.BUDDY));
 		} catch (NullPointerException e) {
-			throw new NullPointerException("this banking account doesn't exist");
+			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -47,7 +52,7 @@ public class AccountService {
 		try {
 			account.updateBalance(id, amount, AccountFactory.makeAccount(AccountType.BANKING));
 		} catch (NullPointerException e) {
-			throw new NullPointerException("this banking account doesn't exist");
+			throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -60,7 +65,7 @@ public class AccountService {
 					AccountFactory.makeAccount(AccountType.BUDDY));
 			if (userBuddyAccount == null) {
 
-				throw new NullPointerException(" Buddy Account not found for " + emailUser);
+				throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION+" for " + emailUser);
 			}
 		} catch (Exception e) {
 			e.getMessage();
@@ -78,7 +83,7 @@ public class AccountService {
 					AccountFactory.makeAccount(AccountType.BANKING));
 			if (userBankingAccount == null) {
 
-				throw new NullPointerException(" Banking Account not found for " + emailUser);
+				throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION+" for " + emailUser);
 			}
 		} catch (Exception e) {
 			e.getMessage();

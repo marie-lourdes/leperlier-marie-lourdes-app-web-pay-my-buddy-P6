@@ -32,13 +32,13 @@ import jakarta.validation.Valid;
 @Controller
 public class UserPaymentController {
 	private static final Logger log = LogManager.getLogger(UserPaymentController.class);
-	
+
 	@Autowired
 	private UserAppService userAppService;
 
 	@Autowired
 	private PaymentService paymentService;
-	
+
 	@Autowired
 	private TransactionService transactionService;
 
@@ -56,29 +56,30 @@ public class UserPaymentController {
 				paymentService.transferMoneyToBankingAccountUser(principal.getName(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 				System.out.println("-------------------transferMoneyToBankingAccountUser-------------");
-				
-				transactionService.addTransaction( creditUser.getId(),  creditUser.getEmail(), userTransaction);
-				
+
+				transactionService.addTransaction(creditUser.getId(), creditUser.getEmail(), userTransaction);
+
 			} else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
 				paymentService.transferMoneyToBuddyAccountUser(principal.getName(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 				System.out.println("-------------------transferMoneyToBuddyAccountUser-------------");
-				
-				transactionService.addTransaction( creditUser.getId(),  creditUser.getEmail(), userTransaction);
+
+				transactionService.addTransaction(creditUser.getId(), creditUser.getEmail(), userTransaction);
 			} else {
 				paymentService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
 						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
 						userTransaction.getDescription(), userTransaction);
 				System.out.println("-------------------payToContact-------------");
-			transactionService.addTransaction(creditUser.getId(), userTransaction.getBeneficiaryUser().getEmail(), userTransaction);
+				transactionService.addTransaction(creditUser.getId(), userTransaction.getBeneficiaryUser().getEmail(),
+						userTransaction);
 			}
-
+			log.info("Payment on beneficiary {} from user {} made successfully",
+					userTransaction.getBeneficiaryUser().getEmail(), principal.getName());
 			return new ModelAndView("redirect:/transfer-success");
 		} catch (NullPointerException e) {
 			log.error(e.getMessage());
 			return new ModelAndView("redirect:/error-404");
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			log.error(e.getMessage());
 			return new ModelAndView();
 		}
@@ -87,13 +88,17 @@ public class UserPaymentController {
 	@GetMapping("/home/transfer")
 	public String getTransferPage(Model model, Principal principal) {
 		String userEmail = principal.getName();
+		try {
+			List<UserApp> allContacts = userAppService.getAllUserContacts(userEmail);
+			this.getHistoricalTransactionsByUser(1, model, principal);
 
-		List<UserApp> allContacts = userAppService.getAllUserContacts(userEmail);
-		this.getHistoricalTransactionsByUser(1, model, principal);
-
-		String breadcrumbTransfer = "Transfer";
-		model.addAttribute("breadcrumbTransfer", breadcrumbTransfer);
-		model.addAttribute("contacts", allContacts);
+			String breadcrumbTransfer = "Transfer";
+			model.addAttribute("breadcrumbTransfer", breadcrumbTransfer);
+			model.addAttribute("contacts", allContacts);
+		} catch (Exception e) {
+			log.error("Failed to retrieve tranfer page" + e.getMessage());
+		}
+		log.info(" Tranfer page successfull retrieved" );
 		return "transfer";
 	}
 
@@ -102,24 +107,28 @@ public class UserPaymentController {
 		String userEmail = principal.getName();
 		Transaction userTransaction = new Transaction();
 		List<TransactionDTO> transactions = new ArrayList<TransactionDTO>();
+		try {
+			int pageSize = 3;
+			Page<Transaction> page = paymentService.getTransactionsByUser(pageNber, pageSize, userEmail);
+			List<Transaction> listTransactions = page.getContent();
+			for (Transaction transaction : listTransactions) {
+				TransactionDTO transactionUser = transactionMapper.transactionToTransactionDTO(transaction);
+				if (transaction.getBeneficiaryUser().getEmail().equals(userEmail)) {
+					transactionUser.setContactName("Me");
+				}
+				transactions.add(transactionUser);
 
-		int pageSize = 3;
-		Page<Transaction> page = paymentService.getTransactionsByUser(pageNber, pageSize, userEmail);
-		List<Transaction> listTransactions = page.getContent();
-		for (Transaction transaction : listTransactions) {
-			TransactionDTO transactionUser = transactionMapper.transactionToTransactionDTO(transaction);
-			if (transaction.getBeneficiaryUser().getEmail().equals(userEmail)) {
-				transactionUser.setContactName("Me");
 			}
-			transactions.add(transactionUser);
 
+			model.addAttribute("currentPage", pageNber);
+			model.addAttribute("totalPages", page.getTotalPages());
+			model.addAttribute("totalItems", page.getTotalElements());
+			model.addAttribute("userTransaction", userTransaction);
+			model.addAttribute("transactions", transactions);
+		} catch (Exception e) {
+			log.error("Failed to retrieve page  of transaction" + e.getMessage());
 		}
-
-		model.addAttribute("currentPage", pageNber);
-		model.addAttribute("totalPages", page.getTotalPages());
-		model.addAttribute("totalItems", page.getTotalElements());
-		model.addAttribute("userTransaction", userTransaction);
-		model.addAttribute("transactions", transactions);
+		log.info(" Page  of transaction successfull retrieved" );
 		return "transfer";
 	}
 
