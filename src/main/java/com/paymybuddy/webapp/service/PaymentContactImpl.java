@@ -30,24 +30,17 @@ public class PaymentContactImpl implements IPayment {
 	private double balanceCalculatedCreditUser;
 
 	@Override
-	public void pay(String emailCreditUser, String emailBeneficiaryUser, double amount) {
-
+	public void pay(String emailCreditUser, String emailBeneficiaryUser, double amount) throws Exception{
 		this.calculBalance(emailCreditUser, emailBeneficiaryUser, amount);
-
-		try {
-			this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(emailCreditUser, emailBeneficiaryUser);
-		} catch (Exception e) {
-
-			e.getMessage();
-		}
-	};
-
-	@Override
-	public void pay(String emailUser, double amount, String typeAccountUser) {
+		this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(emailCreditUser, emailBeneficiaryUser);	
 	}
 
 	@Override
-	public void calculBalance(String emailCreditUser, String emailBeneficiaryUser, double amount) {
+	public void pay(String emailUser, double amount, String typeAccountUser) throws Exception{
+	}
+
+	@Override
+	public void calculBalance(String emailCreditUser, String emailBeneficiaryUser, double amount) throws Exception{
 		balanceCalculatedBeneficiaryUser = 0;
 		balanceCalculatedCreditUser = 0;
 		double balanceBeneficiary = userAccountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
@@ -60,7 +53,7 @@ public class PaymentContactImpl implements IPayment {
 	}
 
 	@Override
-	 public   void calculBalance(String userEmail,  double amount,String typeAccountBeneficairyUser) {}
+	 public   void calculBalance(String userEmail,  double amount,String typeAccountBeneficairyUser) throws Exception{}
 	
 	
 	public void updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailCreditUser,

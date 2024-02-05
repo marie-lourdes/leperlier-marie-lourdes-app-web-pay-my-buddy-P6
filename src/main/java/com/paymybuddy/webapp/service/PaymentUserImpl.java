@@ -27,17 +27,12 @@ public class PaymentUserImpl implements IPayment {
 	private double balanceBuddyAccountCalculated;
 
 	@Override
-	public void pay(String userEmail, double amount, String typeAccountBeneficairyUser) {
-
-		try {
-			this.calculBalance(userEmail, amount, typeAccountBeneficairyUser);
-		} catch (Exception e) {
-			e.getMessage();
-		}
+	public void pay(String userEmail, double amount, String typeAccountBeneficairyUser) throws Exception {
+		this.calculBalance(userEmail, amount, typeAccountBeneficairyUser);
 	}
 
 	@Override
-	public void pay(String emailCreditUser, String emailBeneficiaryUser, double amount) {
+	public void pay(String emailCreditUser, String emailBeneficiaryUser, double amount) throws Exception {
 	}
 
 	@Override
@@ -54,14 +49,14 @@ public class PaymentUserImpl implements IPayment {
 			balanceBankingAccountCalculated = operation.add(balanceBankingAccount, amount);
 			balanceBuddyAccountCalculated = operation.withdraw(balanceBuddyAccount, amountWithFeesTransaction);
 		}
-		
+
 		if (typeAccountBeneficiaryUser.equals(Constants.BUDDY_ACCOUNT)) {
 			balanceBuddyAccountCalculated = operation.add(balanceBuddyAccount, amount - feesTransaction);
 			// deduction des frais appliqué sur le compte beneficiare de l application et
 			// non le compte bancaire qui est crediteur mais hors application
 			balanceBankingAccountCalculated = operation.withdraw(balanceBankingAccount, amount);
 		}
-		
+
 		this.updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(userEmail,
 				this.formatBalanceAccount(balanceBankingAccountCalculated),
 				this.formatBalanceAccount(balanceBuddyAccountCalculated));
@@ -83,9 +78,11 @@ public class PaymentUserImpl implements IPayment {
 			throw new NullPointerException("Buddy Account of user doesn't exist");
 		}
 
-		userAccountService.updateBalanceBankingAccount(userAccountService.findBankingAccountByUser(emailUser).getUser().getId(),
+		userAccountService.updateBalanceBankingAccount(
+				userAccountService.findBankingAccountByUser(emailUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedBankingAccount));
-		userAccountService.updateBalanceBuddyAccount(userAccountService.findBuddyAccountByUser(emailUser).getUser().getId(),
+		userAccountService.updateBalanceBuddyAccount(
+				userAccountService.findBuddyAccountByUser(emailUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedBuddyAccountUser));
 	}
 

@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.paymybuddy.webapp.AccountFactory;
-import com.paymybuddy.webapp.AccountFactory.AccountType;
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
@@ -68,8 +66,7 @@ public class UserAccountController {
 	@PostMapping("/save-buddy-account")
 	public ModelAndView createAccount(Principal principal) {
 		try {
-			BuddyAccount buddyAccountCreated =(BuddyAccount) AccountFactory.makeAccount(AccountType.BUDDY);
-			buddyAccountCreated=userAccountService.addBuddyAccount(principal.getName());
+			userAccountService.addBuddyAccount(principal.getName());
 			return new ModelAndView("redirect:/account-success");
 
 		} catch (Exception e) {

@@ -18,11 +18,11 @@ public class PaymentStrategy {
 	@Qualifier("paymentUserImpl")
 	private  IPayment paymentUser ;
 	
-	public  void pay(String emailCreditUser, String emailBeneficiaryUser,double amount)  {
+	public  void pay(String emailCreditUser, String emailBeneficiaryUser,double amount) throws Exception {
 		paymentContact.pay(emailCreditUser, emailBeneficiaryUser,  amount );		
 	}
 	
-	public  void pay(String userEmail, double amount,String typeAccountUser) {
+	public  void pay(String userEmail, double amount,String typeAccountUser) throws Exception{
 		paymentUser.pay(userEmail,  amount, typeAccountUser);		
 	}
 }

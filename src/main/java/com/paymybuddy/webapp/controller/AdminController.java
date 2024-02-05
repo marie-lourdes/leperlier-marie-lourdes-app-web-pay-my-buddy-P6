@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,7 @@ import com.paymybuddy.webapp.service.UserAccountService;
 
 @Controller
 public class AdminController {
+	private static final Logger log = LogManager.getLogger(AdminController.class);
 
 	@Autowired
 	@Qualifier("roleImpl")
@@ -55,25 +58,23 @@ public class AdminController {
 	}
 
 	@GetMapping("/home/transactions-billing")
-	public String getHistoricalTransactionsWithFees(Model model, Principal principal) {
+	public String getHistoricalTransactionsPage(Model model, Principal principal) {
 		try {
 			this.isUserOrAdmin(model, principal, "transactions-billing");
 			this.getransactionsPaginated(1, model, principal);
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.getMessage();
+			String breadcrumbTransactions = "Historical Transactions";
+			model.addAttribute("breadcrumbTransactions", breadcrumbTransactions);
+		}catch(Exception e) {
+			log.error("Failed to retrieve Historical Transactions with fees" + e.getMessage());	
 		}
-
-		String breadcrumbTransactions = "Historical Transactions";
-		model.addAttribute("breadcrumbTransactions", breadcrumbTransactions);
+		log.info(" Historical Transactions  page successfull retrieved");
 		return "transactions-billing";
 	}
 
 	@GetMapping("/admin/page/{pageNber}")
 	public String getransactionsPaginated(@PathVariable int pageNber, Model model, Principal principal) {
 		List<TransactionBillingDTO> transactions = new ArrayList<TransactionBillingDTO>();
-
+		try {
 		int pageSize = 10;
 		Page<Transaction> page = adminService.getAllTransactionsWithFees(pageNber, pageSize);
 		List<Transaction> listTransactions = page.getContent();
@@ -86,6 +87,11 @@ public class AdminController {
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("transactions", transactions);
+	} catch (Exception e) {
+		log.error("Failed to retrieve transactions" + e.getMessage());
+	}
+	
+	log.info(" Historical transactions successfull retrieved");	
 		return "transactions-billing";
 	}
 
