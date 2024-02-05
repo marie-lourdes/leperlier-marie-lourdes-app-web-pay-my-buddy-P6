@@ -1,6 +1,5 @@
 package com.paymybuddy.webapp.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.IAccountRepository;
 import com.paymybuddy.webapp.repository.IUserRepository;
-import com.paymybuddy.webapp.utils.Constants;
 
 import lombok.Data;
 

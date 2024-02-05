@@ -13,26 +13,24 @@ import com.paymybuddy.webapp.controller.UserPaymentController;
 import lombok.Data;
 
 @Data
-@Component(value="roleImpl")
-public class RoleImpl  implements  IRole{
+@Component(value = "roleImpl")
+public class RoleImpl implements IRole {
 	private static final Logger log = LogManager.getLogger(RoleImpl.class);
 	@Autowired
 	private UserAccountService userAppService;
 	private boolean isUser;
 	private boolean isAdmin;
 	private String userRole;
-	
+
 	@Override
-	public String verifRolePrincipalInView( Model model, Principal principal, String view) {
-    //UserAppService userAppService= new UserAppService();
+	public String verifRolePrincipalInView(Model model, Principal principal, String view) {
+		// UserAppService userAppService= new UserAppService();
 		try {
-			  userRole = userAppService.getUserLoginByEmail(principal.getName()).getRole();
-		}catch (NullPointerException e) {
-			log.error("User doesn'have role defined");
-		}catch (Exception e) {
+			userRole = userAppService.getUserLoginByEmail(principal.getName()).getRole();
+		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
-	  	
+
 		isUser = userRole.equals("USER");
 		isAdmin = userRole.equals("ADMIN");
 		model.addAttribute("isUser", isUser);
