@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.paymybuddy.webapp.repository.IUserRepository;
 import com.paymybuddy.webapp.service.PaymentService;
 import com.paymybuddy.webapp.service.TransactionService;
-import com.paymybuddy.webapp.service.UserService;
+import com.paymybuddy.webapp.service.UserAccountService;
 
 @SpringBootApplication
 public class WebappApplication implements CommandLineRunner {
 
 	@Autowired
-	UserService userAppService;
+	UserAccountService userAppService;
 
 	@Autowired
 	TransactionService transactionService;

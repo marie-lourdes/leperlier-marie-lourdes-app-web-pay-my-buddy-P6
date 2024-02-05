@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.utils.Constants;
 import com.paymybuddy.webapp.utils.ConstantsException;
@@ -36,7 +35,7 @@ public class PaymentService implements IAuthorizationPayment {
 	private PaymentStrategy payment;
 
 	@Autowired
-	private AccountService accountService;
+	private UserAccountService userAccountService;
 
 	@Autowired
 	private TransactionService transactionService;
@@ -47,8 +46,8 @@ public class PaymentService implements IAuthorizationPayment {
 		Date userBuddyAccountBeneficiaryUser = null;
 		double userBuddyAccountCreditUserBalance = 0;
 
-		userBuddyAccountCreditUserBalance = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
-		userBuddyAccountBeneficiaryUser = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation();
+		userBuddyAccountCreditUserBalance = userAccountService.findBuddyAccountByUser(emailCreditUser).getBalance();
+		userBuddyAccountBeneficiaryUser = userAccountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation();
 		System.out.println("userBuddyAccountBeneficiaryUser" + userBuddyAccountBeneficiaryUser);
 		if (userBuddyAccountBeneficiaryUser == null) {
 		
@@ -64,8 +63,8 @@ public class PaymentService implements IAuthorizationPayment {
 	public void transferMoneyToBankingAccountUser(String userEmail, double amount, String description,
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		log.debug("Payment in progress with BankingAccount of User {}  " ,userEmail);
-		double userCreditBuddyAccountBalance = accountService.findBuddyAccountByUser(userEmail).getBalance();
-		Date userBankingAccount = accountService.findBankingAccountByUser(userEmail).getCreation();
+		double userCreditBuddyAccountBalance = userAccountService.findBuddyAccountByUser(userEmail).getBalance();
+		Date userBankingAccount = userAccountService.findBankingAccountByUser(userEmail).getCreation();
 		if (userBankingAccount == null) {
 			throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION+": " + userEmail);
 		} else if (isPaymentAuthorized(amount, userCreditBuddyAccountBalance)) {
@@ -79,8 +78,8 @@ public class PaymentService implements IAuthorizationPayment {
 	public void transferMoneyToBuddyAccountUser(String userEmail, double amount, String description,
 			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
 		log.debug("Payment in progress with BuddyAccount of User {}  " ,userEmail);
-		double userCreditBankingAccountBalance = accountService.findBankingAccountByUser(userEmail).getBalance();
-		Date userBuddyAccount = accountService.findBuddyAccountByUser(userEmail).getCreation();
+		double userCreditBankingAccountBalance = userAccountService.findBankingAccountByUser(userEmail).getBalance();
+		Date userBuddyAccount = userAccountService.findBuddyAccountByUser(userEmail).getCreation();
 		if (userBuddyAccount == null) {
 			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION +": " + userEmail);
 		} else if (isPaymentAuthorized(amount, userCreditBankingAccountBalance)) {

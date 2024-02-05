@@ -23,7 +23,7 @@ public class PaymentContactImpl implements IPayment {
 	private IFormat formatter;
 
 	@Autowired
-	private AccountService accountService;
+	private UserAccountService userAccountService;
 
 	private double balanceCalculatedBeneficiaryUser;
 
@@ -50,8 +50,8 @@ public class PaymentContactImpl implements IPayment {
 	public void calculBalance(String emailCreditUser, String emailBeneficiaryUser, double amount) {
 		balanceCalculatedBeneficiaryUser = 0;
 		balanceCalculatedCreditUser = 0;
-		double balanceBeneficiary = accountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
-		double balanceCredit = accountService.findBuddyAccountByUser(emailCreditUser).getBalance();
+		double balanceBeneficiary = userAccountService.findBuddyAccountByUser(emailBeneficiaryUser).getBalance();
+		double balanceCredit = userAccountService.findBuddyAccountByUser(emailCreditUser).getBalance();
 		double feesTransaction = Billing.calculateFees(amount);
 		double amountWithFeesTransaction = operation.add(amount, feesTransaction);
 		
@@ -66,14 +66,14 @@ public class PaymentContactImpl implements IPayment {
 	public void updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(String emailCreditUser,
 			String emailBeneficiaryUser) throws Exception {
 
-		if (accountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation() == null) {
+		if (userAccountService.findBuddyAccountByUser(emailBeneficiaryUser).getCreation() == null) {
 			throw new NullPointerException("Buddy Account of contact user doesn't exist");
 		}
 
-		accountService.updateBalanceBankingAccount(
-				accountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
+		userAccountService.updateBalanceBankingAccount(
+				userAccountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
-		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
+		userAccountService.updateBalanceBuddyAccount(userAccountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedCreditUser));
 		System.out.println("balanceCalculatedBeneficiaryUser"+balanceCalculatedBeneficiaryUser);
 		System.out.println("balanceCalculatedBeneficiaryUserformatted"+this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));

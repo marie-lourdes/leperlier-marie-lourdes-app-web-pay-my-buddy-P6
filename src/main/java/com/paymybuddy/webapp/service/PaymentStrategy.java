@@ -19,11 +19,11 @@ public class PaymentStrategy {
 	private  IPayment paymentUser ;
 	
 	@Autowired
-	private AccountService accountService;
+	private AccountService userAccountService;
 	@Autowired
 	private TransactionService transactionService;
 	@Autowired
-	private UserService userAppService;
+	private UserAccountService userAppService;
 
 
 	public  void pay(String emailCreditUser, String emailBeneficiaryUser,double amount)  {

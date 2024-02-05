@@ -22,7 +22,7 @@ public class PaymentUserImpl implements IPayment {
 	private IFormat formatter;
 
 	@Autowired
-	private AccountService accountService;
+	private UserAccountService userAccountService;
 	private double balanceBankingAccountCalculated;
 	private double balanceBuddyAccountCalculated;
 
@@ -43,8 +43,8 @@ public class PaymentUserImpl implements IPayment {
 	@Override
 	public void calculBalance(String userEmail, double amount, String typeAccountBeneficiaryUser) throws Exception {
 
-		double balanceBuddyAccount = accountService.findBuddyAccountByUser(userEmail).getBalance();
-		double balanceBankingAccount = accountService.findBankingAccountByUser(userEmail).getBalance();
+		double balanceBuddyAccount = userAccountService.findBuddyAccountByUser(userEmail).getBalance();
+		double balanceBankingAccount = userAccountService.findBankingAccountByUser(userEmail).getBalance();
 		balanceBankingAccountCalculated = 0;
 		balanceBuddyAccountCalculated = 0;
 
@@ -88,16 +88,16 @@ public class PaymentUserImpl implements IPayment {
 	public void updateBalanceBankingAccountAndBuddyAccountOfUserWithFeesTransaction(String emailUser,
 			double balanceCalculatedBankingAccount, double balanceCalculatedBuddyAccountUser) throws Exception {
 
-		if (accountService.findBankingAccountByUser(emailUser).getCreation() == null) {
+		if (userAccountService.findBankingAccountByUser(emailUser).getCreation() == null) {
 			throw new NullPointerException("Banking Account of user doesn't exist");
 		}
-		if (accountService.findBuddyAccountByUser(emailUser).getCreation() == null) {
+		if (userAccountService.findBuddyAccountByUser(emailUser).getCreation() == null) {
 			throw new NullPointerException("Buddy Account of user doesn't exist");
 		}
 
-		accountService.updateBalanceBankingAccount(accountService.findBankingAccountByUser(emailUser).getUser().getId(),
+		userAccountService.updateBalanceBankingAccount(userAccountService.findBankingAccountByUser(emailUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedBankingAccount));
-		accountService.updateBalanceBuddyAccount(accountService.findBuddyAccountByUser(emailUser).getUser().getId(),
+		userAccountService.updateBalanceBuddyAccount(userAccountService.findBuddyAccountByUser(emailUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedBuddyAccountUser));
 	}
 

@@ -17,7 +17,7 @@ import lombok.Data;
 public class RoleImpl  implements  IRole{
 	private static final Logger log = LogManager.getLogger(RoleImpl.class);
 	@Autowired
-	private UserService userAppService;
+	private UserAccountService userAppService;
 	private boolean isUser;
 	private boolean isAdmin;
 	private String userRole;

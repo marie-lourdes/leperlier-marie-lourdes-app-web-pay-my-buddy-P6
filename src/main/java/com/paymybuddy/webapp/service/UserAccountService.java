@@ -5,15 +5,19 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.paymybuddy.webapp.controller.UserAccountController;
+import com.paymybuddy.webapp.AccountFactory;
+import com.paymybuddy.webapp.AccountFactory.AccountType;
 import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.DTO.UserLoginDTO;
 import com.paymybuddy.webapp.domain.DTO.UserMapper;
+import com.paymybuddy.webapp.domain.model.BankingAccount;
+import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.repository.IUserRepository;
 import com.paymybuddy.webapp.utils.ConstantsException;
@@ -21,8 +25,8 @@ import com.paymybuddy.webapp.utils.ConstantsException;
 //service creation user, avec page sign up pour le controller et utilise le service d authentification
 @Transactional
 @Service
-public class UserService {
-	private static final Logger log = LogManager.getLogger(UserService.class);
+public class UserAccountService {
+	private static final Logger log = LogManager.getLogger(UserAccountService.class);
 
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -31,6 +35,10 @@ public class UserService {
 
 	@Autowired
 	private UserMapper mapper;
+
+	@Autowired
+	@Qualifier("accountImpl")
+	private IBalance account;
 
 	public UserApp createUser(UserApp userApp) {
 		log.debug(" Creating user {}: ", userApp.getEmail());
@@ -79,6 +87,75 @@ public class UserService {
 			userRepository.save(user);
 			log.debug("Contact added  successfully: {}", emailContact);
 		}
+	}
+
+	public void addBuddyAccount(String emailUser) throws Exception {
+		log.debug(" Creating Buddy Account {} of user {} ",  emailUser);
+		BuddyAccount existingBuddyAccount = this.findBuddyAccountByUser(emailUser);
+
+		if (existingBuddyAccount != null) {
+			if (existingBuddyAccount.getUser().getEmail().equals(emailUser)) {
+				throw new IllegalArgumentException("Buddy Account already exist!");
+			}
+		}
+		account.addBuddyAccount(emailUser);
+
+	}
+
+	public void updateBalanceBuddyAccount(long id, double amount) throws NullPointerException {
+
+		try {
+			account.updateBalance(id, amount, AccountFactory.makeAccount(AccountType.BUDDY));
+		} catch (NullPointerException e) {
+			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION);
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+
+	public void updateBalanceBankingAccount(long id, double amount) throws NullPointerException {
+
+		try {
+			account.updateBalance(id, amount, AccountFactory.makeAccount(AccountType.BANKING));
+		} catch (NullPointerException e) {
+			throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION);
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+
+	public BuddyAccount findBuddyAccountByUser(String emailUser) throws NullPointerException {
+		BuddyAccount userBuddyAccount = null;
+
+		try {
+			userBuddyAccount = (BuddyAccount) account.findAccountByUser(emailUser,
+					AccountFactory.makeAccount(AccountType.BUDDY));
+			if (userBuddyAccount == null) {
+
+				throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION + " for " + emailUser);
+			}
+		} catch (Exception e) {
+			e.getMessage();
+
+		}
+
+		return userBuddyAccount;
+	}
+
+	public BankingAccount findBankingAccountByUser(String emailUser) throws NullPointerException {
+		BankingAccount userBankingAccount = null;
+
+		try {
+			userBankingAccount = (BankingAccount) account.findAccountByUser(emailUser,
+					AccountFactory.makeAccount(AccountType.BANKING));
+			if (userBankingAccount == null) {
+
+				throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION + " for " + emailUser);
+			}
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return userBankingAccount;
 	}
 
 	public List<UserApp> getAllUserContacts(String emailUser) throws NullPointerException {

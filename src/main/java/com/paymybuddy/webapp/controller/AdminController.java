@@ -18,7 +18,7 @@ import com.paymybuddy.webapp.domain.DTO.UserDTO;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.service.AdminService;
 import com.paymybuddy.webapp.service.IRole;
-import com.paymybuddy.webapp.service.UserService;
+import com.paymybuddy.webapp.service.UserAccountService;
 
 @Controller
 public class AdminController {
@@ -31,7 +31,7 @@ public class AdminController {
 	private AdminService adminService;
 
 	@Autowired
-	private UserService userAppService;
+	private UserAccountService userAccountService;
 
 	@Autowired
 	private TransactionMapper transactionMapper;
@@ -47,7 +47,7 @@ public class AdminController {
 			e.getMessage();
 		}
 		
-		UserDTO user = userAppService.getUserByEmail(principal.getName());
+		UserDTO user = userAccountService.getUserByEmail(principal.getName());
 		String breadcrumbProfilAdmin = "Profil";
 		model.addAttribute("breadcrumbProfilAdmin", breadcrumbProfilAdmin);
 		model.addAttribute("user", user);

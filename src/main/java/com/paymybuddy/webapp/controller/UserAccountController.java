@@ -21,7 +21,7 @@ import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.AccountService;
 import com.paymybuddy.webapp.service.IRole;
-import com.paymybuddy.webapp.service.UserService;
+import com.paymybuddy.webapp.service.UserAccountService;
 
 import jakarta.validation.Valid;
 import lombok.Data;
@@ -36,14 +36,11 @@ public class UserAccountController {
 	private IRole role;
 
 	@Autowired
-	private UserService userAppService;
-
-	@Autowired
-	private AccountService accountService;
+	private UserAccountService userAccountService;
 
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
-		userAppService.createUser(user);
+		userAccountService.createUser(user);
 		return new ModelAndView("redirect:/home");
 	}
 
@@ -51,7 +48,7 @@ public class UserAccountController {
 	public ModelAndView createContact(@Valid @ModelAttribute UserApp contact, Principal principal) throws IOException {
 
 		try {
-			userAppService.addUserContact(contact.getEmail(), principal.getName());
+			userAccountService.addUserContact(contact.getEmail(), principal.getName());
 			return new ModelAndView("redirect:/home/contact");
 		} catch (IllegalArgumentException e) {
 			 log.error(e.getMessage());
@@ -65,7 +62,7 @@ public class UserAccountController {
 	@PostMapping("/save-buddy-account")
 	public ModelAndView createAccount(Principal principal) {
 		try {
-			accountService.addBuddyAccount(principal.getName());
+			userAccountService.addBuddyAccount(principal.getName());
 			return new ModelAndView("redirect:/account-success");
 
 		} catch (IllegalArgumentException e) {
@@ -82,7 +79,7 @@ public class UserAccountController {
 		UserDTO user = new UserDTO();
 		try {
 			this.isUserOrAdmin(model, principal, "home");
-			user = userAppService.getUserByEmail(principal.getName());
+			user = userAccountService.getUserByEmail(principal.getName());
 
 			String breadcrumbHome = "Home /";
 			model.addAttribute("breadcrumbHome", breadcrumbHome);
@@ -114,7 +111,7 @@ public class UserAccountController {
 	@GetMapping("/home/contact") // enpoint template contacts
 	public String getUserContact(Model model, Principal principal) {
 		try {
-			List<UserApp> allContact = userAppService.getAllUserContacts(principal.getName());
+			List<UserApp> allContact = userAccountService.getAllUserContacts(principal.getName());
 
 			String breadcrumbContact = "Contact";
 			model.addAttribute("breadcrumbContact", breadcrumbContact);
@@ -133,9 +130,9 @@ public class UserAccountController {
 			this.isUserOrAdmin(model, principal, "profil");
 
 			UserDTO contactCreated = new UserDTO();
-			UserDTO user = userAppService.getUserByEmail(principal.getName());
-			BuddyAccount userBuddyAccountBalance = accountService.findBuddyAccountByUser(user.getEmail());
-			BankingAccount userBankingAccountBalance = accountService.findBankingAccountByUser(user.getEmail());
+			UserDTO user = userAccountService.getUserByEmail(principal.getName());
+			BuddyAccount userBuddyAccountBalance = userAccountService.findBuddyAccountByUser(user.getEmail());
+			BankingAccount userBankingAccountBalance = userAccountService.findBankingAccountByUser(user.getEmail());
 
 			String breadcrumbProfil = "Profil";
 			model.addAttribute("breadcrumbProfil", breadcrumbProfil);

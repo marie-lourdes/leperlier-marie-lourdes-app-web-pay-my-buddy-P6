@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.webapp.AccountFactory;
 import com.paymybuddy.webapp.AccountFactory.AccountType;
-import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
-import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.utils.ConstantsException;
 
 import jakarta.transaction.Transactional;
@@ -18,7 +16,7 @@ import jakarta.transaction.Transactional;
 @Service
 public class AccountService {
 
-	@Autowired
+/*	@Autowired
 	@Qualifier("accountImpl")
 	private IBalance account;
 
@@ -89,6 +87,6 @@ public class AccountService {
 			e.getMessage();
 		}
 		return userBankingAccount;
-	}
+	}*/
 
 }
