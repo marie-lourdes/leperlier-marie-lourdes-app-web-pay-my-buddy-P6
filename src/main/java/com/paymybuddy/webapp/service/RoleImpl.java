@@ -24,7 +24,6 @@ public class RoleImpl implements IRole {
 
 	@Override
 	public String verifRolePrincipalInView(Model model, Principal principal, String view) {
-		// UserAppService userAppService= new UserAppService();
 		try {
 			userRole = userAppService.getUserLoginByEmail(principal.getName()).getRole();
 		} catch (Exception e) {
