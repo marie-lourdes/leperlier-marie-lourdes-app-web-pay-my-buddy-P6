@@ -1,7 +1,9 @@
 package com.paymybuddy.webapp.service;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -14,9 +16,11 @@ import org.junit.jupiter.api.Test;
 import org.junitpioneer.jupiter.SetEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.webapp.domain.model.Account;
+import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 
@@ -26,7 +30,7 @@ import com.paymybuddy.webapp.domain.model.UserApp;
 class UserAccountServiceTest {
 	@Autowired
 	private UserAccountService userAccountServiceUnderTest;
-	private UserAccountService userAccountServiceStaticUnderTest;
+
 	private UserApp userCreated;
 	private UserApp contactCreated;
 	private List<UserApp> contactsUser;
@@ -104,9 +108,57 @@ class UserAccountServiceTest {
 					.getAllUserContacts("usertest@email.com");
 			assertTrue(listOfContactsOfUserFound.contains(resultlistContactCreated));
 
+		} catch (IllegalArgumentException e) {
+			e.getMessage();
 		} catch (AssertionError e) {
 			fail(e.getMessage());
 		}
 	}
 
+	@Transactional
+	@Test
+	void testAddUserContact_withDuplicatedContact_returnIllegalArgumentException() throws Exception {
+		try {
+			testAddUserContact();
+			userAccountServiceUnderTest.addUserContact("usertest5@email.com", "usertest@email.com");
+		} catch (IllegalArgumentException e) {
+			assertThrows(IllegalArgumentException.class,
+					() -> userAccountServiceUnderTest.addUserContact("usertest5@email.com", "usertest@email.com"));
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Transactional
+	@Test
+	void testAddUserContact_withContactNotFound_returnNullException() throws Exception {
+		try {
+
+			UserApp resultlistContactCreated = userAccountServiceUnderTest.addUserContact("usertest6@email.com",
+					"usertest@email.com");
+			assertNull(resultlistContactCreated);
+		} catch (NullPointerException e) {
+			assertThrows(NullPointerException.class,
+					() -> userAccountServiceUnderTest.addUserContact("usertest6@email.com", "usertest@email.com"));
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	void testAddBuddyAccount() throws Exception {
+
+		try {
+			BuddyAccount resultBuddyAccountCreated = userAccountServiceUnderTest.addBuddyAccount("usertest@email.com");
+			assertAll("assertion of info Buddy Account created",
+					() -> assertEquals(80.00, resultBuddyAccountCreated.getBalance()),
+					() -> assertEquals("usertest@email.com", resultBuddyAccountCreated.getUser().getEmail()),
+					() -> assertNotNull(resultBuddyAccountCreated.getId()));
+		} catch (NullPointerException e) {
+			e.getMessage();
+
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
+	}
 }

@@ -95,7 +95,7 @@ public class UserAccountService {
 	public BuddyAccount addBuddyAccount(String emailUser) throws Exception {
 		log.debug(" Creating Buddy Account {} of user {} ", emailUser);
 		
-		BuddyAccount buddyAccountCreated=null;
+		BuddyAccount buddyAccountCreated= new BuddyAccount();
 		buddyAccountCreated =account.addBuddyAccount(emailUser);
 
 		log.debug("Buddy account  created  successfully for user : {}", emailUser);
