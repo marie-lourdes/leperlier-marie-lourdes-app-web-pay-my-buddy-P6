@@ -54,7 +54,7 @@ public class UserApp {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "contacts", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "id_contact"))
-	List<UserApp> contacts = new ArrayList<>();
+	List<UserApp> contacts = new ArrayList<UserApp>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Account> account;
