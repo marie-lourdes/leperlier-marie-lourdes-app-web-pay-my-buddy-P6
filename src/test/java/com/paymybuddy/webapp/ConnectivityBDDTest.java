@@ -12,14 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class ConnectivityBDDTest {
-
-
-	
 	@Test
-	void testConnectionBDD() throws ClassNotFoundException {
+	void testConnectionBDD() {
 		Connection con= null;
 		try {
-			//Class.forName("com.mysql.cj.jdbc.Driver");
 			 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/paymybuddy_test?serverTimezone=Europe/Paris","buddyuser", "buddy");
 			 assertNotNull(con);
 		} catch (SQLException e) {

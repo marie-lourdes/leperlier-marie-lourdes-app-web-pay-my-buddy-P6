@@ -69,7 +69,7 @@ public class UserAccountService {
 		return userCreated;
 	}
 
-	public void addUserContact(String emailContact, String emailUser)
+	public UserApp addUserContact(String emailContact, String emailUser)
 			throws IllegalArgumentException, NullPointerException {
 		log.debug(" Creating contact {} of user {} ", emailContact, emailUser);
 
@@ -85,8 +85,11 @@ public class UserAccountService {
 		} else {
 			user.addContact(contactToAdd);
 			userRepository.save(user);
+			
 			log.debug("Contact added  successfully: {}", emailContact);
+			return contactToAdd;
 		}
+	
 	}
 
 	public BuddyAccount addBuddyAccount(String emailUser) throws Exception {

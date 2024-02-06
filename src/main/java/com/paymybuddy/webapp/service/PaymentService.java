@@ -18,6 +18,8 @@ import com.paymybuddy.webapp.utils.Constants;
 import com.paymybuddy.webapp.utils.ConstantsException;
 import com.paymybuddy.webapp.utils.IFormat;
 
+import lombok.Data;
+@Data
 @Transactional
 @Service
 public class PaymentService implements IAuthorizationPayment {
@@ -40,8 +42,7 @@ public class PaymentService implements IAuthorizationPayment {
 	@Autowired
 	private TransactionService transactionService;
 
-	public void payToContact(String emailCreditUser, String emailBeneficiaryUser, double amount, String description,
-			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
+	public void payToContact(String emailCreditUser, String emailBeneficiaryUser, double amount) throws IllegalArgumentException, NullPointerException {
 		log.debug("Payment in progress with contact: {}  ", emailBeneficiaryUser);
 
 		double userBuddyAccountCreditUserBalance = userAccountService.findBuddyAccountByUser(emailCreditUser)
@@ -64,8 +65,7 @@ public class PaymentService implements IAuthorizationPayment {
 		log.debug("Payment on contact : {}  made successfully", emailBeneficiaryUser);
 	}
 
-	public void transferMoneyToBankingAccountUser(String userEmail, double amount, String description,
-			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
+	public void transferMoneyToBankingAccountUser(String userEmail, double amount) throws IllegalArgumentException, NullPointerException {
 		log.debug("Payment in progress with BankingAccount of User {}  ", userEmail);
 
 		double userCreditBuddyAccountBalance = userAccountService.findBuddyAccountByUser(userEmail).getBalance();
@@ -84,8 +84,7 @@ public class PaymentService implements IAuthorizationPayment {
 		log.debug("Payment on BankingAccount of User: {} made successfully{}  ", userEmail);
 	}
 
-	public void transferMoneyToBuddyAccountUser(String userEmail, double amount, String description,
-			Transaction transactionCreated) throws IllegalArgumentException, NullPointerException {
+	public void transferMoneyToBuddyAccountUser(String userEmail, double amount) throws IllegalArgumentException, NullPointerException {
 		log.debug("Payment in progress with BuddyAccount of User {}  ", userEmail);
 
 		double userCreditBankingAccountBalance = userAccountService.findBankingAccountByUser(userEmail).getBalance();

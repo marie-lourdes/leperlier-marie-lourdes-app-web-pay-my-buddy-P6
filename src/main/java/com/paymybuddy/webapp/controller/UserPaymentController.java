@@ -54,20 +54,18 @@ public class UserPaymentController {
 			// ou "my bankingaccount" dans le template transfer.html
 
 			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
-				paymentService.transferMoneyToBankingAccountUser(principal.getName(), userTransaction.getAmount(),
-						userTransaction.getDescription(), userTransaction);
+				paymentService.transferMoneyToBankingAccountUser(principal.getName(), userTransaction.getAmount()
+						);
 
 				transactionService.addTransaction(creditUser.getId(), creditUser.getEmail(), userTransaction);
 
 			} else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
-				paymentService.transferMoneyToBuddyAccountUser(principal.getName(), userTransaction.getAmount(),
-						userTransaction.getDescription(), userTransaction);
+				paymentService.transferMoneyToBuddyAccountUser(principal.getName(), userTransaction.getAmount());
 
 				transactionService.addTransaction(creditUser.getId(), creditUser.getEmail(), userTransaction);
 			} else {
 				paymentService.payToContact(userAppService.getUserByEmail(principal.getName()).getEmail(),
-						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount(),
-						userTransaction.getDescription(), userTransaction);
+						userTransaction.getBeneficiaryUser().getEmail(), userTransaction.getAmount());
 
 				transactionService.addTransaction(creditUser.getId(), userTransaction.getBeneficiaryUser().getEmail(),
 						userTransaction);
