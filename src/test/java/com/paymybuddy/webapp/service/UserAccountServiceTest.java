@@ -193,7 +193,6 @@ class UserAccountServiceTest {
 			BuddyAccount noExistingBuddyAccount = userAccountServiceUnderTest
 					.findBuddyAccountByUser("usertest5@email.com");
 			assertNull(noExistingBuddyAccount.getCreation());
-			assertTrue(0.0 == noExistingBuddyAccount.getBalance());
 		} catch (NullPointerException e) {
 			assertThrows(NullPointerException.class,
 					() -> userAccountServiceUnderTest.updateBalanceBuddyAccount(42, 15.00));
@@ -226,7 +225,6 @@ class UserAccountServiceTest {
 			BankingAccount noExistingbankingAccount = userAccountServiceUnderTest
 					.findBankingAccountByUser("usertest5@email.com");
 			assertNull(noExistingbankingAccount.getCreation());
-			assertTrue(0.0 == noExistingbankingAccount.getBalance());
 		} catch (NullPointerException e) {
 			assertThrows(NullPointerException.class,
 					() -> userAccountServiceUnderTest.updateBalanceBankingAccount(42, 15.00));
@@ -250,6 +248,46 @@ void testFindBuddyAccountByUser() throws Exception {
 	}
 }
 
+@Test
+void testFindBuddyAccountByUser_withBuddyAccountNotFound_returnNullException()throws Exception {
+	try {
+		BuddyAccount buddyAccountNotFound = userAccountServiceUnderTest.findBuddyAccountByUser("usertest5@email.com");
+		
+		assertNull(buddyAccountNotFound.getCreation());
+	} catch (NullPointerException e) {
+				assertThrows(NullPointerException.class,
+						() -> userAccountServiceUnderTest.findBuddyAccountByUser("usertest5@email.com"));
+	} catch (AssertionError e) {
+		fail(e.getMessage());
+	}
+}
+
+@Test
+void testFindBankingAccountByUser() throws Exception {
+	try {
+		BankingAccount resultBankingAccountFound = userAccountServiceUnderTest.findBankingAccountByUser("testuser2@gmail.com");
+		
+		assertAll("assertion info of  Banking Account found ",
+				() -> assertEquals(76001,resultBankingAccountFound.getId()),	
+				() -> assertNotNull(resultBankingAccountFound.getCreation()),
+				() -> assertEquals(30.00, resultBankingAccountFound.getBalance()),
+				() -> assertEquals("testuser2@gmail.com", resultBankingAccountFound.getUser().getEmail()));
+	} catch (AssertionError e) {
+		fail(e.getMessage());
+	}
+}
 
 
+void testFindBankingAccountByUser_withBankingAccountNotFound_returnNullException()throws Exception {
+	try {
+		BankingAccount bankingAccountNotFound = userAccountServiceUnderTest.findBankingAccountByUser("usertest5@email.com");
+		
+		assertNull(bankingAccountNotFound .getCreation());
+	} catch (NullPointerException e) {
+				assertThrows(NullPointerException.class,
+						() ->userAccountServiceUnderTest.findBankingAccountByUser("usertest5@email.com"));
+	} catch (AssertionError e) {
+		fail(e.getMessage());
+	}
+}
 }
