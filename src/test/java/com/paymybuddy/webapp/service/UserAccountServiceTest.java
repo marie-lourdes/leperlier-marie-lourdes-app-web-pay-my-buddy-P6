@@ -171,13 +171,12 @@ class UserAccountServiceTest {
 	@Test
 	void testUpdateBalanceBuddyAccount() throws Exception {
 		try {
-			BuddyAccount resultBuddyAccountCreated = userAccountServiceUnderTest.updateBalanceBuddyAccount(0, 0);
-			assertAll("assertion of info Buddy Account created",
-					() -> assertEquals(80.00, resultBuddyAccountCreated.getBalance()),
-					() -> assertEquals("usertest@email.com", resultBuddyAccountCreated.getUser().getEmail()),
-					() -> assertNotNull(resultBuddyAccountCreated.getId()));
-		} catch (IllegalArgumentException e) {
-			e.getMessage();
+			 userAccountServiceUnderTest.updateBalanceBuddyAccount(44, 5.00);
+			 BuddyAccount buddyAccountUpdated =userAccountServiceUnderTest.findBuddyAccountByUser("usertest@email.com");
+			assertAll("assertion of balance updated of Buddy Account ",
+					() -> assertEquals(76016,buddyAccountUpdated.getId()),
+					() -> assertEquals(85.00,  buddyAccountUpdated.getBalance()),
+					() -> assertEquals("usertest@email.com",buddyAccountUpdated.getUser().getEmail()));	
 		} catch (AssertionError e) {
 			fail(e.getMessage());
 		}
