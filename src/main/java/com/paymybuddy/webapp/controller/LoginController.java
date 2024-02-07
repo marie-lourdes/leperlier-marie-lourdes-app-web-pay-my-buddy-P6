@@ -19,7 +19,6 @@ public class LoginController {
 
 	@GetMapping("/login") //
 	public String getLoginPage(Model model) {
-
 		return "login";
 	}
 
@@ -28,7 +27,7 @@ public class LoginController {
 		try {
 			this.isUserOrAdmin(model, principal, "logout");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		
 			e.getMessage();
 		}
 		String breadcrumbLogOff = "Log Off";

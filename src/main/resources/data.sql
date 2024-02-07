@@ -57,13 +57,6 @@ INSERT INTO user_app(email , first_name, last_name, password,role) VALUES
 ("testuser3@gmail.com", "Firstnameuser3", "Lastnameuser3", "$2a$10$loqM3iAxV3CxJJydEvsDK.Zq3H33VdV1vy5PmQsf7wFsTJRzWZeCG","USER");
 
 
-INSERT INTO contacts(id_contact, user_id) VALUES
-(1, 2 );
-
-INSERT INTO contacts(id_contact, user_id) VALUES
-(3,2 );
-
-
 INSERT INTO account(user_id, balance,account_type,creation ) VALUES
 (2, 5453, "Banking Account",NOW());
 

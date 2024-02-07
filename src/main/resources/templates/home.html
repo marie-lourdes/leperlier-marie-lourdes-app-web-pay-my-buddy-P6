@@ -37,11 +37,10 @@
 	</header>
 	<div class="container">
 		<main>
-			<div th:if="${user}!= null"class="text-welcome">
-				
+			<div class="text-welcome">	
 				Welcome to Pay My Buddy application!
-				<span th:if="${user.firstName}!= null" th:text="${user.firstName}"> Prénom </span>
-				<div th:if="${user.email}== null" th:text="${user.email}"> Prénom </div>	
+				<span th:if="${user.firstName}" th:text="${user.firstName}"> Prénom </span>
+				<div th:if="${user.email}" th:text="${user.email}"> Prénom </div>	
 			</div>
 		</main>
 	</div>

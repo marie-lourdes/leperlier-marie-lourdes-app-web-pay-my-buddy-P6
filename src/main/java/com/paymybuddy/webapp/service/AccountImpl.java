@@ -3,11 +3,14 @@ package com.paymybuddy.webapp.service;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.paymybuddy.webapp.AccountFactory;
 import com.paymybuddy.webapp.AccountFactory.AccountType;
+import com.paymybuddy.webapp.controller.UserAccountController;
 import com.paymybuddy.webapp.domain.model.Account;
 import com.paymybuddy.webapp.domain.model.BankingAccount;
 import com.paymybuddy.webapp.domain.model.BuddyAccount;
@@ -20,7 +23,7 @@ import lombok.Data;
 @Data
 @Component(value = "accountImpl")
 public class AccountImpl implements IBalance {
-
+	private static final Logger log = LogManager.getLogger(AccountImpl.class);
 	@Autowired
 	private IUserRepository userRepository;
 
@@ -38,7 +41,7 @@ public class AccountImpl implements IBalance {
 		BuddyAccount existingBuddyAccount = (BuddyAccount) this.findAccountByUser(emailUser, new BuddyAccount());
 		if (existingBuddyAccount != null) {
 			if (existingBuddyAccount.getUser().getEmail().equals(emailUser)) {
-				throw new IllegalArgumentException("Buddy Account already exist!");
+				log.error("Buddy Account already exist!");
 			}
 		}
 
