@@ -1,6 +1,5 @@
 package com.paymybuddy.webapp.service;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -13,18 +12,14 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junitpioneer.jupiter.SetEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.webapp.domain.model.Account;
-import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 
-@SetEnvironmentVariable(key = "spring.datasource.url", value = "jdbc:mysql://${MYSQL_HOST:localhost}:3306/paymybuddy_test?serverTimezone=Europe/Paris")
 @SpringBootTest
 class UserAccountServiceTest {
 	@Autowired
@@ -36,9 +31,7 @@ class UserAccountServiceTest {
 
 	@BeforeEach
 	void setUpPerTest() {
-
 		contactCreated = new UserApp();
-
 		contactCreated.setFirstName("firstname2");
 		contactCreated.setLastName("lastname2");
 		contactCreated.setEmail("usertest5@email.com");
@@ -48,8 +41,8 @@ class UserAccountServiceTest {
 		contactCreated.setTransactions(new ArrayList<Transaction>());
 		contactCreated.setRole("USER");
 		userAccountServiceUnderTest.createUser(contactCreated);
+		
 		userCreated = new UserApp();
-
 		userCreated.setFirstName("firstname");
 		userCreated.setLastName("lastname");
 		userCreated.setEmail("usertest@email.com");

@@ -139,16 +139,17 @@
 
 	<profiles>
 		<profile>
+			<id>prod</id>
 			<activation>
 				<property>
 					<name>environnement</name>
-					<value>dev</value>
+					<value>prod</value>
 				</property>
 			</activation>
 			<build>
 				<resources>
 					<resource>
-						<directory>src/main/resources/config-dev</directory>
+						<directory>src/main/resources/config-prod</directory>
 						<filtering>true</filtering>
 					</resource>
 				</resources>

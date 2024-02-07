@@ -2,8 +2,10 @@ package com.paymybuddy.webapp.controller;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.ActiveProfiles;
 
 //@AutoConfigureJsonTesters
+
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class AuthenticationControllerITest {
 	/*@Autowired
