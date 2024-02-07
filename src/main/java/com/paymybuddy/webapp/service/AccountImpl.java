@@ -33,29 +33,25 @@ public class AccountImpl implements IBalance {
 	private List<Account> accountsFoundByUser;
 
 	@Override
-	public BuddyAccount addBuddyAccount(String emailUser)  {
+	public BuddyAccount addBuddyAccount(String emailUser) throws Exception {
 		UserApp user = new UserApp();
 		user = userRepository.findByEmail(emailUser);
 		BuddyAccount newAccount = (BuddyAccount) AccountFactory.makeAccount(AccountType.BUDDY);
 
-		BuddyAccount existingBuddyAccount;
-		try {
-			existingBuddyAccount = (BuddyAccount) this.findAccountByUser(emailUser, new BuddyAccount());
-			if (existingBuddyAccount != null) {
-				if (existingBuddyAccount.getUser().getEmail().equals(emailUser)) {
-					throw new IllegalArgumentException("Buddy Account already exist!");
-				}
+		List<Account> userExistingAccounts;
+		userExistingAccounts = user.getAccount();
+		for (Account account : userExistingAccounts) {
+			if (account.getClass() == BuddyAccount.class) {
+				throw new IllegalArgumentException("Buddy Account already exist!");
 			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
 		}
-		
 
 		newAccount.setBalance(80.0);
 		newAccount.setUser(user);
 		newAccount.setCreation(new Date());
 
 		accountRepository.save(newAccount);
+
 		return newAccount;
 	}
 

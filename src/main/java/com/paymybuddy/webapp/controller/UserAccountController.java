@@ -40,10 +40,10 @@ public class UserAccountController {
 	@PostMapping("/sign-up-form")
 	public ModelAndView createUser(@Valid @ModelAttribute UserApp user) throws IOException {
 		try {
-		userAccountService.createUser(user);
-		return new ModelAndView("redirect:/home");
+			userAccountService.createUser(user);
+			return new ModelAndView("redirect:/home");
 		} catch (IllegalArgumentException e) {
-			 log.error(e.getMessage());
+			log.error(e.getMessage());
 			return new ModelAndView("redirect:/error");
 		}
 	}
@@ -55,10 +55,10 @@ public class UserAccountController {
 			userAccountService.addUserContact(contact.getEmail(), principal.getName());
 			return new ModelAndView("redirect:/home/contact");
 		} catch (IllegalArgumentException e) {
-			 log.error(e.getMessage());
+			log.error(e.getMessage());
 			return new ModelAndView("redirect:/error");
 		} catch (NullPointerException e) {
-			 log .error(e.getMessage());
+			log.error(e.getMessage());
 			return new ModelAndView("redirect:/error-404");
 		}
 	}
@@ -70,9 +70,9 @@ public class UserAccountController {
 			return new ModelAndView("redirect:/account-success");
 
 		} catch (Exception e) {
-			 log .error(e.getMessage());
+			log.error(e.getMessage());
 			return new ModelAndView("redirect:/error");
-		} 
+		}
 	}
 
 	@GetMapping("/home")
@@ -117,7 +117,7 @@ public class UserAccountController {
 			String breadcrumbContact = "Contact";
 			model.addAttribute("breadcrumbContact", breadcrumbContact);
 			model.addAttribute("contacts", allContact);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			log.error("Failed to retrieve contact page " + e.getMessage());
 		}
 		log.info("Contact page  successfull retrieved");
@@ -158,7 +158,7 @@ public class UserAccountController {
 			role.verifRolePrincipalInView(model, principal, view);
 		} catch (Exception e) {
 			log.error("Failed to retrieve role admin and role user in view {}" + e.getMessage(), view);
-		
+
 		}
 	}
 }

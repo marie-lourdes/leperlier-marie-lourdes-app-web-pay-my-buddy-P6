@@ -85,21 +85,21 @@ public class UserAccountService {
 		} else {
 			user.addContact(contactToAdd);
 			userRepository.save(user);
-			
+
 			log.debug("Contact added  successfully: {}", emailContact);
 			return contactToAdd;
 		}
-	
+
 	}
 
 	public BuddyAccount addBuddyAccount(String emailUser) throws Exception {
 		log.debug(" Creating Buddy Account {} of user {} ", emailUser);
-		
-		BuddyAccount buddyAccountCreated= new BuddyAccount();
-		buddyAccountCreated =account.addBuddyAccount(emailUser);
+
+		BuddyAccount buddyAccountCreated = new BuddyAccount();
+		buddyAccountCreated = account.addBuddyAccount(emailUser);
 
 		log.debug("Buddy account  created  successfully for user : {}", emailUser);
-		return buddyAccountCreated ;
+		return buddyAccountCreated;
 	}
 
 	public void updateBalanceBuddyAccount(long id, double amount) throws NullPointerException {
