@@ -1,5 +1,6 @@
 package com.paymybuddy.webapp.service;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.webapp.domain.model.Account;
+import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.domain.model.UserApp;
 
@@ -27,7 +29,6 @@ class UserAccountServiceTest {
 
 	private UserApp userCreated;
 	private UserApp contactCreated;
-	private List<UserApp> contactsUser;
 
 	@BeforeEach
 	void setUpPerTest() {
@@ -41,7 +42,7 @@ class UserAccountServiceTest {
 		contactCreated.setTransactions(new ArrayList<Transaction>());
 		contactCreated.setRole("USER");
 		userAccountServiceUnderTest.createUser(contactCreated);
-		
+
 		userCreated = new UserApp();
 		userCreated.setFirstName("firstname");
 		userCreated.setLastName("lastname");
@@ -137,7 +138,7 @@ class UserAccountServiceTest {
 		}
 	}
 
-	/*@Test
+	@Test
 	void testAddBuddyAccount() throws Exception {
 
 		try {
@@ -146,11 +147,40 @@ class UserAccountServiceTest {
 					() -> assertEquals(80.00, resultBuddyAccountCreated.getBalance()),
 					() -> assertEquals("usertest@email.com", resultBuddyAccountCreated.getUser().getEmail()),
 					() -> assertNotNull(resultBuddyAccountCreated.getId()));
-		} catch (NullPointerException e) {
+		} catch (IllegalArgumentException e) {
 			e.getMessage();
-
 		} catch (AssertionError e) {
 			fail(e.getMessage());
 		}
-	}*/
+	}
+
+	@Test
+	void testAddBuddyAccount_withDuplicatedContact_returnIllegalArgumentException() throws Exception {
+		try {
+			BuddyAccount resultBuddyAccountCreated = userAccountServiceUnderTest.addBuddyAccount("usertest@email.com");
+
+			assertNull(resultBuddyAccountCreated.getId());
+		} catch (IllegalArgumentException e) {
+			assertThrows(IllegalArgumentException.class,
+					() -> userAccountServiceUnderTest.addBuddyAccount("usertest@email.com"));
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	void testUpdateBalanceBuddyAccount() throws Exception {
+		try {
+			BuddyAccount resultBuddyAccountCreated = userAccountServiceUnderTest.updateBalanceBuddyAccount(0, 0);
+			assertAll("assertion of info Buddy Account created",
+					() -> assertEquals(80.00, resultBuddyAccountCreated.getBalance()),
+					() -> assertEquals("usertest@email.com", resultBuddyAccountCreated.getUser().getEmail()),
+					() -> assertNotNull(resultBuddyAccountCreated.getId()));
+		} catch (IllegalArgumentException e) {
+			e.getMessage();
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
+	}
+
 }

@@ -89,7 +89,6 @@ public class UserAccountService {
 			log.debug("Contact added  successfully: {}", emailContact);
 			return contactToAdd;
 		}
-
 	}
 
 	public BuddyAccount addBuddyAccount(String emailUser) throws Exception {
@@ -102,10 +101,10 @@ public class UserAccountService {
 		return buddyAccountCreated;
 	}
 
-	public void updateBalanceBuddyAccount(long id, double amount) throws NullPointerException {
+	public void updateBalanceBuddyAccount(long userId, double amount) throws NullPointerException {
 		log.debug("Updating amount  Buddy Account of user ");
 		try {
-			account.updateBalance(id, amount, AccountFactory.makeAccount(AccountType.BUDDY));
+			account.updateBalance( userId, amount, AccountFactory.makeAccount(AccountType.BUDDY));
 		} catch (NullPointerException e) {
 			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION);
 		} catch (Exception e) {
@@ -114,10 +113,10 @@ public class UserAccountService {
 		log.debug("Amount Buddy Account updated successfully");
 	}
 
-	public void updateBalanceBankingAccount(long id, double amount) throws NullPointerException {
+	public void updateBalanceBankingAccount(long userId, double amount) throws NullPointerException {
 		log.debug("Updating amount  Banking Account of user ");
 		try {
-			account.updateBalance(id, amount, AccountFactory.makeAccount(AccountType.BANKING));
+			account.updateBalance(userId, amount, AccountFactory.makeAccount(AccountType.BANKING));
 		} catch (NullPointerException e) {
 			throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION);
 		} catch (Exception e) {
