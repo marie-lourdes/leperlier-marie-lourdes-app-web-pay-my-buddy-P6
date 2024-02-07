@@ -29,7 +29,6 @@ public class WebSecurity {
 			requests.requestMatchers("/home/transfer").hasRole("USER");
 			requests.requestMatchers("/transfert-success").hasRole("USER");
 			requests.requestMatchers("/account-success").hasRole("USER");
-			requests.requestMatchers("/login").permitAll();
 			requests.requestMatchers("/logout-success").permitAll();
 			requests.requestMatchers("/home/sign-up").permitAll();
 			requests.requestMatchers(HttpMethod.POST, "/sign-up-form").permitAll();
