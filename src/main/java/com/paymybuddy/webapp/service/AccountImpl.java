@@ -51,7 +51,6 @@ public class AccountImpl implements IBalance {
 		newAccount.setCreation(new Date());
 
 		accountRepository.save(newAccount);
-
 		return newAccount;
 	}
 
