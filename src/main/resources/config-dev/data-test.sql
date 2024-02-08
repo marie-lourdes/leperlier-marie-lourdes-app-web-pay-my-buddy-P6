@@ -56,6 +56,8 @@ INSERT INTO user_app(email , first_name, last_name, password,role) VALUES
 INSERT INTO user_app(email , first_name, last_name, password,role) VALUES
 ("testuser3@gmail.com", "Firstnameuser3", "Lastnameuser3", "$2a$10$loqM3iAxV3CxJJydEvsDK.Zq3H33VdV1vy5PmQsf7wFsTJRzWZeCG","USER");
 
+INSERT INTO user_app(id ,email , first_name, last_name, password,role) VALUES
+(11,"testuser8@gmail.com", "Firstnameuser8", "Lastnameuser8", "$2a$10$loqM3iAxV3CxJJydEvsDK.Zq3H33VdV1vy5PmQsf7wFsTJRzWZeCG","USER");
 
 INSERT INTO contacts(id_contact, user_id) VALUES
 (1, 2 );

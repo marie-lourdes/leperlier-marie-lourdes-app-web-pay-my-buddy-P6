@@ -91,6 +91,20 @@ public class UserAccountService {
 		}
 	}
 
+	public List<UserApp> getAllUserContacts(String emailUser) throws NullPointerException {
+		log.debug(" Retrieving all contacts of user {} ", emailUser);
+		UserApp user = userRepository.findByEmail(emailUser);
+		if (user == null) {
+			throw new NullPointerException(ConstantsException.USER_NULL_EXCEPTION + emailUser);
+		}
+		List<UserApp> userContacts = user.getContacts();
+		if (userContacts.isEmpty()) {
+			log.error("Contacts not found of user:{}", emailUser);
+		}
+		log.debug("Contacts retrieved successfully of user: {} ", emailUser);
+		return userContacts;
+	}
+	
 	public BuddyAccount addBuddyAccount(String emailUser) throws Exception {
 		log.debug(" Creating Buddy Account {} of user {} ", emailUser);
 
@@ -157,20 +171,6 @@ public class UserAccountService {
 		}
 		log.debug("Banking Account retrieved successfully: {}", userBankingAccount);
 		return userBankingAccount;
-	}
-
-	public List<UserApp> getAllUserContacts(String emailUser) throws NullPointerException {
-		log.debug(" Retrieving all contacts of user {} ", emailUser);
-		UserApp user = userRepository.findByEmail(emailUser);
-		if (user == null) {
-			throw new NullPointerException(ConstantsException.USER_NULL_EXCEPTION + emailUser);
-		}
-		List<UserApp> userContacts = user.getContacts();
-		if (userContacts.isEmpty()) {
-			log.error("Contacts not found of user:{}", emailUser);
-		}
-		log.debug("Contacts retrieved successfully of user: {} ", emailUser);
-		return userContacts;
 	}
 
 	public UserLoginDTO getUserLoginByEmail(String email) {

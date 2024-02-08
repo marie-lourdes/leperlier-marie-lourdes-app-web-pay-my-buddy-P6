@@ -1,5 +1,6 @@
 package com.paymybuddy.webapp.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,9 +35,9 @@ class UserAccountServiceTest {
 	@BeforeEach
 	void setUpPerTest() {
 		userCreated2 = new UserApp();
-		userCreated2.setFirstName("firstname2");
-		userCreated2.setLastName("lastname2");
-		userCreated2.setEmail("usertest5@email.com");
+		userCreated2.setFirstName("firstname5");
+		userCreated2.setLastName("lastname5");
+		userCreated2.setEmail("testuser5@email.com");
 		userCreated2.setPassword("buddy");
 		userCreated2.setAccount(new ArrayList<Account>());
 		userCreated2.setContacts(new ArrayList<UserApp>());
@@ -47,7 +48,7 @@ class UserAccountServiceTest {
 		userCreated1 = new UserApp();
 		userCreated1.setFirstName("firstname");
 		userCreated1.setLastName("lastname");
-		userCreated1.setEmail("usertest@email.com");
+		userCreated1.setEmail("testuser@email.com");
 		userCreated1.setPassword("buddy");
 		userCreated1.setAccount(new ArrayList<Account>());
 		userCreated1.setContacts(new ArrayList<UserApp>());
@@ -61,7 +62,7 @@ class UserAccountServiceTest {
 		try {
 			userAccountServiceUnderTest.createUser(userCreated1);
 
-			UserApp userFound = userAccountServiceUnderTest.getUserEntityByEmail("usertest@email.com");
+			UserApp userFound = userAccountServiceUnderTest.getUserEntityByEmail("testuser@email.com");
 			assertNotNull(userFound);
 			assertEquals(userCreated1.getEmail(), userFound.getEmail());
 		} catch (AssertionError e) {
@@ -72,10 +73,9 @@ class UserAccountServiceTest {
 	@Test
 	void testCreateUser_withDuplicatedEmailOfUserCreated_returnIllegalArgumentException() throws Exception {
 		UserApp userCreated = new UserApp();
-		userCreated.setId(3);
 		userCreated.setFirstName("firstname");
 		userCreated.setLastName("lastname");
-		userCreated.setEmail("usertest@email.com");
+		userCreated.setEmail("testuser@email.com");
 		userCreated.setPassword("buddy");
 		userCreated.setAccount(new ArrayList<Account>());
 		userCreated.setContacts(new ArrayList<UserApp>());
@@ -95,11 +95,11 @@ class UserAccountServiceTest {
 	void testAddUserContact() throws Exception {
 		try {
 			userAccountServiceUnderTest.createUser(userCreated1);
-			UserApp resultlistContactCreated = userAccountServiceUnderTest.addUserContact("usertest5@email.com",
-					"usertest@email.com");
+			UserApp resultlistContactCreated = userAccountServiceUnderTest.addUserContact("testuser8@gmail.com",
+					"testuser@email.com");
 
 			List<UserApp> listOfContactsOfUserFound = userAccountServiceUnderTest
-					.getAllUserContacts("usertest@email.com");
+					.getAllUserContacts("testuser@email.com");
 			assertTrue(listOfContactsOfUserFound.contains(resultlistContactCreated));
 
 		} catch (IllegalArgumentException e) {
@@ -113,11 +113,13 @@ class UserAccountServiceTest {
 	@Test
 	void testAddUserContact_withDuplicatedContact_returnIllegalArgumentException() throws Exception {
 		try {
-			testAddUserContact();
-			userAccountServiceUnderTest.addUserContact("usertest5@email.com", "usertest@email.com");
+			userAccountServiceUnderTest.addUserContact("testuser8@email.com", " testuser@email.com");
+		} catch (NullPointerException e) {
+			assertThrows(NullPointerException.class,
+					() -> userAccountServiceUnderTest.addUserContact("testuser8@email.com", " testuser@email.com"));
 		} catch (IllegalArgumentException e) {
 			assertThrows(IllegalArgumentException.class,
-					() -> userAccountServiceUnderTest.addUserContact("usertest5@email.com", "usertest@email.com"));
+					() -> userAccountServiceUnderTest.addUserContact("testuser8@email.com", " testuser@email.com"));
 		} catch (AssertionError e) {
 			fail(e.getMessage());
 		}
@@ -127,13 +129,47 @@ class UserAccountServiceTest {
 	@Test
 	void testAddUserContact_withContactNotFound_returnNullException() throws Exception {
 		try {
-			UserApp resultlistContactCreated = userAccountServiceUnderTest.addUserContact("usertest6@email.com",
-					"usertest@email.com");
+			UserApp resultContactCreated = userAccountServiceUnderTest.addUserContact("testuser6@email.com",
+					"testuser@email.com");
 
-			assertNull(resultlistContactCreated);
+			assertNull(resultContactCreated);
 		} catch (NullPointerException e) {
 			assertThrows(NullPointerException.class,
-					() -> userAccountServiceUnderTest.addUserContact("usertest6@email.com", "usertest@email.com"));
+					() -> userAccountServiceUnderTest.addUserContact("testuser6@email.com", "testuser@email.com"));
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Transactional
+	@Test
+	void testGetAllUserContacts() throws Exception {
+		try {
+			List<UserApp> resultUserContactsFound = userAccountServiceUnderTest
+					.getAllUserContacts("testuser2@gmail.com");
+
+			UserApp testuser1Contact = userAccountServiceUnderTest.getUserEntityByEmail("testuser1@gmail.com");
+			UserApp testuser3Contact = userAccountServiceUnderTest.getUserEntityByEmail("testuser3@gmail.com");
+			assertThat(resultUserContactsFound).contains(testuser1Contact);
+			assertThat(resultUserContactsFound).contains(testuser3Contact);
+		} catch (NullPointerException e) {
+			assertThrows(NullPointerException.class,
+					() -> userAccountServiceUnderTest.getAllUserContacts("testuser2@gmail.com"));
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Transactional
+	@Test
+	void testGetAllUserContacts_withUserContactNotFound_returnNullException() throws Exception {
+		try {
+			List<UserApp> resultUserContactsNotFound = userAccountServiceUnderTest
+					.getAllUserContacts("testuser2@gmail.com");
+
+			UserApp testuser6Contact = userAccountServiceUnderTest.getUserEntityByEmail("testuser6@gmail.com");
+			assertThat(resultUserContactsNotFound).doesNotContain(testuser6Contact);
+			// assertThat(resultUserContactsFound).contains(testuser3Contact);
 		} catch (AssertionError e) {
 			fail(e.getMessage());
 		}
@@ -142,11 +178,11 @@ class UserAccountServiceTest {
 	@Test
 	void testAddBuddyAccount() throws Exception {
 		try {
-			BuddyAccount resultBuddyAccountCreated = userAccountServiceUnderTest.addBuddyAccount("usertest@email.com");
+			BuddyAccount resultBuddyAccountCreated = userAccountServiceUnderTest.addBuddyAccount("testuser@email.com");
 
 			assertAll("assertion of info Buddy Account created",
 					() -> assertEquals(80.00, resultBuddyAccountCreated.getBalance()),
-					() -> assertEquals("usertest@email.com", resultBuddyAccountCreated.getUser().getEmail()),
+					() -> assertEquals("testuser@email.com", resultBuddyAccountCreated.getUser().getEmail()),
 					() -> assertNotNull(resultBuddyAccountCreated.getId()));
 		} catch (IllegalArgumentException e) {
 			e.getMessage();
@@ -158,12 +194,12 @@ class UserAccountServiceTest {
 	@Test
 	void testAddBuddyAccount_withDuplicatedBuddyAccount_returnIllegalArgumentException() throws Exception {
 		try {
-			BuddyAccount resultBuddyAccountCreated = userAccountServiceUnderTest.addBuddyAccount("usertest@email.com");
+			BuddyAccount resultBuddyAccountCreated = userAccountServiceUnderTest.addBuddyAccount("testuser@email.com");
 
 			assertNull(resultBuddyAccountCreated.getId());
 		} catch (IllegalArgumentException e) {
 			assertThrows(IllegalArgumentException.class,
-					() -> userAccountServiceUnderTest.addBuddyAccount("usertest@email.com"));
+					() -> userAccountServiceUnderTest.addBuddyAccount("testuser@email.com"));
 		} catch (AssertionError e) {
 			fail(e.getMessage());
 		}
@@ -172,14 +208,14 @@ class UserAccountServiceTest {
 	@Test
 	void testUpdateBalanceBuddyAccount() throws Exception {
 		try {
-			userAccountServiceUnderTest.updateBalanceBuddyAccount(44, 85.00);
+			userAccountServiceUnderTest.updateBalanceBuddyAccount(7, 85.00);
 
 			BuddyAccount resultBuddyAccountUpdated = userAccountServiceUnderTest
-					.findBuddyAccountByUser("usertest@email.com");
+					.findBuddyAccountByUser("testuser@email.com");
 			assertAll("assertion of balance updated of Buddy Account ",
-					() -> assertEquals(76016, resultBuddyAccountUpdated.getId()),
+					() -> assertEquals(76005, resultBuddyAccountUpdated.getId()),
 					() -> assertEquals(85.00, resultBuddyAccountUpdated.getBalance()),
-					() -> assertEquals("usertest@email.com", resultBuddyAccountUpdated.getUser().getEmail()));
+					() -> assertEquals("testuser@email.com", resultBuddyAccountUpdated.getUser().getEmail()));
 		} catch (AssertionError e) {
 			fail(e.getMessage());
 		}
@@ -188,14 +224,14 @@ class UserAccountServiceTest {
 	@Test
 	void testUpdateBalanceBuddyAccount_withBuddyAccountNotFound_returnNullException() throws Exception {
 		try {
-			userAccountServiceUnderTest.updateBalanceBuddyAccount(42, 15.00);
+			userAccountServiceUnderTest.updateBalanceBuddyAccount(4, 15.00);
 
 			BuddyAccount noExistingBuddyAccount = userAccountServiceUnderTest
-					.findBuddyAccountByUser("usertest5@email.com");
+					.findBuddyAccountByUser("testuser5@email.com");
 			assertNull(noExistingBuddyAccount.getCreation());
 		} catch (NullPointerException e) {
 			assertThrows(NullPointerException.class,
-					() -> userAccountServiceUnderTest.updateBalanceBuddyAccount(42, 15.00));
+					() -> userAccountServiceUnderTest.updateBalanceBuddyAccount(4, 15.00));
 		} catch (AssertionError e) {
 			fail(e.getMessage());
 		}
@@ -208,7 +244,7 @@ class UserAccountServiceTest {
 
 			BankingAccount resultBankingAccountUpdated = userAccountServiceUnderTest
 					.findBankingAccountByUser("testuser2@gmail.com");
-			assertAll("assertion of balance updated of Buddy Account ",
+			assertAll("assertion of balance updated of Banking Account ",
 					() -> assertEquals(76001, resultBankingAccountUpdated.getId()),
 					() -> assertEquals(30.00, resultBankingAccountUpdated.getBalance()),
 					() -> assertEquals("testuser2@gmail.com", resultBankingAccountUpdated.getUser().getEmail()));
@@ -220,74 +256,79 @@ class UserAccountServiceTest {
 	@Test
 	void testUpdateBalanceBankingAccount_withBankingAccountNotFound_returnNullException() throws Exception {
 		try {
-			userAccountServiceUnderTest.updateBalanceBankingAccount(42, 15.00);
+			userAccountServiceUnderTest.updateBalanceBankingAccount(4, 15.00);
 
 			BankingAccount noExistingbankingAccount = userAccountServiceUnderTest
-					.findBankingAccountByUser("usertest5@email.com");
+					.findBankingAccountByUser("testuser5@email.com");
 			assertNull(noExistingbankingAccount.getCreation());
 		} catch (NullPointerException e) {
 			assertThrows(NullPointerException.class,
-					() -> userAccountServiceUnderTest.updateBalanceBankingAccount(42, 15.00));
+					() -> userAccountServiceUnderTest.updateBalanceBankingAccount(4, 15.00));
 		} catch (AssertionError e) {
 			fail(e.getMessage());
 		}
 	}
 
-@Test
-void testFindBuddyAccountByUser() throws Exception {
-	try {
-		BuddyAccount resultBuddyAccountFound = userAccountServiceUnderTest.findBuddyAccountByUser("usertest@email.com");
-		
-		assertAll("assertion info of  Buddy Account found ",
-				() -> assertEquals(76016,resultBuddyAccountFound.getId()),	
-				() -> assertNotNull(resultBuddyAccountFound.getCreation()),
-				() -> assertEquals(85.00, resultBuddyAccountFound.getBalance()),
-				() -> assertEquals("usertest@email.com", resultBuddyAccountFound.getUser().getEmail()));
-	} catch (AssertionError e) {
-		fail(e.getMessage());
-	}
-}
+	@Test
+	void testFindBuddyAccountByUser() throws Exception {
+		try {
+			BuddyAccount resultBuddyAccountFound = userAccountServiceUnderTest
+					.findBuddyAccountByUser("testuser@email.com");
 
-@Test
-void testFindBuddyAccountByUser_withBuddyAccountNotFound_returnNullException()throws Exception {
-	try {
-		BuddyAccount buddyAccountNotFound = userAccountServiceUnderTest.findBuddyAccountByUser("usertest5@email.com");
-		
-		assertNull(buddyAccountNotFound.getCreation());
-	} catch (NullPointerException e) {
-				assertThrows(NullPointerException.class,
-						() -> userAccountServiceUnderTest.findBuddyAccountByUser("usertest5@email.com"));
-	} catch (AssertionError e) {
-		fail(e.getMessage());
+			assertAll("assertion info of  Buddy Account found by user",
+					() -> assertEquals(76005, resultBuddyAccountFound.getId()),
+					() -> assertNotNull(resultBuddyAccountFound.getCreation()),
+					() -> assertEquals(85.00, resultBuddyAccountFound.getBalance()),
+					() -> assertEquals("testuser@email.com", resultBuddyAccountFound.getUser().getEmail()));
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
 	}
-}
 
-@Test
-void testFindBankingAccountByUser() throws Exception {
-	try {
-		BankingAccount resultBankingAccountFound = userAccountServiceUnderTest.findBankingAccountByUser("testuser2@gmail.com");
-		
-		assertAll("assertion info of  Banking Account found ",
-				() -> assertEquals(76001,resultBankingAccountFound.getId()),	
-				() -> assertNotNull(resultBankingAccountFound.getCreation()),
-				() -> assertEquals(30.00, resultBankingAccountFound.getBalance()),
-				() -> assertEquals("testuser2@gmail.com", resultBankingAccountFound.getUser().getEmail()));
-	} catch (AssertionError e) {
-		fail(e.getMessage());
+	@Test
+	void testFindBuddyAccountByUser_withBuddyAccountNotFound_returnNullException() throws Exception {
+		try {
+			BuddyAccount buddyAccountNotFound = userAccountServiceUnderTest
+					.findBuddyAccountByUser("testuser5@email.com");
+
+			assertNull(buddyAccountNotFound.getCreation());
+		} catch (NullPointerException e) {
+			assertThrows(NullPointerException.class,
+					() -> userAccountServiceUnderTest.findBuddyAccountByUser("testuser5@email.com"));
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
 	}
-}
 
+	@Test
+	void testFindBankingAccountByUser() throws Exception {
+		try {
+			BankingAccount resultBankingAccountFound = userAccountServiceUnderTest
+					.findBankingAccountByUser("testuser2@gmail.com");
 
-void testFindBankingAccountByUser_withBankingAccountNotFound_returnNullException()throws Exception {
-	try {
-		BankingAccount bankingAccountNotFound = userAccountServiceUnderTest.findBankingAccountByUser("usertest5@email.com");
-		
-		assertNull(bankingAccountNotFound .getCreation());
-	} catch (NullPointerException e) {
-				assertThrows(NullPointerException.class,
-						() ->userAccountServiceUnderTest.findBankingAccountByUser("usertest5@email.com"));
-	} catch (AssertionError e) {
-		fail(e.getMessage());
+			assertAll("assertion info of  Banking Account found ",
+					() -> assertEquals(76001, resultBankingAccountFound.getId()),
+					() -> assertNotNull(resultBankingAccountFound.getCreation()),
+					() -> assertEquals(30.00, resultBankingAccountFound.getBalance()),
+					() -> assertEquals("testuser2@gmail.com", resultBankingAccountFound.getUser().getEmail()));
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
 	}
-}
+
+	@Test
+	void testFindBankingAccountByUser_withBankingAccountNotFound_returnNullException() throws Exception {
+		try {
+			BankingAccount bankingAccountNotFound = userAccountServiceUnderTest
+					.findBankingAccountByUser("testuser5@email.com");
+
+			assertNull(bankingAccountNotFound.getCreation());
+		} catch (NullPointerException e) {
+			assertThrows(NullPointerException.class,
+					() -> userAccountServiceUnderTest.findBankingAccountByUser("testuser5@email.com"));
+		} catch (AssertionError e) {
+			fail(e.getMessage());
+		}
+	}
+
 }
