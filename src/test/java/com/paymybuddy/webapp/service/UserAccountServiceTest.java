@@ -169,7 +169,6 @@ class UserAccountServiceTest {
 
 			UserApp testuser6Contact = userAccountServiceUnderTest.getUserEntityByEmail("testuser6@gmail.com");
 			assertThat(resultUserContactsNotFound).doesNotContain(testuser6Contact);
-			// assertThat(resultUserContactsFound).contains(testuser3Contact);
 		} catch (AssertionError e) {
 			fail(e.getMessage());
 		}
