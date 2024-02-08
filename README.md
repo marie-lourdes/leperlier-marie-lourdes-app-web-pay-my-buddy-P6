@@ -48,35 +48,10 @@ The link homepage  is :http://localhost:8080/home
 ### MORE INFORMATIONS
 
 #### Information data and structure of BDD PayMyBuddy
-
-- POST: **/person**
-- PUT:  **/person?id='firstName lastName'**
-- DELETE: **/person?id='firstName lastName'**
-
+https://github.com/marie-lourdes/leperlier-marie-lourdes-app-web-pay-my-buddy-P6/tree/6c084a19f0f7b4e6516ffd56c72738d924d1c14e/Documents%20annexe
 #### Diagram domaim application
 
-- POST: **/firestation/'station_number'**
-- POST: **/firestation/'address of firestation'**
-- PUT: **/person?address='address of firestation'**
-- DELETE: **/firestation/'station_number'**
-- DELETE: **/firestation/'address of firestation'**
-
-#### MedicalRecord service
-
-- POST: **/medicalRecord**
-- PUT:  **/medicalRecord?id='firstName lastName'**
-- DELETE: **/medicalRecord?id='firstName lastName'**
-
-### URL AlertsSafetyNetService(only Read)
-
-- GET: **/firestation?stationNumber='station_number'**
-- GET: **/childAlert?address='address'**
-- GET: **/phoneAlert?firestation='firestation_number'**
-- GET: **/fire?address='address'**
-- GET: **/flood/stations?stations='a list of station_numbers'**
-- GET: **/personInfo?firstName='firstName'&lastName='lastName'**
-- GET: **/communityEmail?city='city'**
-
+https://github.com/marie-lourdes/leperlier-marie-lourdes-app-web-pay-my-buddy-P6/blob/6c084a19f0f7b4e6516ffd56c72738d924d1c14e/Documents%20annexe/Unbenannt.png
 ### Testing
 
  For testing application use:
