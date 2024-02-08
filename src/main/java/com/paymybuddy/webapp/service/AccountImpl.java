@@ -73,8 +73,10 @@ public class AccountImpl implements IBalance {
 	@Override
 	public void updateBalance(long id, double amount, Account account) throws Exception {
 		UserApp user = new UserApp();
-		user = userRepository.findById(id).get();
-
+		if(userRepository.findById(id).isPresent()) {
+			user = userRepository.findById(id).get();
+		}
+		
 		if (account.getClass() == BuddyAccount.class) {
 			accountRepository.updateBalanceBuddyAccount(amount, user);
 		} else if (account.getClass() == BankingAccount.class) {

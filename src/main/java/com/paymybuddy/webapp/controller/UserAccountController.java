@@ -21,6 +21,7 @@ import com.paymybuddy.webapp.domain.model.BuddyAccount;
 import com.paymybuddy.webapp.domain.model.UserApp;
 import com.paymybuddy.webapp.service.IRole;
 import com.paymybuddy.webapp.service.UserAccountService;
+import com.paymybuddy.webapp.utils.Constants;
 
 import jakarta.validation.Valid;
 import lombok.Data;
@@ -44,7 +45,7 @@ public class UserAccountController {
 			return new ModelAndView("redirect:/home");
 		} catch (IllegalArgumentException e) {
 			log.error(e.getMessage());
-			return new ModelAndView("redirect:/error");
+			return new ModelAndView(Constants.REDIRECT_ERROR_PAGE);
 		}
 	}
 
@@ -56,7 +57,7 @@ public class UserAccountController {
 			return new ModelAndView("redirect:/home/contact");
 		} catch (IllegalArgumentException e) {
 			log.error(e.getMessage());
-			return new ModelAndView("redirect:/error");
+			return new ModelAndView(Constants.REDIRECT_ERROR_PAGE);
 		} catch (NullPointerException e) {
 			log.error(e.getMessage());
 			return new ModelAndView("redirect:/error-404");
@@ -71,7 +72,7 @@ public class UserAccountController {
 
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			return new ModelAndView("redirect:/error");
+			return new ModelAndView(Constants.REDIRECT_ERROR_PAGE);
 		}
 	}
 
@@ -86,8 +87,8 @@ public class UserAccountController {
 			model.addAttribute("breadcrumbHome", breadcrumbHome);
 			model.addAttribute("user", user);
 		} catch (Exception e) {
-			log.error("Failed to retrieve homepage " + e.getMessage());
-			return "error";
+			log.error("Failed to retrieve homepage {}", e.getMessage());
+			return Constants.ERROR_PAGE;
 		}
 		log.info(" Homepage successfull retrieved");
 		return "home";
@@ -103,7 +104,7 @@ public class UserAccountController {
 
 		} catch (Exception e) {
 			log.error("Failed to retrieve sign up page " + e.getMessage());
-			return "error";
+			return Constants.ERROR_PAGE;
 		}
 		log.info(" Sign up page successfull retrieved");
 		return "sign-up";
@@ -118,7 +119,7 @@ public class UserAccountController {
 			model.addAttribute("breadcrumbContact", breadcrumbContact);
 			model.addAttribute("contacts", allContact);
 		} catch (Exception e) {
-			log.error("Failed to retrieve contact page " + e.getMessage());
+			log.error("Failed to retrieve contact page {}", e.getMessage());
 		}
 		log.info("Contact page  successfull retrieved");
 		return "contact";
@@ -141,8 +142,8 @@ public class UserAccountController {
 			model.addAttribute("userBuddyAccount", userBuddyAccountBalance);
 			model.addAttribute("userBankingAccount", userBankingAccountBalance);
 		} catch (Exception e) {
-			log.error("Failed to retrieve profil page" + e.getMessage());
-			return "error";
+			log.error("Failed to retrieve profil page {}",  e.getMessage());
+			return Constants.ERROR_PAGE;
 		}
 		log.info("Profil page  successfull retrieved");
 		return "profil";
@@ -157,7 +158,7 @@ public class UserAccountController {
 		try {
 			role.verifRolePrincipalInView(model, principal, view);
 		} catch (Exception e) {
-			log.error("Failed to retrieve role admin and role user in view {}" + e.getMessage(), view);
+			log.error("Failed to retrieve role admin and role user in view {}", e.getMessage(), view);
 
 		}
 	}

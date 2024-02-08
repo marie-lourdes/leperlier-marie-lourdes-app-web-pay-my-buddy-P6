@@ -50,8 +50,6 @@ public class UserPaymentController {
 			throws IOException {
 		try {
 			UserDTO creditUser = userAppService.getUserByEmail(principal.getName());
-			// transfert au buddyaccount si la valeur "option value est "my buddy account"
-			// ou "my bankingaccount" dans le template transfer.html
 
 			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
 				paymentService.transferMoneyToBankingAccountUser(principal.getName(), userTransaction.getAmount()
@@ -93,7 +91,7 @@ public class UserPaymentController {
 			model.addAttribute("breadcrumbTransfer", breadcrumbTransfer);
 			model.addAttribute("contacts", allContacts);
 		} catch (Exception e) {
-			log.error("Failed to retrieve tranfer page" + e.getMessage());
+			log.error("Failed to retrieve tranfer page {}", e.getMessage());
 		}
 		log.info(" Tranfer page successfull retrieved");
 		return "transfer";
@@ -123,7 +121,7 @@ public class UserPaymentController {
 			model.addAttribute("userTransaction", userTransaction);
 			model.addAttribute("transactions", transactions);
 		} catch (Exception e) {
-			log.error("Failed to retrieve page  of transaction" + e.getMessage());
+			log.error("Failed to retrieve page  of transaction {}",e.getMessage());
 		}
 		log.info(" Page  of transaction successfull retrieved");
 		return "transfer";

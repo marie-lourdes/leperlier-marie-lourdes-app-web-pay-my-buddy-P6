@@ -33,6 +33,7 @@ public class PaymentContactImpl implements IPayment {
 		this.updateBalanceBuddyAccountsContactAndUserWithFeesTransaction(emailCreditUser, emailBeneficiaryUser);
 	}
 
+	// method no used from IPayment with these parameters
 	@Override
 	public void pay(String emailUser, double amount, String typeAccountUser) throws Exception {
 	}
@@ -50,6 +51,7 @@ public class PaymentContactImpl implements IPayment {
 		this.balanceCalculatedCreditUser = operation.withdraw(balanceCredit, amountWithFeesTransaction);
 	}
 
+	// method not used from IPayment with these parameters
 	@Override
 	public void calculBalance(String userEmail, double amount, String typeAccountBeneficairyUser) throws Exception {
 	}
@@ -67,16 +69,10 @@ public class PaymentContactImpl implements IPayment {
 		userAccountService.updateBalanceBuddyAccount(
 				userAccountService.findBuddyAccountByUser(emailCreditUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedCreditUser));
-		System.out.println("balanceCalculatedBeneficiaryUser" + balanceCalculatedBeneficiaryUser);
-		System.out.println("balanceCalculatedBeneficiaryUserformatted"
-				+ this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
-		System.out.println("balanceCalculatedCreditUser" + balanceCalculatedCreditUser);
-		System.out.println(
-				"balanceCalculatedCreditUser formatted" + this.formatBalanceAccount(balanceCalculatedCreditUser));
 	}
 
-	public double formatBalanceAccount(double balance) throws Exception {
-		double result = formatter.formatResultDecimalOperation(balance);
-		return result;
+	public double formatBalanceAccount(double balance) {
+
+		return formatter.formatResultDecimalOperation(balance);
 	}
 }

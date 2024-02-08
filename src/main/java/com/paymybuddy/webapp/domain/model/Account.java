@@ -38,9 +38,6 @@ public abstract class Account {
 	@Column(name = "balance")
 	private double balance;
 
-	/*@Column(name = "type")
-	private String type;*/
-
 	@Column(name = "creation")
 	private Date creation;
 	

@@ -27,7 +27,6 @@ public class AuthenticationUserDetailService implements UserDetailsService{
 		public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 			UserLoginDTO userDTO =userAccountService.getUserLoginByEmail(email);
 		    User	userdetails= new User(userDTO.getEmail(), userDTO.getPassword(), getGrantedAuthorities(userDTO.getRole()));
-		    System.out.println("User details service: "+userdetails); // pour les test 
 			return userdetails;
 		}
 

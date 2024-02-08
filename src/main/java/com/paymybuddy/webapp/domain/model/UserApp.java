@@ -23,7 +23,7 @@ import lombok.Data;
 @Entity
 @Table(name = "user_app")
 public class UserApp {
-	private final String REGEX_P = "^(.+)@(\\S+)[.](\\S+)$";
+	private static final String REGEX_P = "^(.+)@(\\S+)[.](\\S+)$";
 
 	@Id
 	@NotNull
@@ -46,11 +46,6 @@ public class UserApp {
 
 	@Column(name = "role")
 	private String role = "USER";
-
-	/*
-	 * @OneToMany(mappedBy = "user", fetch = FetchType.EAGER) private List<Contact>
-	 * contacts;
-	 */
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "contacts", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "id_contact"))

@@ -106,7 +106,7 @@ public class UserAccountService {
 	}
 	
 	public BuddyAccount addBuddyAccount(String emailUser) throws Exception {
-		log.debug(" Creating Buddy Account {} of user {} ", emailUser);
+		log.debug(" Creating Buddy Account  of user {} ", emailUser);
 
 		BuddyAccount buddyAccountCreated = new BuddyAccount();
 		buddyAccountCreated = account.addBuddyAccount(emailUser);
@@ -122,7 +122,7 @@ public class UserAccountService {
 		} catch (NullPointerException e) {
 			throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION);
 		} catch (Exception e) {
-			log.error("Failed to update amount Buddy Account" + e.getMessage());
+			log.error("Failed to update amount Buddy Account {}", e.getMessage());
 		}
 		log.debug("Amount Buddy Account updated successfully");
 	}
@@ -134,7 +134,7 @@ public class UserAccountService {
 		} catch (NullPointerException e) {
 			throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION);
 		} catch (Exception e) {
-			log.error("Failed to update amount Buddy Account" + e.getMessage());
+			log.error("Failed to update amount Buddy Account {}", e.getMessage());
 		}
 		log.debug("Amount Banking Account updated successfully");
 	}
@@ -150,7 +150,7 @@ public class UserAccountService {
 				throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION + " for " + emailUser);
 			}
 		} catch (Exception e) {
-			log.debug(" Failed to retrieve Buddy Account of user {} " + e.getMessage(), emailUser);
+			log.debug(" Failed to retrieve Buddy Account of user {} {}" + e.getMessage(), emailUser);
 		}
 		log.debug("Buddy Account retrieved successfully: {}", userBuddyAccount);
 		return userBuddyAccount;
@@ -167,7 +167,7 @@ public class UserAccountService {
 				throw new NullPointerException(ConstantsException.BANKING_ACCOUNT_NULL_EXCEPTION + " for " + emailUser);
 			}
 		} catch (Exception e) {
-			log.debug(" Failed to retrieve Banking Account of user {} " + e.getMessage(), emailUser);
+			log.debug(" Failed to retrieve Banking Account of user {}  {}" + e.getMessage(), emailUser);
 		}
 		log.debug("Banking Account retrieved successfully: {}", userBankingAccount);
 		return userBankingAccount;
@@ -179,7 +179,6 @@ public class UserAccountService {
 		if (userLoginDTO == null) {
 			log.error(ConstantsException.USER_NULL_EXCEPTION + email);
 		}
-		System.out.println(userLoginDTO);
 		return userLoginDTO;
 	}
 

@@ -103,6 +103,7 @@ nav>ul>li:hover+ul .active--home {
 	padding: 15px;
 	margin-top: 0;
 	box-sizing: border-box;
+	background-color: rgba(198, 195, 195, 0.5);
 }
 
 .link-active {
@@ -192,9 +193,6 @@ tbody tr {
 	text-align: center;
 }
 
-#breadcrumb {
-	background-color: rgba(198, 195, 195, 0.5);
-}
 
 th,td {
 	padding: 30px;

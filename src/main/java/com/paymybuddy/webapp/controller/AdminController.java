@@ -21,6 +21,7 @@ import com.paymybuddy.webapp.domain.model.Transaction;
 import com.paymybuddy.webapp.service.AdminService;
 import com.paymybuddy.webapp.service.IRole;
 import com.paymybuddy.webapp.service.UserAccountService;
+import com.paymybuddy.webapp.utils.Constants;
 
 @Controller
 public class AdminController {
@@ -46,8 +47,7 @@ public class AdminController {
 			String breadcrumbTransactions = "Historical Transactions";
 			model.addAttribute("breadcrumbTransactions", breadcrumbTransactions);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.getMessage();
+			log.error(e.getMessage());
 		}
 		
 		UserDTO user = userAccountService.getUserByEmail(principal.getName());
@@ -60,15 +60,15 @@ public class AdminController {
 	@GetMapping("/home/transactions-billing")
 	public String getHistoricalTransactionsPage(Model model, Principal principal) {
 		try {
-			this.isUserOrAdmin(model, principal, "transactions-billing");
+			this.isUserOrAdmin(model, principal, Constants.TRANSACTIONS_PAGE);
 			this.getransactionsPaginated(1, model, principal);
 			String breadcrumbTransactions = "Historical Transactions";
 			model.addAttribute("breadcrumbTransactions", breadcrumbTransactions);
 		}catch(Exception e) {
-			log.error("Failed to retrieve Historical Transactions with fees" + e.getMessage());	
+			log.error("Failed to retrieve Historical Transactions with fees {}",e.getMessage());	
 		}
 		log.info(" Historical Transactions  page successfull retrieved");
-		return "transactions-billing";
+		return Constants.TRANSACTIONS_PAGE;
 	}
 
 	@GetMapping("/admin/page/{pageNber}")
@@ -88,11 +88,11 @@ public class AdminController {
 		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("transactions", transactions);
 	} catch (Exception e) {
-		log.error("Failed to retrieve transactions" + e.getMessage());
+		log.error("Failed to retrieve transactions {}", e.getMessage());
 	}
 	
 	log.info(" Historical transactions successfull retrieved");	
-		return "transactions-billing";
+		return Constants.TRANSACTIONS_PAGE;
 	}
 
 	public String isUserOrAdmin(Model model, Principal principal, String view) throws Exception {

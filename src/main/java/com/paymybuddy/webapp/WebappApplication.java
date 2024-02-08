@@ -12,28 +12,8 @@ import com.paymybuddy.webapp.service.TransactionService;
 import com.paymybuddy.webapp.service.UserAccountService;
 
 @SpringBootApplication
-public class WebappApplication implements CommandLineRunner {
-
-	@Autowired
-	UserAccountService userAppService;
-
-	@Autowired
-	TransactionService transactionService;
-
-	@Autowired
-	PaymentService bankingService;
-	
-	@Autowired
-	IUserRepository userRepository;
-
+public class WebappApplication  {
 	public static void main(String[] args) {
 		SpringApplication.run(WebappApplication.class, args);
-	}
-
-	@Transactional
-	@Override
-	public void run(String... args) {
-
-		
 	}
 }

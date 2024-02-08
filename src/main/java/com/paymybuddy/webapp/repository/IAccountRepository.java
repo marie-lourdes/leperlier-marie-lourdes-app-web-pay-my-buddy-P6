@@ -13,8 +13,7 @@ import com.paymybuddy.webapp.domain.model.UserApp;
 public interface IAccountRepository extends JpaRepository<Account, Long> {
 
 	List<Account> findByUser(UserApp user);
-	
-//	public List<Transaction> findByTransactions(Transaction user);
+
 	@Modifying
 	@Query(value = " update  BuddyAccount a set a.balance=:amount where (a.user=:user)  ")
 	 void updateBalanceBuddyAccount(@Param("amount") double amount, @Param("user") UserApp user);

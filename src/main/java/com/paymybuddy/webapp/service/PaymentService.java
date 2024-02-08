@@ -81,7 +81,7 @@ public class PaymentService implements IAuthorizationPayment {
 		} catch (Exception e) {
 			log.error("Payment failed on BankingAccount of user {}", userEmail);
 		}
-		log.debug("Payment on BankingAccount of User: {} made successfully{}  ", userEmail);
+		log.debug("Payment on BankingAccount of User: {} made successfully", userEmail);
 	}
 
 	public void transferMoneyToBuddyAccountUser(String userEmail, double amount) throws IllegalArgumentException, NullPointerException {
@@ -100,7 +100,7 @@ public class PaymentService implements IAuthorizationPayment {
 		} catch (Exception e) {
 			log.error("Payment failed on Buddy Account of user {}", userEmail);
 		}
-		log.debug("Payment on BuddyAccount of User: {} made successfully{}  ", userEmail);
+		log.debug("Payment on BuddyAccount of User: {} made successfully", userEmail);
 	}
 
 	public Page<Transaction> getTransactionsByUser(int pageNber, int pageSize, String email) {

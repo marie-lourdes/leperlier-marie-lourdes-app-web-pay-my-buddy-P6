@@ -18,10 +18,6 @@ form.form--transaction div {
 
 }
 
-section .form--transaction {
-	min-height: 15vh;
-}
-
 .header-send-money {
 	justify-content: space-between;
 	align-items: center;
@@ -39,13 +35,14 @@ section .form--transaction {
 	background-color: rgba(198, 195, 195, 0.5);
 	align-items: baseline;
 	box-sizing: border-box;
+	min-height: 15vh;
 }
 
 input.login-field--amount {
 	position: relative;
 }
 
-input.login-field--amount,
+
 select,
 .login-field--description-transaction-visible {
 	color: #000;
@@ -135,6 +132,7 @@ input.login-field--amount {
 	appearance: none;
 	position: relative;
 	text-align: right;
+	color: #000;
 }
 
 .symbol-euro {

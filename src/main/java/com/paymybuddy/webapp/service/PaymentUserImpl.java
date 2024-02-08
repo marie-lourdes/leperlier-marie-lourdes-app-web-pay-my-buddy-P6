@@ -30,7 +30,8 @@ public class PaymentUserImpl implements IPayment {
 	public void pay(String userEmail, double amount, String typeAccountBeneficairyUser) throws Exception {
 		this.calculBalance(userEmail, amount, typeAccountBeneficairyUser);
 	}
-
+	
+	//method not used from IPayment with these parameters
 	@Override
 	public void pay(String emailCreditUser, String emailBeneficiaryUser, double amount) throws Exception {
 	}
@@ -62,7 +63,8 @@ public class PaymentUserImpl implements IPayment {
 				this.formatBalanceAccount(balanceBuddyAccountCalculated));
 		System.out.println("balanceBankingAccountCalculated" + balanceBankingAccountCalculated);
 	}
-
+	
+	//method not used from IPayment with these parameters
 	@Override
 	public void calculBalance(String emailCreditUser, String emailBeneficiaryUser, double amount) throws Exception {
 
@@ -86,9 +88,8 @@ public class PaymentUserImpl implements IPayment {
 				this.formatBalanceAccount(balanceCalculatedBuddyAccountUser));
 	}
 
-	public double formatBalanceAccount(double balance) throws Exception {
-		double result = formatter.formatResultDecimalOperation(balance);
-		return result;
+	public double formatBalanceAccount(double balance) {	
+		return  formatter.formatResultDecimalOperation(balance);
 	}
 
 }

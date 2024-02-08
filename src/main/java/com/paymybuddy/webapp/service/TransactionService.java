@@ -79,7 +79,7 @@ public class TransactionService {
 		 } catch(Exception e) {
 				log.error("Failed to retrieve all transactions for admin");
 			}
-			 log.debug("all transactions : {}retrieved successfully for admin");
+			 log.debug("all transactions retrieved successfully for admin");
 		return transactionsPage;
 	}
 		
