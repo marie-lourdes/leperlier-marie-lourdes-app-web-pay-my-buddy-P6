@@ -23,6 +23,11 @@ section {
 	width: 70%;
 }
 
+section.section-contacts {
+	flex-direction: column;
+    width: 100%;
+}
+
 header,
 main {
 	display: flex;
@@ -174,6 +179,11 @@ table {
 	box-sizing: border-box;
 }
 
+thead {
+	background:  rgb(111, 174, 75);
+	color: #fff;
+}
+
 table,
 thead,
 tbody,
@@ -182,23 +192,16 @@ tbody tr {
 	text-align: center;
 }
 
-thead,
 #breadcrumb {
 	background-color: rgba(198, 195, 195, 0.5);
 }
 
-thead th {
-	padding: 15px;
-	color: rgb(111, 174, 75);
+th,td {
+	padding: 30px;
 }
 
 tbody tr {
 	background-color: rgba(240, 237, 237, 0.5);
-}
-
-th,
-td {
-	padding: 8px;
 }
 
 .text-welcome {

@@ -15,6 +15,7 @@ form.form--transaction div {
 
 .section--transaction {
 	width: 100%;
+
 }
 
 section .form--transaction {
@@ -68,19 +69,21 @@ select,
 .button-down {
 	appearance: none;
 	position: relative;
-	
+
 	width: 43px;
 	height: 21px;
 	line-height: 1;
 
 }
+
 .button-down {
 	top: 0.55rem;
 	left: -4.8rem;
 }
-.button-up{
+
+.button-up {
 	top: -0.63rem;
-    left: -1.75rem;
+	left: -1.75rem;
 }
 
 section.pagination {
@@ -88,11 +91,21 @@ section.pagination {
 	margin-top: 10px;
 }
 
-section.pagination div a {
-	border: 2px rgba(213, 215, 222, 0.5) solid;
+section.pagination div a,
+section.pagination span span {
+	border: 1px rgba(213, 215, 222, 0.5) solid;
 	padding: 10px;
+	margin: -3px;
+}
+
+section.pagination div a,
+section.pagination span {
 	color: #2145D8;
 	font-weight: bold;
+}
+
+section.pagination span span{
+	color: rgb(138, 137, 137);
 }
 
 .select-contact {
@@ -126,8 +139,9 @@ input.login-field--amount {
 
 .symbol-euro {
 	position: relative;
-	right:2.5rem;
+	right: 2.5rem;
 }
+
 table.table--transaction {
 	width: 100%;
 	border: 1px solid #000;

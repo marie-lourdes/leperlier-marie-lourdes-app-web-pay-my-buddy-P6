@@ -109,7 +109,7 @@
 					<span th:unless="${currentPage}>1"><i class="fa-solid fa-angles-left"></i> </span>
 				</div>
 				<div>
-					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}" class="currentPage">
 						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}" th:text="${i}">current page</a>
 						<span th:unless="${currentPage != i}" th:text="${i}">current page</span>
 					</span>
