@@ -14,9 +14,9 @@ role VARCHAR(10)
 CREATE TABLE contacts (
  id_contact int unique  NOT NULL  ,
 user_id int NOT NULL,
-  PRIMARY KEY ( id_contact,user_id),
-  FOREIGN KEY ( id_contact) REFERENCES user_app(id) ON DELETE CASCADE ON UPDATE CASCADE,
- FOREIGN KEY (user_id ) REFERENCES user_app(id) ON DELETE CASCADE ON UPDATE CASCADE
+PRIMARY KEY ( id_contact,user_id),
+FOREIGN KEY ( id_contact) REFERENCES user_app(id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (user_id ) REFERENCES user_app(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE account(

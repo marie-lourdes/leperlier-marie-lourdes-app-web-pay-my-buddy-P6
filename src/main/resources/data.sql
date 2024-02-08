@@ -12,11 +12,11 @@ role VARCHAR(10)
 );
 
 CREATE TABLE contacts (
- id_contact int  unique NOT NULL  ,
+id_contact int  unique NOT NULL  ,
 user_id int NOT NULL,
-  PRIMARY KEY ( id_contact,user_id),
-  FOREIGN KEY ( id_contact) REFERENCES user_app(id) ON DELETE CASCADE ON UPDATE CASCADE,
- FOREIGN KEY (user_id ) REFERENCES user_app(id) ON DELETE CASCADE ON UPDATE CASCADE
+PRIMARY KEY ( id_contact,user_id),
+FOREIGN KEY ( id_contact) REFERENCES user_app(id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (user_id ) REFERENCES user_app(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE account(
@@ -45,7 +45,7 @@ FOREIGN KEY(beneficiary_user_id  ) REFERENCES user_app(id) ON DELETE RESTRICT ON
 
 ALTER TABLE transaction AUTO_INCREMENT = 1001;
 
-/*--------------- DEFAULT VALUES FOR PAYMYBUDDY_TEST DB ------------*/
+/*--------------- DEFAULT VALUES FOR PAYMYBUDDY_PROD DB ------------*/
 
 INSERT INTO user_app(email , first_name, last_name, password , role) VALUES
 ("testuser1@gmail.com", "Firstnameuser1", "Lastnameuser1", "$2a$10$EGu79kZqYg4X8Ol99UCsBONWuUjL0M1ZgbjcUKBzR2VFeo50tIRbK","ADMIN");
@@ -57,11 +57,23 @@ INSERT INTO user_app(email , first_name, last_name, password,role) VALUES
 ("testuser3@gmail.com", "Firstnameuser3", "Lastnameuser3", "$2a$10$loqM3iAxV3CxJJydEvsDK.Zq3H33VdV1vy5PmQsf7wFsTJRzWZeCG","USER");
 
 
+INSERT INTO contacts(id_contact, user_id) VALUES
+(1, 2 );
+
+INSERT INTO contacts(id_contact, user_id) VALUES
+(3,2 );
+
 INSERT INTO account(user_id, balance,account_type,creation ) VALUES
 (2, 5453, "Banking Account",NOW());
 
 INSERT INTO account(user_id, balance,account_type,creation) VALUES
+(2, 380.0, "Buddy Account",NOW());
+
+INSERT INTO account(user_id, balance,account_type,creation) VALUES
 (3, 9534, "Banking Account",NOW());
+
+INSERT INTO account(user_id, balance,account_type,creation) VALUES
+(3, 0.0, "Buddy Account",NOW());
 
 
 
