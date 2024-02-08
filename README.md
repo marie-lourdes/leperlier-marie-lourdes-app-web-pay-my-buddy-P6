@@ -48,8 +48,10 @@ The link homepage  is :http://localhost:8080/home
 ### MORE INFORMATIONS
 
 #### Information data and structure of BDD PayMyBuddy
+
 https://github.com/marie-lourdes/leperlier-marie-lourdes-app-web-pay-my-buddy-P6/tree/6c084a19f0f7b4e6516ffd56c72738d924d1c14e/Documents%20annexe
-#### Diagram domaim application
+
+#### Class Diagram  application
 
 https://github.com/marie-lourdes/leperlier-marie-lourdes-app-web-pay-my-buddy-P6/blob/6c084a19f0f7b4e6516ffd56c72738d924d1c14e/Documents%20annexe/Unbenannt.png
 ### Testing
