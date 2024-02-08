@@ -11,15 +11,12 @@ public class AccountFactory {
 
 	public enum AccountType {
 		BANKING, BUDDY
-	};
+	}
 
 	public static Account makeAccount(AccountType type) {
-		switch (type) {
-		case BANKING:
+		if(type==AccountType.BANKING) {
 			return new BankingAccount();
-		case BUDDY:
-			return new BuddyAccount();
 		}
-		return new BuddyAccount();
+			return new BuddyAccount();			
 	}
 }
