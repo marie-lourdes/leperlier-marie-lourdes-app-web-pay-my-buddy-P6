@@ -37,7 +37,6 @@ https://www.mysql.com/products/workbench/
 5. Upload structure BDD of file Data.sql in SQL BDD and  then add your info connexion BDD in environment variable of your local system 
 
 
-
 ### Running App
 
 Post installation of Java, Maven and Spring Tools 4, and BDD you will have to run app
