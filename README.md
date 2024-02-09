@@ -37,6 +37,7 @@ https://www.mysql.com/products/workbench/
 5. Upload structure BDD of file Data.sql in SQL BDD and  then add your info connexion BDD in environment variable of your local system 
 
 
+
 ### Running App
 
 Post installation of Java, Maven and Spring Tools 4, and BDD you will have to run app
@@ -63,6 +64,6 @@ https://github.com/marie-lourdes/leperlier-marie-lourdes-app-web-pay-my-buddy-P6
 See the file of logging in folder log of project or use Postman after running application
 
 ### Debugging
- For testing code without run application:
-Use  Maven CLI 'mvn test or mvn verify  changing before the datasource.url bdd for testing
+ For debbuging
+Use  Maven CLI 'mvn test or mvn verify  
 
