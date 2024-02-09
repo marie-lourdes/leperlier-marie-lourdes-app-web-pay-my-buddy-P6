@@ -1,4 +1,4 @@
-# PayMyBuddy Webapp
+java -jar config/webapp-1.0.0.jar# PayMyBuddy Webapp
 
 A banking Webapp  for managing transactions between account of users and contacts subscribed .
 
@@ -34,13 +34,13 @@ https://www.eclipse.org/community/eclipse_newsletter/2018/february/springboot.ph
 
 https://www.mysql.com/products/workbench/
 
-5. Upload structure BDD of file Data.sql in SQL BDD and  then add your info connexion BDD in file application.properties or in local system
+5. Upload structure BDD of file Data.sql in SQL BDD and  then add your info connexion BDD in environment variable of your local system 
 
 
 ### Running App
 
-Post installation of Java, Maven and Spring Tools 4, you will have to run app to load data and all application with  Boot DashBoard of Spring Tools 
-or with your CLI , mvn spring-boot:run .
+Post installation of Java, Maven and Spring Tools 4, and BDD you will have to run app
+ with your CLI ,java -jar config/webapp-1.0.0.jar for app PROD 
 
 Finally, you will be ready to  use webapp and request 
 The link homepage  is :http://localhost:8080/home
@@ -64,5 +64,5 @@ See the file of logging in folder log of project or use Postman after running ap
 
 ### Debugging
  For testing code without run application:
-Use  Maven CLI 'mvn clean package -Denvironnement=dev'
+Use  Maven CLI 'mvn test or mvn verify  changing before the datasource.url bdd for testing
 
