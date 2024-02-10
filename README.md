@@ -34,7 +34,7 @@ https://www.eclipse.org/community/eclipse_newsletter/2018/february/springboot.ph
 
 https://www.mysql.com/products/workbench/
 
-5. Upload structure BDD of file Data.sql in SQL BDD and  then add your info connexion BDD in environment variable of your local system 
+5. Upload structure BDD of file Data.sql in SQL BDD (in folder/config) or file Data-test.sql in folder /resources and  then add your info connexion BDD in environment variable of your local system 
 
 
 ### Running App
