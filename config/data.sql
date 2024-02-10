@@ -72,8 +72,7 @@ INSERT INTO account(user_id, balance,account_type,creation) VALUES
 INSERT INTO account(user_id, balance,account_type,creation) VALUES
 (3, 9534, "Banking Account",NOW());
 
-INSERT INTO account(user_id, balance,account_type,creation) VALUES
-(3, 0.0, "Buddy Account",NOW());
+
 
 
 

@@ -138,27 +138,7 @@
 			<version>6.4.0</version>
 		</dependency>
 	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<activation>
-				<property>
-					<name>environnement</name>
-					<value>dev</value>
-				</property>
-			</activation>
-			<build>
-				<resources>
-					<resource>
-						<directory>src/main/resources/config-dev</directory>
-						<filtering>true</filtering>
-					</resource>
-				</resources>
-			</build>
-		</profile>
-	</profiles>
-
+	
 	<build>
 		<plugins>
 			<plugin>
