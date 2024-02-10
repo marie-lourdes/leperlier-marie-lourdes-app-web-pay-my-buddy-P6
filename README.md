@@ -49,7 +49,8 @@ The link homepage  is :http://localhost:8080/home
 
 
 #### Information data and structure of BDD PayMyBuddy
-https://github.com/marie-lourdes/leperlier-marie-lourdes-app-web-pay-my-buddy-P6/blob/8634bd509d438856098a2476ee8d26545a4d2dbf/Documents%20annexe/Modele-physique-SQL.png
+
+https://github.com/marie-lourdes/leperlier-marie-lourdes-app-web-pay-my-buddy-P6/blob/09fd20ce6eeaba5388da45664ddc375d33330f03/Documents%20annexe/Model-Physique-Donnes-SQL.png
 
 #### Class Diagram  application
 
