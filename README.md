@@ -40,7 +40,8 @@ https://www.mysql.com/products/workbench/
 ### Running App
 
 Post installation of Java, Maven and Spring Tools 4, and BDD you will have to run app
- with your CLI ,java -jar config/webapp-1.0.0.jar for app PROD 
+ with your CLI: java -jar webapp-1.0.0.jar
+ for app PROD 
 
 Finally, you will be ready to  use webapp and request 
 The link homepage  is :http://localhost:8080/home
