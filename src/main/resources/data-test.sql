@@ -78,7 +78,5 @@ INSERT INTO account(user_id, balance,account_type,creation) VALUES
 INSERT INTO account(user_id, balance,account_type,creation) VALUES
 (3, 0.0, "Buddy Account",NOW());
 
-INSERT INTO transaction(transaction_date_time,credit_user_id, beneficiary_user_id, description, amount, transaction_fees) VALUES
-(NOW(),"2",3, "versement sur le compte contact",2388, 11.94);
 
 /*select * from user_app join user_transaction On( user_app.user_id=user_transaction.user_id) join transaction On (transaction.id_transaction=user_transaction.id_transaction);*/

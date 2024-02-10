@@ -100,12 +100,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.junit-pioneer</groupId>
-			<artifactId>junit-pioneer</artifactId>
-			<version>2.2.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 			<scope>test</scope>
@@ -150,14 +144,6 @@
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
-							<exclude>
-						<resources>
-					<resource>
-						<directory>/config</directory>
-			
-					</resource>
-				</resources>
-				</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
