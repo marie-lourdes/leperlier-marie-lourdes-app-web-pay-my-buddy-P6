@@ -12,6 +12,7 @@ What things you need to install the software and how to install them
 - Maven 3.9.4
 - SpringBoot 6.1.1
 - Spring Tools 4
+- Spring Security
 
 ### Installing
 
