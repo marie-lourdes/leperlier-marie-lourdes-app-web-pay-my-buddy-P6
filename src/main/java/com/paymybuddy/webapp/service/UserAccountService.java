@@ -146,6 +146,7 @@ public class UserAccountService {
 		try {
 			userBuddyAccount = (BuddyAccount) account.findAccountByUser(emailUser,
 					AccountFactory.makeAccount(AccountType.BUDDY));
+		
 			if (userBuddyAccount == null) {
 				throw new NullPointerException(ConstantsException.BUDDY_ACCOUNT_NULL_EXCEPTION + " for " + emailUser);
 			}
