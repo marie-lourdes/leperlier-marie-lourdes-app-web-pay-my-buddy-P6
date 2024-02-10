@@ -1,4 +1,3 @@
-java -jar config/webapp-1.0.0.jar# PayMyBuddy Webapp
 
 A banking Webapp  for managing transactions between account of users and contacts subscribed .
 
