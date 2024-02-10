@@ -69,6 +69,7 @@ public class UserPaymentController {
 				transactionService.addTransaction(creditUser.getId(), userTransaction.getBeneficiaryUser().getEmail(),
 						userTransaction);
 			}
+			
 			log.info("Payment on beneficiary {} from user {} made successfully",
 					userTransaction.getBeneficiaryUser().getEmail(), principal.getName());
 			return new ModelAndView("redirect:/transfer-success");
@@ -94,6 +95,7 @@ public class UserPaymentController {
 		} catch (Exception e) {
 			log.error("Failed to retrieve tranfer page {}", e.getMessage());
 		}
+		
 		log.info(" Tranfer page successfull retrieved");
 		return "transfer";
 	}
@@ -113,7 +115,6 @@ public class UserPaymentController {
 					transactionUser.setContactName("Me");
 				}
 				transactions.add(transactionUser);
-
 			}
 
 			model.addAttribute("currentPage", pageNber);
@@ -124,6 +125,7 @@ public class UserPaymentController {
 		} catch (Exception e) {
 			log.error("Failed to retrieve page  of transaction {}", e.getMessage());
 		}
+		
 		log.info(" Page  of transaction successfull retrieved");
 		return "transfer";
 	}
