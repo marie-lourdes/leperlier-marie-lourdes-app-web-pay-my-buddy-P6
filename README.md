@@ -40,7 +40,8 @@ https://www.mysql.com/products/workbench/
 ### Running App
 
 Post installation of Java, Maven and Spring Tools 4, and BDD you will have to run app
- with your CLI: java -jar webapp-1.0.0.jar
+ with your CLI or with dashboard of Spring Tools.
+ Then move the JAR  generated at root of project , Spring will  run with properties in folder /config for ENV "prod" and finally  run in you CLI: java -jar webapp-1.0.0.jar
  for app PROD 
 
 Finally, you will be ready to  use webapp and request 
