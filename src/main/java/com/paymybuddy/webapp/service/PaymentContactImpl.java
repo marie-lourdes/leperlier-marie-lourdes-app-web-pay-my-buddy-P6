@@ -63,7 +63,7 @@ public class PaymentContactImpl implements IPayment {
 			throw new NullPointerException("Buddy Account of contact user doesn't exist");
 		}
 
-		userAccountService.updateBalanceBankingAccount(
+		userAccountService.updateBalanceBuddyAccount(
 				userAccountService.findBuddyAccountByUser(emailBeneficiaryUser).getUser().getId(),
 				this.formatBalanceAccount(balanceCalculatedBeneficiaryUser));
 		userAccountService.updateBalanceBuddyAccount(

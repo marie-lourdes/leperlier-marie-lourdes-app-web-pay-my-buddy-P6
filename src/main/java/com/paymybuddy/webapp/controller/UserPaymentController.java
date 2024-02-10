@@ -51,13 +51,13 @@ public class UserPaymentController {
 		try {
 			UserDTO creditUser = userAppService.getUserByEmail(principal.getName());
 
-			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT)) {
+			if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BANKING_ACCOUNT) && userTransaction.getBeneficiaryUser().getEmail().equals(principal.getName())) {
 				paymentService.transferMoneyToBankingAccountUser(principal.getName(), userTransaction.getAmount()
 						);
 
 				transactionService.addTransaction(creditUser.getId(), creditUser.getEmail(), userTransaction);
 
-			} else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT)) {
+			} else if (userTransaction.getBeneficiaryUser().getEmail().equals(Constants.BUDDY_ACCOUNT) && userTransaction.getBeneficiaryUser().getEmail().equals(principal.getName()) ) {
 				paymentService.transferMoneyToBuddyAccountUser(principal.getName(), userTransaction.getAmount());
 
 				transactionService.addTransaction(creditUser.getId(), creditUser.getEmail(), userTransaction);
