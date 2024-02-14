@@ -15,11 +15,11 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
 	List<Account> findByUser(UserApp user);
 
 	@Modifying
-	@Query(value = " update  BuddyAccount a set a.balance=:amount where (a.user=:user)  ")
+	@Query(" update  BuddyAccount a set a.balance= ?1 where (a.user= ?2)  ")
 	 void updateBalanceBuddyAccount(@Param("amount") double amount, @Param("user") UserApp user);
 
 	@Modifying
-	@Query(value = " update  BankingAccount a set a.balance=:amount where (a.user=:user)  ")
+	@Query(" update  BankingAccount a set a.balance= ?1 where (a.user= ?2)  ")
 	 void updateBalanceBankingAccount(@Param("amount") double amount, @Param("user") UserApp user);
 
 }
